@@ -274,9 +274,12 @@ public class LteMParallelExecutor {
                     CompletableFuture<LteMMeterExecResult> cf =
                             CompletableFuture
                             .supplyAsync(() -> 0, managedExecutorService) // 非同期実行開始
-                            .thenCompose(v -> execForOneMeterBySwitchCode(meterInfo, input, execOnlySwitchApiFlg, mMeterInfoDao, lteMApiType));
-
-                    checkTimeout(cf, timeout, TimeUnit.SECONDS, managedScheduledExecutorService);
+                            .thenCompose(v -> {
+                                CompletableFuture<LteMMeterExecResult> workFuture = 
+                                    execForOneMeterBySwitchCode(meterInfo, input, execOnlySwitchApiFlg, mMeterInfoDao, lteMApiType);
+                                checkTimeout(workFuture, timeout, TimeUnit.SECONDS, managedScheduledExecutorService);
+                                return workFuture;
+                            });
 
                     return cf.handle((res, ex) -> {
                         if (ex == null) {
