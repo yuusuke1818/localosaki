@@ -1836,21 +1836,31 @@ public class MeterManagementBean extends SmsConversationBean implements Serializ
             CompletableFuture<List<LteMMeterExecResult>> switchAndLoadlimitApi =
                     CompletableFuture.supplyAsync(() -> {
                         boolean acquired = false;
+                        long semaphoreStartTime = System.currentTimeMillis();
                         try {
                             acquired = semaphore.tryAcquire(
                                 MeterManagementConstants.SEMAPHORE_TIMEOUT_LUMP_REGIST_API,
                                 TimeUnit.SECONDS
                             );
+                            long semaphoreAcquiredTime = System.currentTimeMillis();
+                            long semaphoreWaitMs = semaphoreAcquiredTime - semaphoreStartTime;
+                            
                             if (!acquired) {
-                                String msg = String.format("同時実行上限により待機超過: 管理番号:%s, メーターID:%s",
-                                        trim(mi.getMeterMngId()), trim(mi.getMeterId()));
+                                String msg = String.format("同時実行上限により待機超過: 管理番号:%s, メーターID:%s, セマフォ待機時間:%dms",
+                                        trim(mi.getMeterMngId()), trim(mi.getMeterId()), semaphoreWaitMs);
                                 System.out.println(msg);
                                 eventLogger.warn(msg);
                                 asyncUiErrors.add(msg);
                                 return semaphoreTimeoutFail("Semaphore timeout");
                             }
 
-                            return lteMParallelExecutor.executeAsyncForMeters(
+                            String logMsg = String.format("【requestId:%s】 【personId:%s】 セマフォ取得成功: 管理番号:%s, メーターID:%s, 待機時間:%dms",
+                                    requestId, loginPersonId, trim(mi.getMeterMngId()), trim(mi.getMeterId()), semaphoreWaitMs);
+                            System.out.println(logMsg);
+                            eventLogger.info(logMsg);
+
+                            long apiStartTime = System.currentTimeMillis();
+                            List<LteMMeterExecResult> results = lteMParallelExecutor.executeAsyncForMeters(
                                 Collections.singletonList(mi),
                                 newProperty,
                                 MeterManagementConstants.LTEM_API_TYPE.SET.getCode(),
@@ -1858,6 +1868,15 @@ public class MeterManagementBean extends SmsConversationBean implements Serializ
                                 loginPersonId,
                                 mMeterInfoDao
                             );
+                            long apiEndTime = System.currentTimeMillis();
+                            long apiExecutionMs = apiEndTime - apiStartTime;
+
+                            String completionMsg = String.format("【requestId:%s】 【personId:%s】 API実行完了: 管理番号:%s, メーターID:%s, 実行時間:%dms",
+                                    requestId, loginPersonId, trim(mi.getMeterMngId()), trim(mi.getMeterId()), apiExecutionMs);
+                            System.out.println(completionMsg);
+                            eventLogger.info(completionMsg);
+
+                            return results;
 
                         } catch (InterruptedException ie) {
                             Thread.currentThread().interrupt();
@@ -1866,9 +1885,15 @@ public class MeterManagementBean extends SmsConversationBean implements Serializ
                         } finally {
                             if (acquired) {
                                 semaphore.release();
+                                long releaseTime = System.currentTimeMillis();
+                                long totalTime = releaseTime - semaphoreStartTime;
+                                String releaseMsg = String.format("【requestId:%s】 【personId:%s】 セマフォ解放: 管理番号:%s, メーターID:%s, 合計処理時間:%dms",
+                                        requestId, loginPersonId, trim(mi.getMeterMngId()), trim(mi.getMeterId()), totalTime);
+                                System.out.println(releaseMsg);
+                                eventLogger.info(releaseMsg);
                             }
                         }
-                    }, lteMParallelExecutor.getExecutor());
+                    }, java.util.concurrent.ForkJoinPool.commonPool());
 
             // List<LteMMeterExecResult>をBooleanへ畳み込み（全部成功なら true）
             final MeterInfo info = meterInfo;
