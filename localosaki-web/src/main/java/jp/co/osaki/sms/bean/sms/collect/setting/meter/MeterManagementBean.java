@@ -1578,6 +1578,12 @@ public class MeterManagementBean extends SmsConversationBean implements Serializ
         eventLogger.debug(MeterManagementBean.class.getPackage().getName()
                 .concat(" smsCollectSettingMeterMeterManagementBean:execLumpRegist():START"));
 
+        if (!batchRegistEnabled) {
+            addErrorMessage("一括登録の実行権限がありません。");
+            eventLogger.warn("Batch registration attempted without permission. corpId=" + getLoginCorpId());
+            return;
+        }
+
         List<String> errorList = new ArrayList<>();
         this.bulkErrorList.clear();
 
