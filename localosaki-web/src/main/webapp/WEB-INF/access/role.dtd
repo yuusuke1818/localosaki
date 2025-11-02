@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+    PUBLIC ID: osol-role
+    SYSTEM ID: "role.dtd"
+-->
+<!-- ロールリスト -->
+<!ELEMENT RoleList (Role*)>
+    <!-- ロール [ロールセット(+)] -->
+    <!ELEMENT Role (Login, Operation?)>
+    <!-- ロールキー(必須) -->
+    <!ATTLIST Role Key ID #REQUIRED>
+    <!-- ロール名(必須) -->
+    <!ATTLIST Role Name CDATA #REQUIRED>
+        <!-- ログインロール -->
+        <!ELEMENT Login (#PCDATA)>
+        <!-- 操作ロール -->
+        <!ELEMENT Operation (#PCDATA)>

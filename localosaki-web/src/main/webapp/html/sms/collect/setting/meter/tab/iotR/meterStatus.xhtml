@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:rich="http://richfaces.org/rich" xmlns:cust="http://xmlns.jcp.org/jsf/component"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:a4j="http://richfaces.org/a4j">
+    <h:outputStylesheet library="css" name="common/rfCalendar.css"/>
+    <rich:messages id="w7Messages" styleClass="errNonSearch errArea" />
+    <h3 class="contents_title">メーター状態登録</h3>
+    <form jsfc="h:form" id="iotRMeterStatusForm">
+        <div class="contents_form_area">
+            <div jsfc="a4j:outputPanel" id="w7Panel">
+                <table class="w7Table">
+                    <tr style="height: 10px"></tr>
+                    <tr>
+                        <td class="TXT008">メーター状況</td>
+                        <td>
+                            <h:selectOneMenu id="w7MeterPresentSituationSelect"  
+                                class="EDIT002 check_change autofocus"
+                                value="#{smsCollectSettingMeterMeterManagementBean.iotRMeterStatusProperty.meterPresentSituationDisp}"
+                                onchange="checkIotRMeterPresSitu();">
+                                <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.meterPresSituMap}" />
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="TXT008">アラート停止</td>
+                        <td>
+                            <h:selectBooleanCheckbox
+                                id="w7AlertPauseFlgCheckbox"
+                                class="check_change"
+                                value="#{smsCollectSettingMeterMeterManagementBean.iotRMeterStatusProperty.alertPauseFlgBool}"
+                                onclick="disabledAlertPause(this);"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="TXT008">アラート停止期間</td>
+                        <td>
+                            <h:inputText
+                                id="w7AlertPauseStart"
+                                class="textWidthMedium check_change alertPause"
+                                value="#{smsCollectSettingMeterMeterManagementBean.iotRMeterStatusProperty.alertPauseStart}"
+                                maxlength="10"
+                                style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}">
+                                <f:ajax event="change" render="idIotRAlertPauseStart"/>
+                                <f:passThroughAttribute name="placeholder" value="YYYY/MM/DD"/>
+                            </h:inputText>
+                            <div style="display: inline-block">
+                                <rich:calendar id="idIotRAlertPauseStart" class="calDayDaily" datePattern="yyyy/MM/dd"
+                                               enableManualInput="false" showWeeksBar="false" showFooter="false"
+                                               required="false" showInput="false"
+                                               value="#{smsCollectSettingMeterMeterManagementBean.iotRMeterStatusProperty.calAlertPauseStart}"
+                                               buttonIcon="#{request.contextPath}/resources/images/common/com030.png"
+                                               zindex="50"
+                                               styleClass="calobj">
+                                    <f:ajax event="change" render="w7AlertPauseStart"/>
+                                </rich:calendar>
+                            </div>
+                            <h:outputText value="&nbsp;&nbsp;&nbsp;～&nbsp;&nbsp;&nbsp;" />
+                            <h:inputText
+                                id="w7AlertPauseEnd"
+                                class="textWidthMedium check_change alertPause"
+                                value="#{smsCollectSettingMeterMeterManagementBean.iotRMeterStatusProperty.alertPauseEnd}"
+                                maxlength="10"
+                                style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}">
+                                <f:ajax event="change" render="idIotRAlertPauseEnd"/>
+                                <f:passThroughAttribute name="placeholder" value="YYYY/MM/DD"/>
+                            </h:inputText>
+                            <div style="display: inline-block">
+                                <rich:calendar id="idIotRAlertPauseEnd" class="calDayDaily" datePattern="yyyy/MM/dd"
+                                               enableManualInput="false" showWeeksBar="false" showFooter="false"
+                                               required="false" showInput="false"
+                                               value="#{smsCollectSettingMeterMeterManagementBean.iotRMeterStatusProperty.calAlertPauseEnd}"
+                                               buttonIcon="#{request.contextPath}/resources/images/common/com030.png"
+                                               zindex="50"
+                                               styleClass="calobj">
+                                    <f:ajax event="change" render="w7AlertPauseEnd" 
+                                            listener="disabledAlertPause(smsCollectSettingMeterMeterManagementBean.iotRMeterStatusProperty.alertPauseFlgBool)"
+                                            />
+                                </rich:calendar>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="TXT008">備考</td>
+                        <td colspan="3" style="padding-top: 8px;">
+                            <h:inputTextarea
+                                id="w7AlertMemo"
+                                class="check_change"
+                                value="#{smsCollectSettingMeterMeterManagementBean.iotRMeterStatusProperty.meterStatusMemo}"
+                                maxlength="1000"
+                                style="width: 350px; height: 150px;">
+                            </h:inputTextarea>
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <br />
+                <br />
+                <div class="gradation_type_1 button_large_2 btnRegistLayout">
+                    <a4j:commandButton 
+                        id="w7RegistBtn"
+                        value="登録"
+                        execute="@form"
+                        render="@form confirmDialogForm:confirmationDialogMessage"
+                        onclick="return confirmationDialogOpenForIns($('input[id$=w7RegistBtn]'))"
+                        oncomplete="$('input[id$=w7RegistBtnHidden]').click();">
+                    </a4j:commandButton>
+                    <h:graphicImage class="btnRegistIconLayout" library="images"
+                        name="common/com067.png" />
+                    <a4j:commandButton id="w7RegistBtnHidden" style="display: none;"
+                        execute="@form"
+                        render ="@form confirmDialogForm:confirmationDialogMessage 
+                                #{rich:clientId('wTablePanel')}"
+                        action="#{smsCollectSettingMeterMeterManagementBean.execMeterStatusRegist(smsCollectSettingMeterMeterManagementBean.iotRMeterStatusProperty)}"
+                        onbegin="showBlockModal()"
+                        oncomplete="hideBlockModal(); viewList('W'); clearChangeFlag(); dispButton();">
+                    </a4j:commandButton>
+                </div>
+            </div>
+        </div>
+    </form>
+</html>

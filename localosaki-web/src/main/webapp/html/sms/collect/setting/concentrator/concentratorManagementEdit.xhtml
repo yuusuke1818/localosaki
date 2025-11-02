@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      >
+<body>
+
+<ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+    <ui:define name="content_side" class="content">
+        <meta http-equiv="content-language" content="ja" />
+        <h:outputStylesheet library="css" name="common/button.css"/>
+        <h:outputStylesheet library="css" name="common/default.css"/>
+        <h:outputStylesheet library="css" name="common/cssLayout.css"/>
+        <h:outputStylesheet library="css" name="common/common.css"/>
+        <h:outputStylesheet library="css" name="sms/collect/setting/concentrator/concentratorManagementEdit.css"/>
+
+        <form jsfc="h:form" id="smsCollectSettingConcentratorManagementEditBean">
+            <div class="inner_content">
+                <div class="title_area_warp">
+                    <!-- 画面タイトル -->
+                    <div class="title_area_left">
+                        <h2 class="page_title">コンセントレーター管理</h2>
+                        <!-- ヘルプボタン -->
+                        <c:if test="#{indexBean.userGuideBool}">
+                            <h:commandLink class="help_icon"
+                                action="#{indexBean.userGuide()}" target="_blank" />
+                        </c:if>
+                        <p class="page_subtitle">
+                           <h:outputText value="コンセントレーター情報の新規登録、または編集ができます。" />
+                        </p>
+                        <rich:messages />
+                    </div>
+                    <div class="clear" />
+                    <c:if test="#{smsCollectSettingConcentratorManagementEditBean.editFlg}">
+                        <h3 class="contents_title editDisp">設定変更</h3>
+                    </c:if>
+                    <c:if test="#{!smsCollectSettingConcentratorManagementEditBean.editFlg}">
+                        <h3 class="contents_title editDisp">新規登録</h3>
+                    </c:if>
+
+                    <div class="contents_form_area editDisp">
+                        <table class="editTable">
+                            <tr style="height: 10px">
+                                <td class="edit_table_col1"></td>
+                                <td class="edit_table_col2"></td>
+                                <td class="edit_table_col3"></td>
+                                <td class="edit_table_col4"></td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">登録先装置</td>
+                                <td class="TXT020">
+                                    <h:outputText id="edit_dev_name" value="#{smsCollectSettingConcentratorManagementEditBean.devName}"></h:outputText>
+                                    <h:inputHidden value="#{smsCollectSettingConcentratorManagementEditBean.devId}" id="editDevId" />
+                                </td>
+                                <td>
+                                    ※登録先装置を表示
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">管理番号</td>
+                                <c:if test="#{smsCollectSettingConcentratorManagementEditBean.editFlg}">
+                                    <td class="TXT020">
+                                        <h:outputText id="mng_id" value="#{smsCollectSettingConcentratorManagementEditBean.concentId}" >
+                                            <f:convertNumber pattern="00" />
+                                        </h:outputText>
+                                    </td>
+                                </c:if>
+                                <c:if test="#{!smsCollectSettingConcentratorManagementEditBean.editFlg}">
+                                    <td>
+                                        <h:selectOneMenu id="mngIdSelect" class="EDIT002 check_change autofocus" value="#{smsCollectSettingConcentratorManagementEditBean.concentId}" >
+                                            <f:selectItems value="#{smsCollectSettingConcentratorManagementEditBean.concentIdMap}" />
+                                        </h:selectOneMenu>
+                                    </td>
+
+                                </c:if>
+                                <td>
+                                    ※選択範囲 ： "01～16 " 未登録の番号のみ
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">コンセントレーター名<span class="required"></span></td>
+                                <td>
+                                    <c:if test="#{smsCollectSettingConcentratorManagementEditBean.editFlg}">
+                                        <h:inputText id="concentrator_name"
+                                            class="text_width_long check_change autofocus"
+                                            style="#{smsCollectSettingConcentratorManagementEditBean.getInvalidStyle(component.clientId)}"
+                                            value="#{smsCollectSettingConcentratorManagementEditBean.consentratorName}"
+                                            maxlength="20"></h:inputText>
+                                    </c:if>
+                                    <c:if test="#{!smsCollectSettingConcentratorManagementEditBean.editFlg}">
+                                        <h:inputText id="concentrator_name"
+                                            class="text_width_long check_change"
+                                            style="#{smsCollectSettingConcentratorManagementEditBean.getInvalidStyle(component.clientId)}"
+                                            value="#{smsCollectSettingConcentratorManagementEditBean.consentratorName}"
+                                            maxlength="20"></h:inputText>
+                                    </c:if>
+                                </td>
+                                <td>
+                                    ※最大20文字
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">IPアドレス<span class="required"></span></td>
+                                <td>
+                                    <h:inputText id="ip_addr"
+                                    class="text_width_middle check_change"
+                                    style="#{smsCollectSettingConcentratorManagementEditBean.getInvalidStyle(component.clientId)}"
+                                    value="#{smsCollectSettingConcentratorManagementEditBean.ipAddr}"
+                                    maxlength="15"></h:inputText>
+                                </td>
+                                <td>
+                                    ※ 入力範囲 ： "000.000.000.000～255.255.255.255 "
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">コメント</td>
+                                <td>
+                                    <h:inputText id="comment" class="text_width_long check_change" value="#{smsCollectSettingConcentratorManagementEditBean.comment}" maxlength="20"></h:inputText>
+                                </td>
+                                <td>
+                                    ※最大20文字
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+                        <br />
+                        <br />
+                        <div class="edit_button_area">
+                            <div class="gradation_type_1 button_large_2 button_area">
+                                <c:if test="#{smsCollectSettingConcentratorManagementEditBean.editFlg}">
+                                    <a4j:commandButton
+                                        id="editBtn"
+                                        value="設定変更"
+                                        render="concentrator_name,ip_addr"
+                                        action="#{smsCollectSettingConcentratorManagementEditBean.execUpdate()}"
+                                        onclick="return confirmationDialogOpen($('input[id$=editBtn]'))"
+                                        onbegin="showBlockModal()" oncomplete="hideBlockModal(); clearChangeFlag();">
+                                    </a4j:commandButton>
+                                    <h:graphicImage class="edit_button_icon" library="images" name="common/com067.png" />
+                                </c:if>
+                                <c:if test="#{!smsCollectSettingConcentratorManagementEditBean.editFlg}">
+                                    <a4j:commandButton
+                                        id="registBtn"
+                                        value="登録"
+                                        render="concentrator_name,ip_addr"
+                                        action="#{smsCollectSettingConcentratorManagementEditBean.execUpdate()}"
+                                        onclick="return confirmationDialogOpen($('input[id$=registBtn]'))"
+                                        onbegin="showBlockModal()" oncomplete="hideBlockModal(); clearChangeFlag();">
+                                    </a4j:commandButton>
+                                    <h:graphicImage class="regist_button_icon" library="images" name="common/com067.png" />
+                                </c:if>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ui:include src="/html/common/confirmationDialog.xhtml" >
+                <ui:param name="confirmationDialogTitle" value="確認" />
+                <ui:param name="confirmationDialogMessage" value="#{smsCollectSettingConcentratorManagementEditBean.confirmMessage}" />
+            </ui:include>
+        </form>
+
+        <ui:include src="/html/common/changeCautionDialog.xhtml" >
+            <!-- ボタンに対応する場合 -->
+            <!--                                <ui:param name="cautionDialogId" value="editCautionDialog" />-->
+            <ui:param name="changeCautionTargetButton" value="#{smsCollectSettingMeterUserEditBean.acceptButton}" />
+        </ui:include>
+
+    </ui:define>
+</ui:composition>
+
+</body>
+</html>

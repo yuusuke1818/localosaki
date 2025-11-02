@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PUBLIC ID: osol-operation
+    SYSTEM ID: "operation.dtd"
+-->
+<!-- 操作ロールリスト -->
+<!ELEMENT OperationList (Operation*)>
+    <!-- 操作企業情報[企業種別(0 or 1), 権限種別(0 or 1), 担当者権限コード(0 or 1)] -->
+    <!ELEMENT Operation (CorpType?, AuthorityType?, AuthorityCd?)>
+    <!-- ロールキー(必須) -->
+    <!ATTLIST Operation Key ID #REQUIRED>
+    <!-- ロール名(必須) -->
+    <!ATTLIST Operation Name CDATA #REQUIRED>
+        <!-- 企業種別 -->
+        <!ELEMENT CorpType (#PCDATA)>
+            <!-- 企業種別の値 -->
+            <!ENTITY 大崎電気工業 "0">
+            <!ENTITY パートナー企業 "1">
+            <!ENTITY メンテナンス企業 "2">
+            <!ENTITY 契約企業 "3">
+        <!-- 権限種別 -->
+        <!ELEMENT AuthorityType (#PCDATA)>
+            <!-- 権限種別の値 -->
+            <!ENTITY 管理担当 "0">
+            <!ENTITY 建物担当 "1">
+        <!-- 担当者権限コード -->
+        <!ELEMENT AuthorityCd (#PCDATA)>
+            <!-- 担当者権限コードの値 -->
+            <!ENTITY 管理者権限 "001">
+            <!ENTITY 建物テナント設備管理 "002">
+            <!ENTITY メンテナンス管理 "003">
+            <!ENTITY エネルギー目標入力 "004">
+            <!ENTITY エネルギー使用量入力 "005">
+            <!ENTITY 集計分析 "006">
+            <!ENTITY 計画履行入力 "007">
+            <!ENTITY サイネージ管理 "008">
+            <!ENTITY エネルギー使用状況確認 "009">
+            <!ENTITY 機器制御 "010">

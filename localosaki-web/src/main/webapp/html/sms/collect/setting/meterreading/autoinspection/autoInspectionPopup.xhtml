@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+    <h:outputStylesheet library="css" name="common/popup.css"/>
+    <h:outputStylesheet library="css" name="sms/collect/setting/meterreading/autoinspection/autoInspectionPopup.css" />
+
+    <rich:popupPanel id="autoInspectionPopup" modal="true" moveable="true" resizeable="false"
+                 width="850" height="650" domElementAttachment="form" zindex="200"
+                 minWidth="850" maxWidth="850" minHeight="650"
+                 onshow="hideBlockModal(true); checkAutoFocusOnShowRichPanel(event);">
+        <f:facet name="header">
+            <div class="pop_title_area">
+                <div class="left">
+                    <h:outputText class="pop_page_title" value="自動検針設定" />
+                </div>
+                <div class="pop_button_close">
+                    <input type="button" id="closeBtn" value="" onclick="#{rich:component('autoInspectionPopup')}.hide();">
+                    </input>
+                </div>
+            </div>
+        </f:facet>
+        <form jsfc="h:form" id="smsCollectSettingMeterreadingAutoInspectionBean" >
+            <div class="inner_content" style="max-width: 770px;">
+                <table id="data_table">
+                <c:forEach var="autoInspData" items="#{autoInspDataList}" varStatus="statusRow" >
+                    <tr>
+                        <th class="TXT008" style="width: 185px;">
+                            #{autoInspData.meterTypeName}
+                        </th>
+                        <td class="TXT008 TXT010 TXT011" style="max-width: 100px; text-align: center;">
+                            #{autoInspData.autoInspDateTimeDisp}
+                        </td>
+                        <td class="TXT008 TXT010 TXT011" style="min-width: 485px;">
+                            #{autoInspData.inspectionMonthDisp}
+                        </td>
+                    </tr>
+                </c:forEach>
+                </table>
+            </div>
+        </form>
+    </rich:popupPanel>
+</html>

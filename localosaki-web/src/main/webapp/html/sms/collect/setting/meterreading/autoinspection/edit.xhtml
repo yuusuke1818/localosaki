@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+    <head jsfc="h:head">
+        <title>自動検針</title>
+    </head>
+    <body jsfc="h:body">
+        <ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+            <ui:define name="content_side">
+                <h:outputStylesheet library="css" name="common/button.css"/>
+                <h:outputStylesheet library="css" name="sms/collect/setting/meterreading/autoinspection/edit.css" />
+                <h:outputScript library="js" name="sms/collect/setting/meterreading/autoinspection/edit.js"/>
+
+                <form jsfc="h:form" id="smsCollectSettingMeterreadingAutoInspectionEditBean">
+                    <div class="inner_content">
+                        <div jsfc="a4j:outputPanel" id="autoInspectionPanel">
+                            <div class="title_area_warp">
+                                <!-- 画面タイトル -->
+                                <div class="title_area_left">
+                                    <h2 class="page_title">自動検針</h2>
+                                    <!-- ヘルプボタン -->
+                                    <c:if test="#{indexBean.userGuideBool}">
+                                        <h:commandLink class="help_icon"
+                                            action="#{indexBean.userGuide()}" target="_blank" />
+                                    </c:if>
+                                    <p class="page_subtitle">
+                                        <h:outputText value="自動検針を実行する日時の設定ができます。" /><br/>
+                                        <h:outputText value="※AieLinkメーターに対して”時刻”の指定はできません" /><br/>
+                                        <h:outputText value="※AieLinkメーターに対して検針日を変更する場合は検針データ確定までに日数を要する場合があります。" /><br/>
+                                        <h:outputText value="　詳しくはSLA記載内容をご確認ください" />
+                                    </p>
+                                    <rich:messages />
+                                </div>
+                                <div class="clear" />
+
+                         <div class="contents">
+                            <div class="contents_title">
+                                <span class="contents_title_body">自動検針設定</span>
+                            </div>
+                            <div class="contents_form_area">
+                                <c:set var="editDataList" value="#{smsCollectSettingMeterreadingAutoInspectionEditBean.editDataList}" />
+                                <div class="contents_table">
+                                    <div class="search_result_area">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2">種別</th>
+                                                <th colspan="2">自動検針日時</th>
+                                                <th class="allCheck" rowspan="2">全選択</th>
+                                                <th colspan="12">検針実行月</th>
+                                                <th rowspan="2">備考</th>
+                                            </tr>
+                                            <tr>
+                                                <th>日</th>
+                                                <th>時</th>
+                                            <c:forEach var="dispMonth" begin="1" end="12" step="1" varStatus="status">
+                                                <th>#{dispMonth}</th>
+                                            </c:forEach>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                    <c:forEach var="editData" items="#{editDataList}" varStatus="statusRow" >
+                                        <c:set var="index" value="#{statusRow.index}" />
+                                            <tr>
+                                                <td class="meterTypeName">
+                                                    #{editData.meterTypeName}
+                                                </td>
+                                                <td>
+                                                    <select jsfc="h:selectOneMenu" value="#{editData.inspectionDay}" class="SEL3 check_change">
+                                                        <option jsfc="f:selectItems" value="#{smsCollectSettingMeterreadingAutoInspectionEditBean.inspectionDayMap}" />
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select jsfc="h:selectOneMenu" value="#{editData.inspectionHour}" class="SEL3 check_change">
+                                                        <option jsfc="f:selectItems" value="#{smsCollectSettingMeterreadingAutoInspectionEditBean.inspectionHourMap}" />
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" onclick="clickAllCheck(this.checked, #{index});" class="check_change" />
+                                                </td>
+                                                <td>
+                                                    <h:selectBooleanCheckbox styleClass="inspectionMonth#{index} check_change" value="#{editData.inspectionMonth1}" />
+                                                </td>
+                                                <td>
+                                                    <h:selectBooleanCheckbox styleClass="inspectionMonth#{index} check_change" value="#{editData.inspectionMonth2}" />
+                                                </td>
+                                                <td>
+                                                    <h:selectBooleanCheckbox styleClass="inspectionMonth#{index} check_change" value="#{editData.inspectionMonth3}" />
+                                                </td>
+                                                <td>
+                                                    <h:selectBooleanCheckbox styleClass="inspectionMonth#{index} check_change" value="#{editData.inspectionMonth4}" />
+                                                </td>
+                                                <td>
+                                                    <h:selectBooleanCheckbox styleClass="inspectionMonth#{index} check_change" value="#{editData.inspectionMonth5}" />
+                                                </td>
+                                                <td>
+                                                    <h:selectBooleanCheckbox styleClass="inspectionMonth#{index} check_change" value="#{editData.inspectionMonth6}" />
+                                                </td>
+                                                <td>
+                                                    <h:selectBooleanCheckbox styleClass="inspectionMonth#{index} check_change" value="#{editData.inspectionMonth7}" />
+                                                </td>
+                                                <td>
+                                                    <h:selectBooleanCheckbox styleClass="inspectionMonth#{index} check_change" value="#{editData.inspectionMonth8}" />
+                                                </td>
+                                                <td>
+                                                    <h:selectBooleanCheckbox styleClass="inspectionMonth#{index} check_change" value="#{editData.inspectionMonth9}" />
+                                                </td>
+                                                <td>
+                                                    <h:selectBooleanCheckbox styleClass="inspectionMonth#{index} check_change" value="#{editData.inspectionMonth10}" />
+                                                </td>
+                                                <td>
+                                                    <h:selectBooleanCheckbox styleClass="inspectionMonth#{index} check_change" value="#{editData.inspectionMonth11}" />
+                                                </td>
+                                                <td>
+                                                    <h:selectBooleanCheckbox styleClass="inspectionMonth#{index} check_change" value="#{editData.inspectionMonth12}" />
+                                                </td>
+                                            <c:if test="#{index == 0}">
+                                                <td rowspan="20" class="note">
+                                                    ・末日計測を実施する場合は1日0時に設定<br />
+                                                    ・月に存在しない日付の場合は末日の指定<br />
+                                                    　時刻に自動検針実施
+                                                </td>
+                                            </c:if>
+                                            </tr>
+                                    </c:forEach>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+
+                            <div class="button_area_center gradation_type_1 gradation_type_5 button_large_2 button_area">
+                                <button jsfc="a4j:commandButton"
+                                    id="updateButton"
+                                    class="button_width edit_search_start"
+                                    value="登録"
+                                    action="#{smsCollectSettingMeterreadingAutoInspectionEditBean.regist()}"
+                                    onclick="return confirmationDialogOpen($('input[id$=updateButton]'))"
+                                    execute="@form" render="#{rich:clientId('autoInspectionPanel')}"
+                                    onbegin="showBlockModal()"
+                                    oncomplete="hideBlockModal(true); clearChangeFlag(); scrollPageTop();"
+                                    disabled="#{smsCollectSettingMeterreadingAutoInspectionEditBean.updateButtonDisabled}" />
+                                <h:graphicImage class="button_icon" library="images" name="common/com067.png" />
+                            </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <ui:include src="/html/common/confirmationDialog.xhtml">
+                        <ui:param name="confirmationDialogTitle" value="確認" />
+                        <ui:param name="confirmationDialogMessage" value="#{smsCollectSettingMeterreadingAutoInspectionEditBean.beforeRegisterMessage}" />
+                    </ui:include>
+
+                    <ui:include src="/html/common/changeCautionDialog.xhtml" />
+                </form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

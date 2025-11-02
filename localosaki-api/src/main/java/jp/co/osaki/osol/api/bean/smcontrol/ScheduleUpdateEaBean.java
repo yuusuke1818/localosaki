@@ -1,0 +1,125 @@
+package jp.co.osaki.osol.api.bean.smcontrol;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import jp.co.osaki.osol.api.OsolApiResultCode;
+import jp.co.osaki.osol.api.dao.smcontrol.ScheduleUpdateEaDao;
+import jp.co.osaki.osol.api.dao.smcontrol.SmCntrolDao;
+import jp.co.osaki.osol.api.parameter.smcontrol.ScheduleUpdateEaParameter;
+import jp.co.osaki.osol.api.result.smcontrol.ScheduleUpdateEaResult;
+import jp.co.osaki.osol.api.resultdata.smcontrol.SmPrmResultData;
+import jp.co.osaki.osol.mng.FvpCtrlMngResponse;
+import jp.co.osaki.osol.mng.SmControlException;
+import jp.co.osaki.osol.mng.constants.SmControlConstants;
+import jp.co.osaki.osol.mng.param.A200060Param;
+import jp.co.osaki.osol.mng.param.BaseParam;
+
+/**
+ *
+ * スケジュール(設定) Eα Bean クラス
+ *
+ * @autho t_hayama
+ *
+ */
+@Named(value = SmControlConstants.SCHEDULE_UPDATE_EA)
+@RequestScoped
+public class ScheduleUpdateEaBean extends AbstractApiBean<ScheduleUpdateEaResult, ScheduleUpdateEaParameter>{
+
+	@EJB
+	private ScheduleUpdateEaDao dao;
+
+	@Override
+	protected SmCntrolDao getSmCntrolDao() {
+		return dao;
+	}
+
+	@Override
+	protected <T extends BaseParam> T initParam(ScheduleUpdateEaParameter parameter) {
+		A200060Param param = new Gson().fromJson(parameter.getResult(), A200060Param.class);
+
+		param.setScheduleControlInfo(parameter.getScheduleControlInfo());
+		param.setUpdateDBflg(parameter.isUpdateDBflg());
+
+		// コマンド設定
+		if (SmControlConstants.SCHEDULE_CONTROL_INFO_1.equals(param.getScheduleControlInfo())) {
+			param.setCommand("X0" + SmControlConstants.SCHEDULE_CONTROL_INFO_1_CMD);
+		} else if (SmControlConstants.SCHEDULE_CONTROL_INFO_2.equals(param.getScheduleControlInfo())) {
+			param.setCommand("X0" + SmControlConstants.SCHEDULE_CONTROL_INFO_2_CMD);
+		} else {
+			// Not Process
+		}
+
+		@SuppressWarnings("unchecked")
+		T ret = (T) param;
+
+		return ret;
+	}
+
+	//機種依存チェック(Ea, Ea2以外はエラー)
+	@Override
+	protected boolean checkSmPrm(SmPrmResultData smPrm, BaseParam param) throws SmControlException {
+		if (!super.isEa(smPrm) && !super.isEa2(smPrm)) {
+			StackTraceElement st = Thread.currentThread().getStackTrace()[1];
+			super.loggingError(st, "PRODUCT_CD", smPrm.getProductCd());
+			throw new SmControlException(OsolApiResultCode.API_ERROR_PARAMETER_VALID,"API_ERROR_PARAMETER_VALID");
+		}
+
+		//listサイズチェック
+		List<Map<String, Object>> loadList = ((A200060Param)param).getLoadList();
+
+		if ((super.isEa(smPrm) && loadList.size() != SmControlConstants.SCHEDULE_LOAD_LIST_E_ALPHA)
+				|| (super.isEa2(smPrm) && loadList.size() != SmControlConstants.SCHEDULE_LOAD_LIST_E_ALPHA_2)) {
+			StackTraceElement st = Thread.currentThread().getStackTrace()[1];
+			super.loggingError(st, "loadList.size()", String.valueOf(loadList.size()));
+			throw new SmControlException(OsolApiResultCode.API_ERROR_PARAMETER_VALID,"API_ERROR_PARAMETER_VALID");
+		}
+
+		String scheduleControlInfo = ((A200060Param)param).getScheduleControlInfo();
+		if (!SmControlConstants.SCHEDULE_CONTROL_INFO_1.equals(scheduleControlInfo)
+				&& !SmControlConstants.SCHEDULE_CONTROL_INFO_2.equals(scheduleControlInfo)) {
+			StackTraceElement st = Thread.currentThread().getStackTrace()[1];
+			super.loggingError(st, "scheduleControlInfo", scheduleControlInfo);
+			throw new SmControlException(OsolApiResultCode.API_ERROR_PARAMETER_VALID,"API_ERROR_PARAMETER_VALID");
+		}
+
+		for (Map<String, Object> load : loadList) {
+			// 入れ子リスト取得
+			Object strSettingMonthScheduleList = load.get("settingMonthScheduleList");
+			List<Map<String,String>> mmScheduleList =
+					new Gson().fromJson(String.valueOf(strSettingMonthScheduleList), new TypeToken<Collection<Map<String,String>>>(){}.getType());
+			if(mmScheduleList.size() != SmControlConstants.SCHEDULE_MONTH_SCHEDULE_LIST) {
+				StackTraceElement st = Thread.currentThread().getStackTrace()[1];
+				super.loggingError(st, "mmScheduleList.size()", String.valueOf(mmScheduleList.size()));
+				throw new SmControlException(OsolApiResultCode.API_ERROR_PARAMETER_VALID,"API_ERROR_PARAMETER_VALID");
+			}
+		}
+
+		return true;
+	}
+
+
+	@Override
+	protected void callDao(FvpCtrlMngResponse<?> response) throws Exception {
+	     // param取得
+        @SuppressWarnings("unchecked")
+        FvpCtrlMngResponse<A200060Param> res = (FvpCtrlMngResponse<A200060Param>) response;
+
+        //if DBフラグがOFFなら処理無し
+        if(!super.apiParameter.isUpdateDBflg()) {
+            return;
+        }
+
+        // dao呼出
+        dao.updateSchedule(res, super.loginUserId);
+	}
+
+}

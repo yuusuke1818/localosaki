@@ -1,0 +1,1014 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cust="http://xmlns.jcp.org/jsf/component"
+    xmlns:oslib="http://osaki.co.jp/base-component"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:jsf="http://xmlns.jcp.org/jsf"
+    xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<head jsfc="h:head">
+<title>検針データ</title>
+</head>
+<body jsfc="h:body">
+    <ui:composition
+        template="/html/template/template_collect_sidemenu.xhtml">
+        <ui:define name="content_side">
+            <h:outputStylesheet library="css" name="common/cssLayout.css" />
+            <h:outputStylesheet library="css" name="common/button.css" />
+            <h:outputStylesheet library="css" name="common/rfCalendar.css" />
+            <h:outputStylesheet library="css"
+                name="sms/collect/dataview/meterReadingData.css" />
+            <h:outputScript library="js"
+                name="sms/collect/dataview/meterReadingData.js" />
+
+            <form jsfc="h:form" id="meterReadingDataBeanForm">
+                <div class="inner_content_sms">
+                    <div jsfc="a4j:outputPanel" id="meterReadingDataPanel">
+                        <div class="title_area_warp">
+                            <!-- 画面タイトル -->
+                            <div class="title_area_left">
+                                <h2 jsf:id="title" class="page_title">#{meterReadingDataBean.meterReadingDataBeanProperty.title}</h2>
+                                <!-- ヘルプボタン -->
+                                <c:if test="#{indexBean.userGuideBool}">
+                                    <h:commandLink class="help_icon"
+                                        action="#{indexBean.userGuide()}" target="_blank" />
+                                </c:if>
+                                <p jsf:id="subtitle" class="page_subtitle">
+                                    <h:outputText
+                                        value="#{meterReadingDataBean.meterReadingDataBeanProperty.content}" />
+                                </p>
+                            </div>
+                            <div class="clear" />
+                            <!-- 表示条件 -->
+                            <span class="errSearch"> <rich:messages />
+                            </span>
+                            <div class="contents_title contents_accordion_header"
+                                jsf:id="updateDisplayTitle">
+                                <h:graphicImage class="button_icon button_opener"
+                                    library="images" name="demand/demand_container_opner.png"
+                                    style="display: none" />
+                                <h:graphicImage class="button_icon button_closer"
+                                    library="images" name="demand/demand_container_closer.png" />
+                                <span class="contents_title_body">#{meterReadingDataBean.meterReadingDataBeanProperty.updateDisplayTitle}</span>
+                            </div>
+                            <div class="contents_form_area contents_accordion_body">
+                                <div class="msg" jsf:id="updateDisplayMessage">#{meterReadingDataBean.meterReadingDataBeanProperty.updateDisplayMessage}</div>
+                                <div class="conditions" jsf:id="condition">
+                                    <c:if
+                                        test="#{meterReadingDataBean.meterReadingDataBeanProperty.meterReadingDataFlg}">
+                                        <div class="contents_form_search_col">
+                                            <div jsf:id="devId">
+                                                <label class="TXT008">接続先</label>
+                                                <h:selectOneMenu
+                                                    value="#{meterReadingDataBean.meterReadingDataBeanProperty.devId}"
+                                                    class="SELECT001 SELECT_DEVID">
+                                                    <option jsfc="f:selectItems"
+                                                        value="#{meterReadingDataBean.meterReadingDataBeanProperty.devIdMap}" />
+                                                    <a4j:ajax event="change" execute="@this"
+                                                        listener="#{meterReadingDataBean.getMonthMeterReadingNo()}"
+                                                        render="monthMeterReadingNo"
+                                                        oncomplete="changeBtnReloadDisabled(#{meterReadingDataBean.meterReadingDataBeanProperty.btnReloadDisabled})" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div jsf:id="monthMeterReadingNo">
+                                                <label class="TXT008">月検針連番</label>
+                                                <h:selectOneMenu
+                                                    value="#{meterReadingDataBean.meterReadingDataBeanProperty.monthMeterReadingNo}"
+                                                    class="SELECT001 SELECT_MONTHMETERREADINGNO">
+                                                    <option jsfc="f:selectItems"
+                                                        value="#{meterReadingDataBean.meterReadingDataBeanProperty.monthMeterReadingNoList}" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <div class="contents_form_search_col">
+                                            <div>
+                                                <label class="TXT008">表示年月</label>
+                                                <h:selectOneMenu
+                                                    value="#{meterReadingDataBean.meterReadingDataBeanProperty.year}"
+                                                    class="SELECT001 SELECT_YEAR">
+                                                    <option jsfc="f:selectItems"
+                                                        value="#{meterReadingDataBean.meterReadingDataBeanProperty.yearList}" />
+                                                    <a4j:ajax event="change" execute="@this"
+                                                        listener="#{meterReadingDataBean.getMonthMeterReadingNo()}"
+                                                        render="monthMeterReadingNo"
+                                                        oncomplete="changeBtnReloadDisabled(#{meterReadingDataBean.meterReadingDataBeanProperty.btnReloadDisabled})" />
+                                                </h:selectOneMenu>
+                                                <span class="TXT008 TXT010">年</span>
+                                                <h:selectOneMenu
+                                                    value="#{meterReadingDataBean.meterReadingDataBeanProperty.month}"
+                                                    class="SELECT001 SELECT_MONTH">
+                                                    <option jsfc="f:selectItems"
+                                                        value="#{meterReadingDataBean.meterReadingDataBeanProperty.monthList}" />
+                                                    <a4j:ajax event="change" execute="@this"
+                                                        listener="#{meterReadingDataBean.getMonthMeterReadingNo()}"
+                                                        render="monthMeterReadingNo"
+                                                        oncomplete="changeBtnReloadDisabled(#{meterReadingDataBean.meterReadingDataBeanProperty.btnReloadDisabled})" />
+                                                </h:selectOneMenu>
+                                                <span class="TXT008 TXT010">月</span>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                    <c:if
+                                        test="#{!meterReadingDataBean.meterReadingDataBeanProperty.meterReadingDataFlg}">
+                                        <div class="contents_form_search_col">
+                                            <div>
+                                                <label class="TXT008">検針年月</label>
+                                                <h:selectOneMenu
+                                                    value="#{meterReadingDataBean.meterReadingDataBeanProperty.fromYear}"
+                                                    class="SELECT001 SELECT_YEAR">
+                                                    <option jsfc="f:selectItems"
+                                                        value="#{meterReadingDataBean.meterReadingDataBeanProperty.yearList}" />
+                                                </h:selectOneMenu>
+                                                <span class="TXT008 TXT010">年</span>
+                                                <h:selectOneMenu
+                                                    value="#{meterReadingDataBean.meterReadingDataBeanProperty.fromMonth}"
+                                                    class="SELECT001 SELECT_MONTH">
+                                                    <option jsfc="f:selectItems"
+                                                        value="#{meterReadingDataBean.meterReadingDataBeanProperty.monthList}" />
+                                                </h:selectOneMenu>
+                                                <span class="TXT008 TXT010">月</span> <label class="TXT008">～</label>
+                                                <h:selectOneMenu
+                                                    value="#{meterReadingDataBean.meterReadingDataBeanProperty.toYear}"
+                                                    class="SELECT001 SELECT_YEAR">
+                                                    <option jsfc="f:selectItems"
+                                                        value="#{meterReadingDataBean.meterReadingDataBeanProperty.yearList}" />
+                                                </h:selectOneMenu>
+                                                <span class="TXT008 TXT010">年</span>
+                                                <h:selectOneMenu
+                                                    value="#{meterReadingDataBean.meterReadingDataBeanProperty.toMonth}"
+                                                    class="SELECT001 SELECT_MONTH">
+                                                    <option jsfc="f:selectItems"
+                                                        value="#{meterReadingDataBean.meterReadingDataBeanProperty.monthList}" />
+                                                </h:selectOneMenu>
+                                                <span class="TXT008 TXT010">月</span>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                    <div class="contents_form_search_col">
+                                        <!-- 表示更新ボタン -->
+                                        <c:if
+                                            test="#{meterReadingDataBean.meterReadingDataBeanProperty.meterReadingDataFlg}">
+                                            <div
+                                                class="button_reload button_area_center gradation_type_1 gradation_type_5 button_large_2">
+                                                <c:if
+                                                    test="#{meterReadingDataBean.meterReadingDataBeanProperty.btnReloadDisabled}">
+                                                    <input id="reloadButton"
+                                                        class="action_button reload_button" jsfc="h:commandButton"
+                                                        value="表示更新" disabled="disabled"> <a4j:ajax
+                                                            event="click" execute="@form"
+                                                            render="@form meterReadingDataBeanForm:meterReadingDataFlg"
+                                                            listener="#{meterReadingDataBean.reload()}"
+                                                            onbegin="showBlockModal()"
+                                                            oncomplete="setErrorMsgArea('search');reload();hideBlockModal()" />
+                                                    </input>
+                                                </c:if>
+                                                <c:if
+                                                    test="#{!meterReadingDataBean.meterReadingDataBeanProperty.btnReloadDisabled}">
+                                                    <input id="reloadButton" class="action_button"
+                                                        jsfc="h:commandButton" value="表示更新"> <a4j:ajax
+                                                            event="click" execute="@form"
+                                                            render="@form meterReadingDataBeanForm:meterReadingDataFlg"
+                                                            listener="#{meterReadingDataBean.reload()}"
+                                                            onbegin="showBlockModal()"
+                                                            oncomplete="setErrorMsgArea('search');reload();hideBlockModal();$('input[id$=scrollButton]').click();" />
+                                                    </input>
+                                                </c:if>
+                                                <a4j:commandButton id="scrollButton" style="display: none;"
+                                                    render="@none" onbegin="scrollEvent()" />
+                                                <div class="button_reload_icon">
+                                                    <h:graphicImage library="images" name="common/com015.png" />
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                        <c:if
+                                            test="#{!meterReadingDataBean.meterReadingDataBeanProperty.meterReadingDataFlg}">
+                                            <div
+                                                class="button_reload button_area_center gradation_type_1 gradation_type_5 button_large_2">
+
+                                                <input id="reloadButton" class="action_button"
+                                                    jsfc="h:commandButton" value="表示更新"> <a4j:ajax
+                                                        event="click" execute="@form"
+                                                        render="@form meterReadingDataBeanForm:meterReadingDataFlg"
+                                                        listener="#{meterReadingDataBean.reload()}"
+                                                        onbegin="showBlockModal()"
+                                                        oncomplete="setErrorMsgArea('search');reload();hideBlockModal();$('input[id$=scrollButton]').click();" />
+                                                </input>
+                                                <a4j:commandButton id="scrollButton" style="display: none;"
+                                                    render="@none" onbegin="scrollEvent()" />
+                                                <div class="button_reload_icon">
+                                                    <h:graphicImage library="images" name="common/com015.png" />
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                    </div>
+                                    <div>
+                                        <c:if
+                                            test="#{!meterReadingDataBean.meterReadingDataBeanProperty.meterReadingDataFlg}">
+                                            <br></br>
+                                            <div class="msg">請求を行うデータを選択してください。選択後「請求額算出」ボタンを押してください。</div>
+                                            <label class="TXT008">メーター使用料金</label>
+
+                                            <rich:extendedDataTable var="item"
+                                                value="#{meterReadingDataBean.selectBillingDataPagingList.pageList}"
+                                                headerClass="table_meterReading_header"
+												rowClass="table_meterReading_row" frozenColumns="6"
+												style="width: 780px; max-height: 610px; table-layout: fixed;"
+                                                class="table_comp table_daily_comp">
+
+												<rich:column width="50px">
+                                                    <f:facet name="header">
+                                                        <div class="th-span-label">選択</div>
+                                                    </f:facet>
+                                                    <div class="th-sep-label">
+                                                        <h:selectBooleanCheckbox id="selectBillingFlg"
+                                                            value="#{item.selectBillingFlg}" />
+                                                    </div>
+                                                </rich:column>
+
+                                                <rich:column width="180px">
+                                                    <f:facet name="header">
+                                                        <div class="th-span-label">検針日</div>
+                                                    </f:facet>
+                                                    <div class="th-sep-label">
+                                                        <h:outputText id="meterReadingDate"
+                                                            value="#{fn:substring(item.meterReadingDate, 0, 30)}" />
+                                                    </div>
+                                                </rich:column>
+                                                <rich:column width="120px">
+                                                    <f:facet name="header">
+                                                        <div class="th-span-label">検針連番</div>
+                                                    </f:facet>
+                                                    <div class="th-sep-label">
+                                                        <h:outputText id="meterReadingSerialNumber"
+                                                            value="#{fn:substring(item.meterReadingSerialNumber, 0, 30)}" />
+                                                    </div>
+                                                </rich:column>
+
+												<rich:column width="144px" class="column_style_type">
+                                                    <f:facet name="header">
+                                                        <div class="th-span-label">種別</div>
+                                                    </f:facet>
+													<div class="th-sep-label">
+                                                        <h:outputText id="meterTypeName"
+                                                            value="#{fn:substring(item.meterTypeName, 0, 30)}" />
+                                                    </div>
+                                                </rich:column>
+                                                <rich:column width="140px">
+                                                    <f:facet name="header">
+                                                        <div class="th-span-label">メーター台数</div>
+                                                    </f:facet>
+                                                    <div class="th-sep-label">
+                                                        <h:outputText id="numberOfMeters"
+                                                            value="#{fn:substring(item.numberOfMeters, 0, 30)}" />
+                                                    </div>
+                                                </rich:column>
+                                                <rich:column width="140px">
+                                                    <f:facet name="header">
+                                                        <div class="th-span-label">未完了</div>
+                                                    </f:facet>
+                                                    <div class="th-sep-label">
+                                                        <h:outputText id="numberOfUnfinishedMeterReading"
+                                                            value="#{fn:substring(item.numberOfUnfinishedMeterReading, 0, 30)}" />
+                                                    </div>
+                                                </rich:column>
+                                            </rich:extendedDataTable>
+											<div class="contents_form_search_col">
+												<div>
+                                                <h:selectBooleanCheckbox
+                                                    value="#{meterReadingDataBean.meterReadingDataBeanProperty.proratedChargeFlg}" />
+                                            </div>
+												<div style="margin-top: 5px;">按分料金</div>
+											</div>
+											<div class="contents_form_search_col">
+												<div>
+                                                <h:selectBooleanCheckbox
+                                                    value="#{meterReadingDataBean.meterReadingDataBeanProperty.fixedCostFlg}" />
+                                            </div>
+												<div style="margin-top: 5px;">固定費 ※複数月選択している場合も固定費×1回分にて請求額を算出します。</div>
+											</div>
+											<div style="margin-top:20px;margin-left:41.5%"
+                                                class="button_reload button_area_center gradation_type_1 gradation_type_5 button_large_2">
+                                                <a4j:commandButton id="BillingAmountCalculationButton"
+                                                    value="請求額算出" event="click" execute="@form"
+                                                    actionListener="#{meterReadingDataBean.btnBillingAmountCalculationClick()}"
+                                                    render="title subtitle meterReadingTable table printing button condition updateDisplayTitle updateDisplayMessage"
+                                                    onbegin="showBlockModal()"
+                                                    oncomplete="setErrorMsgArea('search');reload();hideBlockModal()" />
+                                                <div class="button_reload_icon">
+                                                    <h:graphicImage library="images" name="common/com015.png" />
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contents_header" jsf:id="button">
+                                <!-- 検針結果ボタン、請求金額ボタン -->
+                                <span
+                                    class="#{meterReadingDataBean.meterReadingDataBeanProperty.meterReadingDataStyle}">
+                                    <a4j:commandButton id="btnMeterReadingData" value="検針データ"
+                                        class="button_large_2 btn_icon_input" execute="@form"
+                                        render="title subtitle meterReadingTable table printing button condition updateDisplayTitle updateDisplayMessage"
+                                        actionListener="#{meterReadingDataBean.btnMeterReadingDataClick()}"
+                                        disabled="#{meterReadingDataBean.meterReadingDataBeanProperty.meterReadingDataDisabled}"
+                                        onbegin="showBlockModal()"
+                                        oncomplete="setErrorMsgArea('search');btnMeterReadingData();hideBlockModal();scrollEvent()">
+                                        <h:graphicImage class="button_meter_reading" library="images"
+                                            name="sms/collect/dataview/btn_list.png" />
+                                    </a4j:commandButton>
+                                </span> <span
+                                    class="#{meterReadingDataBean.meterReadingDataBeanProperty.billingAmountDataStyle}">
+                                    <a4j:commandButton id="btnBillingAmountData" value="請求金額"
+                                        class="button_large_2 btn_icon_input" execute="@form"
+                                        render="title subtitle meterReadingTable table printing button condition updateDisplayTitle updateDisplayMessage"
+                                        actionListener="#{meterReadingDataBean.btnBillingAmountDataClick()}"
+                                        disabled="#{meterReadingDataBean.meterReadingDataBeanProperty.billingAmountDataDisabled}"
+                                        onbegin="showBlockModal()"
+                                        oncomplete="setErrorMsgArea('search');btnBillingAmountData();hideBlockModal()">
+                                        <h:graphicImage class="button_meter_reading_billingamount"
+                                            library="images"
+                                            name="sms/collect/dataview/billingamount_icon_01.png" />
+                                    </a4j:commandButton>
+                                </span>
+                                <!-- 帳票出力ボタン -->
+                                <div
+                                    class="button_csv button_area_center gradation_type_1 button_large_2">
+                                    <a4j:commandButton id="downloadCsvFile" value="帳票出力"
+                                        event="click" execute="@form"
+                                        actionListener="#{meterReadingDataBean.downloadCsvFile()}"
+                                        onbegin="showBlockModal()"
+                                        oncomplete="if(!#{meterReadingDataBean.hasError()}) {
+                                                              $('input[id$=downloadFileStartCsv]').click();
+                                                         }
+                                                         hideBlockModal();" />
+                                    <button jsfc="h:commandButton" id="downloadFileStartCsv"
+                                        style="display: none;"
+                                        action="#{meterReadingDataBean.downloadFileStartCsv()}" />
+                                    <div class="button_csv_icon">
+                                        <h:graphicImage library="images" name="common/com044.png" />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 印刷条件 -->
+
+                            <div class="printing" jsf:id="printing">
+                                <span class="errPrint"> <rich:messages />
+                                </span>
+                                <div class="contents_title contents_accordion_printing_header">
+                                    <h:graphicImage class="button_icon button_opener"
+                                        library="images" name="demand/demand_container_opner.png"
+                                        style="display: none" />
+                                    <h:graphicImage class="button_icon button_closer"
+                                        library="images" name="demand/demand_container_closer.png" />
+                                    <span class="contents_title_body">印刷条件</span>
+                                </div>
+
+                                <div class="contents_form_area contents_accordion_printing_body">
+                                    <div class="msg">表示内容を印刷します。</div>
+                                    <div class="conditions">
+                                        <div class="print_area">
+                                            <div class="contents_form_search_col">
+                                                <div>
+                                                    <label class="TXT008">印刷対象ユーザーコード</label>
+                                                    <h:inputText
+                                                        value="#{meterReadingDataBean.billingAmountDataBeanProperty.printBuildingNoFrom}"
+                                                        class="EDIT002 INPUT_FROM" />
+                                                    <span class="TXT008 TXT010">～</span>
+                                                    <h:inputText
+                                                        value="#{meterReadingDataBean.billingAmountDataBeanProperty.printBuildingNoTo}"
+                                                        class="EDIT002 INPUT_TO" />
+                                                </div>
+                                            </div>
+                                            <div class="contents_form_search_col">
+                                                <div>
+													<label class="TXT008">請求年月</label>
+                                                    <h:inputText id="billingDate"
+                                                        value="#{meterReadingDataBean.billingAmountDataBeanProperty.billingDate}"
+														class="INPUT_DATE" style="" maxlength="7">
+                                                        <f:attribute name="format" value="yyyy/MM" />
+                                                        <f:passThroughAttribute name="placeholder" value="YYYY/MM" />
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                            <div class="contents_form_search_col">
+                                                <div>
+                                                    <label class="TXT008">発行日</label>
+                                                    <h:inputText id="dateIssue"
+                                                        value="#{meterReadingDataBean.billingAmountDataBeanProperty.dateIssue}"
+                                                        class="INPUT_DATE" style="" maxlength="10">
+                                                        <f:attribute name="format" value="yyyy/MM/dd" />
+                                                        <f:passThroughAttribute name="placeholder"
+                                                            value="YYYY/MM/DD" />
+                                                        <a4j:ajax event="change" render="calDateIssue"
+                                                            listener="#{meterReadingDataBean.changeInputDateIssue()}" />
+                                                    </h:inputText>
+                                                    <rich:calendar id="calDateIssue" datePattern="yyyy/MM/dd"
+                                                        enableManualInput="false" showWeeksBar="false"
+                                                        showFooter="false" required="false" showInput="false"
+                                                        value="#{meterReadingDataBean.billingAmountDataBeanProperty.calDateIssue}"
+                                                        buttonIcon="#{request.contextPath}/resources/images/common/com030.png"
+                                                        dayDisableFunction="isSelectableDate"
+                                                        dayClassFunction="setCalendarDisableStyle" zindex="50"
+                                                        styleClass="calobj">
+                                                        <a4j:ajax event="change" render="dateIssue"
+                                                            listener="#{meterReadingDataBean.changeCalDateIssue()}" />
+                                                    </rich:calendar>
+                                                    <label id="lblDeadLine" class="TXT008">納期限</label>
+                                                    <h:inputText id="deadLine"
+                                                        value="#{meterReadingDataBean.billingAmountDataBeanProperty.deadLine}"
+                                                        class="INPUT_DATE" style="" maxlength="10">
+                                                        <f:attribute name="format" value="yyyy/MM/dd" />
+                                                        <f:passThroughAttribute name="placeholder"
+                                                            value="YYYY/MM/DD" />
+                                                        <a4j:ajax event="change" render="calDeadLine"
+                                                            listener="#{meterReadingDataBean.changeInputDeadLine()}" />
+                                                    </h:inputText>
+                                                    <rich:calendar id="calDeadLine" datePattern="yyyy/MM/dd"
+                                                        enableManualInput="false" showWeeksBar="false"
+                                                        showFooter="false" required="false" showInput="false"
+                                                        value="#{meterReadingDataBean.billingAmountDataBeanProperty.calDeadLine}"
+                                                        buttonIcon="#{request.contextPath}/resources/images/common/com030.png"
+                                                        dayDisableFunction="isSelectableDate"
+                                                        dayClassFunction="setCalendarDisableStyle" zindex="51"
+                                                        styleClass="calobj">
+                                                        <a4j:ajax event="change" render="deadLine"
+                                                            listener="#{meterReadingDataBean.changeCalDeadLine()}" />
+                                                    </rich:calendar>
+                                                </div>
+                                            </div>
+                                            <div class="contents_form_search_col">
+                                                <div>
+                                                    <label class="TXT008 TXT_CENTER">和暦表記</label>
+                                                    <h:selectBooleanCheckbox
+                                                        value="#{meterReadingDataBean.billingAmountDataBeanProperty.japaneseCalendar}"
+                                                        class="CHECK_BOX_POS" />
+                                                </div>
+                                            </div>
+                                            <div class="contents_form_search_col">
+                                                <div>
+                                                    <label class="TXT008">請求者名</label>
+                                                    <h:inputText
+                                                        value="#{meterReadingDataBean.billingAmountDataBeanProperty.claimantName}"
+                                                        class="EDIT002 INPUT_CLAIMANT" />
+                                                </div>
+                                                <div>
+                                                    <label id="regNo" class="TXT008">登録番号</label>
+                                                    <h:inputText
+                                                        value="#{meterReadingDataBean.billingAmountDataBeanProperty.regNo}"
+                                                        class="EDIT002 INPUT_CLAIMANT" />
+                                                </div>
+                                            </div>
+                                            <div class="contents_form_search_col">
+                                                <div>
+                                                    <label class="TXT008 TXT_CENTER">印刷内容</label>
+                                                    <h:selectBooleanCheckbox
+                                                        value="#{meterReadingDataBean.billingAmountDataBeanProperty.invoice}"
+                                                        class="CHECK_BOX_POS" />
+                                                    <span class="TXT008 TXT010 TXT_CENTER">請求書</span>
+                                                </div>
+                                                <div>
+                                                    <h:selectBooleanCheckbox
+                                                        value="#{meterReadingDataBean.billingAmountDataBeanProperty.receipt}"
+                                                        class="CHECK_BOX_POS" />
+                                                    <span class="TXT008 TXT010 TXT_CENTER">領収書</span>
+                                                </div>
+                                                <div>
+                                                    <h:selectBooleanCheckbox
+                                                        value="#{meterReadingDataBean.billingAmountDataBeanProperty.invoiceAndReceiptCopy}"
+                                                        class="CHECK_BOX_POS" />
+                                                    <span class="TXT008 TXT010 TXT_CENTER">請求書および領収書控え</span>
+                                                </div>
+                                            </div>
+                                            <div class="contents_form_search_col">
+                                                <div class="button_printing gradation_type_1 button_large_2">
+                                                    <a4j:commandButton id="downloadPdfFile" value="　印刷　"
+                                                        event="click" execute="@form"
+                                                        actionListener="#{meterReadingDataBean.downloadPdfFile()}"
+                                                        onbegin="showBlockModal()"
+                                                        oncomplete="if(!#{meterReadingDataBean.hasError()}) {
+                                                                        $('input[id$=downloadFileStartPdf]').click();
+                                                                }
+                                                                setErrorMsgArea('print');
+                                                                hideBlockModal();" />
+                                                    <div class="button_printing_icon">
+                                                        <h:graphicImage library="images" name="common/com078.png" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div jsf:id="meterReadingTable">
+                                <!-- 検針結果一覧 -->
+                                <c:if
+                                    test="#{meterReadingDataBean.meterReadingDataBeanProperty.meterReadingDataFlg}">
+                                    <div class="search_result_pop_header_wrap">
+                                        <div class="page_content_parts" id="listReroad1">
+                                            <div class="search_result_pop_header_left">
+                                                検索条件に該当する検針データ情報 <span jsfc="h:outputText"
+                                                    class="serach_result_total_count"
+                                                    value="#{meterReadingDataBean.meterReadingDataPagingList.resultCount}" />
+                                                件
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <c:if
+                                        test="#{meterReadingDataBean.meterReadingDataBeanProperty.devId == '0'}">
+                                        <rich:extendedDataTable var="item"
+                                            value="#{meterReadingDataBean.meterReadingDataPagingList.allList}"
+                                            rendered="#{meterReadingDataBean.meterReadingDataPagingList.resultCount > 0}"
+                                            headerClass="table_meterReading_header"
+                                            rowClass="table_meterReading_row" frozenColumns="4"
+                                            style="width: 944px; max-height: 610px; table-layout: fixed;"
+                                            class="table_comp table_daily_comp">
+
+                                            <rich:column width="120px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">装置名</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="devName" value="#{item.devName}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="65px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">管理番号</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="meterMngId" value="#{item.meterMngId}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="380px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">テナント名</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="buildingName"
+                                                        value="#{fn:substring(item.buildingName, 0, 30)}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="95px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">種別</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="meterTypeName"
+                                                        value="#{item.meterTypeName}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="75px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">今回検針値</div>
+                                                </f:facet>
+                                                <div
+                                                    class="th-sep-label cont_style_meterReading cont_style_latestInspVal">
+                                                    <h:outputText id="latestInspVal"
+                                                        value="#{item.latestInspVal}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="75px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">前回検針値</div>
+                                                </f:facet>
+                                                <div
+                                                    class="th-sep-label cont_style_meterReading cont_style_prevInspVal">
+                                                    <h:outputText id="prevInspVal" value="#{item.prevInspVal}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="45px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">乗率</div>
+                                                </f:facet>
+                                                <div
+                                                    class="th-sep-label cont_style_meterReading cont_style_multipleRate">
+                                                    <h:outputText id="multipleRate"
+                                                        value="#{item.multipleRate}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="80px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">今回使用量</div>
+                                                </f:facet>
+                                                <div
+                                                    class="th-sep-label cont_style_meterReading cont_style_latestUseVal">
+                                                    <h:outputText id="latestUseVal"
+                                                        value="#{item.latestUseVal}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="80px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">前回使用量</div>
+                                                </f:facet>
+                                                <div
+                                                    class="th-sep-label cont_style_meterReading cont_style_prevUseVal">
+                                                    <h:outputText id="prevUseVal" value="#{item.prevUseVal}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="65px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">使用量率</div>
+                                                </f:facet>
+                                                <div
+                                                    class="th-sep-label cont_style_meterReading cont_style_usePerRate">
+                                                    <h:outputText id="usePerRate" value="#{item.usePerRate}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="100px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">ユーザーコード</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="tenantId" value="#{item.tenantId}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="130px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">今回検針日時</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="latestInspDate"
+                                                        value="#{item.latestInspDate}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="75px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">ステータス</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="endFlgRed" value="#{item.endFlg}"
+                                                        rendered="#{item.endFlg == '未完了'}" style="color:red;" />
+                                                    <h:outputText id="endFlg" value="#{item.endFlg}"
+                                                        rendered="#{item.endFlg != '未完了'}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="130px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">前回検針日時</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="prevInspDate"
+                                                        value="#{item.prevInspDate}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="130px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">前年同月検針日時</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="previousYearInspDate"
+                                                        value="#{item.previousYearInspDate}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="98px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">前年同月使用量</div>
+                                                </f:facet>
+                                                <div
+                                                    class="th-sep-label cont_style_meterReading cont_style_previousYearUseVal">
+                                                    <h:outputText id="previousYearUseVal"
+                                                        value="#{item.previousYearUseVal}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="150px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">最大デマンド値（kW）</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="maxDemandVal"
+                                                        value="#{item.maxDemandVal}" />
+                                                </div>
+                                            </rich:column>
+                                        </rich:extendedDataTable>
+                                    </c:if>
+
+                                    <c:if
+                                        test="#{meterReadingDataBean.meterReadingDataBeanProperty.devId != '0'}">
+                                        <rich:extendedDataTable var="item"
+                                            value="#{meterReadingDataBean.meterReadingDataPagingList.pageList}"
+                                            rendered="#{meterReadingDataBean.meterReadingDataPagingList.resultCount > 0}"
+                                            headerClass="table_meterReading_header"
+                                            rowClass="table_meterReading_row" frozenColumns="3"
+                                            style="width: 944px; max-height: 610px; table-layout: fixed;"
+                                            class="table_comp table_daily_comp">
+
+                                            <rich:column width="65px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">管理番号</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="meterMngId" value="#{item.meterMngId}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="380px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">テナント名</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="buildingName"
+                                                        value="#{fn:substring(item.buildingName, 0, 30)}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="95px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">種別</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="meterTypeName"
+                                                        value="#{item.meterTypeName}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="75px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">今回検針値</div>
+                                                </f:facet>
+                                                <div
+                                                    class="th-sep-label cont_style_meterReading cont_style_latestInspVal">
+                                                    <h:outputText id="latestInspVal"
+                                                        value="#{item.latestInspVal}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="75px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">前回検針値</div>
+                                                </f:facet>
+                                                <div
+                                                    class="th-sep-label cont_style_meterReading cont_style_prevInspVal">
+                                                    <h:outputText id="prevInspVal" value="#{item.prevInspVal}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="45px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">乗率</div>
+                                                </f:facet>
+                                                <div
+                                                    class="th-sep-label cont_style_meterReading cont_style_multipleRate">
+                                                    <h:outputText id="multipleRate"
+                                                        value="#{item.multipleRate}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="80px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">今回使用量</div>
+                                                </f:facet>
+                                                <div
+                                                    class="th-sep-label cont_style_meterReading cont_style_latestUseVal">
+                                                    <h:outputText id="latestUseVal"
+                                                        value="#{item.latestUseVal}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="80px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">前回使用量</div>
+                                                </f:facet>
+                                                <div
+                                                    class="th-sep-label cont_style_meterReading cont_style_prevUseVal">
+                                                    <h:outputText id="prevUseVal" value="#{item.prevUseVal}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="65px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">使用量率</div>
+                                                </f:facet>
+                                                <div
+                                                    class="th-sep-label cont_style_meterReading cont_style_usePerRate">
+                                                    <h:outputText id="usePerRate" value="#{item.usePerRate}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="100px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">ユーザーコード</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="tenantId" value="#{item.tenantId}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="130px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">今回検針日時</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="latestInspDate"
+                                                        value="#{item.latestInspDate}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="75px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">ステータス</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="endFlgRed" value="#{item.endFlg}"
+                                                        rendered="#{item.endFlg == '未完了'}" style="color:red;" />
+                                                    <h:outputText id="endFlg" value="#{item.endFlg}"
+                                                        rendered="#{item.endFlg != '未完了'}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="130px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">前回検針日時</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="prevInspDate"
+                                                        value="#{item.prevInspDate}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="130px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">前年同月検針日時</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="previousYearInspDate"
+                                                        value="#{item.previousYearInspDate}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="98px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">前年同月使用量</div>
+                                                </f:facet>
+                                                <div
+                                                    class="th-sep-label cont_style_meterReading cont_style_previousYearUseVal">
+                                                    <h:outputText id="previousYearUseVal"
+                                                        value="#{item.previousYearUseVal}" />
+                                                </div>
+                                            </rich:column>
+
+                                            <rich:column width="150px">
+                                                <f:facet name="header">
+                                                    <div class="th-span-label">最大デマンド値（kW）</div>
+                                                </f:facet>
+                                                <div class="th-sep-label">
+                                                    <h:outputText id="maxDemandVal"
+                                                        value="#{item.maxDemandVal}" />
+                                                </div>
+                                            </rich:column>
+                                        </rich:extendedDataTable>
+                                    </c:if>
+                                </c:if>
+                            </div>
+
+                            <div class="search_result_area" jsf:id="table">
+                                <!-- 請求金額一覧 -->
+                                <c:if
+                                    test="#{meterReadingDataBean.meterReadingDataBeanProperty.billingAmountDataFlg}">
+                                    <div class="search_result_pop_header_wrap">
+                                        <div class="page_content_parts" id="listReroad2">
+                                            <div class="search_result_pop_header_left">
+                                                検索条件に該当する請求金額データ情報 <span jsfc="h:outputText"
+                                                    class="serach_result_total_count"
+                                                    value="#{meterReadingDataBean.billingAmountDataPagingList.resultCount}" />
+                                                件
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <c:if
+                                        test="#{meterReadingDataBean.billingAmountDataPagingList.resultCount != '0'}">
+                                        <h:dataTable id="resultBillingAmountData"
+                                            class="table_billingAmount" var="item"
+                                            value="#{meterReadingDataBean.billingAmountDataPagingList.pageList}"
+                                            headerClass="table_header">
+                                            <span jsfc="h:column"
+                                                class="column_style_billingAmount_userCode"> <f:facet
+                                                    name="header">
+                                                    ユーザーコード
+                                                </f:facet> <h:outputText
+                                                    id="billingAmount_tenantId" value="#{item.tenantId}" />
+                                            </span>
+                                            <span jsfc="h:column"
+                                                class="column_style_billingAmount_buildingName"> <f:facet
+                                                    name="header">
+                                                    テナント番号<br />テナント名
+                                                </f:facet> <h:outputText
+                                                    id="billingAmount_buildingNo" value="#{item.buildingNo}" /><br />
+                                                <h:outputText id="billingAmount_buildingName"
+                                                    value="#{fn:substring(item.buildingName, 0, 50)}" />
+                                            </span>
+                                            <span jsfc="h:column"
+                                                class="column_style_billingAmount_billingAmount"> <f:facet
+                                                    name="header">
+                                                    今回請求金額
+                                                </f:facet> <h:outputText
+                                                    id="billingAmount_billingAmount"
+                                                    value="#{item.dispSumUsageFee}" />
+                                            </span>
+                                            <span jsfc="h:column"
+                                                class="column_style_billingAmount_consumptionTax"> <f:facet
+                                                    name="header">
+                                                    うち消費税<br />
+                                                    <h:outputText
+                                                        value="( #{meterReadingDataBean.billingAmountDataBeanProperty.salesTaxRate}% )" />
+                                                </f:facet> <h:outputText id="billingAmount_consumptionTax"
+                                                    value="#{item.dispSumTax}" />
+                                            </span>
+                                            <span jsfc="h:column"
+                                                class="column_style_billingAmount_status"> <f:facet
+                                                    name="header">
+                                                    ステータス
+                                                </f:facet> <h:outputText
+                                                    id="billingAmount_status" value="#{item.aggregateStatus}" />
+                                            </span>
+                                            <span jsfc="h:column"
+                                                class="column_style_billingAmount_details"> <f:facet
+                                                    name="header">
+                                                    詳細
+                                                </f:facet> <a4j:commandButton
+                                                    id="detailsButton" value=" " class="button_small"
+                                                    style="width:36px;" execute="@form"
+                                                    render="billingAmountDetailsPopupForm data_table"
+                                                    actionListener="#{meterReadingDataBean.btnDetailsClick(item)}"
+                                                    oncomplete="#{rich:component('billingAmountDetailsPopup')}.show();">
+                                                    <h:graphicImage class="button_detail" library="images"
+                                                        name="common/com063.png" />
+                                                </a4j:commandButton>
+                                            </span>
+                                        </h:dataTable>
+                                        <!-- ページング -->
+                                        <ui:fragment
+                                            rendered="#{meterReadingDataBean.billingAmountDataPagingList.resultCount != '0'}">
+                                            <div class="contents_center">
+                                                <div id="paging_area">
+                                                    <span id="prevButton_area"> <h:commandLink
+                                                            id="prevButton" value="&lt;&nbsp;&nbsp;前へ"
+                                                            actionListener="#{meterReadingDataBean.billingAmountDataPagingList.prevPage}"
+                                                            disabled="#{!meterReadingDataBean.billingAmountDataPagingList.isPrevPage()}">
+                                                            <a4j:ajax execute="@form" render="@form"
+                                                                oncomplete="pagingData()" onbegin="beginPaging()" />
+                                                            <f:attribute name="page"
+                                                                value="#{meterReadingDataBean.billingAmountDataPagingList.currentPage}" />
+                                                        </h:commandLink>
+                                                    </span>
+                                                    <cust:pageIndex id="pageJumpButton"
+                                                        value="#{meterReadingDataBean.billingAmountDataPagingList.pageValue}"
+                                                        action="#{meterReadingDataBean.pageJump()}">
+                                                        <ui:include src="./index.xhtml" />
+                                                    </cust:pageIndex>
+                                                    <span id="nextButton_area"> <h:commandLink
+                                                            id="nextButton" class="nextButton"
+                                                            value="後へ&nbsp;&nbsp;&gt; "
+                                                            actionListener="#{meterReadingDataBean.billingAmountDataPagingList.nextPage}"
+                                                            disabled="#{!meterReadingDataBean.billingAmountDataPagingList.isNextPage()}">
+                                                            <a4j:ajax execute="@form" render="@form"
+                                                                oncomplete="pagingData()" onbegin="beginPaging()" />
+                                                            <f:attribute name="page"
+                                                                value="#{meterReadingDataBean.billingAmountDataPagingList.currentPage}" />
+                                                        </h:commandLink>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </ui:fragment>
+                                    </c:if>
+                                </c:if>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- ダウンロード用FORM -->
+            <form jsfc="h:form" id="formDownload" target="_blank">
+                <button jsfc="h:commandButton" id="downloadFileStartPdf"
+                    style="display: none;"
+                    actionListener="#{meterReadingDataBean.downloadFileStartPdf()}" />
+            </form>
+            <!-- 請求金額詳細ポップアップ -->
+            <ui:include
+                src="/html/sms/collect/dataview/meterReadingData/billingAmountDetailsPopup.xhtml" />
+        </ui:define>
+    </ui:composition>
+</body>
+</html>

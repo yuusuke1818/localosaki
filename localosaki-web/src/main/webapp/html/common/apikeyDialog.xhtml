@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      >
+    
+      <h:outputStylesheet library="css" name="common/popup.css"/>
+    <rich:popupPanel id="apikeyDialog" modal="true" moveable="true" resizeable="false"  
+                       top="180" width="780" height="300" zindex="320"
+                       onshow="checkAutoFocusOnShowRichPanel(event);"
+                       >
+        <f:facet name="header">
+            <div class="pop_title_area" style="display:flex; align-items: center;">
+                
+                <h:graphicImage class="apikey_icon" library="images" name="common/apikey.png"  />
+                <div class="pop_page_title_with_icon">APIキー</div>
+                
+                <div class="pop_button_close">
+                    <input type="button" value="" onclick="#{rich:component('apikeyDialog')}.hide();"/>
+                </div>
+            </div>
+        </f:facet>
+        <div  class="inner_content">
+            <form jsfc="h:form" id="apikeyDialogContents">
+                <table class="apikey_content">
+                    <tr>
+                        <td class="apikey_info">
+                            APIキー
+                        </td>
+                        <td class="apikey_info">
+                            <h:outputText id="apiKeyString" value="#{commonApikeyDialogBean.apiKeyString}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="apikey_info">
+                            APIキー&nbsp;有効期限
+                        </td>
+                        <td class="apikey_info">
+                            <h:outputText id="apiKeyExpirationDate" value="#{commonApikeyDialogBean.expirationDate}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="apikey_info">
+                            リフレッシュキー
+                        </td>
+                        <td class="apikey_info">
+                            <h:outputText id="refreshKeyString" value="#{commonApikeyDialogBean.refreshKeyString}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="apikey_info" colspan="2">
+                            <div class="button_area_center gradation_type_1 button_large_2 button_regist" style="position:relative;text-align: center;">
+                                <a4j:commandButton type="button" id="IssueButton" styleClass="action_button" value="#{commonApikeyDialogBean.buttonTitle}" style="width: 150px;" >
+                                   <a4j:ajax event="click"
+                                            render="apikeyDialogContents"
+                                            listener="#{commonApikeyDialogBean.issueApiKey()}" />
+                                    <h:graphicImage class="button_icon" style="position: relative; top:5px; left:35px;" library="images" name="common/com067.png" />
+                                 </a4j:commandButton>
+                                 <h:inputHidden value="#{commonApikeyDialogBean.version}" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </rich:popupPanel>
+</html>

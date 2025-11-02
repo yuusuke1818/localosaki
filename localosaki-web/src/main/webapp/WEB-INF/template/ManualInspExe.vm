@@ -1,0 +1,10 @@
+$dev_name($dev_id)の装置で
+任意検針を行いましたので通知します
+
+管理番号 メータID 月検針連番 検針日時 コメント
+#foreach ( $record in $recordList)
+#set ($pattern = "$record.meterMngId $record.meterId $insp_month_no $target_date $record.memo ")
+$pattern
+#end
+
+大崎電気工業株式会社

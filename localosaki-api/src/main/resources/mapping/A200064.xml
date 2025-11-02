@@ -1,0 +1,135 @@
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+    <!-- フィーダ日報（取得）テンプレート -->
+    <!-- ベース部分（圧縮データ長なし） -->
+    <template name="baseNoCompress">
+        <field name="productCd" length="2" keepPadding="true"/>
+        <field name="address" length="2" keepPadding="true"/>
+        <field name="command" length="2" default="DF" keepPadding="true"/>
+        <field name="pointGroup" length="1" keepPadding="true"/>
+        <field name="daysAgo" length="2" padding="0" justify="right"/>
+    </template>
+    <template name="baseNoCompress.res">
+        <field name="productCd" length="2" keepPadding="true"/>
+        <field name="address" length="2" keepPadding="true"/>
+        <field name="command" length="2" keepPadding="true"/>
+        <field name="pointGroup" length="1" keepPadding="true"/>
+        <field name="daysAgo" length="2" keepPadding="true"/>
+    </template>
+    <!-- ベース部分（圧縮データ長あり） -->
+    <template name="baseCompress">
+        <field name="productCd" length="2" keepPadding="true"/>
+        <field name="address" length="2" keepPadding="true"/>
+        <field name="command" length="2" default="DF" keepPadding="true"/>
+        <field name="pointGroup" length="1" keepPadding="true"/>
+        <field name="daysAgo" length="2" padding="0" justify="right"/>
+        <field name="compressionDataLength" length="6" default="000000" keepPadding="true"/>
+    </template>
+    <template name="baseCompress.res">
+        <field name="productCd" length="2" keepPadding="true"/>
+        <field name="address" length="2" keepPadding="true"/>
+        <field name="command" length="2" keepPadding="true"/>
+        <field name="pointGroup" length="1" keepPadding="true"/>
+        <field name="daysAgo" length="2" keepPadding="true"/>
+        <field name="compressionDataLength" length="6" keepPadding="true"/>
+    </template>
+    <!-- データ部（共通部分） -->
+    <template name="commonResponse">
+        <field name="measureDayTime" length="10" keepPadding="true"/>
+        <field name="aggregateHour" length="6" keepPadding="true"/>
+        <segment name="pointDataList" collection="list" class="map" occurs="16">
+            <segment name="timeValueList" collection="list" class="map" occurs="48">
+                <field name="demandData" length="4" keepPadding="true"/>
+            </segment>
+        </segment>
+    </template>
+
+        <!-- 「00」製品に対する設定 -->
+    <!-- 送信文 -->
+    <stream name="00.req" format="fixedlength">
+        <record name="dummy">
+            <field name="dummy" length="0" />
+        </record>
+    </stream>
+
+    <!-- 受信文 -->
+    <stream name="00.res" format="fixedlength">
+        <record name="dummy">
+            <field name="dummy" length="0" />
+        </record>
+    </stream>
+
+    <!-- 「03」製品に対する設定 -->
+    <!-- 送信文 -->
+    <stream name="03.req" format="fixedlength">
+        <record name="dummy">
+            <field name="dummy" length="0" />
+        </record>
+    </stream>
+
+    <!-- 受信文 -->
+    <stream name="03.res" format="fixedlength">
+        <record name="dummy">
+            <field name="dummy" length="0" />
+        </record>
+    </stream>
+
+    <!-- 「06」製品に対する設定 -->
+    <!-- 送信文 -->
+    <stream name="06.req" format="fixedlength">
+        <record name="dummy">
+            <field name="dummy" length="0" />
+        </record>
+    </stream>
+
+    <!-- 受信文 -->
+    <stream name="06.res" format="fixedlength">
+        <record name="dummy">
+            <field name="dummy" length="0" />
+        </record>
+    </stream>
+
+    <!-- 「12」製品に対する設定 -->
+    <!-- 送信文 -->
+    <stream name="12.req" format="fixedlength">
+        <record name="dummy">
+            <field name="dummy" length="0" />
+        </record>
+    </stream>
+
+    <!-- 受信文 -->
+    <stream name="12.res" format="fixedlength">
+        <record name="dummy">
+            <field name="dummy" length="0" />
+        </record>
+    </stream>
+
+    <!-- [21：Eα]に対する設定 -->
+    <!-- 送信文 -->
+    <stream name="21.req" format="fixedlength">
+        <record name="request" template="baseNoCompress" class="jp.co.osaki.osol.mng.param.A200064Param" />
+    </stream>
+    <!-- 受信文（データあり） -->
+    <stream name="21.res" format="fixedlength">
+        <record name="response" template="baseNoCompress.res" class="jp.co.osaki.osol.mng.param.A200064Param">
+            <include template="commonResponse"/>
+        </record>
+    </stream>
+    <!-- [22：Eα2]に対する設定 -->
+    <!-- 送信文 -->
+    <stream name="22.req" format="fixedlength">
+        <record name="request" template="baseCompress" class="jp.co.osaki.osol.mng.param.A200064Param" />
+    </stream>
+    <!-- 受信文（データあり） -->
+    <stream name="22.res" format="fixedlength">
+        <record name="response" template="baseCompress.res" class="jp.co.osaki.osol.mng.param.A200064Param">
+            <include template="commonResponse"/>
+        </record>
+    </stream>
+    <!-- 応答データ無し -->
+    <stream name="res_data.none" format="fixedlength">
+        <record name="response" template="baseNoCompress.res" class="jp.co.osaki.osol.mng.param.A200064Param">
+        </record>
+    </stream>
+</beanio>

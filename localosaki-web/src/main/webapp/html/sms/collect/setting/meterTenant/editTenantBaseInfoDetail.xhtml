@@ -1,0 +1,309 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:outputStylesheet library="css" name="common/popup.css"/>
+    <rich:popupPanel id="smsCollectSettingTenantEditBaseInfoPopup"
+                     modal="true" moveable="true" resizeable="false" 
+                     top="80" width="880" height="600" zindex="320"
+                     onshow="hideBlockModal(true);checkAutoFocusOnShowRichPanel(event);"
+                     domElementAttachment="form">
+        <f:facet name="header">
+            <div class="pop_title_area">
+                <div class="left">
+                    <c:if test="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.menuNo == 1}">
+                        <h:outputText class="pop_page_title" value="従量電灯A設定" />
+                    </c:if>
+                
+                    <c:if test="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.menuNo == 2}">
+                        <h:outputText class="pop_page_title" value="従量電灯B設定" />
+                    </c:if>
+                    <c:if test="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.menuNo == 0}">
+                        <h:outputText class="pop_page_title" 
+                            value="料金設定（#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.meterTypeName}）" />
+                    </c:if>
+                </div>
+                <div class="pop_button_close">
+                    <input type="button" value="" 
+                           onclick="#{rich:component('smsCollectSettingTenantEditBaseInfoPopup')}.hide();" 
+                           />
+                </div>
+            </div>
+        </f:facet>
+        <div  class="inner_content inner_content_linePopup content_width" style="padding-top:0px;">
+            
+            <c:if test="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.menuNo == 1}">
+                <p class="page_subtitle">従量電灯Aの設定ができます。</p>
+            </c:if>
+                
+            <c:if test="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.menuNo == 2}">
+                <p class="page_subtitle">従量電灯Bの設定ができます。</p>
+            </c:if>
+            <c:if test="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.menuNo == 0}">
+                <p class="page_subtitle">料金設定ができます。</p>
+            </c:if>
+            <a4j:outputPanel id="smsCollectSettingTenantEditBaseInfoDetailSettingPanel">
+
+                <!-- メッセージ -->
+                <span class="rf-msgs">
+                    <c:forEach items="#{smsCollectSettingMeterTenantEditBean.errorDetailMessages}" var="msg">
+                        <div class="rf-msgs-err"><h:outputText class="rf-msgs-sum" value="#{msg}" /></div>
+                    </c:forEach>
+                </span>
+                
+                <div class="search_result_area">
+                    <div class="search_result_head">
+                        <table class="tab_line">
+                            <tbody>
+                                <tr class="table_header">
+                                    <td class="th_kubun" colspan="2">料金区分</td>
+                                    <td class="th_unit">単位</td>
+                                    <td class="th_price">単価(税込)</td>
+                                    <td class="th_bulk">全テナントに設定</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <table class="tab_line">
+                        <tbody>
+                        
+                            <!-- 従量電灯A -->
+                            <c:if test="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.menuNo == 1}">
+                                <tr>
+                                    <td class="td_kubun" colspan="6">
+                                      <h:outputText value="最低料金　　　(最初の#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.rangeUnitPriceDataList.get(0).rangeValue}kWhまで)" />
+                                    </td>
+                                    <td class="td_unit">
+                                        1契約
+                                    </td>
+                                    <td class="td_price" style="">
+                                        <h:inputText id="lowestPriceId" class="txtLineName check_change autofocus txt_price" maxlength="8"
+                                            style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                            value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.lowestPrice}" />
+                                    </td>
+                                    <td class="td_bulk" style="" rowspan="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.rangeUnitPriceDataList.size() > 0 
+                                        ? smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.rangeUnitPriceDataList.size() + 5 
+                                        : smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.rangeUnitPriceDataList.size() + 1}">
+                                        <h:selectBooleanCheckbox value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.bulkFlg}" class="autofocus" />
+                                    </td>
+                                </tr>
+                            </c:if>
+                            <!-- 従量電灯B -->
+                            <c:if test="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.menuNo == 2}">
+                                <tr>
+                                    <td class="td_kubun" colspan="6">基本料金</td>
+                                    <td class="td_unit">
+                                        <!--
+                                        <h:outputText value="1kVA" />
+                                        -->
+                                        1契約
+                                    </td>
+                                    <td class="td_price">
+                                        <h:inputText id="basicPriceId" class="txtLineName check_change autofocus txt_price" maxlength="8"
+                                            style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                            value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.basicPrice}" />
+                                    </td>
+                                    <td class="td_bulk" style="" rowspan="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.rangeUnitPriceDataList.size() > 0
+                                        ? smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.rangeUnitPriceDataList.size() + 3
+                                        : smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.rangeUnitPriceDataList.size() + 1}">
+                                        <h:selectBooleanCheckbox value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.bulkFlg}" class="autofocus" />
+                                    </td>
+                                </tr>
+                            </c:if>
+                            
+                            <!-- その他 -->
+                            <c:if test="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.menuNo == 0}">
+                                <tr>
+                                    <td class="td_kubun" colspan="6">基本料金</td>
+                                    <td class="td_unit">
+                                      1契約
+                                    </td>
+                                    <td class="td_price">
+                                        <h:inputText id="basicPriceId" class="txtLineName check_change autofocus txt_price" maxlength="8"
+                                            style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                            value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.basicPrice}" />
+                                    </td>
+                                    <td class="td_bulk" style="" rowspan="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.rangeUnitPriceDataList.size() + 1}">
+                                        <h:selectBooleanCheckbox value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.bulkFlg}" class="autofocus" />
+                                    </td>
+                                </tr>
+                            </c:if>
+                            
+                            <c:set var="rangeBefore" value="0" />
+                            <c:set var="minRangeValue" value="-1" />
+                            <c:forEach items="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.rangeUnitPriceDataList}" var="item" varStatus="sts" >
+                                <tr>
+                                    <c:if test="#{sts.index == 0}">
+                                        <td class="td_split_left" colspan="5" rowspan="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.rangeUnitPriceDataList.size()}">
+                                            従量料金
+                                        </td>
+                                        <c:set var="minRangeValue" value="#{item.rangeValue}" />
+                                    </c:if>
+                                    
+                                    <td class="td_split_right">
+                                        <h:outputText value="#{rangeBefore}～#{item.rangeValue}" />
+                                        <c:if test="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.menuNo == 1 and sts.index == 0}">
+                                          <br/>
+                                          <h:outputText value="(料金計算に使用しない)" />
+                                        </c:if>
+                                    </td>
+                                    <c:set var="rangeBefore" value="#{item.rangeValue}" />
+                                    
+                                    <td class="td_unit">
+                                        <h:outputText value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.unitUsageBased}" />
+                                    </td>
+                                    <td class="td_price">
+                                        <h:inputText id="range_val_#{sts.index}" class="txtLineName check_change autofocus txt_price" maxlength="7"
+                                            style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                            value="#{item.unitPrice}" />
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            
+                            <!-- 従量電灯A -->
+                            <c:if test="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.menuNo == 1 and minRangeValue != -1}">
+                                <tr>
+                                    <td class="td_split_left" colspan="5" rowspan="2">燃料費調整額</td>
+                                    <td class="td_split_right">
+                                        <h:outputText value="最初の#{minRangeValue}kWhまで" />
+                                    </td>
+                                    
+                                    <td class="td_unit">
+                                        <!-- 
+                                        <h:outputText value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.unitUsageBased}" />
+                                        -->
+                                        1契約
+                                    </td>
+                                    <td class="td_price">
+                                        <h:inputText id="fuelAdjustPriceId" class="txtLineName check_change autofocus txt_price" maxlength="7"
+                                            style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                            value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.fuelAdjustPrice}" />
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td class="td_split_right">
+                                        <h:outputText value="#{minRangeValue}kWh超過" />
+                                    </td>
+                                    
+                                    <td class="td_unit">
+                                        <h:outputText value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.unitUsageBased}" />
+                                    </td>
+                                    <td class="td_price">
+                                        <h:inputText id="adjustPriceOver15Id" class="txtLineName check_change autofocus txt_price" maxlength="7"
+                                            style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                            value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.adjustPriceOver15}" />
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td class="td_split_left" colspan="5" rowspan="2">再生可能エネルギー発電促進賦課金</td>
+                                    <td class="td_split_right">
+                                        <h:outputText value="最初の#{minRangeValue}kWhまで" />
+                                    </td>
+                                    
+                                    <td class="td_unit">
+                                        <!--
+                                        <h:outputText value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.unitUsageBased}" />
+                                        -->
+                                        1契約
+                                    </td>
+                                    <td class="td_price">
+                                        <h:inputText id="renewEnerPriceId" class="txtLineName check_change autofocus txt_price" maxlength="7"
+                                            style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                            value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.renewEnerPrice}" />
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td class="td_split_right">
+                                        <h:outputText value="#{minRangeValue}kWh超過" />
+                                    </td>
+                                    
+                                    <td class="td_unit">
+                                        <h:outputText value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.unitUsageBased}" />
+                                    </td>
+                                    <td class="td_price">
+                                        <h:inputText id="renewPriceOver15Id" class="txtLineName check_change autofocus txt_price" maxlength="7"
+                                            style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                            value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.renewPriceOver15}" />
+                                    </td>
+                                </tr>
+                            </c:if>
+                            
+                            <!-- 従量電灯B -->
+                            <c:if test="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.menuNo == 2 and minRangeValue != -1}">
+                                <tr>
+                                    <td class="td_kubun" colspan="6" rowspan="1">燃料費調整額</td>
+                                    
+                                    <td class="td_unit">
+                                        <h:outputText value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.unitUsageBased}" />
+                                    </td>
+                                    <td class="td_price">
+                                        <h:inputText id="fuelAdjustPriceId" class="txtLineName check_change autofocus txt_price" maxlength="7"
+                                            style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                            value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.fuelAdjustPrice}" />
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td class="td_kubun" colspan="6" rowspan="1">再生可能エネルギー発電促進賦課金</td>
+                                    
+                                    <td class="td_unit">
+                                        <h:outputText value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.unitUsageBased}" />
+                                    </td>
+                                    <td class="td_price">
+                                        <h:inputText id="renewEnerPriceId" class="txtLineName check_change autofocus txt_price" maxlength="7"
+                                            style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                            value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.renewEnerPrice}" />
+                                    </td>
+                                </tr>
+                            </c:if>
+                            
+                            <!-- 割引率 -->
+                            <tr>
+                                <td class="td_kubun" colspan="6" rowspan="1">割引率</td>
+                                
+                                <td class="td_unit">
+                                    <h:outputText value="%" />
+                                </td>
+                                <td class="td_price">
+                                    <h:inputText id="discountRateId" class="txtLineName check_change autofocus txt_price" maxlength="3"
+                                            style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                            value="#{smsCollectSettingMeterTenantEditBean.editDetailPopupInfo.discountRate}" />
+                                </td>
+                                <td class="td_bulk" colspan="1" rowspan="1"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </a4j:outputPanel>
+            <div class="page_footer">
+                <div class="gradation_type_1 button_large_2 tenantDetail_regist_button">
+                    <a4j:commandButton id="updateTenantBaseInfoDetailButton" 
+                                       value="確定" 
+                                       class="autofocus"
+                                       onbegin="showBlockModal()" 
+                                       onclick="setChangeFlag();"
+                                       execute="smsCollectSettingTenantEditBaseInfoPopup"
+                                       render="smsCollectSettingMeterTenantEditBean"
+                                       actionListener="#{smsCollectSettingMeterTenantEditBean.submitPopupBtnAction}"
+                                       oncomplete="hideBlockModal(true);
+                                        if (#{smsCollectSettingMeterTenantEditBean.editDetailPopupCompFlg}) {
+                                            #{rich:component('smsCollectSettingTenantEditBaseInfoPopup')}.hide();
+                                        } else {
+                                            #{rich:component('smsCollectSettingTenantEditBaseInfoPopup')}.show();
+                                        }">
+                        <h:graphicImage class="button_icon" library="images" name="common/com067.png" />
+                    </a4j:commandButton>
+                </div>
+            </div>
+        </div> 
+    </rich:popupPanel>    
+</html>

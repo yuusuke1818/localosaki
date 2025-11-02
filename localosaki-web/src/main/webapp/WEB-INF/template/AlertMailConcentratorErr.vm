@@ -1,0 +1,16 @@
+$devName($devId)の装置で
+コンセントレーター異常が発生しましたので通知します。
+
+管理番号 状態
+
+#foreach($meter in $meterList)$meter.concentId $meter.concentState
+#end
+
+コンセントレーター状態が異常状態のままであるのは以下のメーターです。
+
+管理番号 
+
+#foreach($meter in $errMeterList)$meter.concentId 
+#end
+
+大崎電気工業株式会社

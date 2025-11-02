@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:rich="http://richfaces.org/rich">
+      <h:outputStylesheet library="css" name="common/popup.css"/>
+    <!-- 登録内容を変更して登録を押さないままにタブ遷移する時、新規登録を押した時に変更を破棄しても遷移するのか確認するポップアップ -->
+
+<!--    <rich:popupPanel id="changeCautionDialog" modal="true" moveable="true" resizeable="false"  
+                     style="margin-left: 40%; margin-top: 20%;" top="0" left="0" width="360" height="180" zindex="320" 
+                     domElementAttachment="parent">-->
+
+    <rich:popupPanel id="changeCautionDialog" modal="true" moveable="true" resizeable="false"
+                     top="180" width="480" height="200" domElementAttachment="form" zindex="320"
+                     onshow="checkAutoFocusOnShowRichPanel(event);">
+        <!-- z-index:150 ヘッダ部分の後ろに隠れるのを避ける為 -->    
+        
+        <f:facet name="header">
+            <div class="pop_title_area">
+                <div class="left">
+                    <span class="pop_page_title">確認</span>
+                </div>
+                <div class="pop_button_close">
+                    <input type="button" value="" onclick="#{rich:component('changeCautionDialog')}.hide()">
+                    </input>
+                </div>
+            </div>
+        </f:facet>
+
+<!--        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('changeCautionDialog')}.hide();return false;" style="color: inherit">
+                <input jsfc="h:outputText" value="×"/>
+            </h:outputLink>
+        </f:facet>-->
+        <div class="inner_content content_width" style="text-align: center;">
+            <table jsfc="h:panelGrid" columns="1" style="width: 100%;">
+                <span jsfc="h:column">
+                    <div class="page_subtitle">
+                        変更内容が登録されていません。登録を押さないと内容が保存されません。よろしいですか？
+                    </div>
+                </span>
+                <span jsfc="h:column">
+                    <table class="change_caution_button_area">
+                        <tr>
+                            <td class="gradation_type_1 button_large_2 ok_button" style="width:180px">
+                                <h:button id="changeCautionDialogConfirmButton" value="OK"
+                                          style="width:160px;"
+                                      onclick="tabChange(#{changeCautionTargetTabPanel}); return !tabTrigger;" /><!-- binding="#{changeCautionTargetButton}"  -->
+                                <h:graphicImage style="pointer-events: none;" class="button_icon2" library="images" name="common/com067.png" />
+                            </td>
+                            <td class="gradation_type_4 button_large_2 cancel_button">
+                                <input type="button" id="changeCautionDialogCancelButton" value="キャンセル"
+                                       style="width:160px;"
+                                        onclick="#{rich:component('changeCautionDialog')}.hide(); return false;">
+                                </input>
+                                <h:graphicImage style="pointer-events: none;" class="button_icon" library="images" name="common/com021.png" />
+                            </td>
+                        </tr>
+                    </table>
+                </span>
+            </table>
+        </div>
+    </rich:popupPanel>
+
+    <script type="text/javascript">
+        var newItem = null;
+        var tabTrigger = false;
+        function tabChangeCheck(event){
+            newItem = event.rf.data.newItem;
+            if(isChange){
+                tabTrigger = true;
+                #{rich:component('changeCautionDialog')}.show();
+                $('input[id$=changeCautionDialogCancelButton]').focus();
+                //alert("new:"+newItem.id);
+                return false;   //タブ切り替えを却下
+            }
+            return true;    //タブ切り替えを許可
+        }
+        var button = null;
+        function actionChangeCheck(ctrl){
+            //alert("action:"+isChange);
+            if(isChange){
+                tabTrigger = false;
+                button = ctrl;
+                #{rich:component('changeCautionDialog')}.show();
+                $('input[id$=changeCautionDialogCancelButton]').focus();
+                return false;
+            }
+            return true;
+        }
+        function tabChange(tabPanel){
+            isChange = false;
+            #{rich:component('changeCautionDialog')}.hide();
+            if(tabTrigger){
+                tabPanel.switchToItem(newItem.id);
+                //#{changeCautionTargetTabPanel}.switchToItem(newItem.id);
+                //return false;   //actionしない
+            }else{
+                //#{changeCautionTargetAction};
+                button.click();
+                button = null;
+                //return true;    //
+            }
+        }
+        function clearChangeFlag(){ //登録ボタンから呼ぶ
+            isChange = false;
+        }
+        function setChangeFlag(){ //下のchangeイベントから取れないような要素から
+            //alert("setChange");
+            isChange = true;
+        }
+
+    </script>
+                
+</html>

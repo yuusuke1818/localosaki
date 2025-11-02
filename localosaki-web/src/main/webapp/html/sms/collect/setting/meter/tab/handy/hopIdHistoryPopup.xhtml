@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+      <rich:popupPanel id="hopIdHistoryPopup" modal="true" moveable="true" resizeable="false" 
+                     width="600" height="480" domElementAttachment="form" zindex="200"
+                     minWidth="600" maxWidth="600" minHeight="480"
+                     onshow="hideBlockModal(true);checkAutoFocusOnShowRichPanel(event);" onhide="resetListener();">
+        <h:outputStylesheet library="css" name="common/popup.css"/>
+        <h:outputStylesheet library="css" name="sms/collect/setting/meter/metermanagement.css" />
+
+        <f:facet name="header">
+            <div class="pop_title_area">
+                <div class="left">
+                    <h:outputText class="pop_page_title" value="リレー無線ID履歴" />
+                </div>
+                <div class="pop_button_close">
+                    <input type="button" id="closeBtn" value="" onclick="#{rich:component('hopIdHistoryPopup')}.hide();">
+                    </input>
+                </div>
+            </div>
+        </f:facet>
+        <form jsfc="h:form" id="hopIdHistoryPopupForm" >
+            <center>
+                <div class="inner_content content_width">
+                    <table>
+                        <tr>
+                            <td class="TXT008 column_title">リレー1無線ID</td>
+                            <td class="column_value">
+                            <!--  
+                                <h:inputText
+                                        id="historyHop1Id"
+                                        class="textWidthMedium"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.hopIdHistoryProperty.hop1Id}"
+                                        onfocus="document.getElementById(#{rich.clientId('isFocusHop1Id')}).value = '1';
+                                                 document.getElementById(#{rich.clientId('isFocusHop2Id')}).value = '0';
+                                                 document.getElementById(#{rich.clientId('isFocusHop3Id')}).value = '0';"
+                                            >
+                                </h:inputText>
+                            -->
+                                <h:inputText
+                                        id="historyHop1Id"
+                                        class="textWidthMedium"
+                                        maxlength="12"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.hopIdHistoryProperty.hop1Id}"
+                                        onfocus="document.getElementById('smsCollectSettingMeterMeterManagementBean:hopIdHistoryPopupForm:isFocusHop1Id').value = '1';
+                                                 document.getElementById('smsCollectSettingMeterMeterManagementBean:hopIdHistoryPopupForm:isFocusHop2Id').value = '0';
+                                                 document.getElementById('smsCollectSettingMeterMeterManagementBean:hopIdHistoryPopupForm:isFocusHop3Id').value = '0';">
+                                </h:inputText>
+                                <h:inputHidden id="isFocusHop1Id" value="#{smsCollectSettingMeterMeterManagementBean.hopIdHistoryProperty.isFocusHop1Id}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008">リレー2無線ID</td>
+                            <td>
+                                <h:inputText 
+                                        id="historyHop2Id" 
+                                        class="textWidthMedium" 
+                                        maxlength="12"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.hopIdHistoryProperty.hop2Id}"
+                                        onfocus="document.getElementById('smsCollectSettingMeterMeterManagementBean:hopIdHistoryPopupForm:isFocusHop1Id').value = '0';
+                                                 document.getElementById('smsCollectSettingMeterMeterManagementBean:hopIdHistoryPopupForm:isFocusHop2Id').value = '1';
+                                                 document.getElementById('smsCollectSettingMeterMeterManagementBean:hopIdHistoryPopupForm:isFocusHop3Id').value = '0';">
+                                </h:inputText>
+                                <h:inputHidden id="isFocusHop2Id" value="#{smsCollectSettingMeterMeterManagementBean.hopIdHistoryProperty.isFocusHop2Id}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008">リレー3無線ID</td>
+                            <td>
+                                <h:inputText 
+                                        id="historyHop3Id" 
+                                        class="textWidthMedium" 
+                                        maxlength="12"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.hopIdHistoryProperty.hop3Id}"
+                                        onfocus="document.getElementById('smsCollectSettingMeterMeterManagementBean:hopIdHistoryPopupForm:isFocusHop1Id').value = '0';
+                                                 document.getElementById('smsCollectSettingMeterMeterManagementBean:hopIdHistoryPopupForm:isFocusHop2Id').value = '0';
+                                                 document.getElementById('smsCollectSettingMeterMeterManagementBean:hopIdHistoryPopupForm:isFocusHop3Id').value = '1';">
+                                </h:inputText>
+                                <h:inputHidden id="isFocusHop3Id" value="#{smsCollectSettingMeterMeterManagementBean.hopIdHistoryProperty.isFocusHop3Id}" />
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="gradation_type_1 button_medium btnHistoryLayout">
+                                    <a4j:commandButton
+                                            id="h2HistoryClearBtn"
+                                            value="全クリア"
+                                            style="width:100px;"
+                                            render="smsCollectSettingMeterMeterManagementBean:hopIdHistoryPopupForm"
+                                            actionListener="#{smsCollectSettingMeterMeterManagementBean.btnClearClick()}"
+                                            execute="@form"
+                                            oncomplete="">
+                                        <!-- <h:graphicImage class="btnHistoryIconLayout" library="images" name="common/com063.png" />-->
+                                    </a4j:commandButton>
+                                </div>
+                            </td>
+                            <td style="width:50px;"/>
+                            <td>
+                                <div class="gradation_type_1 button_medium btnHistoryLayout">
+                                    <a4j:commandButton
+                                            id="h2HistoryConfirmBtn"
+                                            value="確定"
+                                            style="width:100px;"
+                                            render="
+                                                smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2Hop1Id
+                                                smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2Hop2Id
+                                                smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2Hop3Id
+                                                smsCollectSettingMeterMeterManagementBean:handyEditForm:h4Hop1Id
+                                                smsCollectSettingMeterMeterManagementBean:handyEditForm:h4Hop2Id
+                                                smsCollectSettingMeterMeterManagementBean:handyEditForm:h4Hop3Id"
+                                            actionListener="#{smsCollectSettingMeterMeterManagementBean.btnConfirmClick(smsCollectSettingMeterMeterManagementBean.hopIdHistoryProperty)}"
+                                            execute="@form"
+                                            oncomplete="#{rich:component('hopIdHistoryPopup')}.hide();">
+                                        <!-- <h:graphicImage class="btnHistoryIconLayout" library="images" name="common/com063.png" />-->
+                                    </a4j:commandButton>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+                    <br />
+                    <div jsf:id="hopIdHistoryList">
+                        <c:if test="#{smsCollectSettingMeterMeterManagementBean.hopIdHistoryProperty.hopIdList.size() != '0'}">
+                            <div class="search_result_area">
+                                <h:dataTable id="hopIdList" class="hTbl table_hopId" var="item"  value="#{smsCollectSettingMeterMeterManagementBean.hopIdHistoryProperty.hopIdList}" headerClass="table_header">
+                                    <span jsfc="h:column" class="column_hopId">
+                                        <f:facet name="header">
+                                            無線ID
+                                        </f:facet>
+                                        <a4j:commandLink
+                                                render="smsCollectSettingMeterMeterManagementBean:hopIdHistoryPopupForm"
+                                                actionListener="#{smsCollectSettingMeterMeterManagementBean.linkHopIdClick(item, smsCollectSettingMeterMeterManagementBean.hopIdHistoryProperty)}"
+                                                value="#{item}">
+                                        </a4j:commandLink>
+                                    </span>
+                                </h:dataTable>
+                            </div>
+                        </c:if>
+                    </div>
+                </div>
+            </center>
+        </form>
+    </rich:popupPanel>
+</html>

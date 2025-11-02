@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<head jsfc="h:head">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<h:outputStylesheet library="css" name="common/default.css" />
+<h:outputStylesheet library="css" name="common/cssLayout.css" />
+<h:outputStylesheet library="css" name="common/common.css" />
+<h:outputScript library="js" name="common/jquery-1.12.3.min.js" />
+<h:outputScript library="js" name="common/separater.js" />
+<h:outputScript library="js" name="common/common.js" />
+<title>#{loginBean.getApplicationName()}&nbsp;#{loginBean.getOemName()}&nbsp;ver&nbsp;#{loginBean.getApplicationVersion()}-#{loginBean.getOemVersion()}&nbsp;#{loginBean.getProjectStage()}</title>
+<c:if test="#{loginBean.faviconBool}">            
+    <link rel="shortcut icon" href="#{request.contextPath}/resources/images/ico/favicon_24x24.png" type="image/x-icon" />
+</c:if>
+</head>
+<body jsfc="h:body">
+	<div id="back_left"></div>
+	<div id="back_center"></div>
+	<div id="back_right"></div>
+	<div id="content" class="top_logo_area">
+		<div id="top_logo">
+			<h:graphicImage style="width:460px;" library="images" name="sms_logo_login.png" />
+		</div>
+	</div>
+	<div id="content" class="center_content_login">
+		<ui:insert name="content">Content</ui:insert>
+	</div>
+	<div id="bottom">
+		<div id="footer_link_area"></div>
+		<div id="copyright_area">#{loginBean.copyright}</div>
+	</div>
+	<div id="block-modal-content">
+		<h:graphicImage library="images" name="loading.gif" />
+	</div>
+	<script type="text/javascript">
+            var keyBlock = false;
+            function showBlockModal(){
+                if($("#block-modal-overlay")[0]) return false ;
+                //オーバーレイ用のHTMLコードを、[body]内の最後に生成する
+                $("body").append('<div id="block-modal-overlay"></div>');
+                $("#block-modal-overlay").show();
+                $("#block-modal-content").show();
+                var w = $(window).width();
+                var h = $(window).height();
+                var cw = $("#block-modal-content").width();
+                var ch = $("#block-modal-content").height();
+                var pxleft = ((w - cw)/2);
+                var pxtop = ((h - ch)/2);
+                $("#block-modal-content").css({"left": pxleft + "px"});
+                $("#block-modal-content").css({"top": pxtop + "px"});
+                keyBlock = true;
+                return true;
+            }
+            function hideBlockModal(nonScrollFlg){
+                $("#block-modal-overlay").hide(0,function(){
+                        $("#block-modal-overlay").remove();
+                });        
+                $("#block-modal-content").hide();        
+                keyBlock = false;
+                if (!nonScrollFlg) {
+                    window.scrollTo( 0, 0 ) ;
+                }
+            }
+            function actionIntervalBlock(){
+                showBlockModal();
+                var intervalId = setInterval(function () {
+                    clearInterval(intervalId);
+                    hideBlockModal();
+                }, 1000);
+                return true;
+            }
+            $(document).on("keydown", function(){
+                if(keyBlock) return false;  //ブロック中は全てのキー無効
+                if(event.keyCode === 13){
+                    if(event.target.type==="button" || event.target.type==="submit" || event.target.type==="select-one" 
+                            || event.target.nodeName === "A" || event.target.type==="textarea"){
+                        return true;  //button,linkのenterは許容
+                    }
+                    return false;
+                }
+                return true;
+            });
+            var actionChangeCheck;
+            window.onunload = function(){
+                //console.log("onunload");
+                hideBlockModal(true);
+            };
+        </script>
+</body>
+</html>

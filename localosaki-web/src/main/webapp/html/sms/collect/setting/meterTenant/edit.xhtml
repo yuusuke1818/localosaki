@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:body>
+        <ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+            <ui:define name="content_side">
+                <h:outputStylesheet library="css" name="common/tab.css" />
+                <h:outputStylesheet library="css" name="sms/collect/setting/meterTenant/edit.css"/>
+                <h:outputStylesheet library="css" name="sms/collect/setting/meterTenant/editTenantBaseInfoDetail.css"/>
+                <h:outputScript library="js" name="sms/collect/setting/meterTenant/edit.js"/>
+                <div class="inner_content">
+                    <h:form id="smsCollectSettingMeterTenantEditBean">
+                        <div class="title_area_warp">
+                            <!-- 画面タイトル -->
+                            <c:if test="#{!smsCollectSettingMeterTenantEditBean.editBeanProperty.updateProcessFlg}">
+                            <div class="title_area_left">
+                                <h2 class="page_title">
+                                    <h:outputText id="buildingInfoEditBeanBuildingTenant" 
+                                                  value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.buildingTenant}新規登録" />
+                                </h2>                          
+                                <!-- ヘルプボタン -->
+                                <c:if test="#{indexBean.userGuideBool}">
+                                  <h:commandLink class="help_icon" action="#{indexBean.userGuide()}" target="_blank" />
+                                </c:if>
+                                <p class="page_subtitle">
+                                    <h:outputText value="建物・テナント情報の新規登録ができます。" />
+                                </p>
+                            </div>
+                        </c:if>
+                        <c:if test="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.updateProcessFlg}">
+                            <div class="title_area_left">
+                                <h2 class="page_title">
+                                    <h:outputText id="buildingInfoEditBeanBuildingTenant" 
+                                                  value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.buildingTenant}編集" />
+                                </h2>
+                                <!-- ヘルプボタン -->                      
+                                <c:if test="#{indexBean.userGuideBool}">
+                                  <h:commandLink class="help_icon" 
+                                           action="#{indexBean.userGuide()}" target="_blank" />
+                                </c:if>
+                                <p class="page_subtitle">
+                                    <h:outputText id="buildingInfoEditBeanBuildingTenantSubject" 
+                                    value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.buildingTenant}情報の編集ができます。" />
+                                </p>
+                            </div>
+                        </c:if>
+                        <div class="clear" />
+
+                        <!-- メッセージ表示部分 -->
+                        <!--<div>-->
+                        <span class="rf-msgs">
+                            <c:forEach items="#{smsCollectSettingMeterTenantEditBean.infoMessages}" var="msg">
+                                <div class="rf-msg-inf"><h:outputText class="rf-msgs-sum" value="#{msg}" /></div>
+                            </c:forEach> 
+                            <c:forEach items="#{smsCollectSettingMeterTenantEditBean.errorMessages}" var="msg">
+                                <div class="rf-msgs-err"><h:outputText class="rf-msgs-sum" value="#{msg}" /></div>
+                            </c:forEach>
+                        </span>
+                        <rich:messages id="searchTenantInfoMessages" showSummary="true" />
+                        <!--</div>-->
+
+                        <!-- コンテンツ -->
+                        <div>
+                            <span class="caution_text">
+                                <h:outputText value="※入力後は登録ボタンを押してください。"/>
+                            </span>
+                            
+                            <!-- 変更確認ダイアログなし -->
+                            <rich:tabPanel id="editBuildingTab" switchType="client"
+                                           headerAlignment="left" tabActiveHeaderClass="active_tab" tabInactiveHeaderClass="inactive_tab"
+                                           onbeforeitemchange="
+                                           if (event.rf.data.newItem.id == 'buildingInfoEditBean:energySetting'){
+                                           if (tabChangeCheck(event)) {
+                                           showBlockModal();
+                                           $('input[id$=btn_tab_energy]').click();
+                                           }
+                                           return false;
+                                           }
+                                           "
+                                           >
+                                           
+                                <rich:tab id="baseInfo">
+                                    <f:facet name="headerActive">
+                                        <h:panelGrid>
+                                            <h:outputText value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.buildingTenant}基本情報"/>
+                                        </h:panelGrid>
+                                        <h:graphicImage class="tab_icon" library="images" name="building/building_info_edit001.png" />
+                                    </f:facet>
+                                    <f:facet name="headerInactive">
+                                        <h:panelGrid>
+                                            <h:outputText value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.buildingTenant}基本情報"/>
+                                        </h:panelGrid>
+                                        <!--<h:graphicImage class="" library="images" name="building/building_info_edit002.png" />-->
+                                        <h:graphicImage class="tab_icon" library="images" name="building/building_info_edit001.png" />
+                                    </f:facet>
+                                    <!-- 基本情報タブ -->
+                                    <ui:include src="/html/sms/collect/setting/meterTenant/editTenantBaseInfo.xhtml"/>
+                                </rich:tab>
+                            </rich:tabPanel>
+                        </div>
+                        <!--アクセストークン用--> 
+                        <oslib:requestToken />
+                        </div>
+                    </h:form>
+
+                    <h:form>
+                        <!--変更確認ポップアップ用--> 
+                        <ui:include src="/html/common/changeCautionDialog.xhtml" >
+                            <ui:param name="changeCautionTargetTabPanel" value="#{rich:component('editBuildingTab')}" />
+<!--                            <ui:param name="changeCautionTargetButton" value="#{buildingInfoEditBean.createButton}" />-->
+                        </ui:include>
+
+                        <ui:remove>確認ダイアログ</ui:remove>
+                        <ui:include src="/html/common/confirmationDialog.xhtml" >
+                            <ui:param name="confirmationDialogTitle" value="確認" />
+                            <ui:param name="confirmationDialogMessage" value="#{buildingInfoEditBean.dialogMessage}" />
+                        </ui:include>
+                    </h:form>
+                    <!-- 汎用自治体検索 -->
+                    <ui:include src="/html/common/search_municipality.xhtml" >
+                        <ui:param name="reflectControl" 
+                                  value="smsCollectSettingMeterTenantEditBean:prefectureCd smsCollectSettingMeterTenantEditBean:municipalityCd smsCollectSettingMeterTenantEditBean:municipalityName" />
+                    </ui:include>
+                </div>
+            </ui:define>
+        </ui:composition> 
+    </h:body>
+</html>
+
+
+

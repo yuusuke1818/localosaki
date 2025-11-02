@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+      <h:outputStylesheet library="css" name="common/popup.css"/>
+      <h:form id="inputPointConfirmationForm">
+
+        <rich:popupPanel id="inputPointConfirmationDialog" modal="true" moveable="true" resizeable="false"  
+                           top="180" width="500" height="250" zindex="320"
+                           domElementAttachment="parent"
+                           onshow="checkAutoFocusOnShowRichPanel(event);">
+
+            <f:facet name="header">
+                <div class="pop_title_area">
+                    <div class="left">
+                        <h:outputText class="pop_page_title" value="確認" />
+                    </div>
+                    <div class="pop_button_close">
+                        <input type="button" value="" onclick="inputPointConfirmationDialogClose();">
+                        </input>
+                    </div>
+                </div>
+            </f:facet>
+            <div  class="inner_content content_width">
+                <div>
+                    <span class="page_subtitle">
+                       登録しました。<br/>
+                       登録データは集計処理の完了まで画面に反映されません。<br/>
+                       しばらく待ってから、日報の系統別使用量をご確認ください。<br/>
+                    </span>
+                </div>
+                <div class="gradation_type_1 button_large " style="text-align: center;padding-top:20px;">
+                    <a4j:commandButton id="inputPointConfirmationDialogOkButton" value="OK"
+                                          onclick="inputPointConfirmationDialogClose(); return false;"/>
+                </div>
+
+            </div>
+        </rich:popupPanel>
+
+        <script type="text/javascript">
+            var inputPointConfirmationDialogShowing = false;
+            function inputPointConfirmationDialogOpen(){
+                if(inputPointConfirmationDialogShowing){  //表示済みなら閉じて本来の処理(action)へ
+                	inputPointConfirmationDialogClose();
+                    return true;
+                }
+                //未表示なら表示し、actionはしない
+                inputPointConfirmationDialogShowing = true;
+                #{rich:component('inputPointConfirmationDialog')}.show();
+                return false;
+            }
+            function inputPointConfirmationDialogClose(){
+                if(inputPointConfirmationDialogShowing){
+                	inputPointConfirmationDialogShowing = false;
+                    #{rich:component('inputPointConfirmationDialog')}.hide();
+                }
+            }
+        </script>
+    </h:form>
+</html>

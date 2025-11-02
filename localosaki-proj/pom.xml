@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>jp.co.osaki.osol</groupId>
+    <artifactId>osol-proj</artifactId>
+    <version>3.5</version>
+    <packaging>pom</packaging>
+    <name>osol-proj</name>
+    <description>OsolSystem</description>
+    <organization>
+        <name>osaki.co.jp</name>
+        <url>http://www.osaki.co.jp/</url>
+    </organization>
+    <url>http://osol.osaki.co.jp</url>
+    <modules>
+        <module>../osol-sms-entity</module>
+        <module>../osol-sms-lib</module>
+        <module>../osol-sms-access</module>
+        <module>../osol-sms-api</module>
+        <module>../osol-sms-web</module>
+        <module>../osol-sms-batch</module>
+        <module>../sms-webap-base-eclipse</module>
+    </modules>
+</project>

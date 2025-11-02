@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:rich="http://richfaces.org/rich" xmlns:cust="http://xmlns.jcp.org/jsf/component"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:a4j="http://richfaces.org/a4j">
+    <div style="margin-top: 0;">
+        <div>
+            <rich:messages id="p5Messages" styleClass="errNonSearch errArea" />
+            <h3 class="contents_title">設定内容変更</h3>
+            <form jsfc="h:form" id="pulseSettingEditForm">
+                <div class="contents_form_area">
+                    <div jsfc="a4j:outputPanel" id="p5Panel">
+                        <table class="p5Table">
+                            <tr style="height: 10px">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">パルス種別</td>
+                                <td>
+                                    <h:selectOneMenu id="p5PulseTypeSelect"  class="EDIT002 check_change disabledControl p5PulseType" value="#{smsCollectSettingMeterMeterManagementBean.pulseSettingUpdateProperty.pulseType}" >
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.pulseTypeMap}" />
+                                    </h:selectOneMenu>
+                                </td>
+                                <td>
+                                    <h:selectBooleanCheckbox id="p5ChkPulseTypeSelect"
+                                            value="#{smsCollectSettingMeterMeterManagementBean.pulseSettingUpdateProperty.pulseTypeChg}"
+                                            class="check_change disabledControlCheck" onclick="disabledControl(this, 'p5PulseType');backRegistVal(this);" />
+                                    <h:inputHidden id="p5PulseTypeSelectHidden" value="#{smsCollectSettingMeterMeterManagementBean.pulseSettingUpdateProperty.pulseTypeHidden}" />
+                                    パルス種別設定
+                                </td>
+                                <td>
+                                    ※短パルス/長パルス/状態/無効から選択
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">パルス重み</td>
+                                <td>
+                                    <h:inputText
+                                            id="p5PulseWeight"
+                                            class="textWidthMedium disabledControl p5PulseWeight check_change"
+                                            value="#{smsCollectSettingMeterMeterManagementBean.pulseSettingUpdateProperty.pulseWeight}" maxlength="5"
+                                            style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                                </td>
+                                <td>
+                                    <h:selectBooleanCheckbox id="p5ChkPulseWeight"
+                                            value="#{smsCollectSettingMeterMeterManagementBean.pulseSettingUpdateProperty.pulseWeightChg}"
+                                            class="check_change disabledControlCheck" onclick="disabledControl(this, 'p5PulseWeight');backRegistVal(this);" />
+                                    <h:inputHidden id="p5PulseWeightHidden" value="#{smsCollectSettingMeterMeterManagementBean.pulseSettingUpdateProperty.pulseWeightHidden}" />
+                                    パルス重み設定
+                                </td>
+                                <td>
+                                    ※入力範囲："1～99999"（×0.01）
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">乗率<span class="required"></span></td>
+                                <td colspan="2">
+                                    <h:inputText
+                                            id="p5Multi"
+                                            class="textWidthSmall check_change"
+                                            value="#{smsCollectSettingMeterMeterManagementBean.pulseSettingUpdateProperty.multi}"
+                                            maxlength="4"
+                                            style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                                </td>
+                                <td>
+                                    ※入力範囲："1～9999"
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">指針値</td>
+                                <td>
+                                    <h:inputText
+                                            id="p5CurrentData"
+                                            class="textWidthMedium disabledControl p5CurrentData check_change"
+                                            value="#{smsCollectSettingMeterMeterManagementBean.pulseSettingUpdateProperty.currentData}"
+                                            maxlength="8"
+                                            style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                                </td>
+                                <td>
+                                    <h:selectBooleanCheckbox id="p5ChkCurrentData"
+                                            value="#{smsCollectSettingMeterMeterManagementBean.pulseSettingUpdateProperty.currentDataChg}"
+                                            class="check_change disabledControlCheck" onclick="disabledControl(this, 'p5CurrentData');backRegistVal(this);" />
+                                    <h:inputHidden id="p5CurrentDataHidden" value="#{smsCollectSettingMeterMeterManagementBean.pulseSettingUpdateProperty.currentDataHidden}" />
+                                    指針値設定
+                                </td>
+                                <td>
+                                    ※入力範囲："1～99999999"（×0.01）
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="btnRegistLayout">
+                        <h:selectBooleanCheckbox id="p5SendFlg"
+                           value="#{smsCollectSettingMeterMeterManagementBean.pulseSettingUpdateProperty.sendFlg}" />
+                        <h:outputLabel for="p5SendFlg">：機器に送信する</h:outputLabel>
+                    </div>
+                    <br />
+                    <div class="gradation_type_1 button_large_2 btnRegistLayout">
+                        <!-- 確認メッセージ設定処理を呼び出し → 更新処理呼び出し用ボタンclick -->
+                        <a4j:commandButton
+                                id="p5ExecBtn"
+                                value="実行"
+                                execute="@form"
+                                render="@form confirmDialogForm:confirmationDialogMessage
+                                    #{rich:clientId('pTablePanel')}
+                                    smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2ExamNoticeMonthPanel
+                                    smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2DevNamePanel
+                                    smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2MeterMngIdMapPanel
+                                    smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2ExamNoticeMonthPanel
+                                    smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2DevNamePanel
+                                    smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2MeterMngIdMapPanel
+                                    smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2ExamNoticeMonthPanel
+                                    smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2DevNamePanel
+                                    smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2MeterMngIdMapPanel"
+                                onclick="return confirmationDialogOpenForUpd($('input[id$=p5ExecBtn]'))"
+                                action="#{smsCollectSettingMeterMeterManagementBean.execEdit(smsCollectSettingMeterMeterManagementBean.pulseSettingUpdateProperty, '2')}"
+                                onbegin="showBlockModal()"
+                                oncomplete="hideBlockModal(); viewList('P'); clearChangeFlag(); dispButton();">
+                        </a4j:commandButton>
+                        <h:graphicImage class="btnRegistIconLayout" library="images" name="common/com067.png" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</html>

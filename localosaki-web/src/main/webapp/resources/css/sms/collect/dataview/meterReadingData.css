@@ -1,0 +1,528 @@
+div.inner_content_sms {
+  max-width: 1300px;
+}
+
+.contents_form_area .conditions label {
+  display: inline-block;
+  text-align: right;
+  width: 125px;
+  padding: 0 10px;
+}
+
+label#lblDeadLine {
+  width: 140px;
+}
+
+label#lblClaimantName2 {
+  width: 98px;
+}
+
+.contents_form_area .conditions .print_area label {
+  display: inline-block;
+  text-align: right;
+  width: 195px;
+  padding: 0 10px;
+}
+
+/*フォームラベルテキスト*/
+.TXT010 {
+  font-weight: normal;
+}
+
+/*フォームラベルテキスト*/
+.TXT011 {
+  margin-left: 20px;
+}
+
+/*フォームラベルテキスト(数値)*/
+.TXT012 {
+  text-align: right;
+}
+
+/** 今回請求金額行の背景色 */
+tr#bill_amount {
+  background-color: lightgreen;
+}
+
+.contents_form_area {
+  margin-top: 0px;
+}
+
+.contents_form_print_area {
+  margin-top: 0px;
+}
+
+.contents_form_search {
+  margin-top: 10px;
+}
+
+.contents_form_search_col {
+  display: flex;
+  margin-top: 10px;
+}
+
+.contents_header {
+  position: absolute;
+  position: relative;
+  margin: 12px 55px 20px 80px;
+}
+
+.SELECT_DEVID {
+  width: 200px;
+  margin-left: 10px;
+}
+
+.SELECT_MONTHMETERREADINGNO {
+  width: 250px;
+  margin-left: 10px;
+}
+
+.SELECT_YEAR {
+  width: 60px;
+  margin-left: 10px;
+}
+
+.SELECT_MONTH {
+  width: 40px;
+  margin-left: 10px;
+}
+
+.button_reload {
+  margin: 0 auto;
+}
+
+.button_reload_icon {
+  margin-top: -33px;
+  margin-left: 8px;
+}
+
+.button_csv {
+  position: absolute;
+  top: 40px;
+  right: 0;
+}
+
+.button_csv_icon {
+  margin-top: -29px;
+  margin-left: 15px;
+}
+
+.button_printing {
+  margin: 0 auto;
+}
+
+.button_printing_icon {
+  margin-top: -32px;
+  margin-left: 16px;
+}
+
+.button_details_icon {
+  margin-top: -33px;
+  margin-left: 5px;
+}
+
+.button_meterReadingData {
+  background-color: #7ff6fa;
+}
+
+.button_billingAmountData {
+  background-color: #7ff6fa;
+}
+
+.button {
+  margin-left: 10px;
+}
+
+.center_content table {
+  border-collapse: collapse;
+}
+
+.search_result_area {
+  margin-top: 10px;
+}
+
+.table_meterReading {
+  overflow-y: scroll;
+  overflow-x: scroll;
+  width: 1505px;
+}
+
+.table_billingAmount {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 944px;
+}
+
+/*検索結果のヘッダーのスタイル*/
+/* .search_result_area .table_header {
+    height: 20px;
+}*/
+tr:nth-child(even) {
+  background-color: rgb(200, 233, 255);
+}
+
+#data_table {
+  width: 100%;
+}
+
+.column_style_meterMngId {
+  width: 50px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+}
+
+.column_style_buildingName {
+  width: 150px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+}
+
+.column_style_meterTypeName {
+  width: 80px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+}
+
+.column_style_latestInspVal {
+  width: 60px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+  text-align: right;
+}
+
+.column_style_prevInspVal {
+  width: 60px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+  text-align: right;
+}
+
+.column_style_multipleRate {
+  width: 30px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+  text-align: right;
+}
+
+.column_style_latestUseVal {
+  width: 80px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+  text-align: right;
+}
+
+.column_style_prevUseVal {
+  width: 80px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+  text-align: right;
+}
+
+.column_style_usePerRate {
+  width: 50px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+  text-align: right;
+}
+
+.column_style_buildingNo {
+  width: 82px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+}
+
+.column_style_latestInspDate {
+  width: 130px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+}
+
+.column_style_prevInspDate {
+  width: 130px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+}
+
+.column_style_previousYearInspDate {
+  width: 130px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+}
+
+.column_style_previousYearUseVal {
+  width: 80px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+  text-align: right;
+}
+
+.column_style_endFlg {
+  width: 50px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+}
+
+.column_style_maxDemandVal {
+  width: 130px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+}
+
+.column_style_billingAmount_userCode {
+  width: 135px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+}
+
+.column_style_billingAmount_buildingName {
+  width: 300px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+}
+
+.column_style_billingAmount_billingAmount {
+  width: 100px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+  text-align: right;
+}
+
+.column_style_billingAmount_consumptionTax {
+  width: 100px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+  text-align: right;
+}
+
+.column_style_billingAmount_status {
+  width: 50px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+}
+
+.column_style_billingAmount_details {
+  width: 50px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+  text-align: center;
+}
+
+.INPUT_FROM {
+  width: 150px;
+  margin-left: 10px;
+}
+
+.INPUT_TO {
+  width: 150px;
+  margin-left: 10px;
+}
+
+.INPUT_CLAIMANT {
+  width: 200px;
+  margin-left: 10px;
+}
+
+.TXT_CENTER {
+  vertical-align: middle;
+}
+
+.CHECK_BOX_POS {
+  margin-left: 20px;
+}
+
+.INPUT_DATE {
+  width: 120px;
+  margin-left: 10px;
+}
+
+/* カレンダ部品*/
+.calobj {
+  margin-top: 2px;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.search_result_area .button_detail {
+  position: absolute;
+  margin-left: 8px;
+  margin-top: 5px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.button_meter_reading {
+  position: absolute;
+  margin-left: 8px;
+  margin-top: 5px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.button_meter_reading_billingamount {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  margin-left: 20px;
+  margin-top: 4px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.btn_icon_input {
+  width: 90px;
+  height: 70px;
+  padding-top: 40px;
+  vertical-align: bottom;
+}
+
+.cont_style_meterReading {
+  border: 0px;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+  text-align: right;
+  position: relative;
+  bottom: 12px;
+}
+
+.cont_style_latestInspVal {
+  width: 55px;
+  position: relative;
+  right: 10px;
+}
+
+.cont_style_prevInspVal {
+  width: 55px;
+  position: relative;
+  right: 10px;
+}
+
+.cont_style_multipleRate {
+  width: 22px;
+  position: relative;
+  right: 7px;
+}
+
+.cont_style_latestUseVal {
+  width: 65px;
+  position: relative;
+  right: 14px;
+}
+
+.cont_style_prevUseVal {
+  width: 65px;
+  position: relative;
+  right: 14px;
+}
+
+.cont_style_usePerRate {
+  width: 45px;
+  position: relative;
+  right: 10px;
+}
+
+.cont_style_previousYearUseVal {
+  width: 65px;
+  position: relative;
+  bottom: 12px;
+}
+
+.rf-edt-hdr-c {
+  background-color: rgb(0, 79, 141);
+  font-weight: bold;
+}
+
+.rf-edt-hdr-c-cnt, .rf-edt-tbl-hdr {
+  color: white;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.rf-edt-hdr-c .th-span-label {
+  height: 30px;
+  line-height: 27px;
+}
+
+.rf-edt-hdr-c .th-sep-label {
+  height: 30px;
+  line-height: 20px;
+}
+
+.th-sep-label span {
+  font-size: 12px;
+  font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo,
+    'ＭＳ Ｐゴシック', sans-serif;
+}
+
+.rf-edt-c {
+  height: 40px;
+  padding: 0px;
+  margin: 0px;
+  font-size: 10px;
+}
+
+.rf-edt-hdr-c-cnt, .rf-edt-tbl {
+  padding: 0px;
+}
+
+.rf-edt-c-cnt {
+  padding: 4px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+  word-wrap: break-word;
+  display: table-cell;
+}
+
+/* リストのフッターの高さと背景色を設定 */
+.rf-edt-ftr tbody tr {
+  height: 0;
+  background-color: #cccccc;
+}
+
+.table_meterReading_header {
+  height: 50px;
+}
+
+.table_meterReading_row {
+  height: 25px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.table_meterReading_column {
+  border: 0px;
+  padding: 55px;
+}
+
+.column_style_type .rf-edt-c-cnt {
+  white-space: normal
+}
+
+.column_style_center .rf-edt-c-cnt {
+  position: absolute;
+  left: 9%;
+}
+
+.table_daily_comp .rf-edt-c{
+  height : 25px;
+}

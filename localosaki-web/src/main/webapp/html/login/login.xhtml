@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <head jsfc="h:head">
+        <title>ログイン</title>
+        <h:outputStylesheet library="css" name="common/default.css"/>
+        <h:outputStylesheet library="css" name="common/cssLayout.css"/>
+        <h:outputStylesheet library="css" name="common/common.css"/>
+        <h:outputStylesheet library="css" name="common/announce.css"/>
+    </head>
+    <body jsfc="h:body">
+        <ui:composition template="/html/template/template_login.xhtml" >
+            <ui:define name="content">
+                <h:outputStylesheet library="css" name="login/login.css"/>
+                <!-- 対象ブラウザの判定 -->
+                <c:if test="${loginBean.getWebBrowserCheck() == true}"> 
+                    <script type="text/javascript">targetBrowser();</script> 
+                </c:if> 
+                <h:form id="loginBean" >
+                    <br/><br/>
+                    <table  id="inputTable" class="login_table_margin login_table_width">
+                        <colgroup>
+                            <col class="login_table_col1" />
+                            <col class="login_table_col2" />
+                            <col class="login_table_col3" />
+                            <col class="login_table_col4" />
+                        </colgroup>
+                        <tr>
+                            <td colspan="3" class="announcement_height" >
+                                <c:if test="#{loginBean.getMessageList().size() > 0}">
+                                    <div id="announcementBorder" class="announcement_background">
+                                        <rich:messages id="messages"/>
+                                    </div>
+                                </c:if>
+                            </td>
+                        </tr>
+                        <tr class="login_td_height">
+                            <td class="login_table_column1" style="width:101px;">
+                                <span class="login_font login_color">企業ID</span>
+                            </td>
+                            <td class="login_table_column2"></td>
+                            <td class="login_table_column3">
+                                <h:inputText tabindex="1"
+                                             class="input_box_height input_box_width autofocus"
+                                             id="corp" value="#{loginBean.corpId}" />
+                            </td>
+                            <td class="login_button_area" rowspan="4">
+                                <a4j:commandButton id="loginBtn" tabindex="4" 
+                                                   value=" "
+                                                   class="button_radius command_button_height command_button_width 
+                                                   command_button_color button_border
+                                                   button_font_size pass_spacing"
+                                                   action="#{loginBean.login()}"
+                                                   oncomplete="
+                                                   if (#{loginBean.isPassExpirationDate()}) {
+                                                   #{rich:component('cautionPasswordPopup')}.show();
+                                                   return false;
+                                                   }"
+                                                   render="@form"> 
+
+                                </a4j:commandButton>
+                            </td>
+                            <h:graphicImage class="dummy_login_button" library="images" name="login/login_login003.png"/>
+                        </tr> 
+                        <tr class="login_td_height">
+                            <td>
+                                <span class="login_font login_color">ユーザーID</span>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <h:inputText  tabindex="2"
+                                              class="input_box_height input_box_width"
+                                              id="user" value="#{loginBean.personId}" />
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr class="login_td_height">
+                            <td>
+                                <span class="login_font login_color">パスワード</span>
+                            </td>
+                            <td></td>
+                            <td>
+                                <h:inputSecret tabindex="3"
+                                               class="input_box_height input_box_width"
+                                               id="password" value="#{loginBean.password}" />
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/><br/>
+                    <ui:include src="/html/login/cautionPassword.xhtml" />
+                </h:form>
+
+                <script type="text/javascript">
+                    history.pushState(null, null, null);
+
+                    window.addEventListener("popstate", function () {
+                        history.pushState(null, null, null);
+                    });
+                </script>
+            </ui:define>
+        </ui:composition> 
+    </body> 
+</html>
+

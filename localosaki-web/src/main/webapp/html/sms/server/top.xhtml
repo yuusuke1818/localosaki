@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:oslib="http://osaki.co.jp/base-component"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j">
+<body>
+	<ui:composition
+		template="/html/template/template_server_sidemenu.xhtml">
+		<ui:param name="isTopPage" value="true" />
+		<ui:define name="content_side" class="content">
+			<h:outputStylesheet library="css" name="menu/index.css" />
+			<h:outputScript library="js" name="menu/menu.js" />
+			<form jsfc="h:form" id="smsServerTopBean">
+				<div class="index_spacing">
+					<!-- 通常メニュー -->
+					<div style="text-align: center; font-size: 20px; padding: 20px">左側メニューより表示画面を選択してください。</div>
+				</div>
+			</form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

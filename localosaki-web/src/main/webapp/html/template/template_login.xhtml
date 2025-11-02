@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<head jsfc="h:head">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<h:outputStylesheet library="css" name="common/default.css" />
+<h:outputStylesheet library="css" name="common/cssLayout.css" />
+<h:outputStylesheet library="css" name="common/common.css" />
+<h:outputScript library="js" name="common/jquery-1.12.3.min.js" />
+<h:outputScript library="js" name="common/separater.js" />
+<h:outputScript library="js" name="common/common.js" />
+<title>#{loginBean.getApplicationName()}&nbsp;#{loginBean.getOemName()}&nbsp;ver&nbsp;#{loginBean.getApplicationVersion()}-#{loginBean.getOemVersion()}&nbsp;#{loginBean.getProjectStage()}</title>
+<c:if test="#{loginBean.faviconBool}">
+    <link rel="shortcut icon" href="#{request.contextPath}/resources/images/ico/favicon_24x24.png" type="image/x-icon" />
+</c:if>
+</head>
+<body jsfc="h:body">
+	<div id="back_left"></div>
+	<div id="back_center"></div>
+	<div id="back_right"></div>
+	<div id="content" class="top_logo_area">
+		<div id="top_logo">
+			<h:graphicImage library="images" name="sms_logo_login.png" />
+		</div>
+	</div>
+	<div id="content" class="center_content_login">
+		<ui:insert name="content">Content</ui:insert>
+	</div>
+	<div id="menseki" style="padding-bottom: 20px">
+		<div style="color: red">
+			※安全のために：<br /> ・パスワードはパソコンの前などに書いて貼らないようにお願いします。<br />
+			・ブラウザのオートコンプリート機能は使用しない設定にすることをお勧めします。
+		</div>
+		<br />
+		<div>
+			本システムについて：<br /> ・本システムは、2048bitのSSL暗号化通信を行っています。<br /> ・Microsoft
+			Edge バージョン100以上またはChrome バージョン100以上相当のブラウザでご使用ください。<br />
+			・CookieおよびJavaScriptの機能を使用しています。
+		</div>
+	</div>
+	<div id="bottom">
+        <div id="footer_link_area">
+            <form jsfc="h:form" id="templateLoginForm">
+                <h:panelGrid columns="3">
+                        <h:commandLink value="利用規約" action="#{loginBean.termsOfService()}" target="_blank"/>
+                        <h:outputLink value="#{loginBean.privacy}" target="_blank">個人情報保護への取り組み</h:outputLink>
+                        <h:outputLink value="#{loginBean.inqury}" target="_blank">お問い合わせ</h:outputLink>
+
+                </h:panelGrid>
+            </form>
+        </div>
+		<div id="footer_logo_area_login">
+			<!--
+                <form jsfc="h:form" id="footerLogoForm">
+                    <a href="http://www.osaki.co.jp/" target="_blank" class="footer_logo_area_login_test">
+                        <h:graphicImage library="images" name="common/com027.png" />
+                    </a>
+                </form>
+                -->
+		</div>
+		<div id="copyright_area">#{loginBean.copyright}</div>
+	</div>
+</body>
+</html>

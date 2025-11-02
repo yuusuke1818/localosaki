@@ -1,0 +1,250 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      >
+<body>
+
+<ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+    <ui:define name="content_side" class="content">
+        <meta http-equiv="content-language" content="ja" />
+        <h:outputStylesheet library="css" name="common/button.css"/>
+        <h:outputStylesheet library="css" name="common/default.css"/>
+        <h:outputStylesheet library="css" name="common/cssLayout.css"/>
+        <h:outputStylesheet library="css" name="common/common.css"/>
+        <h:outputStylesheet library="css" name="sms/collect/setting/concentrator/concentratorManagement.css"/>
+        <h:outputScript library="js" name="sms/collect/setting/concentrator/concentratorManagement.js" />
+
+        <form jsfc="h:form" id="smsCollectSettingConcentratorManagementBean">
+            <div class="inner_content">
+                <div class="title_area_warp">
+                    <!-- 画面タイトル -->
+                    <div class="title_area_left">
+                        <h2 class="page_title">コンセントレーター管理</h2>
+                        <!-- ヘルプボタン -->
+                        <c:if test="#{indexBean.userGuideBool}">
+                            <h:commandLink class="help_icon"
+                                action="#{indexBean.userGuide()}" target="_blank" />
+                        </c:if>
+                        <p class="page_subtitle">
+                            <h:outputText value="コンセントレーター情報の新規登録、または編集ができます。" />
+                        </p>
+                        <rich:messages />
+                    </div>
+                    <div class="clear" />
+
+                    <div class="contents_title contents_accordion_header">
+                        <h:graphicImage class="button_icon button_opener" library="images" name="demand/demand_container_opner.png" style="display: none;" />
+                        <h:graphicImage class="button_icon button_closer" library="images" name="demand/demand_container_closer.png"  />
+                        <span class="contents_title_body">表示条件</span>
+                    </div>
+                    <div class="contents_form_area contents_accordion_body">
+                        <span class="msg">表示内容を変更したい場合は、下記を変更し、［表示更新］ボタンを押してください。</span>
+                        <div class="contents_form_area_row">
+                            <span class="page_subtitle">接続先</span>
+                            <div>
+                                <select jsfc="h:selectOneMenu"
+                                                 id="devId"
+                                                 value="#{smsCollectSettingConcentratorManagementBean.devId}"
+                                                 styleClass="inspectionMeterBefList_sel_std"
+                                                 onkeydown="searchConditionKeydown()">
+                                    <option jsfc="f:selectItems" value="#{smsCollectSettingConcentratorManagementBean.devIdMap}" />
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="button_area_center gradation_type_1 gradation_type_5 button_large_2 button_area">
+                            <a4j:commandButton
+                                id="searchButton"
+                                class="action_button"
+                                value="表示更新"
+                                execute="@form" 
+                                render="@form" 
+                                disabled="#{smsCollectSettingConcentratorManagementBean.devIdMap.isEmpty()}"
+                                action="#{smsCollectSettingConcentratorManagementBean.execSearch()}"
+                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                ></a4j:commandButton>
+                            <h:graphicImage class="reload_button_icon" library="images" name="common/com015.png" rendered="true"/>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="btnRegistLayout res_del_toggle_check_area">
+                            <h:selectBooleanCheckbox id="delCheckBox" 
+                            value="#{smsCollectSettingConcentratorManagementBean.confirmationCheckBox}" 
+                            disabled="#{smsCollectSettingConcentratorManagementBean.selectCheckBoxDisableFlg}">
+                            </h:selectBooleanCheckbox>
+                            <h:outputLabel for="delCheckBox">:選択されているコンセントレーターの初期化・削除ボタンを有効にする</h:outputLabel>
+                        </div>
+                        <div class="button_area_right gradation_type_1 gradation_type_5 button_large_2 control_button_area">
+                            <div class="regist_button">
+                                <a4j:commandButton
+                                    id="entryButton"
+                                    class="action_button"
+                                    value="新規登録"
+                                    execute="@form" 
+                                    render="@form" 
+                                    disabled="#{smsCollectSettingConcentratorManagementBean.registButtonDisableFlg}"
+                                    action="#{smsCollectSettingConcentratorManagementBean.execRegist()}"
+                                    onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                    ></a4j:commandButton>
+                                <h:graphicImage class="regist_button_icon" library="images" name="common/com013.png" rendered="true"/>
+                            </div>
+                            
+                            <div class="reset_button">
+                                <a4j:commandButton
+                                    id="resetButton"
+                                    class="action_button"
+                                    value="選択初期化"
+                                    execute="@form" 
+                                    render="confirmationDialog"
+                                    actionListener="#{smsCollectSettingConcentratorManagementBean.setResetMessage()}"
+                                    oncomplete="$('input[id$=hiddenResetButton]').click();"
+                                    ></a4j:commandButton>
+                                <h:graphicImage class="reset_button_icon" library="images" name="common/com015.png" rendered="true"/>
+                                <a4j:commandButton
+                                id="hiddenResetButton"
+                                style="display: none;"
+                                execute="@form" 
+                                render="@form"
+                                action="#{smsCollectSettingConcentratorManagementBean.execReset()}"
+                                onclick="return confirmationDialogOpen($('input[id$=hiddenResetButton]'))"
+                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                ></a4j:commandButton>
+                            </div>
+                            <div class="delete_button">
+                                <a4j:commandButton
+                                    id="deleteButton"
+                                    class="action_button"
+                                    value="選択削除"
+                                    execute="@form" 
+                                    render="confirmationDialog"
+                                    actionListener="#{smsCollectSettingConcentratorManagementBean.setDeleteMessage()}"
+                                    oncomplete="$('input[id$=hiddenDeleteButton]').click();"
+                                    ></a4j:commandButton>
+                                <h:graphicImage class="delete_button_icon" library="images" name="common/com019.png" rendered="true"/>
+                                <a4j:commandButton
+                                id="hiddenDeleteButton"
+                                style="display: none;"
+                                execute="@form" 
+                                render="@form"
+                                action="#{smsCollectSettingConcentratorManagementBean.execDelete()}"
+                                onclick="return confirmationDialogOpen($('input[id$=hiddenDeleteButton]'))"
+                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                ></a4j:commandButton>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <c:if test="#{smsCollectSettingConcentratorManagementBean.handyFlg}">
+                        <h:panelGrid styleClass="handy_not_compatible">
+                            ハンディ用装置のため表示できません。
+                        </h:panelGrid>
+                    </c:if>
+                    <c:if test="#{!smsCollectSettingConcentratorManagementBean.handyFlg}">
+                        <!-- 検索結果リスト表示 -->
+                        <div class="search_result_area">
+                            <div class="search_result_header_wrap">
+                                <div id="listReroad">
+                                    <div class="search_result_header_left page_content_parts">
+                                        検索条件に該当するコンセントレーター情報 
+                                        <span class="serach_result_total_count" jsfc="h:outputText" value=" #{smsCollectSettingConcentratorManagementBean.concentratorContents.size()}" />
+                                        件
+                                    </div>
+                                    <br/><br/>
+                                </div>
+                            </div>
+                            <h:dataTable var="item" value="#{smsCollectSettingConcentratorManagementBean.concentratorContents}"
+                                style="width: 100%;"
+                                headerClass="table_header"
+                                columnClasses="column_style_checkbox,column_style_mngId,column_style_concentratorName,column_style_ipAddr,column_style_controlStatus,column_style_comment,column_style_button"
+                                rendered="#{!smsCollectSettingConcentratorManagementBean.concentratorContents.isEmpty()}">
+                                <span jsfc="h:column">
+                                    <f:facet name="header">
+                                        <a4j:commandLink id="selectAllCheck" styleClass="all_check" style="color:#FFF;font-size:12px;text-decoration:underline;">選択</a4j:commandLink>
+                                    </f:facet>
+                                    <h:selectBooleanCheckbox id="targetCheckBox" value="#{item.checkBox}" />
+                                </span>
+                                <span jsfc="h:column">
+                                    <f:facet name="header">
+                                        管理番号
+                                    </f:facet>
+                                    <h:outputText id="mngId" value="#{item.concentrator.concentId}">
+                                        <f:convertNumber pattern="00" />
+                                    </h:outputText>
+                                </span>
+                                <span jsfc="h:column">
+                                    <f:facet name="header">
+                                       コンセントレーター名
+                                    </f:facet>
+                                    <h:outputText id="concentratorName" value="#{item.concentrator.name}" /><br />
+                                </span>
+                                <span jsfc="h:column">
+                                    <f:facet name="header">
+                                        IPアドレス
+                                    </f:facet>
+                                    <h:outputText id="ipAddr" value="#{item.concentrator.ipAddr}" />
+                                </span>
+                                <span jsfc="h:column">
+                                    <f:facet name="header">
+                                        操作状態
+                                    </f:facet>
+                                    <h:outputText id="controlStatus_blue" value="#{item.status}" style="color:blue;" rendered="#{item.concentrator.srvEnt == '1'}"/>
+                                    <h:outputText id="controlStatus_red" value="#{item.status}" style="color:red;" rendered="#{item.concentrator.srvEnt == '9'}"/>
+                                    
+                                </span>
+                                <span jsfc="h:column">
+                                    <f:facet name="header">
+                                        コメント
+                                    </f:facet>
+                                    <h:outputText id="comment" value="#{item.concentrator.memo}" />
+                                </span>
+                                <span jsfc="h:column">
+                                    <f:facet name="header">
+                                        編集
+                                    </f:facet>
+                                    <a4j:commandButton
+                                        id="editButton"
+                                        class="button_small button_building_edit"
+                                        value=" "
+                                        action="#{smsCollectSettingConcentratorManagementBean.execEdit(item.concentrator)}"
+                                        onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                        ></a4j:commandButton>
+                                        <h:graphicImage class="button_edit" library="images" name="common/com018.png" />
+                                        
+                                </span>
+                            </h:dataTable>
+                        </div>
+                    </c:if>
+                    
+                </div>
+            </div>
+            
+            <ui:include src="/html/common/confirmationDialog.xhtml" >
+                <ui:param name="confirmationDialogTitle" value="確認" />
+                <ui:param name="confirmationDialogMessage" value="#{smsCollectSettingConcentratorManagementBean.confirmMessage}" />
+            </ui:include>
+
+
+            <script type="text/javascript">
+            $(document).on('click', '.contents_accordion_header', function() {
+                $(this).parent().children(".contents_accordion_body").slideToggle();
+                $(this).find(".button_opener").toggle();
+                $(this).find(".button_closer").toggle();
+            })
+            </script>
+        </form>
+    </ui:define>
+</ui:composition>
+
+</body>
+</html>

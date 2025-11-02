@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:outputStylesheet library="css" name="common/popup.css"/>
+    <rich:popupPanel id="commonSearchWeatherCityDialog" modal="true" moveable="true" resizeable="false"
+                     minWidth="800" maxWidth="800" 
+                     top="80" width="800" height="600" domElementAttachment="form" zindex="150" onshow="checkAutoFocusOnShowRichPanel(event);">
+        <!-- z-index:150 ヘッダ部分の後ろに隠れるのを避ける為 -->
+
+        <f:facet name="header">
+            <div class="pop_title_area">
+                <div class="left">
+                    <span class="pop_page_title">市区町村選択</span>
+                </div>
+                <h:form id="weatherCityCloseBtnForm">
+                    <a4j:commandButton value=" " 
+                                       id="weather_city_pop_button_close"
+                                       style="position:absolute;
+                                       top:11px;
+                                       right:5px;
+                                       background-image:url('#{resource['images/common/com023.png']}');
+                                       width:30px;
+                                       height:30px;
+                                       background-repeat: no-repeat;
+                                       border: 0px;
+                                       background-color: #FFF;
+                                       cursor: pointer;"
+                                       onclick="#{rich:component('commonSearchWeatherCityDialog')}.hide();"
+                                       execute="commonSearchWeatherCityDialog"
+                                       render="commonWeatherCitySearchForm"
+                                       actionListener="#{commonSearchWeatherCityBean.clearWeatherCityForm()}"/>
+                </h:form>
+            </div>
+        </f:facet>
+        <form jsfc="h:form" id="commonWeatherCitySearchForm">
+            <div class="inner_content content_width">
+                <div class="search_description">
+                    <p>検索条件を設定して [検索開始] を押してください。</p>
+                </div>
+
+                <!-- 動的検索条件テーブル -->
+                <rich:dataTable id="searchConditionTable" rows="0"
+                                value="#{commonSearchWeatherCityBean.conditionList}"
+                                var="item" 
+                                style="margin-top: 5px;
+                                width: 100%;
+                                border: 0px;
+                                table-layout: fixed;">
+                    <!--検索条件表示部分 -->
+                    <span jsfc="h:column" styleClass="condition_msg" style="width: 23%; border:0px">
+                       <h:selectOneMenu  id="selectConditionCd" value="#{item.selectConditionCd}" styleClass="SELECT001" rendered="#{item.selectEnable}"
+                                         style="height: 25px;">
+                            <f:ajax execute="searchConditionTable" render="commonWeatherCitySearchForm:searchConditionTable" event="change" listener="#{commonSearchWeatherCityBean.changeConditionCd(item.orderNo)}" />
+                            <option jsfc="f:selectItems" value="#{item.selectConditionMap}" />
+                       </h:selectOneMenu>
+                       <h:outputText value="#{item.selectConditionCd}" rendered="#{item.selectDisable}" />
+                    </span>
+                    <!--「が」表示部分 -->
+                    <span jsfc="h:column" style="width: 5%; text-align: center; border:  0px;">
+                        <input jsfc="h:outputText" value="が" style="width: 100%;text-align: center" rendered="#{!item.selectEnable}"/>
+                    </span>
+                    <!--ドロップダウンリストまたは検索キーワード表示部分 -->
+                    <span jsfc="h:column" style="width: 30%; border:  0px;">
+                        <h:selectOneMenu id="prefectureCd" value="#{item.prefectureCd}" styleClass="SELECT001" class="autofocus" rendered="#{item.prefectureSelectEnable}"
+                                         style="width: 100%; height: 25px;" onkeydown="searchPopupConditionKeydown()">
+                            <option jsfc="f:selectItems" value="#{commonSearchWeatherCityBean.prefectureMap}" />
+                        </h:selectOneMenu>
+                        <!--キーワード -->
+                        <h:inputText id="conditionKeyword" value="#{item.conditionKeyword}" styleClass="EDIT002" rendered="#{item.keywordSelectEnable}" 
+                                     style="width: 100%; height: 25px;" maxlength="50" onkeydown="searchPopupConditionKeydown()"/>
+                    </span>
+                    <!--「を含む」表示部分 -->
+                    <span jsfc="h:column"  style="width: 10%; text-align: center; border:  0px;">
+                        <input jsfc="h:outputText" value="#{item.mutchingTypeCd}" rendered="${!empty item.mutchingTypeCd}" style="width: 100%; height: 25px; text-align: center;"/>
+                    </span> 
+
+                    <!--削除ボタン表示部分 -->
+                    <span jsfc="h:column" styleClass="gradation_type_3 button_medium_2 delete_button" style="width: 10%; border:  0px;">
+                        <h:commandButton value="削除" id="deleteBtn" rendered="#{item.deleteButtonEnable}" 
+                                         style="width: 100%; height: 25px;">
+                            <f:ajax event="click" execute="commonWeatherCitySearchForm:searchConditionTable" render="commonWeatherCitySearchForm:searchConditionTable" listener="#{commonSearchWeatherCityBean.deleteCondition(item.orderNo)}"/>
+                        </h:commandButton>
+                        <h:graphicImage class="button_icon" library="images" rendered="#{item.deleteButtonEnable}" name="common/com020.png" />
+                    </span> 
+                </rich:dataTable>
+                <div class="button_search_pop gradation_type_1 button_large_2">
+                    <h:commandButton value="検索開始" id="searchBtn" styleClass="transition_button_size color_botton_regist" action="#{commonSearchWeatherCityBean.search()}">
+                        <!--<f:ajax execute="@form" render="@form" />-->
+                        <a4j:ajax execute="@form" render="@form" onbegin="showBlockModal()" oncomplete="hideBlockModal(true)" />
+                    </h:commandButton>
+                    <h:graphicImage class="button_icon" library="images" name="common/com028.png" />
+                </div>
+
+
+                <!-- 検索結果 -->
+                <ui:fragment id="searchResultArea" rendered="#{commonSearchWeatherCityBean.searchedFlg}">
+                    <div class="">
+                        <div class="search_result_pop_header_wrap">
+                            <div class="page_content_parts" id="listReroad">
+                                <div class="search_result_pop_header_left">
+                                    検索条件に該当する市区町村  ：
+                                    <span jsfc="h:outputText" class="serach_result_total_count" value="#{commonSearchWeatherCityBean.weatherCitySelectPaging.resultCount}件" />
+                                </div>
+                            </div>
+                        </div>
+                        <c:if test="#{commonSearchWeatherCityBean.weatherCitySelectPaging.resultCount > 0}">
+                            <div class="search_result_pop_area">
+                                <table align="center" jsfc="h:dataTable" id="result" var="item" value="#{commonSearchWeatherCityBean.weatherCitySelectPaging.pageList}" 
+                                       class="search_result_pop" 
+                                       headerClass="table_header" 
+                                       style="width: 100%;"
+                                       columnClasses="column_style_city_1, column_style_city_2, column_style_city_3, column_style_city_4">
+                                    <span jsfc="h:column">
+                                        <span jsfc="f:facet" name="header" style="width: 40px;">
+                                            <span jsfc="h:outputText" value="選択"/>
+                                        </span>
+                                        <span class="button_set_pop">
+                                            <a4j:commandButton id="selectSetBtn" style="width:32px; height:32px;" value=" " 
+                                                               action="#{commonSearchWeatherCityBean.select(item)}"
+                                                               execute="@this" render="commonWeatherCitySearchForm #{reflectControl}"
+                                                               onbegin="showBlockModal();" oncomplete="hideBlockModal(true); #{rich:component('commonSearchWeatherCityDialog')}.hide();" />
+                                            <h:graphicImage class="button_icon" library="images" name="common/com060.png" />
+                                        </span>
+                                    </span>
+                                    <span jsfc="h:column">
+                                        <span jsfc="f:facet" name="header">
+                                            <span jsfc="h:outputText" value="都道府県"/>
+                                        </span>
+                                        <span jsfc="h:outputText" id="prefectureName" value="#{item.prefectureName}" />
+                                        <span jsfc="h:inputHidden" id="prefectureCd" value="#{item.prefectureCd}" />
+                                    </span>
+                                    <span jsfc="h:column">
+                                        <span jsfc="f:facet" name="header">
+                                            <span jsfc="h:outputText" value="市区町村コード"/>
+                                        </span>
+                                        <span jsfc="h:outputText" id="weatherCityCd" value="#{item.cityCd}" />
+                                    </span>
+                                    <span jsfc="h:column">
+                                        <span jsfc="f:facet" name="header">
+                                            <span jsfc="h:outputText" value="市区町村名"/>
+                                        </span>
+                                        <span jsfc="h:outputText" id="WeatherCityName" value="#{item.cityName}" />
+                                    </span>                                        
+                                </table>
+                            </div>
+                        </c:if>
+                    </div>
+                    <div>
+                        <c:if test="#{commonSearchWeatherCityBean.weatherCitySelectPaging.resultCount > 0}">
+                            <div align="center" >
+                                <div id="paging_area">
+                                    <span id="prevButton_area">
+                                        <h:commandLink id="prevButton" value="&lt;&nbsp;&nbsp;前へ" actionListener="#{commonSearchWeatherCityBean.prevPage}" 
+                                                       disabled="#{!commonSearchWeatherCityBean.weatherCitySelectPaging.isPrevPage()}">
+                                            <f:ajax execute="@form" render="@form" />
+                                            <f:attribute name="page" value="#{commonSearchWeatherCityBean.weatherCitySelectPaging.currentPage}" />
+                                        </h:commandLink>
+                                    </span>
+                                    <cust:pageIndex id="pageJumpButton" value="#{commonSearchWeatherCityBean.weatherCitySelectPaging.pageValue}" 
+                                                    action="#{commonSearchWeatherCityBean.pageJump()}" >
+                                        <ui:include src="/html/common/paging/index.xhtml" />
+                                    </cust:pageIndex>
+                                    <span id="nextButton_area">
+                                        <h:commandLink id="nextButton" class="nextButton" value="後へ&nbsp;&nbsp;&gt; " actionListener="#{commonSearchWeatherCityBean.nextPage}" 
+                                                       disabled="#{!commonSearchWeatherCityBean.weatherCitySelectPaging.isNextPage()}">
+                                            <f:ajax execute="@form" render="@form" />
+                                            <f:attribute name="page" value="#{commonSearchWeatherCityBean.weatherCitySelectPaging.currentPage}" />
+                                        </h:commandLink>
+                                    </span>
+                                </div>
+                            </div>
+                        </c:if>
+                    </div>
+                </ui:fragment>
+            </div>
+        </form>
+    </rich:popupPanel>
+
+</html>
+

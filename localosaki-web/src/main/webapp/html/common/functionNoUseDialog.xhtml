@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+      <h:outputStylesheet library="css" name="common/popup.css"/>
+      <h:form id="functionNoUseDialogForm">
+
+        <rich:popupPanel id="functionNoUseDialog" modal="true" moveable="true" resizeable="false"  
+                           top="180" width="480" height="250" zindex="320"
+                           domElementAttachment="parent"
+                           onshow="checkAutoFocusOnShowRichPanel(event);">
+
+            <f:facet name="header">
+                <div class="pop_title_area">
+                    <div class="left">
+                        <h:outputText class="pop_page_title" value="機能利用制限" />
+                    </div>
+                    <div class="pop_button_close">
+                        <input type="button" value="" onclick="functionNoUseDialogClose();">
+                        </input>
+                    </div>
+                </div>
+            </f:facet>
+            <div  class="inner_content content_width">
+                <table jsfc="h:panelGrid" columns="1" style="width: 100%;">
+                    <span jsfc="h:column" style="">
+                        <span class="page_subtitle">
+                            本機能はお客様がご契約されているプランでは<br/>
+                            ご利用頂けません。<br/>
+                            ご利用方法については、お問い合わせください。<br/><br/>
+                        </span>
+                    </span>
+                    <span jsfc="h:column">
+                        <table class="change_caution_button_area" style="text-align: center; margin-left: 13px;">
+                            <tr>
+                                <td class="gradation_type_1 button_large">
+                                    <a4j:commandButton id="functionNoUseDialogOkButton" value="OK"
+                                          onclick="functionNoUseDialogClose(); return false;"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </span>
+                </table>
+            </div>
+        </rich:popupPanel>
+
+        <script type="text/javascript">
+            var functionNoUseDialogShowing = false;
+            function functionNoUseDialogOpen(){
+                if(functionNoUseDialogShowing){  //表示済みなら閉じて本来の処理(action)へ
+                    functionNoUseDialogClose();
+                    return true;
+                }
+                //未表示なら表示し、actionはしない
+                functionNoUseDialogShowing = true;
+                #{rich:component('functionNoUseDialog')}.show();
+                return false;
+            }
+            function functionNoUseDialogClose(){
+                if(functionNoUseDialogShowing){
+                    functionNoUseDialogShowing = false;
+                    #{rich:component('functionNoUseDialog')}.hide();
+                }
+            }
+        </script>
+    </h:form>
+</html>

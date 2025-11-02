@@ -1,0 +1,14 @@
+/* 汎用建物・テナント検索用CSS(search_building.xhtml専用） */
+/* 検索条件 建物グルーピング*/
+.table_condition_grouping_pop
+{
+    width: 100%;
+}
+
+.table_condition_grouping_col_pop
+{
+    width: 27%;
+}
+.table_condition_grouping_col_item_pop{
+    width: 23%;
+}

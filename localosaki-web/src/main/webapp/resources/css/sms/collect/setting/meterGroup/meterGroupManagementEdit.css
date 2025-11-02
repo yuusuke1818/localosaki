@@ -1,0 +1,42 @@
+/* 設定変更ボタンエリア */
+.edit_button_area {
+    display: flex;
+    justify-content: center;
+}
+
+/* 設定変更ボタンアイコン */
+.edit_button_area .edit_button_icon {
+    position: relative;
+    top: 6px;
+    left: -124px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* 登録ボタンアイコン */
+.edit_button_area .regist_button_icon {
+    position: relative;
+    top: 6px;
+    left: -85px;
+    z-index: 10;
+    pointer-events: none;
+}
+.editTable {
+    width : 70%;
+}
+
+/* 入力フォームテーブル 幅指定 */
+.edit_table_col1 {
+    width : 30%;
+}
+.edit_table_col2 {
+    width : 70%;
+}
+
+/* テキストボックス 幅指定 */
+.checkbox_width {
+    width: 50%;
+}
+.text_width_long {
+    width: 90%;
+}

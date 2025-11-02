@@ -1,0 +1,685 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:body>
+        <ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+            <ui:define name="content_side">
+                <h:outputStylesheet library="css" name="common/tab.css" />
+                <h:outputStylesheet library="css" name="sms/collect/setting/meterTenant/bulkEdit.css"/>
+                <h:outputScript library="js" name="sms/collect/setting/meterTenant/bulkEdit.js"/>
+                <div class="inner_content">
+                    <div class="title_area_warp">
+                        <!-- 画面タイトル -->
+                        <div class="title_area_left">
+                            <h2 class="page_title">
+                                <h:outputText id="buildingInfoEditBeanBuildingTenant" value="メーターテナント一括登録" />
+                            </h2>                          
+                            <!-- ヘルプボタン -->
+                            <c:if test="#{indexBean.userGuideBool}">
+                                <h:form id="helpForm">
+                                <h:commandLink class="help_icon" action="#{indexBean.userGuide()}" target="_blank" />
+                                </h:form>
+                            </c:if>
+                            <p class="page_subtitle">
+                                <h:outputText value="一括入力をするテナント情報のファイルのダウンロードができます。&lt;br/&gt;
+                                    入力後、アップロードすることによってデータが反映されます。" escape="false" />
+                            </p>
+                        </div>
+                        <div class="clear" />
+
+                    <!-- メッセージ表示部分 -->
+                    <!--<div>-->
+                    <span class="rf-msgs">
+                        <c:forEach items="#{smsCollectSettingMeterTenantBulkEditBean.infoMessages}" var="msg">
+                            <div class="rf-msg-inf"><h:outputText class="rf-msgs-sum" value="#{msg}" /></div>
+                        </c:forEach> 
+                        <c:forEach items="#{smsCollectSettingMeterTenantBulkEditBean.errorMessages}" var="msg">
+                            <div class="rf-msgs-err"><h:outputText class="rf-msgs-sum" value="#{msg}" /></div>
+                        </c:forEach>
+                    </span>
+                    <rich:messages id="searchTenantInfoMessages" showSummary="true" />
+                    <!--</div>-->
+
+                    <!-- コンテンツ -->
+                    <h3 class="contents_title">テナント所属建物情報</h3>
+                    <div class="contents_form_area">
+                        <h:form>
+                            <table>
+                                <tr>
+                                    <th class="TXT008 column_style1">テナント所属建物番号</th>
+                                    <td>
+                                        <h:inputHidden id="divisionCorpId"
+                                                       value="#{smsCollectSettingMeterTenantBulkEditBean.divisionCorpId}" />
+                                        <h:inputHidden id="divisionCorpName"
+                                                       value="#{smsCollectSettingMeterTenantBulkEditBean.divisionCorpName}" />
+                                        <h:inputHidden id="divisionBuildingId"
+                                                    value="#{smsCollectSettingMeterTenantBulkEditBean.divisionBuildingId}" />
+                                        <h:outputText styleClass="TXT020" 
+                                                     value="#{smsCollectSettingMeterTenantBulkEditBean.divisionBuildingNo}" />
+                                                    <!--  
+                                        <h:outputText class="TXT001_margin" value="　※テナントが所属する建物が、O-SOLに登録されていれば指定してください。"/>
+                                         -->
+                                    </td>
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr>
+                                    <th class="TXT008 column_style1">テナント所属建物名</th>
+                                    <td>
+                                        <h:outputText id="divisionBuildingName" 
+                                                    styleClass="TXT020"
+                                                    value="#{smsCollectSettingMeterTenantBulkEditBean.divisionBuildingName}" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </h:form>
+                    </div>
+                    
+                    <h:form id="tenantBulkBeanDL" enctype="multipart/form-data">
+                        <div class="contents_center gradation_type_1 button_large_2 button_download">
+                            <a4j:commandButton id="bulkTenantCsvDownloadButton" value="ダウンロード" 
+                                               action="#{smsCollectSettingMeterTenantBulkEditBean.download()}"
+                                               onbegin="showBlockModal()" 
+                                               oncomplete="hideBlockModal();
+                                               if($('.rf-msgs-err').size()==0)
+                                               {
+                                               $('input[id$=downloadStart]').click();
+                                               }
+                                               selectOne();"
+                                               execute="@form" render="buildingNo" />
+                            <h:commandButton id="downloadStart" style="display: none;" 
+                                             action="#{smsCollectSettingMeterTenantBulkEditBean.downloadStart()}" />
+                            <h:graphicImage class="dl_button_icon" library="images" name="common/com039.png" />
+                        </div>
+                        <br/>
+                    </h:form>
+                    
+                    <div class="search_description"/>
+                    <h:form id="tenantBulkBeanUL" enctype="multipart/form-data">
+                        <div class="contents_center attention_upload">
+                            <h:outputText class="TXT023" value="※必ずダウンロードしたファイルをアップロードしてください。" />
+                        </div>
+                        <div class="file_area">
+                            <h:outputText id="file_path" class="TXT008 file_area_title" style="float: left; margin-top: 9px; margin-right: 20px;" value="ファイル" />  <!-- input要素 -->
+                            <div class="file">
+                                <div class="gradation_type_1 button_medium_2 openButton">
+                                    <h:commandButton id="file_input_button" class="file_input_button" style=""
+                                                     onclick="remakeInputFile();
+                                                             clearFileName();
+                                                             $('input[id$=file_input]').click();
+                                                             return false;" />
+                                    <h:graphicImage class="folder_button_icon" library="images" name="common/com038.png" />
+                                    <h:inputFile id="file_input" label="ファイル名" value="#{smsCollectSettingMeterTenantBulkEditBean.uploadFile}" style="display: none;" 
+                                                 onchange="changeFile()"/>
+
+                                    <h:inputHidden id="file_input_name" value="#{smsCollectSettingMeterTenantBulkEditBean.uploadFileName}" /> 
+
+                                    <span id="openButtonLabel"></span>  <!-- ラベル文字列 -->
+                                    <span class="file_choise_msg">参照</span>
+                                </div>
+                            </div>
+                            <span class="filename" jsfc="h:outputText" value="#{smsCollectSettingMeterTenantBulkEditBean.uploadFileName}"></span>
+                        </div>
+                        <div class="contents_center gradation_type_1 button_large_2 button_upload">
+                            <h:commandButton 
+                                id="file_upload" 
+                                value="アップロード" 
+                                action="#{smsCollectSettingMeterTenantBulkEditBean.execFileUpload()}"
+                                onclick="showBlockModal();"
+                                style="margin-left: -80px;">
+                            </h:commandButton>
+                            <h:graphicImage class="ul_button_icon" library="images" name="common/com041.png" />
+                        </div>
+                    </h:form>
+                    
+                    <div class="search_result_area">
+                       <div class="search_result_header_wrap">
+                            <div id="listReroad">
+                                <div class="search_result_header_left page_content_parts">
+                                    エラーレコード件数
+                                    <span class="serach_result_total_count" jsfc="h:outputText" value=" #{smsCollectSettingMeterTenantBulkEditBean.errorList.size()}" />
+                                    件
+                                </div>
+                                <br/><br/>
+                            </div>
+                        </div>
+                        <div class="contents_table">
+                            <h:dataTable var="item" value="#{smsCollectSettingMeterTenantBulkEditBean.errorList}"
+                                class="data_table"
+                                headerClass="table_header"
+                                columnClasses="column_style_common,column_style_common,column_style_common,column_style_common,column_style_common,column_style_common,column_style_common
+                                ,column_style_common,column_style_common,column_style_common,column_style_common,column_style_common,column_style_common,column_style_common,column_style_common
+                                ,column_style_common,column_style_common,column_style_common,column_style_common,column_style_common,column_style_common,column_style_common,column_style_common
+                                ,column_style_common,column_style_common,column_style_common,column_style_common,column_style_common,column_style_common,column_style_common,column_style_common
+                                ,column_style_common,column_style_common,column_style_common,column_style_common"
+                                rendered="#{!smsCollectSettingMeterTenantBulkEditBean.errorList.isEmpty()}">
+                                <h:column>
+                                    <f:facet name="header">
+                                        ユーザーコード
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(0).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="userCode" value="#{item.get(0).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="userCodeTt" styleClass="tooltip" layout="block" rendered="#{item.get(0).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="userCodeTooltip" value="#{item.get(0).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        テナント番号
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(1).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="tenantNo" value="#{item.get(1).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="tenantNoTt" styleClass="tooltip" layout="block" rendered="#{item.get(1).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="tenantNoTooltip" value="#{item.get(1).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        テナント名
+                                    </f:facet>
+                                  <rich:panel styleClass="#{item.get(2).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="tenantName" value="#{item.get(2).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="tenantNameTt" styleClass="tooltip" layout="block" rendered="#{item.get(2).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="tenantNameTooltip" value="#{item.get(2).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        テナント名かな
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(3).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="tenantKana" value="#{item.get(3).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="tenantKanaTt" styleClass="tooltip" layout="block" rendered="#{item.get(3).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="tenantKanaTooltip" value="#{item.get(3).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        テナント短縮名称
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(4).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="contruction" value="#{item.get(4).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="contructionTt" styleClass="tooltip" layout="block" rendered="#{item.get(4).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="contructionTooltip" value="#{item.get(4).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        郵便番号
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(5).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="zipCode" value="#{item.get(5).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="zipCodeTt" styleClass="tooltip" layout="block" rendered="#{item.get(5).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="zipCodeTooltip" value="#{item.get(5).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        都道府県
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(6).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="prefecture" value="#{item.get(6).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="prefectureTt" styleClass="tooltip" layout="block" rendered="#{item.get(6).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="prefectureTooltip" value="#{item.get(6).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        住所
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(7).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="address" value="#{item.get(7).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="addressTt" styleClass="tooltip" layout="block" rendered="#{item.get(7).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="addressTooltip" value="#{item.get(7).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        住所(建物名)
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(8).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="addr_bldg" value="#{item.get(8).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="addr_bldgTt" styleClass="tooltip" layout="block" rendered="#{item.get(8).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="addr_bldgTooltip" value="#{item.get(8).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        電話番号
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(9).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="telno" value="#{item.get(9).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="telnoTt" styleClass="tooltip" layout="block" rendered="#{item.get(9).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="telnoTooltip" value="#{item.get(9).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        FAX番号
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(10).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="faxno" value="#{item.get(10).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="faxnoTt" styleClass="tooltip" layout="block" rendered="#{item.get(10).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="faxnoTooltip" value="#{item.get(10).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        備考
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(11).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="biko" value="#{item.get(11).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="bikoTt" styleClass="tooltip" layout="block" rendered="#{item.get(11).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="bikoTooltip" value="#{item.get(11).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        集計開始年月
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(12).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="startYm" value="#{item.get(12).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="startYmTt" styleClass="tooltip" layout="block" rendered="#{item.get(12).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="startYmTooltip" value="#{item.get(12).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        集計終了年月
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(13).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="endYm" value="#{item.get(13).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="endYmTt" styleClass="tooltip" layout="block" rendered="#{item.get(13).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="endYmTooltip" value="#{item.get(13).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        公開可否
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(14).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="publicFlg" value="#{item.get(14).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="publicFlgTt" styleClass="tooltip" layout="block" rendered="#{item.get(14).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="publicFlgTooltip" value="#{item.get(14).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        固定費1名称
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(15).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="fixed1Name" value="#{item.get(15).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="fixed1NameTt" styleClass="tooltip" layout="block" rendered="#{item.get(15).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="fixed1NameTooltip" value="#{item.get(15).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        固定費1金額
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(16).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="fixed1Price" value="#{item.get(16).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="fixed1PriceTt" styleClass="tooltip" layout="block" rendered="#{item.get(16).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="fixed1PriceTooltip" value="#{item.get(16).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        固定費2名称
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(17).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="fixed2Name" value="#{item.get(17).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="fixed2NameTt" styleClass="tooltip" layout="block" rendered="#{item.get(17).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="fixed2NameTooltip" value="#{item.get(17).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        固定費2金額
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(18).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="fixed2Price" value="#{item.get(18).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="fixed2PriceTt" styleClass="tooltip" layout="block" rendered="#{item.get(18).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="fixed2PriceTooltip" value="#{item.get(18).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        固定費3名称
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(19).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="fixed3Name" value="#{item.get(19).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="fixed3NameTt" styleClass="tooltip" layout="block" rendered="#{item.get(19).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="fixed3NameTooltip" value="#{item.get(19).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        固定費3金額
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(20).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="fixed3Price" value="#{item.get(20).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="fixed3PriceTt" styleClass="tooltip" layout="block" rendered="#{item.get(20).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="fixed3PriceTooltip" value="#{item.get(20).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        固定費4名称
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(21).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="fixed4Name" value="#{item.get(21).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="fixed4NameTt" styleClass="tooltip" layout="block" rendered="#{item.get(21).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="fixed4NameTooltip" value="#{item.get(21).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        固定費4金額
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(22).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="fixed4Price" value="#{item.get(22).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="fixed4PriceTt" styleClass="tooltip" layout="block" rendered="#{item.get(22).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="fixed4PriceTooltip" value="#{item.get(22).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        電気料金メニュー
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(23).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="priceMenuNo" value="#{item.get(23).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="priceMenuNoTt" styleClass="tooltip" layout="block" rendered="#{item.get(23).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="priceMenuNoTooltip" value="#{item.get(23).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        按分率1
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(24).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="divRate1" value="#{item.get(24).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="divRate1Tt" styleClass="tooltip" layout="block" rendered="#{item.get(24).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="divRate1Tooltip" value="#{item.get(24).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        按分率2
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(25).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="divRate2" value="#{item.get(25).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="divRate2Tt" styleClass="tooltip" layout="block" rendered="#{item.get(25).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="divRate2Tooltip" value="#{item.get(25).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        按分率3
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(26).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="divRate3" value="#{item.get(26).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="divRate3Tt" styleClass="tooltip" layout="block" rendered="#{item.get(26).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="divRate3Tooltip" value="#{item.get(26).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        按分率4
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(27).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="divRate4" value="#{item.get(27).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="divRate4Tt" styleClass="tooltip" layout="block" rendered="#{item.get(27).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="divRate4Tooltip" value="#{item.get(27).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        按分率5
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(28).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="divRate5" value="#{item.get(28).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="divRate5Tt" styleClass="tooltip" layout="block" rendered="#{item.get(28).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="divRate5Tooltip" value="#{item.get(28).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        按分率6
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(29).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="divRate6" value="#{item.get(29).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="divRate6Tt" styleClass="tooltip" layout="block" rendered="#{item.get(29).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="divRate6Tooltip" value="#{item.get(29).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        按分率7
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(30).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="divRate7" value="#{item.get(30).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="divRate7Tt" styleClass="tooltip" layout="block" rendered="#{item.get(30).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="divRate7Tooltip" value="#{item.get(30).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        按分率8
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(31).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="divRate8" value="#{item.get(31).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="divRate8Tt" styleClass="tooltip" layout="block" rendered="#{item.get(31).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="divRate8Tooltip" value="#{item.get(31).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        按分率9
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(32).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="divRate9" value="#{item.get(32).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="divRate9Tt" styleClass="tooltip" layout="block" rendered="#{item.get(32).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="divRate9Tooltip" value="#{item.get(32).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        按分率10
+                                    </f:facet>
+                                    <rich:panel styleClass="#{item.get(33).error.isPresent()?'error_cell' : 'nomal_cell'}">
+                                        <h:outputText id="divRate10" value="#{item.get(33).value}">
+                                        </h:outputText>
+                                        <rich:tooltip id="divRate10Tt" styleClass="tooltip" layout="block" rendered="#{item.get(33).error.isPresent()}">
+                                            <span style="white-space: nowrap">
+                                                <h:outputText id="divRate10Tooltip" value="#{item.get(33).error.get()}">
+                                                 </h:outputText>
+                                            </span>
+                                        </rich:tooltip>
+                                    </rich:panel>
+                                </h:column>
+                            </h:dataTable>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </ui:define>
+        </ui:composition> 
+    </h:body>
+</html>
+
+
+

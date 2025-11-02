@@ -1,0 +1,145 @@
+.contents_form_area {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.contents{
+  position: relative;
+  top : 60px;
+}
+
+.page_subtitle{
+  width : 850px;
+}
+
+.contents_title .button_icon {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+.col_button_move input {
+  height: 30px;
+}
+
+.contents_form_area .contents_table {
+  margin-left: 0px;
+  padding: 0px;
+}
+
+.contents_form_area .contents_table table tr th, .contents_form_area .contents_table table tr td {
+  border: 1px solid #C4C0C9;
+}
+
+.contents_form_area .contents_table table tr th {
+  color: #FFF;
+  background-color: rgb(0, 79, 141);
+}
+
+.contents_form_area .contents_table table tbody tr:nth-child(2n) {
+  background-color: rgb(200, 233, 255);
+}
+
+.contents_form_area .contents_table table tr td {
+  text-align: center;
+  padding: 0px;
+}
+
+.contents_form_area .contents_table .meterTypeName {
+  min-width: 150px;
+}
+
+.contents_form_area .contents_table .allCheck {
+  min-width: 50px;
+}
+
+.contents_form_area .contents_table .note {
+  width: 250px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.button_search {
+  margin: auto;
+}
+
+.button_search, .button_print1, .button_print2 {
+  width: 120px;
+}
+
+.button_search .button_icon {
+  position: absolute;
+  top: 1px;
+  left: 3px;
+}
+
+.button_disp {
+  margin: auto;
+  width: 120px;
+}
+
+.button_disp input[type='button'] {
+  padding: 0 60px;
+}
+
+.button_disp .button_icon {
+  position: absolute;
+  top: 1px;
+  left: 3px;
+}
+
+.button_print1 .button_icon, .button_print2 .button_icon {
+  position: absolute;
+  top: 6px;
+  left: 10px;
+}
+
+.contents_header {
+  position: relative;
+  margin: 10px 55px 10px 80px;
+}
+
+.contents_header_tab span+span {
+  margin-left: 5px;
+}
+
+.contents_header_tab span img {
+  background-color: #7ff6fa;
+  cursor: pointer;
+}
+
+.button_width {
+    height: 40px;
+    width: 150px;
+}
+
+.button_area {
+    text-align: center;
+    margin-top: 85px;
+}
+
+.button_area .button_icon {
+    position: relative;
+    top: 6px;
+    left: -120px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.contents_form_area .contents_form_area_row {
+    display: table;
+    margin-bottom: 20px;
+}
+
+.contents_form_area .contents_form_area_row > div {
+    display: table-cell;
+    margin-top: 100px;
+}
+.rf-msgs  span{
+  margin-top : 52px;
+  margin-bottom : -45px;
+}

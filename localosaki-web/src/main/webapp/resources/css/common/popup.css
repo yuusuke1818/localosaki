@@ -1,0 +1,598 @@
+/*********************************************
+*ポップアップ関連*
+**********************************************/
+/*richface既存のpaddingを排除*/
+.rf-pp-cnt{
+    padding:0px;
+}
+/*初期化*/
+.rf-pp-hdr-cnt {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    color:initial;
+    font-size:initial;
+    padding: 0px;
+    margin: 0px;
+}
+/*初期化*/
+.rf-pp-hdr {
+    background:none;
+    position: relative;
+    padding-left:0px;
+    cursor: move;
+    padding: 0px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+/*コンテンツ内側の間隔*/
+div.inner_content {
+    min-height:100px;
+   /* width:auto; */
+}
+
+/*IE対応用幅指定*/
+div.content_width {
+	width: auto;
+}
+
+/*タイトルエリア*/
+.pop_title_area{
+    position: relative;
+    width:100%;
+    height:50px;
+    background: -moz-linear-gradient(
+            top,
+            #38acff 0%,
+            #054f99);
+    background: -webkit-gradient(
+            linear, left top, left bottom,
+            from(#38acff),
+            to(#054f99));
+    background: -ms-linear-gradient(
+            top,
+            #38acff 0%,
+            #054f99);
+}
+
+/*ポップアップヘッダー（原単位分母のみ色が違う）*/
+.pop_title_area_gentani{
+    position: relative;
+    width:100%;
+    height:50px;
+    background: -moz-linear-gradient(
+            top,
+            #627cfe 0%,
+            #3d52a6 52%,
+            #30458a);
+    background: -webkit-gradient(
+            linear, left top, left bottom,
+            from(#627cfe),
+            color-stop(0.52, #3d52a6),
+            to(#30458a));
+    background: -ms-linear-gradient(
+            top,
+            #627cfe 0%,
+            #3d52a6 52%,
+            #30458a);
+}
+
+/*タイトル*/
+.pop_page_title{
+    position: absolute;
+    top: 12px;
+    left: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    letter-spacing: 2px;
+    color:#FFF;
+}
+
+/*アイコン付きタイトル*/
+.pop_page_title_with_icon{
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    letter-spacing: 2px;
+    color:#FFF;
+}
+
+/*ポップアップ右上の閉じるボタン*/
+.pop_button_close input[type="button"]{
+    position:absolute;
+    top:11px;
+    right:5px;
+    background-image:url("#{resource['images/common/com023.png']}");
+    width:30px;
+    height:30px;
+    background-repeat: no-repeat;
+    border: 0px;
+    background-color: #FFF;
+    cursor: pointer;
+}
+
+.contents_area tr{
+    height: 40px;
+}
+
+.contents_area tr th{
+    width: 120px;
+}
+
+/*検索ボタン*/
+.button_search{
+    text-align: center;
+}
+
+.rf-pp-cntr table { border-collapse: collapse; }
+
+/* 検索結果カラム */
+/*.search_result_pop tr th:nth-child(0){
+    width: 30px;
+}*/
+
+/*デフォルトカラム*/
+.column_style{
+    border: 1px #CCC solid;
+    padding: 10px 10px 10px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+/*検索結果*/
+/*セットボタン*/
+.column_style_1{
+    text-align: center;
+    width:30px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_2{
+    width:100px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_3{
+    width:350px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_4{
+    width:200px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_5{
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+/*建物汎用カラム幅*/
+/*セットボタン*/
+.column_style_building_0{
+    text-align: center;
+    width:30px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+/*建物・テナント*/
+.column_style_building_1{
+    text-align: center;
+    width:30px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_building_2{
+    width:200px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_building_3{
+    width:250px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_building_4{
+    width:200px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+/*ユーザー汎用カラム幅*/
+/*セットボタン*/
+.column_style_user_1{
+    text-align: center;
+    width:30px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_user_2{
+    width:134px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_user_3{
+    width:134px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_user_4{
+    width:134px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_user_5{
+    width:134px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_user_6{
+    width:134px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+/*アカウントステータス*/
+.accountStatusArea1{
+    width:500px;
+    height:25px;
+}
+.accountStatusArea1 td:nth-child(1){
+    width: 159px;
+}
+.accountStatusArea2{
+    width:500px;
+    height:25px;
+}
+
+/*自治体汎用カラム幅*/
+/*セットボタン*/
+.column_style_municipality_1{
+    text-align: center;
+    width:30px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_municipality_2{
+    width:220px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_municipality_3{
+    width:220px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_municipality_4{
+    width:220px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_maintenance_1{
+    text-align: center;
+    width:20px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_maintenance_2{
+    width:180px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_maintenance_3{
+    width:100px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_maintenance_4{
+    width:180px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_maintenance_5{
+    width:60px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+    text-align: right;
+}
+
+.column_style_maintenance_6{
+    width:50px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+    position:relative;
+    text-align: center;
+}
+.column_style_maintenance_6 .button_icon{
+    position:absolute;
+    margin-left: -26px;
+    margin-top: 8px;
+}
+
+/*市区町村汎用カラム幅*/
+/*セットボタン*/
+.column_style_city_1{
+    text-align: center;
+    width:30px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_city_2{
+    width:100px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_city_3{
+    width:100px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_city_4{
+    width:220px;
+    border: 1px #CCC solid;
+    padding: 1px 10px 1px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+
+.button_search_pop{
+    position:relative;
+    text-align: center;
+    margin-top:10px;
+}
+
+.button_search_pop .button_icon{
+    position:absolute;
+    top: 8px;
+    left: 300px;
+}
+
+/*********************************************
+*検索結果関連*
+**********************************************/
+
+/*検索結果件数表示エリア（左）*/
+.search_result_pop_header_left{
+    letter-spacing: 1.5px;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+}
+
+
+/*検索結果表示エリア*/
+.search_result_pop_area{
+    width:100%;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+}
+
+/*検索結果のヘッダーのスタイル*/
+.search_result_pop_area .table_header {
+    background-color: rgb(0,79,141);
+    color: white;
+    font-weight: bold;
+    border: 1px #CCC solid;
+    height:34px;
+}
+
+/*検索結果のtbodyのスタイル*/
+.search_result_pop_area tbody tr{
+    height:20px;
+}
+
+/*検索結果の1リストに2行表示させるパターンの背景色対応１*/
+.search_result_pop_area tbody tr:nth-child(2n) {
+    background-color: rgb(200,233,255);
+}
+
+/*検索結果の1リストに2行表示させるパターンの背景色対応２*/
+.search_result_pop_area tbody tr:nth-child(2n-1) table tbody tr:nth-child(2n) {
+    background-color: #FFF;
+}
+
+/*リスト内アクションボタン(グラデーション直接指定)*/
+.search_result_pop_area tbody tr input[type="submit"],
+.search_result_pop_area tbody tr input[type="button"]{
+    height:36px;
+    background: -moz-linear-gradient( top, #fffcf7 0%, #3990ce 25%, #1061a3 50%, #2baaf3 85%, #37e6e6);
+    background: -webkit-gradient( linear, left top, left bottom, from(#fffcf7), color-stop(0.25, #3990ce), color-stop(0.40, #1061a3), color-stop(0.50, #1061a3), color-stop(0.90, #2baaf3), to(#2baaf3));
+    background: -ms-linear-gradient( top, #fffcf7 0%, #3990ce 25%, #1061a3 50%, #2baaf3 85%, #37e6e6);
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+    border-radius: 1px;
+    border: 1px solid #24a1e9;
+    -moz-box-shadow: 0px 1px 3px rgba(000,000,000,0.5), inset 0px -1px 0px rgba(255,255,255,0.7);
+    -webkit-box-shadow: 0px 1px 3px rgba(000,000,000,0.5), inset 0px -1px 0px rgba(255,255,255,0.7);
+    -ms-box-shadow: 0px 1px 3px rgba(000,000,000,0.5), inset 0px -1px 0px rgba(255,255,255,0.7);
+
+    box-shadow: 0px 1px 3px rgba(000,000,000,0.5), inset 0px -1px 0px rgba(255,255,255,0.7);
+    text-shadow: 0px -1px 1px rgba(000,000,000,0.2), 0px 1px 0px rgba(255,255,255,0.3);
+
+    color: #FFFFFF;
+}
+
+.search_result_pop_area tbody tr input:hover[type="submit"],
+.search_result_pop_area tbody tr input:hover[type="button"]
+{
+    background: -moz-linear-gradient( top, #fffcf7 0%, #3990ce 10%, #1061a3 40%, #2baaf3 90%, #fffcf7);
+    background: -webkit-gradient( linear, left top, left bottom, from(#fffcf7), color-stop(0.10, #3990ce), color-stop(0.40, #1061a3), color-stop(0.50, #1061a3), color-stop(0.90, #2baaf3), to(#2baaf3));
+    background: -ms-linear-gradient( top, #fffcf7 0%, #3990ce 10%, #1061a3 40%, #2baaf3 90%, #37e6e6);
+}
+
+.button_set_pop{
+    position:relative;
+    text-align: center;
+}
+
+.button_set_pop .button_icon{
+    position:absolute;
+    margin-top: 9px;
+    margin-left: -24px;
+}
+
+/*OK、キャンセルボタン表示エリア*/
+.change_caution_button_area{
+    margin-top:20px;
+    width:100%;
+}
+
+.change_caution_button_area .ok_button{
+    position:relative;
+    width: 140px;
+    text-align: right;
+}
+
+.change_caution_button_area .ok_button .button_icon{
+    position:absolute;
+    top: 9px;
+    left: 55px;
+    right:
+}
+
+.change_caution_button_area .ok_button .button_icon2{
+    position:absolute;
+    top: 9px;
+    left: 70px;
+}
+
+.change_caution_button_area .cancel_button{
+    position:relative;
+    width:214px;
+}
+
+.change_caution_button_area .cancel_button .button_icon{
+    position:absolute;
+    top: 9px;
+    left: 48px;
+}
+
+/*OKボタン表示エリア*/
+.change_caution_button_area_2{
+    margin-top:20px;
+    width:50%;
+}
+
+.change_caution_button_area_2 .ok_button{
+    position:relative;
+    width: 140px;
+    text-align: right;
+}
+
+.change_caution_button_area_2 .ok_button .button_icon{
+    position:absolute;
+    top: 9px;
+    left: 55px;
+}
+
+.change_caution_button_area_2 .ok_button .button_icon2{
+    position:absolute;
+    top: 9px;
+    left: 70px;
+}
+
+/*法点検サイクルの説明リスト*/
+.tenken_cycle{
+    width:100%;
+    border-collapse: collapse;
+    border:2px solid rgb(0,79,141);
+    font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    font-size:14px;
+    text-align: center;
+}
+
+.tenken_cycle th{
+    background-color:rgb(0,79,141);
+    color:#FFF;
+}
+
+.tenken_cycle td{
+    border:1px solid rgb(0,79,141);
+    color:#000;
+}
+/*親グループ、子グループ追加バリデーションメッセージ*/
+#parentGroupValidationMessage, #childGroupValidationMessage{
+    font-size: 15px;
+    font-weight : bold;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+}
+
+/*APIキー表示画面*/
+.apikey_content{
+    font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    font-size:14px;
+    width: 100%;
+}
+
+/*APIキーアイコン*/
+.apikey_icon{
+    margin-left:10px;
+}
+
+/*APIキー表示カラム*/
+.apikey_string{
+    border: solid #004c8b;
+    padding: 10px;
+    text-align: center;
+    height: 20px;
+    vertical-align: middle;
+}
+
+/*API情報表示カラム*/
+.apikey_info{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

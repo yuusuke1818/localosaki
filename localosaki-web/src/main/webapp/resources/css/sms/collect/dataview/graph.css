@@ -1,0 +1,341 @@
+.contents_graph {
+    display: none;
+}
+
+.contents_graph .row {
+    display: flex;
+    align-items: center;
+}
+
+.contents_graph .graph_header {
+    display: flex;
+    padding: 0px;
+    color: #FFF;
+    text-align: center;
+    font-size: 10pt;
+    font-weight: bold;
+    border: thin solid #CCC;
+    background-color: #CCC;
+}
+
+.contents_graph .graph_header .head {
+    width: 100px;
+    border-color: #CCC;
+    margin-left: 0px;
+    margin-right: 1px;
+}
+
+.contents_graph .graph_header .head .devNameHeader {
+    margin: 1px 0px 1px 0px;
+    height: 17px;
+    line-height: 17px;
+    overflow: hidden;
+}
+
+.contents_graph .graph_header .head .meterMngIdHeader {
+    margin: 0px;
+    height: 14px;
+    line-height: 16px;
+    overflow: hidden;
+}
+
+.contents_graph .graph_header .head .meterIdNameHeader {
+    margin: 1px 0px 1px 0px;
+    height: 14px;
+    line-height: 14px;
+    overflow: hidden;
+}
+
+.contents_graph .graph_header .head .tenantNameHeader {
+    margin: 1px 0px 1px 0px;
+    height: 33px;
+}
+
+.tenantNameHeaderInner {
+    position: relative;
+    top: 26%;
+}
+
+.contents_graph .graph_header .head .tenantNameHeaderInner1 {
+    background-color: transparent;
+    position: relative;
+    bottom: 6px;
+}
+
+@media (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .contents_graph .graph_header .head .tenantNameHeaderInner1 {
+        background-color: transparent;
+        position: relative;
+        bottom: 16%;
+    }
+}
+
+.contents_graph .graph_header .head .tenantNameHeaderInner2 {
+    background-color: transparent;
+    position: relative;
+    bottom: 11px;
+}
+
+@media (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .contents_graph .graph_header .head .tenantNameHeaderInner2 {
+        background-color: transparent;
+        position: relative;
+        bottom: 32%;
+    }
+}
+
+.contents_graph .graph_header .head .meterTypeNameHeader {
+    margin: 0px;
+    height: 14px;
+    line-height: 14px;
+    overflow: hidden;
+}
+
+.contents_graph .graph_header .head .unitHeader {
+    height: 14px;
+    line-height: 14px;
+    overflow: hidden;
+}
+
+.contents_graph .graph_header .items {
+    width: 140px;
+    margin-left: 0px;
+    margin-right: 1px;
+    cursor: pointer;
+}
+
+.contents_graph .graph_header .items .devNameHeader {
+    line-height: 16px;
+    overflow: hidden;
+}
+
+.contents_graph .graph_header .items .devNameHeader span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+    word-break: break-all;
+}
+
+.contents_graph .graph_header .items .meterMngIdHeader {
+    margin: 0px;
+    height: 14px;
+    line-height: 16px;
+    overflow: hidden;
+}
+
+.contents_graph .graph_header .items .tenantNameHeader {
+    margin: 1px 0px 1px 0px;
+    height: 33px;
+    line-height: 35px;
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+.contents_graph .graph_header .items .tenantNameHeader span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+    word-break: break-all;
+}
+
+.contents_graph .graph_header .items .meterTypeNameHeader {
+    height: 14px;
+    line-height: 16px;
+    overflow: hidden;
+}
+
+.contents_graph .graph_header .items .unitHeader {
+    height: 14px;
+    line-height: 16px;
+    overflow: hidden;
+}
+
+.contents_graph .graph_header .items .meterTypeNameHeader span {
+    display: inline-block;
+    line-height: normal;
+    position: relative;
+    bottom: 2px;
+}
+
+.contents_graph .graph_header .items:hover div {
+    background-color: #99ef99;
+}
+
+.contents_graph .graph_header .head div,
+.contents_graph .graph_header .items div {
+    height: 18px;
+    margin: 1px 0;
+    padding: 3px 0;
+    background-color: #004f8d;
+}
+
+.contents_graph .graph_header .items.selected div {
+    background-color: #2dc12d;
+}
+
+.div_graph_header {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.div_graph_dev_header .title {
+    color: #999;
+    padding: 3px 20px;
+    font-weight: bold;
+    border: 0px none;
+    margin-right: 3px;
+}
+
+.div_graph_dev_header .head {
+    color: #999;
+    border: 1px solid #CCC;
+    border-radius: 15px;
+    padding: 3px 20px;
+    font-weight: bold;
+    margin-right: 3px;
+    margin-top: 10px;
+}
+
+.div_graph_header .head {
+    color: #999;
+    border: 1px solid #CCC;
+    border-radius: 15px;
+    padding: 3px 20px;
+    font-weight: bold;
+    margin-right: 3px;
+}
+
+.div_graph_demand_header .title {
+    color: #999;
+    padding: 3px 20px;
+    font-weight: bold;
+    border: 0px none;
+    margin-right: 3px;
+}
+
+.div_graph_demand_header .head {
+    color: #999;
+    border: 1px solid #CCC;
+    border-radius: 15px;
+    padding: 3px 20px;
+    font-weight: bold;
+    margin-right: 3px;
+}
+
+.div_graph_header .head{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.div_graph_demand_header .head{
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: 5px;
+}
+
+.div_graph_header .graphDevNameRow .head {
+    width: 50px;
+}
+
+.div_graph_header .graphDevNameRow .body {
+    width: 120px;
+}
+
+.div_graph_header .graphMeterMngIdRow .head {
+    width: 50px;
+}
+
+.div_graph_header .graphMeterMngIdRow .body {
+    width: 40px;
+}
+
+.div_graph_header .graphMeterIdRow .head {
+    width: 40px;
+}
+
+.div_graph_header .graphMeterIdRow .body {
+    width: 120px;
+}
+
+.div_graph_header .graphTenantNameRow .head {
+    width: 60px;
+}
+
+.div_graph_header .graphTenantNameRow .body {
+    display: flex;
+}
+
+.div_graph_header .graphMeterTypeNameRow .head {
+    margin-left: 5px;
+    width: 75px;
+}
+
+.div_graph_header .graphMeterTypeNameRow .body {
+    width: 160px;
+}
+
+@media (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .div_graph_header .graphMeterMngIdRow .head {
+        width: 50px;
+    }
+
+    .div_graph_header .graphMeterIdRow .head {
+        width: 45px;
+    }
+
+    .div_graph_header .graphTenantNameRow .head {
+        width: 65px;
+    }
+
+    .div_graph_header .graphMeterTypeNameRow .head {
+        width: 75px;
+    }
+}
+
+.div_graph_header .body {
+    color: #2dc12d;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.div_graph_dev_header .body {
+    color: #2dc12d;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.div_graph_demand_header .body {
+    color: #E95C0D;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.div_graph_demand_header .title{
+    margin-bottom : 3px;
+}
+
+.div_graph_demand_header .graph-max-demand{
+    margin-bottom : 10px;
+}
+
+.div_graph_demand_header .graph-max-demand .body{
+    display: flex;
+}
+
+.contents_cell_header {
+    max-width: 58px;
+    min-width: 58px;
+    word-break: keep-all;
+}
+
+.contents_cell_body {
+    max-width: 58px;
+    min-width: 58px;
+}
+
+.graph_notes {
+    color: #FF0000;
+    font-size: 13px;
+    font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, "ＭＳ Ｐゴシック", sans-serif;
+}

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:rich="http://richfaces.org/rich" xmlns:cust="http://xmlns.jcp.org/jsf/component"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:a4j="http://richfaces.org/a4j">
+    <div style="margin-top: 0;">
+        <div>
+            <rich:messages id="s6Messages" styleClass="errNonSearch errArea" />
+            <form jsfc="h:form" id="smartCurrentValueForm">
+                <table class="s6Table">
+                    <tr style="height: 10px">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div jsfc="a4j:outputPanel" id="s6MeterMngIdListPanel">
+                                メーター管理番号：
+                                <span class="meterMngIdList">
+                                    <select jsfc="h:selectOneMenu" id="s6MeterMngIdSelect" value="#{smsCollectSettingMeterMeterManagementBean.nowValMeterMngIdSmart}" class="SEL1 selDev sDevIdSel">
+                                        <option jsfc="f:selectItems" value="#{smsCollectSettingMeterMeterManagementBean.nowValMeterMngIdMap}" />
+                                    </select>
+                                </span>
+                            </div>
+                        </td>
+                        <td class="TXT020" colspan="2">
+                            <div class="gradation_type_1 button_large_2">
+                                <h:graphicImage class="s6CurrentValueGetBtnIcon" library="images" name="admin/admin003.png" />
+                                <a4j:commandButton
+                                        id="s6GetValueBtn"
+                                        class="action_button"
+                                        value="現在値取得"
+                                        execute="@form" 
+                                        render="@form #{rich:clientId('alertDialog')}"
+                                        onclick="getCurrentValueSelMeterMngId()"
+                                        onbegin="showBlockModal();"
+                                        oncomplete="allCheckBoxDisabled(); hideBlockModal(); viewList('S'); alertDialogOpen();"
+                                        actionListener="#{smsCollectSettingMeterMeterManagementBean.execGetCurrentValue(smsCollectSettingMeterMeterManagementBean.nowValMeterMngIdSmart)}">
+                                </a4j:commandButton>
+
+                                &nbsp;
+                                <h:graphicImage class="s6CurrentValueDispBtnIcon" library="images" name="admin/admin005.png" />
+                                <a4j:commandButton
+                                    id="s6DispValueBtn"
+                                    class="action_button"
+                                    value="現在値表示"
+                                    execute="@form" 
+                                    onclick="getCurrentValueSelMeterMngId()"
+                                    onbegin="showBlockModal();"
+                                    oncomplete="hideBlockModal();"
+                                    render="smsCollectSettingMeterMeterManagementBean:s6CurrentValueDispPanel"
+                                    actionListener="#{smsCollectSettingMeterMeterManagementBean.execDispCurrentValue(smsCollectSettingMeterMeterManagementBean.nowValMeterMngIdSmart)}">
+                                </a4j:commandButton>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+            <br />
+            <br />
+            <br />
+            
+            <div jsfc="a4j:outputPanel" id="s6CurrentValueDispPanel">
+
+                <c:if test="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.demandingFlg == '1'}">
+                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.demandingMsg}" style="font-weight: bold;" /><br/><br/>
+                </c:if>                
+                
+                <c:if test="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.existenceFlag}">
+                    <div class="dispValueTable">
+                        <table>
+                            <tr>
+                                <th colspan="2" class="top_cls">現在時刻</th>
+                                <th class="top_cls">計器ID</th>
+                                <!-- <th class="top_cls">計器種別</th>
+                                <th class="top_cls">相線式</th>
+                                <th class="top_cls">定格電圧(V)</th>
+                                <th class="top_cls">定格電流(A)</th>
+                                <th class="top_cls">乗率</th> -->
+                            </tr>
+                            <tr>
+                                <td id="now_td_id_01" class="now_time_cls" colspan="2">
+                                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.measureDateDisp}" />
+                                </td>
+                                <td id="now_td_id_02" class="now_equip_cls">
+                                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.meterId}" />
+                                </td>
+                                <!-- <td id="now_td_id_03" class="now_type_cls">
+                                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.ifTypeDisp}" />
+                                </td>
+                                <td id="now_td_id_04" class="now_phase_cls">
+                                    ここは空白
+                                </td>
+                                <td id="now_td_id_05" class="now_rateV_cls">
+                                    ここは空白
+                                </td>
+                                <td id="now_td_id_06" class="now_rateI_cls">
+                                    ここは空白
+                                </td>
+                                <td id="now_td_id_07" class="now_mul_cls">
+                                    ここは空白
+                                </td> -->
+                            </tr>
+                            <tr>
+                                <th colspan="2" class="top_cls">現在計量値</th>
+                                <th rowspan="2" class="top_cls">瞬時電力</th>
+                                <th colspan="2" class="top_cls">電圧</th>
+                                <th colspan="2" class="top_cls">電流</th>
+                                <th rowspan="2" class="top_cls">開閉区分</th>
+                            </tr>
+                            <tr>
+                                <th class="top_cls">全日電力量(正)</th>
+                                <th class="top_cls">全日電力量(逆)</th>
+                                <th class="top_cls">P1-P2</th>
+                                <th class="top_cls">P2-P3</th>
+                                <th class="top_cls">1側</th>
+                                <th class="top_cls">3側</th>
+                            </tr>
+                            <tr>
+                                <td id="now_td_id_08" class="now_pW_cls">
+                                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.currentKwh1}kWh" />
+                                </td>
+                                <td id="now_td_id_09" class="now_mW_cls">
+                                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.currentKwh2}kWh" />
+                                </td>
+                                <td id="now_td_id_10" class="now_sW_cls">
+                                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.momentaryPwr}kW" />
+                                </td>
+                                <td id="now_td_id_11" class="now_P12_cls">
+                                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.voltage12}V" />
+                                </td>
+                                <td id="now_td_id_12" class="now_P23_cls">
+                                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.voltage23}V" />
+                                </td>
+                                <td id="now_td_id_13" class="now_I1_cls">
+                                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.ampere1}A" />
+                                </td>
+                                <td id="now_td_id_14" class="now_I3_cls">
+                                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.ampere3}A" />
+                                </td>
+                                <td id="now_td_id_15" class="now_ocstate_cls">
+                                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.circuitBreakerDisp}" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </c:if>
+                <c:if test="#{!smsCollectSettingMeterMeterManagementBean.nowValProperty.existenceFlag}">
+                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.existenceMsg1}" style="white-space: pre;font-weight: bold;" /><br/>
+                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.existenceMsg2}" style="white-space: pre;font-weight: bold;" />
+                </c:if>
+            </div>
+        </div>
+    </div>
+</html>

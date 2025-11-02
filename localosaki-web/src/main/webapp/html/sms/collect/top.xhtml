@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+<body>
+	<ui:composition
+		template="/html/template/template_collect_sidemenu.xhtml">
+		<ui:param name="isTopPage" value="true" />
+		<ui:define name="content_side" class="content">
+            <h:outputStylesheet library="css" name="sms/top.css" />
+			<h:outputStylesheet library="css" name="menu/index.css" />
+			<h:outputScript library="js" name="menu/menu.js" />
+            <h:outputScript library="js" name="sms/top.js" />
+			<form jsfc="h:form" id="smsCollectTopBean">
+				<div class="index_spacing">
+					<!--通常メニュー-->
+					<div style="text-align: center; font-size: 20px; padding: 20px">左側メニューより表示画面を選択してください。</div>
+				</div>
+				   <c:if test="#{smsCollectTopBean.meterManagementVisble}">
+                <form jsfc="h:form" id="smsCollectSettingInspectionExpireryBean">
+                    <div class="inner_content">
+                        <div jsfc="a4j:outputPanel" id="inspectionExpireryPanel">
+                            <div class="title_area_warp">
+                                <!-- 画面タイトル -->
+                                <div class="title_area_left">
+                                    <h2 class="page_title">検満情報</h2>
+                                    <p class="page_subtitle">
+                                        <h:outputText value="各メーターの検満情報を表示します。" />
+                                    </p>
+                                </div>
+                            <div class="clear" />
+
+                    <div class="contents_title contents_accordion_header">
+                        <h:graphicImage class="button_icon button_opener" library="images" name="demand/demand_container_opner.png"  style="display: none;" />
+                        <h:graphicImage class="button_icon button_closer" library="images" name="demand/demand_container_closer.png" />
+                        <span class="contents_title_body">表示条件</span>
+                    </div>
+                    <div class="contents_form_area contents_accordion_body">
+                        <span class="msg">表示内容を変更したい場合は、下記を変更し、［表示更新］ボタンを押してください。</span>
+                        <div class="contents_form_area_row">
+                            <span class="page_subtitle">抽出範囲</span>
+                            <div>
+                                <select jsfc="h:selectOneMenu"
+                                                 id="monthExtract"
+                                                 value="#{smsCollectTopBean.monthExtract}"
+                                                 styleClass="inspectionMeterBefList_sel_std"
+                                                 onkeydown="searchConditionKeydown()">
+                                    <option jsfc="f:selectItems" value="#{smsCollectTopBean.monthExtractMap}" />
+                                </select>
+                            </div>
+                        </div>
+                    <div class="foot">
+		                <div class="gradation_type_1 button_large_2">
+		                    <h:graphicImage class="button_icon" library="images"
+		                        name="common/com015.png" />
+		                    <button jsfc="a4j:commandButton" id="s1ReloadButton"
+		                        class="button_width edit_search_start s1ReloadButton" value="表示更新"
+		                        action="#{smsCollectTopBean.reload()}"
+		                        execute="@form"
+		                        render="#{rich:clientId('sTablePanel')}"
+		                onbegin="showBlockModal()"
+		                oncomplete="setErrMsgArea('1'); hideBlockModal();" />
+		                </div>
+                    </div>
+
+            </div>
+                  </div>
+            <c:if test="#{smsCollectTopBean.dispCnt != '0'}">
+             <div jsfc="a4j:outputPanel" id="sTablePanel">
+              <div class="contents_body">
+                <div class="tbl contents_table">
+                    <div class="search_result_area">
+                    <form jsfc="h:form" id="ocrListFrom">
+                        <rich:extendedDataTable id="resultMeterData" var="item" class="oTbl"
+                                    value="#{smsCollectTopBean.meterList}"
+                                    cellpadding="0"
+                                    selectionMode="none"
+                                    rendered="#{!smsCollectTopBean.meterList.isEmpty()}"
+                                    columnClasses="column_style_dev_name, column_style_mng_id, column_style_user_code, column_style_tenant_name,
+                                                   column_style_meter_id, column_style_type, column_style_exam_end_ym, column_style_exam_alert">
+                            <rich:column headerClass="table_header" width="140px">
+                                <f:facet name="header">
+                                    装置名
+                                </f:facet>
+                                <h:outputText id="devId" value="#{item.devName}" />
+                            </rich:column>
+                            <rich:column headerClass="table_header" width="80px">
+                                <f:facet name="header">
+                                    管理番号
+                                </f:facet>
+                                <h:outputText id="meterMngId" value="#{item.meterMngId}" />
+                            </rich:column>
+                            <rich:column headerClass="table_header" width="95px">
+                                <f:facet name="header">
+                                    ユーザー<br />
+                                    コード
+                                </f:facet> <h:outputText id="tenantId"
+                                    value="#{item.tenantId}" rendered="#{item.tenantId != null}" /> <h:outputText
+                                    id="tenantIdBlank" value="-" rendered="#{item.tenantId == null}" />
+                            </rich:column>
+                            <rich:column headerClass="table_header" width="235px">
+                                <f:facet name="header">
+                                    テナント番号<br />
+                                    テナント名
+                                </f:facet> <ui:fragment
+                                    rendered="#{item.buildingNo != null}">
+                                    <h:outputText id="buildingNo" value="#{item.buildingNo}" />
+                                    <br />
+                                    <h:outputText id="buildingName" value="#{item.buildingName}" style="font-size:13px;" />
+                                </ui:fragment> <h:outputText id="buildingNoBlank" value="-"
+                                    rendered="#{item.buildingNo == null}" />
+                            </rich:column>
+                            <rich:column headerClass="table_header" width="100px">
+                                <f:facet name="header">
+                                    計器ID
+                                </f:facet>
+                                <h:outputText id="meterId" value="#{item.meterId}" />
+                            </rich:column>
+                            <rich:column headerClass="table_header" width="85px">
+                                <f:facet name="header">
+                                    種別
+                                </f:facet>
+                                <h:outputText id="meterTypeName" value="#{item.meterTypeName}" />
+                            </rich:column>
+                            <rich:column headerClass="table_header" width="100px">
+                                <f:facet name="header">
+                                    検満年月
+                                </f:facet>
+                                <ui:fragment rendered="${item.dispYearFlg == '0'}">
+                                    <h:outputText id="examEndYm" value="#{item.examEndYm}" />
+                                </ui:fragment>
+                                <ui:fragment rendered="${item.dispYearFlg == '1'}">
+                                    <h:outputText id="examEndYmWareki" value="#{item.examEndYmWareki}" />
+                                </ui:fragment>
+                            </rich:column>
+                            <rich:column headerClass="table_header" width="80px">
+                                <f:facet name="header">
+                                    検満通知
+                                </f:facet>
+                                <ui:fragment rendered="${item.examNotice == '0'}">
+                                <h:outputText id="examNotice0" value="#{smsCollectTopBean.convertExamNotice(item.examNotice)}" style="color: #ff0000" />
+                                </ui:fragment>
+                                <ui:fragment rendered="${item.examNotice == '1'}" >
+                                <h:outputText id="examNotice1" value="#{smsCollectTopBean.convertExamNotice(item.examNotice)}"  style="color: #0000D0" />
+                                </ui:fragment>
+                            </rich:column>
+                        </rich:extendedDataTable>
+                    </form>
+                    </div>
+                </div>
+                </div>
+                </div>
+            </c:if>
+                            </div>
+                            </div>
+                            </form>
+                            </c:if>
+			</form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

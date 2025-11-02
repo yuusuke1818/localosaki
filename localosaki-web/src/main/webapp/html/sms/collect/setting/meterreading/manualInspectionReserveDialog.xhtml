@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:outputStylesheet library="css" name="common/popup.css"/>
+    <rich:popupPanel id="manualInspectionReserveDialog" modal="true" moveable="true" resizeable="false"
+                       top="180" width="500" height="330" zindex="320"
+                       domElementAttachment="parent">
+
+        <f:facet name="header">
+            <div class="pop_title_area">
+                <div class="left">
+                    <h:outputText class="pop_page_title" value="予約検針" />
+                </div>
+                <div class="pop_button_close">
+                    <input type="button" value="" onclick="#{rich:component('manualInspectionReserveDialog')}.hide();">
+                    </input>
+                </div>
+            </div>
+        </f:facet>
+        <div  class="inner_content content_width">
+            <table jsfc="h:panelGrid" columns="1" style="width: 100%;">
+                <span jsfc="h:column" style="">
+                    <div style="margin-bottom: 5px;">
+                        <h:outputText class="page_subtitle" value="予約する年月日と時間を選択後に、実行を押してください" />
+                    </div>
+                </span>
+                <span jsfc="h:column" style="">
+                    <div class="gradation_type_1 button_medium_2" style="display: flex; align-items: center; margin-top: 10px; margin-left: 35px;">
+                        <div style="width: 40px;">
+                            <rich:calendar id="idUpdReserveInspDaily" class="calDayDaily" datePattern="yyyy/MM/dd"
+                                           enableManualInput="false" showWeeksBar="false" showFooter="false"
+                                           required="false" showInput="false"
+                                           value="#{smsCollectSettingMeterreadingManualInspectionBean.updReserveInspYMD}"
+                                           buttonIcon="#{request.contextPath}/resources/images/common/com030.png"
+                                           dayDisableFunction="isSelectableDate"
+                                           dayClassFunction="setCalendarDisableStyle"
+                                           zindex="50"
+                                           styleClass="calobj">
+                                <f:ajax event="change" render="idUpdReserveInspDate" />
+                            </rich:calendar>
+                        </div>
+                        <div style="width: 150px;"><h:outputText class="popup_msg" id="idUpdReserveInspDate" value="#{smsCollectSettingMeterreadingManualInspectionBean.updReserveInspYMDFmt}" /></div>
+                        <div>
+                            <span class="popup_msg" style="padding-right: 5px;">時間</span>
+                            <h:selectOneMenu id="idUpdReserveInspH" value="#{smsCollectSettingMeterreadingManualInspectionBean.updReserveInspH}"
+                                styleClass="SELECT001"
+                                style="height: 30px; font-size: 17px;"
+                                onkeydown="searchConditionKeydown()">
+                                <option jsfc="f:selectItems"
+                                    value="#{smsCollectSettingMeterreadingManualInspectionBean.searchBeanProperty.reserveInspHMap}" />
+                            </h:selectOneMenu>
+                            ：
+                            <h:selectOneMenu id="idUpdReserveInspM" value="#{smsCollectSettingMeterreadingManualInspectionBean.updReserveInspM}"
+                                styleClass="SELECT001"
+                                style="height: 30px; font-size: 17px;"
+                                onkeydown="searchConditionKeydown()">
+                                <option jsfc="f:selectItems"
+                                    value="#{smsCollectSettingMeterreadingManualInspectionBean.searchBeanProperty.reserveInspMMap}" />
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                </span>
+
+                <span>
+                    <div>
+                        <h:outputText style="color:#ff0000; margin-left: 35px;" value="※AieLinkの場合は時間指定はできません" />
+                    </div>
+                </span>
+
+                <span jsfc="h:column">
+                    <table class="change_caution_button_area" style="text-align: center; margin-top: 40px; margin-left: 10px;">
+                        <tr>
+                            <td class="gradation_type_1 button_large_2 button_area">
+                                <a4j:commandButton id="idBulkUpdReserveInspButton" value="予約検針実行"
+                                          style="width:160px;"
+                                          render="@form"
+                                          onclick="#{rich:component('manualInspectionReserveDialog')}.hide(); return confirmationDialogOpenForUpd($('input[id$=idBulkUpdReserveInspButton]'))"
+                                          action="#{smsCollectSettingMeterreadingManualInspectionBean.bulkUpdReserveInspButton()}"
+                                          oncomplete="ctrlBtnDisabled();"
+                                          />
+                                <h:graphicImage style="pointer-events: none;" class="dialog_exec_reserve_insp_button_icon btnDownloadIconLayout btnFileSelOkIconLayout" library="images" name="common/com067.png" />
+                                <a4j:commandButton id="idBulkDelReserveInspButton" value="予約検針取消"
+                                          style="width:160px;"
+                                          render="@form"
+                                          onclick="#{rich:component('manualInspectionReserveDialog')}.hide(); return confirmationDialogOpenForDel($('input[id$=idBulkDelReserveInspButton]'))"
+                                          action="#{smsCollectSettingMeterreadingManualInspectionBean.bulkDelReserveInspButton()}"
+                                          oncomplete="ctrlBtnDisabled();"
+                                          />
+                                <h:graphicImage style="pointer-events: none;" class="dialog_exec_reserve_insp_button_icon btnDownloadIconLayout btnFileSelOkIconLayout" library="images" name="common/com019.png" />
+                            </td>
+                        </tr>
+                    </table>
+                </span>
+            </table>
+        </div>
+    </rich:popupPanel>
+
+</html>

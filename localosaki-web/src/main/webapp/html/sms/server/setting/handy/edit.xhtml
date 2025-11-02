@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:cust="http://xmlns.jcp.org/jsf/component"
+    xmlns:oslib="http://osaki.co.jp/base-component"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+>
+<body>
+    <ui:composition template="/html/template/template_server_sidemenu.xhtml">
+        <ui:define name="content_side" class="content">
+            <h:outputStylesheet library="css" name="sms/server/setting/handy/edit.css" />
+            <form jsfc="h:form" id="smsServerSettingHandyEditBean">
+                <div class="inner_content">
+                    <div class="title_area_warp">
+                        <!-- 画面タイトル -->
+                        <c:if test="#{!smsServerSettingHandyEditBean.editBeanProperty.updateProcessFlg}">
+                            <div class="title_area_left">
+                                <h2 class="page_title">
+                                    <h:outputText value="ハンディ端末新規登録" />
+                                </h2>
+                                <!-- ヘルプボタン -->
+                                <c:if test="#{indexBean.userGuideBool}">
+                                    <h:commandLink class="help_icon"
+                                        action="#{indexBean.userGuide()}" target="_blank" />
+                                </c:if>
+                                <p class="page_subtitle">
+                                    <h:outputText value="ハンディ端末情報の新規登録ができます。" />
+                                </p>
+                            </div>
+                        </c:if>
+                        <c:if test="#{smsServerSettingHandyEditBean.editBeanProperty.updateProcessFlg}">
+                            <div class="title_area_left">
+                                <h2 class="page_title">
+                                    <h:outputText value="ハンディ端末編集" />
+                                </h2>
+                                <p class="page_subtitle">
+                                    <h:outputText value="ハンディ端末情報の編集ができます。" />
+                                </p>
+                            </div>
+                        </c:if>
+                        <div class="clear" />
+                        <rich:messages id="smsServerSettingHandyEditBeanMessages" />
+                        <div>
+                            <h3 class="contents_title">
+                                <h:outputText value="新規登録" rendered="#{!smsServerSettingHandyEditBean.editBeanProperty.updateProcessFlg}"/>
+                                <h:outputText value="編集" rendered="#{smsServerSettingHandyEditBean.editBeanProperty.updateProcessFlg}"/>
+                            </h3>
+                            <div class="contents_form_area">
+                                <table>
+                                    <tr>
+                                        <th class="TXT008">
+                                            装置コード
+                                            <span class="required"></span>
+                                        </th>
+                                        <td>
+                                            <h:inputText id="inputDevId" styleClass="check_change EDIT002 autofocus"
+                                                value="#{smsServerSettingHandyEditBean.editBeanProperty.devId}"
+                                                rendered="#{!smsServerSettingHandyEditBean.editBeanProperty.updateProcessFlg}"
+                                                style="width:250px; #{smsServerSettingHandyEditBean.getInvalidStyle(component.clientId)}"
+                                                maxlength="8"/>
+                                            <h:outputText id="outputDevId" styleClass="TXT020" value="#{smsServerSettingHandyEditBean.editBeanProperty.devId}"
+                                                rendered="#{smsServerSettingHandyEditBean.editBeanProperty.updateProcessFlg}"/>
+                                        </td>
+                                        <c:if test="#{!smsServerSettingHandyEditBean.editBeanProperty.updateProcessFlg}">
+                                            <td colspan="2">
+                                                <span>
+                                                    ※ 重複して登録できませんのでご注意ください。<br/>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;装置コードの先頭2文字はMHで入力してください。<br/>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;例：MHXXXXXX
+                                                </span>
+                                            </td>
+                                        </c:if>
+                                    </tr>
+                                    <tr>
+                                        <th class="TXT008">
+                                            装置パスワード
+                                            <span class="required"></span>
+                                        </th>
+                                        <td>
+                                            <h:inputSecret id="devPw" styleClass="check_change EDIT002 autofocus"
+                                                value="#{smsServerSettingHandyEditBean.editBeanProperty.devPw}"
+                                                redisplay="true"
+                                                style="width:250px; #{smsServerSettingHandyEditBean.getInvalidStyle(component.clientId)}"
+                                                maxlength="12"/>
+                                        </td>
+                                        <td colspan="2">
+                                            <span>
+                                                ※ 英数字のみ利用可能です。
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="TXT008">
+                                            装置名称
+                                        </th>
+                                        <td>
+                                            <h:inputText id="devName" styleClass="check_change EDIT002"
+                                                value="#{smsServerSettingHandyEditBean.editBeanProperty.name}"
+                                                style="width:250px; #{smsServerSettingHandyEditBean.getInvalidStyle(component.clientId)}"
+                                                maxlength="20"/>
+                                        </td>
+                                        <td colspan="2">
+                                            <span>
+                                                ※ 全角20文字以内にて入力してください。
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 登録ボタン -->
+                        <div class="button_area_center gradation_type_1 button_large_2 button_regist" style="position: relative;">
+                            <a4j:commandButton id="RegistButton" styleClass="action_button" value="登録"
+                                onclick="return deleteCheck('#{smsServerSettingHandyEditBean.deleteDialogMessage}',
+                                                '#{smsServerSettingHandyEditBean.dialogMessage}');"
+                                render="@form" onbegin="showBlockModal()" oncomplete="hideBlockModal();clearChangeFlag();"
+                                action="#{smsServerSettingHandyEditBean.regist()}"
+                            >
+                            </a4j:commandButton>
+                            <h:graphicImage class="button_icon img_regist_beseinfo" library="images" name="common/com067.png" />
+                            <span style="position: absolute; top: 12px;">
+                                <h:selectBooleanCheckbox value="#{smsServerSettingHandyEditBean.editBeanProperty.delFlg}"
+                                        styleClass="check_change check_delete" rendered="#{smsServerSettingHandyEditBean.editBeanProperty.updateProcessFlg}"
+                                >
+                                    <span class="TXT008 check_del_dev">
+                                        <h:outputText id="checkDelHandyLabel" value="装置を削除する" />
+                                    </span>
+                                </h:selectBooleanCheckbox>
+                            </span>
+                        </div>
+                    </div>
+
+                    <ui:include src="/html/common/changeCautionDialog.xhtml" />
+
+                    <!-- アクセストークン用 -->
+                    <oslib:requestToken />
+                    <ui:remove>確認ダイアログ</ui:remove>
+                    <ui:include src="/html/common/confirmationDialog.xhtml">
+                        <ui:param name="confirmationDialogTitle" value="確認" />
+                        <ui:param name="confirmationDialogMessage" value="#{smsServerSettingHandyEditBean.dialogMessage}" />
+                    </ui:include>
+                    <script type="text/javascript">
+                    function deleteCheck(deleteMsgTxt, nomalMsgTxt) {
+                        if (confirmationDialogOpen($('input[id$=RegistButton]'))) {
+                            return true;
+                        }
+                        var isDelete = $(".check_delete").prop('checked');
+                        if (isDelete) {
+                            $('span[id$=confirmationDialogMessage]').html(deleteMsgTxt);
+                        } else {
+                            $('span[id$=confirmationDialogMessage]').html(nomalMsgTxt);
+                        }
+                        return false;
+                    }
+                    </script>
+                    <script type="text/javascript">
+                        function functionCheck(check) {
+                            if(functionCheckDialog(check)){
+                                showBlockModal();
+                                return true;
+                            }
+                            return false;
+                        }
+                    </script>
+                </div>
+            </form>
+        </ui:define>
+    </ui:composition>
+</body>
+</html>

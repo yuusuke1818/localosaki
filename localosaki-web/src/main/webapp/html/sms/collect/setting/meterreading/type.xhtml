@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      >
+<body>
+
+<ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+    <ui:define name="content_side" class="content">
+        <h:outputStylesheet library="css" name="common/button.css"/>
+        <h:outputStylesheet library="css" name="common/default.css"/>
+        <h:outputStylesheet library="css" name="common/cssLayout.css"/>
+        <h:outputStylesheet library="css" name="common/common.css"/>
+        <h:outputStylesheet library="css" name="sms/collect/setting/meterreading/type.css"/>
+
+        <form jsfc="h:form" id="smsCollectSettingMeterreadingTypeBean">
+            <div class="inner_content">
+                <div class="title_area_warp">
+                    <!-- 画面タイトル -->
+                    <div class="title_area_left">
+                        <h2 class="page_title">種別設定</h2>
+                        <!-- ヘルプボタン -->
+                        <c:if test="#{indexBean.userGuideBool}">
+                            <h:commandLink class="help_icon"
+                                action="#{indexBean.userGuide()}" target="_blank" />
+                        </c:if>
+                        <p class="page_subtitle">
+                            <h:outputText value="メーター種別の設定ができます。&lt;br/&gt;
+                                リストから編集を選択してください。" escape="false" />
+                        </p>
+                        <rich:messages />
+                    </div>
+                    <div class="clear" />
+
+                    <div class="search_result_header_wrap">
+                        <div id="listReroad">
+                            <div class="search_result_header_left page_content_parts">
+                                検索条件に該当する種別設定情報 <span class="serach_result_total_count"
+                                    jsfc="h:outputText"
+                                    value="#{smsCollectSettingMeterreadingTypeBean.meterTypeList == null ? 0 : smsCollectSettingMeterreadingTypeBean.meterTypeList.size()}" />
+                                件
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 検索結果リスト表示 -->
+                    <div class="search_result_area">
+                        <h:dataTable id="result" var="item" value="#{smsCollectSettingMeterreadingTypeBean.meterTypeList}"
+                            style="width: 100%;"
+                            headerClass="table_header"
+                            columnClasses="column_style_meterTypeName,column_style_co2Coefficient,column_style_autoInsp,column_style_unitUsageBased,column_style_menuName,column_style_rangeValue,column_style_button"
+                            rendered="#{smsCollectSettingMeterreadingTypeBean.meterTypeList != null}">
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    名称
+                                </f:facet>
+                                <h:outputText id="meterTypeName" value="#{item.meterTypeName}" />
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    CO2排出係数
+                                </f:facet>
+                                <h:outputText id="co2Coefficient" value="#{item.co2Coefficient}" class="col_num_a" />
+                                <h:outputText id="unitCo2CoefficientName" value="#{item.unitCo2CoefficientName}" class="col_num_b" />
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    自動検針
+                                </f:facet>
+                                <h:outputText id="autoInspDay" value="#{item.autoInspDay}日　" rendered="#{item.autoInspDay != '0'}" />
+                                <h:outputText id="autoInspHour" value="#{item.autoInspHour}時" />
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    単位
+                                </f:facet>
+                                <h:outputText id="unitUsageBased" value="#{item.unitUsageBased}" />
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    メニュー
+                                </f:facet>
+                                <h:outputText id="menuName" value="#{item.menuName}" />
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    従量範囲
+                                </f:facet>
+                                <h:outputText id="rangeValue" value="#{item.rangeValue}" />
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    編集
+                                </f:facet>
+                                <button jsfc="h:commandButton" id="editButton" class="button_small button_building_edit" value=""
+                                        onclick="showBlockModal();" action="#{smsCollectSettingMeterreadingTypeBean.execNextScreen(item)}" >
+                                    <h:graphicImage class="button_edit" library="images" name="common/com018.png" />
+                                </button>
+                            </span>
+                        </h:dataTable>
+                    </div>
+
+                </div>
+            </div>
+
+        </form>
+    </ui:define>
+</ui:composition>
+
+</body>
+</html>

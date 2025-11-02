@@ -1,0 +1,169 @@
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+  <!-- *** SmartLEDZ情報(設定) テンプレート *** -->
+  <!-- ベース部分 -->
+  <template name="base">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" default="X0057" keepPadding="true" />
+  </template>
+
+  <template name="base22">
+    <include template="base" />
+    <field name="compressionDataLength" length="6" default="000000" keepPadding="true" />
+  </template>
+
+  <template name="base.res">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" keepPadding="true" />
+  </template>
+
+  <template name="base22.res">
+    <include template="base.res" />
+    <field name="compressionDataLength" length="6" keepPadding="true" />
+  </template>
+
+  <!-- Eα（送信用） -->
+  <template name="request_21">
+    <field name="connectionSmartLedz" length="1" keepPadding="true" />
+    <field name="switchLightControl" length="1" keepPadding="true" />
+    <field name="systemId" length="10" keepPadding="true" />
+    <segment name="gatewayIp" class="map">
+      <field name="address1" length="3" padding="0" justify="right" />
+      <field name="address2" length="3" padding="0" justify="right" />
+      <field name="address3" length="3" padding="0" justify="right" />
+      <field name="address4" length="3" padding="0" justify="right" />
+    </segment>
+    <segment name="groupList" collection="list" class="map" occurs="50">
+      <field name="dimmingRate" length="3" padding="0" justify="right" />
+      <field name="fadeTime" length="3" padding="0" justify="right" />
+      <field name="dimmingLimit" length="1" keepPadding="true" />
+      <field name="scheduleInterlock" length="2" padding="0" justify="right" />
+    </segment>
+    <segment name="zoneList" collection="list" class="map" occurs="20">
+      <field name="sceneNum" length="2" padding="0" justify="right" />
+      <field name="fadeTime" length="3" padding="0" justify="right" />
+      <field name="scheduleInterlock" length="2" padding="0" justify="right" />
+    </segment>
+    <segment name="patternList" collection="list" class="map" occurs="16">
+      <segment name="timeZoneList" collection="list" class="map" occurs="4">
+        <field name="dimmingRate" length="3" padding="0" justify="right" />
+        <field name="sceneNum" length="2" padding="0" justify="right" />
+      </segment>
+    </segment>
+  </template>
+
+  <!-- Eα２（送信用） -->
+  <template name="request_22">
+    <field name="connectionSmartLedz" length="1" keepPadding="true" />
+    <field name="switchLightControl" length="1" keepPadding="true" />
+    <field name="systemId" length="13" keepPadding="true" />
+    <segment name="gatewayIp" class="map">
+      <field name="address1" length="3" padding="0" justify="right" />
+      <field name="address2" length="3" padding="0" justify="right" />
+      <field name="address3" length="3" padding="0" justify="right" />
+      <field name="address4" length="3" padding="0" justify="right" />
+    </segment>
+    <segment name="zoneList" collection="list" class="map" occurs="50">
+      <field name="sceneNum" length="2" padding="0" justify="right" />
+      <field name="scheduleInterlock" length="2" padding="0" justify="right" />
+    </segment>
+    <segment name="patternList" collection="list" class="map" occurs="16">
+      <segment name="timeZoneList" collection="list" class="map" occurs="4">
+        <field name="sceneNum" length="2" padding="0" justify="right" />
+      </segment>
+    </segment>
+  </template>
+
+
+  <!-- 「00」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="00.req" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="00.res" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 「03」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="03.req" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="03.res" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 「06」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="06.req" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="06.res" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 「12」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="12.req" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="12.res" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 「21」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="21.req" format="fixedlength">
+    <record name="response" template="base" class="jp.co.osaki.osol.mng.param.A200058Param">
+      <include template="request_21" />
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="21.res" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200058Param">
+    </record>
+  </stream>
+
+  <!-- 「22」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="22.req" format="fixedlength">
+    <record name="response" template="base22" class="jp.co.osaki.osol.mng.param.A200058Param">
+      <include template="request_22" />
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="22.res" format="fixedlength">
+    <record name="response" template="base22.res" class="jp.co.osaki.osol.mng.param.A200058Param">
+    </record>
+  </stream>
+
+</beanio>

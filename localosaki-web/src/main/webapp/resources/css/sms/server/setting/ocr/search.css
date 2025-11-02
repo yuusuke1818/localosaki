@@ -1,0 +1,142 @@
+.center_content table {
+  border-collapse: collapse;
+}
+
+/* ボタン */
+.action_button {
+  height: 40px;
+  width: 150px;
+}
+
+/*新規登録ボタン*/
+.new_regist_button {
+  width: 150px;
+  float: right;
+  margin-top: 20px;
+}
+
+.new_regist_button input[type="submit"] {
+  float: right;
+}
+
+.small_action_button {
+  height: 20px;
+  width: 50px;
+  margin: 3px 3px 3px 3px;
+}
+
+.condition_del_button {
+  height: 20px;
+  width: 80px;
+  margin: 2px 2px 2px 2px;
+}
+
+/* ボタンのセンタリング */
+.button_area_center {
+  margin: 20px 0;
+  text-align: center;
+}
+
+/* 検索結果カラム */
+.column_style_id {
+  width: 140px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+}
+
+.column_style_name {
+  /*width指定しない*/
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+}
+
+.column_style_name {
+  /*width指定しない*/
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+}
+
+.column_style_examNoticeMonth {
+  width: 130px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+}
+
+.column_style_status {
+  width: 110px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+}
+
+.column_style_edit {
+  position: relative;
+  width: 50px;
+  border: 1px #CCC solid;
+  padding: 10px 10px 10px 10px;
+  margin: 2px 2px 2px 2px;
+  text-align: center;
+}
+
+/*編集のボタン*/
+.search_result_area .button_building_edit {
+  position: relative;
+  width: 36px;
+}
+
+/*編集のアイコン*/
+.search_result_area .button_edit_image {
+  position: absolute;
+  margin-left: -26px;
+  margin-top: 10.5px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.TXT008 {
+  width: 140px;
+}
+
+.TXT020 {
+  width: 140px;
+}
+
+.EDIT002 {
+  width: 80%;
+}
+
+.SELECT001 {
+  width: 180px;
+}
+
+.rf-tab-cnt {
+  background: rgb(222, 231, 239);
+  padding: 0 30px 0 30px;
+}
+
+/*検索開始ボタンアイコン*/
+.button_search .button_icon {
+  position: absolute;
+  top: 8px;
+  left: 413px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/*新規登録ボタン*/
+.new_regist_button .button_icon {
+  position: absolute;
+  top: 10px;
+  right: 100px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/*検索結果のtbodyのスタイル*/
+.search_result_area tbody tr {
+  height: 25px;
+}

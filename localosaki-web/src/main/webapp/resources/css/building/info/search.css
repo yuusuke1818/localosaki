@@ -1,0 +1,359 @@
+.center_content table { border-collapse: collapse; }
+
+.table_header {
+    background-color: rgba(5, 114, 205, 1);
+    color: white;
+    font-weight: normal;
+    border: 1px #000000 solid;
+}
+
+/* 動的検索条件カラム */
+.column_style_select_condition{
+    width:  20%;
+    padding-top: 10px;
+}
+.column_style_condition1{
+    width:  30%;
+    padding-top: 10px;
+}
+.column_style_string1{
+    width:  10%;
+    padding-top: 10px;
+}
+.column_style_condition2{
+    width:  20%;
+    padding-top: 10px;
+}
+.column_style_string2{
+    width:  20%;
+    padding-top: 10px;
+}
+.column_style_del_button{
+    width:  20%;
+    padding-top: 10px;
+}
+
+/* 検索条件 建物グルーピング*/
+.table_condition_grouping
+{
+    width: 100%;
+}
+
+.table_condition_grouping_col
+{
+    width: 32%;
+}
+.table_condition_grouping_col_item{
+    width: 18%;
+}
+
+/* ボタン */
+.action_button{
+    height: 40px;
+    width: 150px;
+}
+
+/*新規登録ボタン*/
+.new_regist_button{
+    width: 150px;
+    float: right;
+    margin-top: 20px;
+}
+
+.new_regist_button input[type="submit"]{
+    float: right;
+}
+/*一覧出力ボタン*/
+.list_output{
+    margin-bottom: 5px;
+}
+
+/*#nextButton{
+    background-color: #FFF;
+    border: 0px;
+}
+
+#prevButton{
+    background-color: #FFF;
+    border: 0px;
+}*/
+
+.small_action_button{
+    height: 20px;
+    width: 50px;
+    margin: 3px 3px 3px 3px;
+}
+.condition_del_button{
+    height: 20px;
+    width: 80px;
+    margin: 2px 2px 2px 2px;
+}
+/*.common_serch_button{
+    height: 20px;
+    width: 80px;
+    margin: 2px 2px 2px 2px;
+}*/
+
+/* ボタンのセンタリング */
+.button_area_center{
+    margin: 20px 0;
+    text-align: center;
+}
+
+/* 検索結果カラム */
+.column_style_tenant_flg{
+    width:  30px;
+    border: 1px #CCC solid;
+    padding: 10px 10px 10px 10px;
+    margin: 2px 2px 2px 2px;
+}
+/* 検索結果カラム */
+.column_style_corp{
+    width:  110px;
+    border: 1px #CCC solid;
+    padding: 10px 10px 10px 10px;
+    margin: 2px 2px 2px 2px;
+}
+.column_style_building{
+    width:  120px;
+    border: 1px #CCC solid;
+    padding: 10px 10px 10px 10px;
+    margin: 2px 2px 2px 2px;
+}
+.column_style_address{
+    /*width指定しない*/
+    border: 1px #CCC solid;
+    padding: 10px 10px 10px 10px;
+    margin: 2px 2px 2px 2px;
+}
+.column_style_status{
+    width:  140px;
+    border: 1px #CCC solid;
+    padding: 10px 10px 10px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_auto_insp {
+    width:  125px;
+    border: 1px #CCC solid;
+    padding: 10px 10px 10px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_auto_insp_btn {
+    width:  50px;
+    border: 1px #CCC solid;
+    padding: 10px 10px 10px 10px;
+    margin: 2px 2px 2px 2px;
+}
+
+.column_style_building_edit{
+    position:relative;
+    width:  50px;
+    border: 1px #CCC solid;
+    padding: 10px 10px 10px 10px;
+    margin: 2px 2px 2px 2px;
+    /*text-align: center;*/
+}
+.column_style_facility_edit{
+    position:relative;
+    width:  120px;
+    border: 1px #CCC solid;
+    padding: 10px 10px 10px 10px;
+    margin: 2px 2px 2px 2px;
+    /*text-align: center;*/
+}
+.column_style_facility{
+    position: relative;
+    width:  120px;
+    border: 1px #CCC solid;
+    text-align: center;
+}
+.a{
+    display:none;
+}
+
+/*原単位分母リストカラム*/
+.unit_divide_list td{
+    border: 1px #CCC solid;
+}
+
+/*複合原単位分母リストカラム*/
+.composite_unit_divide_list td{
+    border: 1px #CCC solid;
+}
+
+/* 一覧のボタン */
+/*.search_result_area input[type="submit"]{
+    width: 36px;
+}*/
+.search_result_area .button_building_edit{
+    position: relative;
+    margin-left: 7px;
+    margin-top: 1.5px;
+    width: 36px;
+}
+.search_result_area .button_facility_list{
+    position: relative;
+    margin-left: 16px;
+    margin-top: 1.5px;
+    width: 36px;
+    margin-right: 5px;
+}
+.search_result_area .button_facility_list_only{
+    position: relative;
+    margin-left: 1px;
+    margin-top: 1.5px;
+    width: 36px;
+}
+.search_result_area .button_facility_edit{
+    position: absolute;
+    margin-left: 19px;
+    margin-top: 1.5px;
+    width: 36px;
+    margin-right: 5px;
+}
+
+/*建物編集のアイコン*/
+.search_result_area .button_edit{
+    position:absolute;
+    margin-left: -26px;
+    margin-top: 10.5px;
+    z-index:10;
+    pointer-events: none;
+}
+
+/*一覧のアイコン*/
+.search_result_area .button_list{
+    position:absolute;
+    margin-left: -32px;
+    margin-top: 9.5px;
+    z-index:10;
+    pointer-events: none;
+}
+
+/*追加のアイコン*/
+.search_result_area .button_add{
+    position:absolute;
+    margin-left: 28.5px;
+    margin-top: 10.5px;
+    z-index:10;
+    pointer-events: none;
+}
+
+
+/* 建物担当一覧カラム */
+.column_style_bp_corp{
+    width:  150px;
+    border: 1px #000000 solid;
+    padding: 10px 10px 10px 10px;
+    margin: 2px 2px 2px 2px;
+}
+.column_style_bp_user{
+    width:  200px;
+    border: 1px #000000 solid;
+    padding: 10px 10px 10px 10px;
+    margin: 2px 2px 2px 2px;
+}
+.column_style_bp_furigana{
+    /*width指定しない*/
+    border: 1px #000000 solid;
+    padding: 10px 10px 10px 10px;
+    margin: 2px 2px 2px 2px;
+}
+.column_style_bp_dept{
+    width:  150px;
+    border: 1px #000000 solid;
+    padding: 10px 10px 10px 10px;
+    margin: 2px 2px 2px 2px;
+}
+.column_style_bp_status{
+    width:  150px;
+    border: 1px #000000 solid;
+    padding: 10px 10px 10px 10px;
+    margin: 2px 2px 2px 2px;
+    text-align: center;
+}
+.column_style_bp_del{
+    width:  50px;
+    border: 1px #000000 solid;
+    padding: 10px 10px 10px 10px;
+    margin: 2px 2px 2px 2px;
+    text-align: center;
+}
+.check_del_building{
+    margin-left:20px;
+}
+
+.page_content_parts{
+    margin: 10px 0px 5px 0px;
+}
+
+.person_add{
+    margin-top:5px;
+}
+
+.TXT008{
+    width:140px;
+}
+
+.TXT020{
+    width:140px;
+}
+
+.EDIT002{
+   width:80%;
+}
+
+.SELECT001{
+    width:180px;
+}
+
+.rf-tab-cnt {
+    background: rgb(222,231,239);
+    padding: 0 30px 0 30px;
+}
+
+/*検索開始ボタンアイコン*/
+.button_search .button_icon{
+position: absolute;
+    top: 8px;
+    left: 413px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/*一覧出力ボタン*/
+.button_export{
+    margin-bottom: 5px;
+}
+
+.button_export .button_icon{
+    position: absolute;
+    top: 10px;
+    right: 105px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/*新規登録ボタン*/
+.new_regist_button .button_icon{
+    position: absolute;
+    top: 8px;
+    right: 105px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/*検索結果のtbodyのスタイル*/
+.search_result_area tbody tr{
+    height:25px;
+}
+
+.button_detail {
+    position: absolute;
+    margin-left: -30px;
+    margin-top: 5px;
+    z-index: 10;
+    pointer-events: none;
+}

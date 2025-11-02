@@ -1,0 +1,262 @@
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+	<!-- *** デマンド(設定) テンプレート *** -->
+	<!-- ベース部分 -->
+	<template name="base">
+		<field name="productCd" length="2" keepPadding="true" />
+		<field name="address" length="2" keepPadding="true" />
+		<field name="command" length="5" default="X0001" keepPadding="true" />
+	</template>
+
+	<template name="base.res">
+		<field name="productCd" length="2" keepPadding="true" />
+		<field name="address" length="2" keepPadding="true" />
+		<field name="command" length="5" keepPadding="true" />
+	</template>
+
+	<!-- 共通部分１（送信用） -->
+	<template name="commonRequest_1">
+		<field name="timeLimitMethod" length="1" keepPadding="true" />
+		<field name="pulseWeight" length="8" padding="0" justify="right" />
+		<field name="targetPower" length="4" padding="0" justify="right" />
+		<field name="dayReportOutputHour" length="2" padding="0" justify="right" />
+		<field name="monthReportOutputDay" length="2" padding="0" justify="right" />
+		<field name="yearReportOutputMonth" length="2" padding="0" justify="right" />
+		<field name="clockMirrorMethod" length="1" keepPadding="true" />
+		<field name="blockoutTimeLimit" length="1" keepPadding="true" />
+		<field name="initialPower" length="2" padding="0" justify="right" />
+		<field name="highLoadCapacity" length="2" padding="0" justify="right" />
+		<field name="limitPower" length="2" padding="0" justify="right" />
+		<field name="blockPower" length="4" padding="0" justify="right" />
+		<field name="returnPower" length="4" padding="0" justify="right" />
+		<field name="alertLockTime" length="2" padding="0" justify="right" />
+		<field name="multiBlockTime" length="2" padding="0" justify="right" />
+	</template>
+
+	<!-- 機種別部分（送信用）（00,03のみ） -->
+	<template name="0003.req">
+		<segment name="loadInfoList" collection="list" occurs="6" class="map">
+			<field name="minLoadBlockTime" length="2" padding="0" justify="right" />
+		</segment>
+		<field name="blockMethod" length="1" padding="0" justify="right" />
+		<segment name="loadInfoList" collection="list" occurs="6" class="map">
+			<field name="loadBlockMethod" length="1" keepPadding="true" />
+			<field name="loadBlockRank" length="2" padding="0" justify="right" />
+		</segment>
+		<segment name="loadInfoList" collection="list" occurs="6" class="map">
+			<field name="loadBlockCapacity" length="4" padding="0" justify="right" />
+		</segment>
+	</template>
+
+	<!-- 機種別部分（送信用）（06,12のみ） -->
+	<template name="0612.req">
+		<segment name="loadInfoList" collection="list" occurs="12" class="map">
+			<field name="minLoadBlockTime" length="2" padding="0" justify="right" />
+		</segment>
+		<field name="blockMethod" length="1" padding="0" justify="right" />
+		<segment name="loadInfoList" collection="list" occurs="12" class="map">
+			<field name="loadBlockMethod" length="1" keepPadding="true" />
+			<field name="loadBlockRank" length="2" padding="0" justify="right" />
+		</segment>
+		<segment name="loadInfoList" collection="list" occurs="12" class="map">
+			<field name="loadBlockCapacity" length="4" padding="0" justify="right" />
+		</segment>
+	</template>
+
+	<!-- 共通部分２（送信用） -->
+	<template name="commonRequest_2">
+		<field name="switchTarget" length="1" keepPadding="true" />
+		<field name="targetPowerMultiplier" length='3' padding="0" justify="right" />
+		<segment name="monthList" collection="list" occurs="12" class="map">
+			<field name='maxDemandMonth' length='4' padding="0" justify="right" />
+		</segment>
+		<segment name="monthList" collection="list" occurs="12" class="map">
+			<field name='nationalHoliday1' length='2' padding="0" justify="right" />
+			<field name='nationalHoliday2' length='2' padding="0" justify="right" />
+			<field name='nationalHoliday3' length='2' padding="0" justify="right" />
+			<field name='nationalHoliday4' length='2' padding="0" justify="right" />
+			<field name='nationalHoliday5' length='2' padding="0" justify="right" />
+			<field name='nationalHoliday6' length='2' padding="0" justify="right" />
+			<field name='nationalHoliday7' length='2' padding="0" justify="right" />
+			<field name='nationalHoliday8' length='2' padding="0" justify="right" />
+			<field name='nationalHoliday9' length='2' padding="0" justify="right" />
+			<field name='nationalHoliday10' length='2' padding="0" justify="right" />
+		</segment>
+		<field name='fuzzy' length='1' keepPadding="true" />
+		<field name='demandFraction' length='1' keepPadding="true" />
+	</template>
+
+
+	<!-- 共通部分１（受信用） -->
+	<template name="commonResponse_1">
+		<field name="settingDate" length="11" keepPadding="true" />
+		<field name="timeLimitMethod" length="1" keepPadding="true" />
+		<field name="pulseWeight" length="8" keepPadding="true" />
+		<field name="targetPower" length="4" keepPadding="true" />
+		<field name="dayReportOutputHour" length="2" keepPadding="true" />
+		<field name="monthReportOutputDay" length="2" keepPadding="true" />
+		<field name="yearReportOutputMonth" length="2" keepPadding="true" />
+		<field name="clockMirrorMethod" length="1" keepPadding="true" />
+		<field name="blockoutTimeLimit" length="1" keepPadding="true" />
+		<field name="initialPower" length="2" keepPadding="true" />
+		<field name="highLoadCapacity" length="2" keepPadding="true" />
+		<field name="limitPower" length="2" keepPadding="true" />
+		<field name="blockPower" length="4" keepPadding="true" />
+		<field name="returnPower" length="4" keepPadding="true" />
+		<field name="alertLockTime" length="2" keepPadding="true" />
+		<field name="multiBlockTime" length="2" keepPadding="true" />
+	</template>
+
+	<!-- 機種別部分（受信用）（00,03のみ） -->
+	<template name="0003.res">
+		<field name="minLoadBlockTimeList" length="2" collection="list" occurs="6" />
+		<field name="blockMethod" length="1" keepPadding="true" />
+		<segment name="_loadInfoList" collection="list" occurs="6" class="map">
+			<field name="loadBlockMethod" length="1" keepPadding="true" />
+			<field name="loadBlockRank" length="2" keepPadding="true" />
+		</segment>
+		<field name="loadBlockCapacityList" collection="list" length="4" occurs="6" />
+	</template>
+
+	<!-- 共通部分２（受信用） -->
+	<template name="commonResponse_2">
+		<field name='switchTarget' length='1' keepPadding="true" />
+		<field name='targetPowerMultiplier' length='3' keepPadding="true" />
+		<segment name="_maxDemandMonthList" collection="list" occurs="12" class="map">
+			<field name='maxDemandMonth' length='4' keepPadding="true" />
+		</segment>
+		<segment name="_monthList" collection="list" occurs="12" class="map">
+			<field name='nationalHoliday1' length='2' keepPadding="true" />
+			<field name='nationalHoliday2' length='2' keepPadding="true" />
+			<field name='nationalHoliday3' length='2' keepPadding="true" />
+			<field name='nationalHoliday4' length='2' keepPadding="true" />
+			<field name='nationalHoliday5' length='2' keepPadding="true" />
+			<field name='nationalHoliday6' length='2' keepPadding="true" />
+			<field name='nationalHoliday7' length='2' keepPadding="true" />
+			<field name='nationalHoliday8' length='2' keepPadding="true" />
+			<field name='nationalHoliday9' length='2' keepPadding="true" />
+			<field name='nationalHoliday10' length='2' keepPadding="true" />
+		</segment>
+		<field name='fuzzy' length='1' keepPadding="true" />
+		<field name='demandFraction' length='1' keepPadding="true" />
+	</template>
+
+	<!-- 「00」製品に対する設定 -->
+	<!-- 送信文 ※取得系コマンドは、ベース情報だけで送信文を作成できることが多い -->
+	<stream name="00.req" format="fixedlength">
+		<record name="response" template="base" class="jp.co.osaki.osol.mng.param.A200007Param">
+			<include template="commonRequest_1" />
+			<include template="0003.req" />
+			<include template="commonRequest_2" />
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<!-- ※ベース情報＋αは個別に設定する。テンプレート利用は、include を利用する -->
+	<stream name="00.res" format="fixedlength">
+		<record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200007Param">
+			<include template="commonResponse_1" />
+			<include template="0003.res" />
+			<include template="commonResponse_2" />
+		</record>
+	</stream>
+
+	<!-- 「03」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="03.req" format="fixedlength">
+		<record name="response" template="base" class="jp.co.osaki.osol.mng.param.A200007Param">
+			<include template="commonRequest_1" />
+			<include template="0003.req" />
+			<include template="commonRequest_2" />
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="03.res" format="fixedlength">
+		<record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200007Param">
+			<include template="commonResponse_1" />
+			<include template="0003.res" />
+			<include template="commonResponse_2" />
+		</record>
+	</stream>
+
+	<!-- 「06」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="06.req" format="fixedlength">
+		<record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200007Param">
+			<include template="commonRequest_1" />
+			<include template="0612.req" />
+			<include template="commonRequest_2" />
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="06.res" format="fixedlength">
+		<record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200007Param">
+			<include template="commonResponse_1" />
+			<field name="minLoadBlockTimeList" length="2" collection="list" occurs="12" />
+			<field name="blockMethod" length="1" keepPadding="true" />
+			<segment name="_loadInfoList" collection="list" occurs="12" class="map">
+				<field name="loadBlockMethod" length="1" keepPadding="true" />
+				<field name="loadBlockRank" length="2" keepPadding="true" />
+			</segment>
+			<field name="loadBlockCapacityList" collection="list" length="4" occurs="12" />
+			<include template="commonResponse_2" />
+		</record>
+	</stream>
+
+	<!-- 「12」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="12.req" format="fixedlength">
+		<record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200007Param">
+			<include template="commonRequest_1" />
+			<include template="0612.req" />
+			<include template="commonRequest_2" />
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="12.res" format="fixedlength">
+		<record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200007Param">
+			<include template="commonResponse_1" />
+			<field name="minLoadBlockTimeList" length="2" collection="list" occurs="12" />
+			<field name="blockMethod" length="1" keepPadding="true" />
+			<segment name="_loadInfoList" collection="list" occurs="12" class="map">
+				<field name="loadBlockMethod" length="1" keepPadding="true" />
+				<field name="loadBlockRank" length="2" keepPadding="true" />
+			</segment>
+			<field name="loadBlockCapacityList" collection="list" length="4" occurs="12" />
+			<include template="commonResponse_2" />
+		</record>
+	</stream>
+
+	<!-- 「21」非対応 -->
+	<!-- 送信文 -->
+	<stream name="21.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+	<!-- 受信文 -->
+	<stream name="21.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 「22」非対応 -->
+	<!-- 送信文 -->
+	<stream name="22.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+	<!-- 受信文 -->
+	<stream name="22.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+</beanio>

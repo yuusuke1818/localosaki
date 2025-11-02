@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE OperationList SYSTEM "operation.dtd">
+<OperationList>
+    <Operation Key="CORP" Name="企業担当">
+        <AuthorityType>&管理担当;</AuthorityType>
+    </Operation>
+    <Operation Key="BUILDING" Name="建物担当">
+        <AuthorityType>&建物担当;</AuthorityType>
+    </Operation>
+    <Operation Key="BUILDING_ON_FACILITY" Name="建物担当：設備管理">
+        <AuthorityType>&建物担当;</AuthorityType>
+        <AuthorityCd>&建物テナント設備管理;</AuthorityCd>
+    </Operation>
+    <Operation Key="BUILDING_ON_MAINTENANCE" Name="建物担当：メンテナンス管理">
+        <AuthorityType>&建物担当;</AuthorityType>
+        <AuthorityCd>&メンテナンス管理;</AuthorityCd>
+    </Operation>
+    <Operation Key="BUILDING_ON_ENEINPUTTARGET" Name="建物担当：エネルギー目標入力">
+        <AuthorityType>&建物担当;</AuthorityType>
+        <AuthorityCd>&エネルギー目標入力;</AuthorityCd>
+    </Operation>
+    <Operation Key="BUILDING_ON_ENEINPUTUSE" Name="建物担当：エネルギー使用量入力">
+        <AuthorityType>&建物担当;</AuthorityType>
+        <AuthorityCd>&エネルギー使用量入力;</AuthorityCd>
+    </Operation>
+    <Operation Key="BUILDING_ON_ANALYSIS" Name="建物担当：集計分析">
+        <AuthorityType>&建物担当;</AuthorityType>
+        <AuthorityCd>&集計分析;</AuthorityCd>
+    </Operation>
+    <Operation Key="BUILDING_ON_PLANDO" Name="建物担当：計画履行入力">
+        <AuthorityType>&建物担当;</AuthorityType>
+        <AuthorityCd>&計画履行入力;</AuthorityCd>
+    </Operation>
+    <Operation Key="BUILDING_ON_SIGNAGE" Name="建物担当：サイネージ管理">
+        <AuthorityType>&建物担当;</AuthorityType>
+        <AuthorityCd>&サイネージ管理;</AuthorityCd>
+    </Operation>
+    <Operation Key="BUILDING_ON_DEMAND" Name="建物担当：エネルギー使用状況確認">
+        <AuthorityType>&建物担当;</AuthorityType>
+        <AuthorityCd>&エネルギー使用状況確認;</AuthorityCd>
+    </Operation>
+    <Operation Key="BUILDING_ON_DEVCONTROL" Name="建物担当：機器制御">
+        <AuthorityType>&建物担当;</AuthorityType>
+        <AuthorityCd>&機器制御;</AuthorityCd>
+    </Operation>
+</OperationList>

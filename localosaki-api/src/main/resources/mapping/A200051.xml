@@ -1,0 +1,141 @@
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+	<!-- *** 祝日(取得) テンプレート *** -->
+	<!-- ベース部分 -->
+	<template name="base">
+		<field name="productCd" length="2" keepPadding="true" />
+		<field name="address" length="2" keepPadding="true" />
+		<field name="command" length="1" default="V" keepPadding="true" />
+		<field name="settingChangeHist" length="1" default="0" keepPadding="true" />
+		<field name="command" length="3" default="054" keepPadding="true" />
+	</template>
+
+	<template name="base22">
+		<include template="base" />
+		<field name="compressionDataLength" length="6" default="000000" keepPadding="true" />
+	</template>
+
+	<template name="base.res">
+		<field name="productCd" length="2" keepPadding="true" />
+		<field name="address" length="2" keepPadding="true" />
+		<field name="command" length="5" keepPadding="true" />
+	</template>
+
+	<template name="base22.res">
+		<field name="productCd" length="2" keepPadding="true" />
+		<field name="address" length="2" keepPadding="true" />
+		<field name="command" length="5" keepPadding="true" />
+		<field name="compressionDataLength" length="6" keepPadding="true" />
+	</template>
+
+	<!-- 共通部分１（受信用） -->
+	<template name="commonResponse1">
+		<field name="settingDate" length="10" keepPadding="true" />
+		<segment name="monthList" collection="list" occurs="12" class="map">
+			<field name='nationalHoliday1' length='2' keepPadding="true" />
+			<field name='nationalHoliday2' length='2' keepPadding="true" />
+			<field name='nationalHoliday3' length='2' keepPadding="true" />
+			<field name='nationalHoliday4' length='2' keepPadding="true" />
+			<field name='nationalHoliday5' length='2' keepPadding="true" />
+			<field name='nationalHoliday6' length='2' keepPadding="true" />
+			<field name='nationalHoliday7' length='2' keepPadding="true" />
+			<field name='nationalHoliday8' length='2' keepPadding="true" />
+			<field name='nationalHoliday9' length='2' keepPadding="true" />
+			<field name='nationalHoliday10' length='2' keepPadding="true" />
+		</segment>
+	</template>
+
+	<!-- 「00」非対応 -->
+	<!-- 送信文 -->
+	<stream name="00.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="00.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 「03」非対応 -->
+	<!-- 送信文 -->
+	<stream name="03.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="03.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 「06」非対応 -->
+	<!-- 送信文 -->
+	<stream name="06.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="06.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 「12」非対応 -->
+	<!-- 送信文 -->
+	<stream name="12.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="12.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 「21」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="21.req" format="fixedlength">
+		<record name="request" template="base" class="jp.co.osaki.osol.mng.param.A200051Param" />
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="21.res" format="fixedlength">
+		<record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200051Param">
+			<include template="commonResponse1" />
+		</record>
+	</stream>
+
+	<!-- 「22」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="22.req" format="fixedlength">
+		<record name="request" template="base22" class="jp.co.osaki.osol.mng.param.A200051Param" />
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="22.res" format="fixedlength">
+		<record name="response" template="base22.res" class="jp.co.osaki.osol.mng.param.A200051Param">
+			<include template="commonResponse1" />
+		</record>
+	</stream>
+
+	<!-- 応答データ無し -->
+	<stream name="res_data.none" format="fixedlength">
+		<record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200051Param">
+		</record>
+	</stream>
+
+</beanio>

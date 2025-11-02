@@ -1,0 +1,24 @@
+.exception_message_area{
+    padding-top:20px;
+    margin:200px auto 0 auto;
+    width: 530px;
+    height: 145px;
+    background: #FFF;
+    border-radius: 5px;
+    border: 1px solid #000;
+    z-index: 100;
+}
+
+.exception_title{
+    text-align: left;
+    font-size: 16px;
+    font-weight:bold;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+}
+
+.exception_message{
+    margin-top: 10px;
+    font-size: 12px;
+    text-align: left;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+}

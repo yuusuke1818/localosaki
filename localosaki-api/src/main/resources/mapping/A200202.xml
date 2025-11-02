@@ -1,0 +1,174 @@
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+    <!-- *** 警報 テンプレート *** -->
+    <!-- ベース部分 -->
+    <template name="base">
+        <field name="sequence" length="2" keepPadding="true" />
+        <field name="command" length="2" keepPadding="true" />
+        <field name="responseCd" length="1" keepPadding="true" />
+    </template>
+
+    <!-- 受信(ヘッダ) -->
+    <template name="base.res">
+        <include template="base"/>
+        <field name="smNo" length="1" keepPadding="true" />
+        <field name="productCd" length="2" keepPadding="true" />
+        <field name="address" length="2" keepPadding="true" />
+    </template>
+
+    <!-- [00,03,06]（受信用） -->
+    <template name="commonResponse">
+        <field name="stateFVPx" length="1" keepPadding="true" />
+        <field name="demandAlert" length="1" keepPadding="true" />
+        <field name="errorCircuitLON" length="1" keepPadding="true" />
+        <field name="settingDemand" length="1" keepPadding="true" />
+        <field name="settingUnit" length="1" keepPadding="true" />
+        <field name="transferAlert" length="1" keepPadding="true" />
+        <field name="batteryErrorAlertFVPx" length="1" keepPadding="true" />
+        <field name="reserve" length="1" keepPadding="true" />
+        <field name="pointList" length="1" collection="list" occurs="20" />
+    </template>
+
+    <!-- 「00」製品に対する設定 -->
+    <!-- 送信文 (未使用) -->
+    <stream name="00.req" format="fixedlength">
+        <record name="request" template="base" class="jp.co.osaki.osol.mng.param.A200202Param" />
+    </stream>
+
+    <!-- 受信文 -->
+    <stream name="00.res" format="fixedlength">
+        <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200202Param">
+            <include template="commonResponse" />
+        </record>
+    </stream>
+
+    <!-- 「03」製品に対する設定 -->
+    <!-- 送信文 (未使用) -->
+    <stream name="03.req" format="fixedlength">
+        <record name="request" template="base" class="jp.co.osaki.osol.mng.param.A200202Param" />
+    </stream>
+
+    <!-- 受信文 -->
+    <stream name="03.res" format="fixedlength">
+        <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200202Param">
+            <include template="commonResponse" />
+        </record>
+    </stream>
+
+    <!-- 「06」製品に対する設定 -->
+    <!-- 送信文 (未使用) -->
+    <stream name="06.req" format="fixedlength">
+        <record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200202Param" />
+    </stream>
+
+    <!-- 受信文 -->
+    <stream name="06.res" format="fixedlength">
+        <record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200202Param">
+            <include template="commonResponse" />
+        </record>
+    </stream>
+
+    <!-- 「12」 -->
+    <!-- 送信文 (未使用) -->
+    <stream name="12.req" format="fixedlength">
+        <record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200202Param" />
+    </stream>
+
+    <!-- 受信文 -->
+    <stream name="12.res" format="fixedlength">
+        <record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200202Param">
+        <field name="recordDayTime" length="12" keepPadding="true" />
+        <field name="alertState" length="1" keepPadding="true" />
+        <field name="targetPowerOrSettingNo" length="4" keepPadding="true" />
+        <field name="nowTargetPower" length="4" keepPadding="true" />
+        <field name="forecastPower" length="4" keepPadding="true" />
+        <field name="leftMinute" length="2" keepPadding="true" />
+        <field name="leftSeconds" length="2" keepPadding="true" />
+        <field name="loadCtrlList" length="1" collection="list" occurs="12" />
+        </record>
+    </stream>
+
+    <!-- 「21」非対応 Todo:仕様確認 -->
+    <!-- 送信文 -->
+    <stream name="21.req" format="fixedlength">
+        <record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200202Param" />
+    </stream>
+    <!-- 受信文 -->
+    <stream name="21.res" format="fixedlength">
+        <record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200202Param">
+        <field name="recordDayTime" length="12" keepPadding="true" />
+        <field name="alertState" length="1" keepPadding="true" />
+        <field name="targetPowerOrSettingNo" length="4" keepPadding="true" />
+        <field name="nowTargetPower" length="4" keepPadding="true" />
+        <field name="forecastPower" length="4" keepPadding="true" />
+        <field name="leftMinute" length="2" keepPadding="true" />
+        <field name="leftSeconds" length="2" keepPadding="true" />
+        <field name="loadCtrlList" length="1" collection="list" occurs="16" />
+        </record>
+    </stream>
+
+    <!-- 「22」非対応 -->
+    <!-- 送信文 -->
+    <stream name="22.req" format="fixedlength">
+        <record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200202Param" />
+    </stream>
+    <!-- 受信文 -->
+    <stream name="22.res" format="fixedlength">
+        <record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200202Param">
+        <field name="recordDayTime" length="12" keepPadding="true" />
+        <field name="alertState" length="1" keepPadding="true" />
+        <field name="targetPowerOrSettingNo" length="4" keepPadding="true" />
+        <field name="nowTargetPower" length="4" keepPadding="true" />
+        <field name="forecastPower" length="4" keepPadding="true" />
+        <field name="leftMinute" length="2" keepPadding="true" />
+        <field name="leftSeconds" length="2" keepPadding="true" />
+        <field name="loadCtrlList" length="1" collection="list" occurs="16" />
+        </record>
+    </stream>
+
+    <!-- 「23」 -->
+    <!-- 送信文 -->
+    <stream name="23.req" format="fixedlength">
+        <record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200202Param" />
+    </stream>
+    <!-- 受信文 -->
+    <stream name="23.res" format="fixedlength">
+        <record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200202Param">
+        <field name="recordDayTime" length="12" keepPadding="true" />
+        <field name="alertState" length="1" keepPadding="true" />
+        <field name="stateFlg1" length="1" keepPadding="true" />
+        </record>
+    </stream>
+
+    <!-- 「24」 -->
+    <!-- 送信文 -->
+    <stream name="24.req" format="fixedlength">
+        <record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200202Param" />
+    </stream>
+    <!-- 受信文 -->
+    <stream name="24.res" format="fixedlength">
+        <record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200202Param">
+        <field name="recordDayTime" length="12" keepPadding="true" />
+        <field name="alertState" length="1" keepPadding="true" />
+        <field name="stateFlg1" length="1" keepPadding="true" />
+        <field name="stateFlgAfter" length="26" keepPadding="true" />
+        </record>
+    </stream>
+
+    <!-- 「25」 -->
+    <!-- 送信文 -->
+    <stream name="25.req" format="fixedlength">
+        <record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200202Param" />
+    </stream>
+    <!-- 受信文 -->
+    <stream name="25.res" format="fixedlength">
+        <record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200202Param">
+        <field name="recordDayTime" length="12" keepPadding="true" />
+        <field name="alertState" length="1" keepPadding="true" />
+        <field name="stateFlg1" length="1" keepPadding="true" />
+        <field name="stateFlgAfterState5" length="3" keepPadding="true" />
+        </record>
+    </stream>
+
+</beanio>

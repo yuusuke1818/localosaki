@@ -1,0 +1,305 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <head jsfc="h:head">
+        <title>データ比較グラフ（月報）</title>
+    </head>
+    <body jsfc="h:body">
+        <ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+            <ui:define name="content_side">
+                <h:outputStylesheet library="css" name="common/rfCalendar.css" />
+                <h:outputStylesheet library="css" name="sms/collect/dataview/compareGraph.css" />
+                <h:outputScript library="js" name="common/Chart.min.js" />
+                <h:outputScript library="js" name="sms/collect/dataview/compareGraph.js"/>
+
+                <form jsfc="h:form" id="smsMonthlyBean">
+                    <div class="inner_content">
+                        <div jsfc="a4j:outputPanel" id="dailyDataPanel">
+                            <div class="title_area_warp">
+                                <!-- 画面タイトル -->
+                                <div class="title_area_left">
+                                    <h2 class="page_title">データ比較グラフ（月報）</h2>
+                                    <!-- ヘルプボタン -->
+                                    <c:if test="#{indexBean.userGuideBool}">
+                                        <h:commandLink class="help_icon"
+                                            action="#{indexBean.userGuide()}" target="_blank" />
+                                    </c:if>
+                                    <p class="page_subtitle">
+                                        <h:outputText value="各メーターの1日毎の計量値のデータ比較グラフ(使用量)を表示します。" />
+                                    </p>
+                                </div>
+                                <div class="clear" />
+
+                            <div class="contents_title contents_accordion_header contents_daily">
+                                <h:graphicImage class="button_icon button_opener" library="images" name="demand/demand_container_opner.png" style="display: none" />
+                                <h:graphicImage class="button_icon button_closer" library="images" name="demand/demand_container_closer.png" />
+                                <span class="contents_title_body">表示条件</span>
+                            </div>
+                            <div class="contents_form_area contents_accordion_body">
+                                <div class="msg">表示内容を変更したい場合は、下記を変更し、[表示]ボタンを押してください。</div>
+                                <div class="conditions">
+                                    <div>
+                                        <label class="TXT008 L1">接続先</label>
+                                        <f:ajax event="change" render="meterMngId dispDirect" listener="#{smsCollectDataviewCompareGraphMonthlyBean.changeDevIdPulldown()}">
+                                            <select jsfc="h:selectOneMenu" value="#{smsCollectDataviewCompareGraphMonthlyBean.devId}" class="SEL1">
+                                                <option jsfc="f:selectItems" value="#{smsCollectDataviewCompareGraphMonthlyBean.compareBean1.devIdMap}" />
+                                            </select>
+                                        </f:ajax>
+                                    </div>
+                                    <div>
+                                        <label class="TXT008 L2">メーター表示切替</label>
+                                        <f:ajax event="click" listener="#{smsCollectDataviewCompareGraphMonthlyBean.changePageNoPulldown()}">
+                                            <select jsfc="h:selectOneMenu" id="meterMngId" value="#{smsCollectDataviewCompareGraphMonthlyBean.meterMngId}" class="SEL2">
+                                                <option jsfc="f:selectItems" value="#{smsCollectDataviewCompareGraphMonthlyBean.compareBean1.meterMngIdMap}" />
+                                            </select>
+                                        </f:ajax>
+                                    </div>
+                                </div>
+
+                                <div class="conditions">
+                                    <div>
+                                        <label class="TXT008 L3">メータータイプ</label>
+                                        <c:set var="selectedMeterKind" value="#{smsCollectDataviewCompareGraphMonthlyBean.meterKind}" />
+                                        <f:ajax event="change" render="smsMonthlyBean:meterMngId" listener="#{smsCollectDataviewCompareGraphMonthlyBean.changeMeterKindRadio()}">
+                                            <ui:repeat value="#{smsCollectDataviewCompareGraphMonthlyBean.meterKindMap}" var="meterKindEntry">
+                                                <input type="radio" jsf:id="meterKindArea" a:name="#{hiddenMeterKind.clientId}" value="#{meterKindEntry.value}"
+                                                       a:checked="#{meterKindEntry.value eq selectedMeterKind ? 'checked' : null}"
+                                                       style="width: 16px;" />
+                                                <h:outputLabel for="meterKindArea" value="#{meterKindEntry.key}"
+                                                               style="width: 120px; text-align: left; position: relative; right: 10px;" />
+                                            </ui:repeat>
+                                        </f:ajax>
+
+                                        <h:inputHidden id="selectedItem" binding="#{hiddenMeterKind}" value="#{selectedMeterKind}" />
+                                    </div>
+                                </div>
+
+                                <div class="conditions">
+                                    <div>
+                                        <label class="TXT008 L4">表示方向</label>
+                                        <f:ajax event="click" listener="#{smsCollectDataviewCompareGraphMonthlyBean.changeDispDirectPulldown()}">
+                                            <select jsfc="h:selectOneMenu" id="dispDirect" value="#{smsCollectDataviewCompareGraphMonthlyBean.dispDirect}" class="SEL3">
+                                                <option jsfc="f:selectItems" value="#{smsCollectDataviewCompareGraphMonthlyBean.compareBean1.dispDirectMap}" />
+                                            </select>
+                                        </f:ajax>
+                                    </div>
+                                    <div>
+                                        <label class="TXT008 L5">表示種別</label>
+                                        <span class="TXT008 disp">使用量</span>
+                                    </div>
+                                    <div>
+                                        <label class="TXT008 L6">開始日</label>
+                                        <f:ajax event="click" listener="#{smsCollectDataviewCompareGraphMonthlyBean.changeStartDayPulldown()}">
+                                            <select jsfc="h:selectOneMenu" id="startDay" value="#{smsCollectDataviewCompareGraphMonthlyBean.startDay}" class="SEL4">
+                                                <option jsfc="f:selectItems" value="#{smsCollectDataviewCompareGraphMonthlyBean.startDateTimeList}" />
+                                            </select>
+                                        </f:ajax>
+                                    </div>
+                                </div>
+
+                                <div class="conditions">
+                                    <div>
+                                        <label class="TXT008 L7">テナント名</label>
+                                        <span class="TXT008" style="width: 10px;">に&nbsp;&nbsp;</span>
+                                        <f:ajax event="blur" render="meterMngId" listener="#{smsCollectDataviewCompareGraphMonthlyBean.inputTenantName()}">
+                                            <input type="text" jsfc="h:inputText" id="tenantName"
+                                                   value="#{smsCollectDataviewCompareGraphMonthlyBean.tenantName}"
+                                                   style="width: 400px;" />
+                                        </f:ajax>
+                                        <label class="TXT008" style="width: 50px; text-align: left;">を含む</label>
+                                    </div>
+                                </div>
+
+                                <div class="gradation_type_1 button_large_2 button_disp">
+                                    <button jsfc="a4j:commandButton"
+                                        id="reloadButton"
+                                        class="button_width edit_search_start"
+                                        value="表示"
+                                        action="#{smsCollectDataviewCompareGraphMonthlyBean.reload()}"
+                                        execute="@form" render="#{rich:clientId('dailyDataPanel')}"
+                                        onbegin="showBlockModal()" oncomplete="hideBlockModal(true);" />
+                                    <h:graphicImage class="button_icon" library="images" name="common/com015.png" />
+                                </div>
+                            </div>
+
+                            <div class="conditions_2">
+                                <div>
+                                    <c:set var="selectMonthList" value="#{smsCollectDataviewCompareGraphMonthlyBean.selectMonthList}" />
+                                    <h:panelGroup id="dateListArea1">
+                                        <table class="calendar_table1">
+                                            <tr>
+                                                <td class="col_button_move">
+                                                    <div class="calendar_table_back gradation_type_1 gradation_type_5">
+                                                        <h:graphicImage class="calendar_move_img" library="images" name="demand/demand_calendar_back.png" />
+                                                    <f:ajax event="click" render="dateListArea1 startDay"
+                                                            listener="#{smsCollectDataviewCompareGraphMonthlyBean.moveLastYearCompare1()}">
+                                                        <button jsfc="a4j:commandButton" id="btnCalendarYearBack1" class="calendar_move_button"
+                                                                value="前年" execute="@form" />
+                                                    </f:ajax>
+                                                    </div>
+                                                </td>
+                                                <th colspan="12" class="cal_header">
+                                                    <div class="calendar_table_ym">
+                                                        #{smsCollectDataviewCompareGraphMonthlyBean.titleCompare}1　#{smsCollectDataviewCompareGraphMonthlyBean.compareBean1.dispYear}年#{smsCollectDataviewCompareGraphMonthlyBean.compareBean1.startMonth}月
+                                                    </div>
+                                                </th>
+                                                <td class="col_button_move">
+                                                    <div class="calendar_table_next gradation_type_1 gradation_type_5">
+                                                    <f:ajax event="click" render="dateListArea1 startDay"
+                                                            listener="#{smsCollectDataviewCompareGraphMonthlyBean.moveNextYearCompare1()}">
+                                                        <button jsfc="a4j:commandButton" id="btnCalendarYearNext1" class="calendar_move_button"
+                                                                value="翌年" execute="@form"
+                                                                disabled="#{smsCollectDataviewCompareGraphMonthlyBean.compareBean1.nextYearButtonDisabled}" />
+                                                    </f:ajax>
+                                                        <h:graphicImage class="calendar_move_img" library="images" name="demand/demand_calendar_next.png" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col_button_move">
+                                                    <div class="calendar_table_back gradation_type_1 gradation_type_5">
+                                                        <h:graphicImage class="calendar_move_img" library="images" name="demand/demand_calendar_back.png" />
+                                                    <f:ajax event="click" render="dateListArea1 startDay"
+                                                            listener="#{smsCollectDataviewCompareGraphMonthlyBean.moveLastMonthCompare1()}">
+                                                        <button jsfc="a4j:commandButton" id="btnCalendarMonthBack1" class="calendar_move_button"
+                                                                value="前月" execute="@form" />
+                                                    </f:ajax>
+                                                    </div>
+                                                </td>
+
+                                                <c:set var="selectedMonth1" value="#{smsCollectDataviewCompareGraphMonthlyBean.compareBean1.calendarBean.selectedMonth}" />
+
+                                                <ui:repeat var="dispMonth" value="#{selectMonthList}" varStatus="status">
+                                                    <c:set var="selectedMonthClass" />
+                                                    <td id="calendarColumn1_#{status.index}" class="td_calendar_day">
+                                                        <ui:fragment rendered="#{dispMonth == selectedMonth1}">
+                                                            <script type="text/javascript">$("#calendarColumn1_#{status.index}").addClass("td_targetday");</script>
+                                                        </ui:fragment>
+
+                                                        <a jsfc="a4j:commandLink" value="#{dispMonth}" >
+                                                            <f:ajax render=":smsMonthlyBean:dateListArea1 :smsMonthlyBean:startDay"
+                                                                    listener="#{smsCollectDataviewCompareGraphMonthlyBean.selectCalMonthCompare1(dispMonth)}" />
+                                                        </a>
+                                                    </td>
+                                                </ui:repeat>
+
+                                                <td class="col_button_move">
+                                                    <div class="calendar_table_next gradation_type_1 gradation_type_5">
+                                                    <f:ajax event="click" render="dateListArea1 startDay"
+                                                            listener="#{smsCollectDataviewCompareGraphMonthlyBean.moveNextMonthCompare1()}">
+                                                        <button jsfc="a4j:commandButton" id="btnCalendarMonthNext1" class="calendar_move_button"
+                                                                value="翌月" execute="@form"
+                                                                disabled="#{smsCollectDataviewCompareGraphMonthlyBean.compareBean1.nextMonthButtonDisabled}" />
+                                                    </f:ajax>
+                                                        <h:graphicImage class="calendar_move_img" library="images" name="demand/demand_calendar_next.png" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </h:panelGroup>
+                                </div>
+                                <div style="width: 50px;"></div>
+                                <div>
+                                    <h:panelGroup id="dateListArea2">
+                                        <table class="calendar_table2">
+                                            <tr>
+                                                <td class="col_button_move">
+                                                    <div class="calendar_table_back gradation_type_1 gradation_type_5">
+                                                        <h:graphicImage class="calendar_move_img" library="images" name="demand/demand_calendar_back.png" />
+                                                    <f:ajax event="click" render="dateListArea2 startDay"
+                                                            listener="#{smsCollectDataviewCompareGraphMonthlyBean.moveLastYearCompare2()}">
+                                                        <button jsfc="a4j:commandButton" id="btnCalendarYearBack2" class="calendar_move_button"
+                                                                value="前年" execute="@form" />
+                                                    </f:ajax>
+                                                    </div>
+                                                </td>
+                                                <th colspan="12" class="cal_header">
+                                                    <div class="calendar_table_ym">
+                                                        #{smsCollectDataviewCompareGraphMonthlyBean.titleCompare}2　#{smsCollectDataviewCompareGraphMonthlyBean.compareBean2.dispYear}年#{smsCollectDataviewCompareGraphMonthlyBean.compareBean2.startMonth}月
+                                                    </div>
+                                                </th>
+                                                <td class="col_button_move">
+                                                    <div class="calendar_table_next gradation_type_1 gradation_type_5">
+                                                    <f:ajax event="click" render="dateListArea2 startDay"
+                                                            listener="#{smsCollectDataviewCompareGraphMonthlyBean.moveNextYearCompare2()}">
+                                                        <button jsfc="a4j:commandButton" id="btnCalendarYearNext2" class="calendar_move_button"
+                                                                value="翌年" execute="@form"
+                                                                disabled="#{smsCollectDataviewCompareGraphMonthlyBean.compareBean2.nextYearButtonDisabled}" />
+                                                    </f:ajax>
+                                                        <h:graphicImage class="calendar_move_img" library="images" name="demand/demand_calendar_next.png" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="col_button_move">
+                                                    <div class="calendar_table_back gradation_type_1 gradation_type_5">
+                                                        <h:graphicImage class="calendar_move_img" library="images" name="demand/demand_calendar_back.png" />
+                                                    <f:ajax event="click" render="dateListArea2 startDay"
+                                                            listener="#{smsCollectDataviewCompareGraphMonthlyBean.moveLastMonthCompare2()}">
+                                                        <button jsfc="a4j:commandButton" id="btnCalendarMonthBack2" class="calendar_move_button"
+                                                                value="前月" execute="@form" />
+                                                    </f:ajax>
+                                                    </div>
+                                                </td>
+
+                                                <c:set var="selectedMonth2" value="#{smsCollectDataviewCompareGraphMonthlyBean.compareBean2.calendarBean.selectedMonth}" />
+
+                                                <ui:repeat var="dispMonth" value="#{selectMonthList}" varStatus="status">
+                                                    <td id="calendarColumn2_#{status.index}" class="td_calendar_day">
+                                                        <ui:fragment rendered="#{dispMonth == selectedMonth2}">
+                                                            <script type="text/javascript">$("#calendarColumn2_#{status.index}").addClass("td_targetday");</script>
+                                                        </ui:fragment>
+
+                                                        <a jsfc="a4j:commandLink" value="#{dispMonth}" >
+                                                            <f:ajax render=":smsMonthlyBean:dateListArea2 :smsMonthlyBean:startDay"
+                                                                    listener="#{smsCollectDataviewCompareGraphMonthlyBean.selectCalMonthCompare2(dispMonth)}" />
+                                                        </a>
+                                                    </td>
+                                                </ui:repeat>
+
+                                                <td class="col_button_move">
+                                                    <div class="calendar_table_next gradation_type_1 gradation_type_5">
+                                                    <f:ajax event="click" render="dateListArea2 startDay"
+                                                            listener="#{smsCollectDataviewCompareGraphMonthlyBean.moveNextMonthCompare2()}">
+                                                        <button jsfc="a4j:commandButton" id="btnCalendarMonthNext2" class="calendar_move_button"
+                                                                value="翌月" execute="@form"
+                                                                disabled="#{smsCollectDataviewCompareGraphMonthlyBean.compareBean2.nextMonthButtonDisabled}" />
+                                                    </f:ajax>
+                                                        <h:graphicImage class="calendar_move_img" library="images" name="demand/demand_calendar_next.png" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </h:panelGroup>
+                                </div>
+                            </div>
+
+                            <c:set var="graphHeaderList1" value="#{smsCollectDataviewCompareGraphMonthlyBean.compareBean1.loadSurveyDataList}" />
+                            <c:set var="graphListMap1" value="#{smsCollectDataviewCompareGraphMonthlyBean.compareBean1.graphListMap}" />
+                            <c:set var="graphHeaderList2" value="#{smsCollectDataviewCompareGraphMonthlyBean.compareBean2.loadSurveyDataList}" />
+                            <c:set var="graphListMap2" value="#{smsCollectDataviewCompareGraphMonthlyBean.compareBean2.graphListMap}" />
+                            <c:set var="targetTimes" value="#{smsCollectDataviewCompareGraphMonthlyBean.dispDayList}" />
+
+                            <!-- グラフ表示部 -->
+                            <ui:include src="/html/sms/collect/dataview/compareGraphView.xhtml"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="titleCompare" value="#{smsCollectDataviewCompareGraphMonthlyBean.titleCompare}" />
+                    <input type="hidden" id="selectableLimitDate" value="#{smsCollectDataviewCompareGraphMonthlyBean.compareBean1.selectableLimitDate}" />
+                </form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

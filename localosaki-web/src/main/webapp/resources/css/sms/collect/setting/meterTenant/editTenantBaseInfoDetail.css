@@ -1,0 +1,150 @@
+
+.search_result_area table tr td {
+    border: 1px #CCC solid;
+}
+
+.txt_price {
+    text-align: right;
+}
+
+.rf-pp-cnt .div_list_count {
+    margin: 0;
+}
+
+/* 系統設定 */
+.inner_content_linePopup .search_result_head,
+.inner_content_linePopup .search_result_add {
+    /* padding-right: 17px; */
+}
+.inner_content_linePopup .search_result_detail {
+    max-height: 251px;
+    overflow-y: scroll;
+}
+.tab_line {
+    width: 100%;
+}
+.tab_line .table_header td {
+    text-align: center;
+}
+
+.tab_line tr {
+    background-color: white;
+}
+.tab_line td {
+    position: relative;
+    padding: 10px 10px 10px 10px;
+}
+.tab_line td input[type='text'],
+.tab_line td select {
+    width: 100%;
+}
+
+.tab_line .th_kubun {
+    width: 300px;
+}
+
+.tab_line .th_unit {
+    width: 40px;
+}
+
+.tab_line .th_price {
+    width: 140px;
+}
+
+.tab_line .th_bulk{
+    width: 44px;
+}
+
+.tab_line .td_kubun {
+    width: 300px;
+    background-color: rgb(200,233,255);
+    font-size: 13px;
+}
+
+.tab_line .td_unit {
+    width: 40px;
+    text-align: center;
+    background-color: rgb(200,233,255);
+    font-size: 13px;
+}
+
+.tab_line .td_price {
+    width: 140px;
+    text-align: right;
+    background-color: rgb(255,255,255);
+    font-size: 13px;
+}
+
+.tab_line .td_bulk{
+    width: 44px;
+    text-align: center;
+    background-color: rgb(255,255,255);
+}
+
+.td_split_left {
+    background-color: rgb(200,233,255);
+    font-size: 13px;
+}
+
+.td_split_right {
+    width: 150px;
+    text-align: center;
+    background-color: rgb(200,233,255);
+    font-size: 13px;
+}
+
+
+
+/*
+.tab_line .td_no {
+    width: 260px;
+    text-align: center;
+}
+.tab_line .td_kind {
+    width: 40px;
+}
+.tab_line .td_name {
+    width: 140px;
+}
+.tab_line .td_purpose {
+    width: 80px;
+}
+.tab_line .td_unit {
+    width: 100px;
+}
+.tab_line .td_chk {
+    width: 44px;
+    text-align: center;
+}
+ */
+.tab_line .td_chk img.button_icon {
+    position: absolute;
+    top: 20px;
+    left: 24px;
+}
+.tab_line .td_chk input[type='button'] {
+    width: 36px;
+}
+
+/* 脚注 */
+.page_footNote {
+    padding-top: 15px;
+    font-size: 13px;
+}
+
+/* 登録 */
+.rf-pp-cnt .page_footer {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.tenantDetail_regist_button input[type="submit"] {
+    width: 150px;
+}
+
+.rf-pp-cnt .page_footer img.button_icon {
+    position: absolute;
+    left: 333px;
+    top: 9px;
+    /* left: 356px; */
+}

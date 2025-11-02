@@ -1,0 +1,802 @@
+/***********************************
+*　ボタン関連(グラデーションパターン)*
+***********************************/
+
+/*グラデーションタイプ1（青色）*/
+.gradation_type_1 input[type="button"],
+.gradation_type_1 input[type="submit"],
+.gradation_type_1 input[type="file"],
+.gradation_type_1 button,
+.gradation_type_1 a{
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    color: #ffffff;
+    opacity: 1.0;
+    background: -moz-linear-gradient( top, #fffcf7 0%, #3990ce 25%, #1061a3 50%, #2baaf3 85%, #37e6e6);
+    background: -webkit-gradient( linear, left top, left bottom, from(#fffcf7), color-stop(0.25, #3990ce), color-stop(0.40, #1061a3), color-stop(0.50, #1061a3), color-stop(0.90, #2baaf3), to(#2baaf3));
+    background: -ms-linear-gradient( top, #fffcf7 0%, #3990ce 25%, #1061a3 50%, #2baaf3 85%, #37e6e6);
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+    border-radius: 1px;
+    border: 1px solid #24a1e9;
+    -moz-box-shadow: 0px 1px 3px rgba(000,000,000,0.5), inset 0px -1px 0px rgba(255,255,255,0.7);
+    -webkit-box-shadow: 0px 1px 3px rgba(000,000,000,0.5), inset 0px -1px 0px rgba(255,255,255,0.7);
+    -ms-box-shadow: 0px 1px 3px rgba(000,000,000,0.5), inset 0px -1px 0px rgba(255,255,255,0.7);
+
+    box-shadow: 0px 1px 3px rgba(000,000,000,0.5), inset 0px -1px 0px rgba(255,255,255,0.7);
+    text-shadow: 0px -1px 1px rgba(000,000,000,0.2), 0px 1px 0px rgba(255,255,255,0.3);
+}
+
+/*グラデーションタイプ1(押下時)*/
+.gradation_type_1 input:hover[type="button"],
+.gradation_type_1 input:hover[type="submit"],
+.gradation_type_1 button:hover,
+.gradation_type_1 a:hover{
+    background: -moz-linear-gradient( top, #fffcf7 0%, #3990ce 10%, #1061a3 40%, #2baaf3 90%, #fffcf7);
+    background: -webkit-gradient( linear, left top, left bottom, from(#fffcf7), color-stop(0.10, #3990ce), color-stop(0.40, #1061a3), color-stop(0.50, #1061a3), color-stop(0.90, #2baaf3), to(#2baaf3));
+    background: -ms-linear-gradient( top, #fffcf7 0%, #3990ce 10%, #1061a3 40%, #2baaf3 90%, #37e6e6);
+    cursor: pointer;
+}
+
+/*グラデーションタイプ2（黄色）*/
+.gradation_type_2 input[type="submit"]{
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    color: #000000;
+    background: -moz-linear-gradient(
+        top,
+        #fffcf7 0%,
+        #ffce1e 25%,
+        #ffcf0f 50%,
+        #ffcb1f 75%,
+        #ffea00);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#fffcf7),
+        color-stop(0.25, #ffce1e),
+        color-stop(0.50, #ffcf0f),
+        color-stop(0.75, #ffcb1f),
+        to(#ffea00));
+    background: -ms-linear-gradient(
+        top,
+        #fffcf7 0%,
+        #ffce1e 25%,
+        #ffcf0f 50%,
+        #ffcb1f 75%,
+        #ffea00);
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -ms-border-radius: 0px;
+    border-radius: 0px;
+    border: 1px solid #ffd000;
+    -moz-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    -webkit-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    -ms-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    text-shadow:
+        0px -1px 1px rgba(000,000,000,0.2),
+        0px 1px 0px rgba(255,255,255,0.3);
+}
+
+/*グラデーションタイプ2(押下時)*/
+.gradation_type_2 input:hover[type="submit"]{
+    background: -moz-linear-gradient(
+        top,
+        #fffcf7 0%,
+        #ffce1e 10%,
+        #ffcf0f 50%,
+        #ffcb1f 75%,
+        #ffea00);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#fffcf7),
+        color-stop(0.10, #ffce1e),
+        color-stop(0.50, #ffcf0f),
+        color-stop(0.75, #ffcb1f),
+        to(#ffea00));
+    background: -ms-linear-gradient(
+        top,
+        #fffcf7 0%,
+        #ffce1e 10%,
+        #ffcf0f 50%,
+        #ffcb1f 75%,
+        #ffea00);
+    cursor: pointer;
+}
+
+/*グラデーションタイプ3（水色）*/
+.gradation_type_3 input[type="button"],
+.gradation_type_3 input[type="submit"],
+.gradation_type_3 button{
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    color: #444444;
+    background: -moz-linear-gradient(
+        top,
+        #ffffff 0%,
+        #76daff 25%,
+        #76daff 50%,
+        #93ebfa 75%,
+        #7ff6fa);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#ffffff),
+        color-stop(0.25, #76daff),
+        color-stop(0.50, #76daff),
+        color-stop(0.75, #93ebfa),
+        to(#7ff6fa));
+    background: -ms-linear-gradient(
+        top,
+        #ffffff 0%,
+        #76daff 25%,
+        #76daff 50%,
+        #93ebfa 75%,
+        #7ff6fa);
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -ms-border-radius: 0px;
+    border-radius: 0px;
+    border: 1px solid #99e6ff;
+    -moz-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    -webkit-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    -ms-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    text-shadow:
+        0px -1px 1px rgba(000,000,000,0.2),
+        0px 1px 0px rgba(255,255,255,0.3);
+}
+
+/*グラデーションタイプ3(押下時)*/
+.gradation_type_3 input:hover[type="button"],
+.gradation_type_3 input:hover[type="submit"],
+.gradation_type_3 button:hover{
+    background: -moz-linear-gradient(
+        top,
+        #ffffff 0%,
+        #76daff 10%,
+        #76daff 50%,
+        #93ebfa 75%,
+        #7ff6fa);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#ffffff),
+        color-stop(0.10, #76daff),
+        color-stop(0.50, #76daff),
+        color-stop(0.75, #93ebfa),
+        to(#7ff6fa));
+    background: -ms-linear-gradient(
+        top,
+        #ffffff 0%,
+        #76daff 10%,
+        #76daff 50%,
+        #93ebfa 75%,
+        #7ff6fa);
+    cursor: pointer;
+}
+
+/*グラデーションタイプ4（灰色）*/
+.gradation_type_4 input[type="submit"],
+.gradation_type_4 input[type="button"]{
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    color: #000000;
+    background: -moz-linear-gradient(
+        top,
+        #fffcf7 0%,
+        #b8b8b8 20%,
+        #999999 50%,
+        #b8b8b8 80%,
+        #fffcf7);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#fffcf7),
+        color-stop(0.20, #b8b8b8),
+        color-stop(0.50, #999999),
+        color-stop(0.80, #b8b8b8),
+        to(#fffcf7));
+    background: -ms-linear-gradient(
+        top,
+        #fffcf7 0%,
+        #b8b8b8 20%,
+        #999999 50%,
+        #b8b8b8 80%,
+        #fffcf7);
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -ms-border-radius: 0px;
+    border-radius: 0px;
+    border: 1px solid #8f8f8f;
+    -moz-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    -webkit-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    -ms-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    text-shadow:
+        0px -1px 1px rgba(000,000,000,0.2),
+        0px 1px 0px rgba(255,255,255,0.3);
+}
+
+/*グラデーションタイプ4(押下時)*/
+.gradation_type_4 input:hover[type="submit"],
+.gradation_type_4 input:hover[type="button"]{
+    background: -moz-linear-gradient(
+        top,
+        #fffcf7 0%,
+        #999999 10%,
+        #999999 50%,
+        #b8b8b8 80%,
+        #fffcf7);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#fffcf7),
+        color-stop(0.10, #999999),
+        color-stop(0.50, #999999),
+        color-stop(0.80, #b8b8b8),
+        to(#fffcf7));
+    background: -ms-linear-gradient(
+        top,
+        #fffcf7 0%,
+        #999999 10%,
+        #999999 50%,
+        #b8b8b8 80%,
+        #fffcf7);
+    cursor: pointer;
+}
+
+/*グラデーションタイプ5（非活性）*/
+.gradation_type_5 input[type="submit"][disabled],
+.gradation_type_5 input[type="button"][disabled],
+.gradation_type_5 button[disabled]{
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    color: #000000;
+    opacity:0.4;
+    background: -moz-linear-gradient(
+        top,
+        #fffcf7 0%,
+        #b8b8b8 20%,
+        #999999 50%,
+        #b8b8b8 80%,
+        #fffcf7);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#fffcf7),
+        color-stop(0.20, #b8b8b8),
+        color-stop(0.50, #999999),
+        color-stop(0.80, #b8b8b8),
+        to(#fffcf7));
+    background: -ms-linear-gradient(
+        top,
+        #fffcf7 0%,
+        #b8b8b8 20%,
+        #999999 50%,
+        #b8b8b8 80%,
+        #fffcf7);
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -ms-border-radius: 0px;
+    border-radius: 0px;
+    border: 1px solid #8f8f8f;
+    -moz-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    -webkit-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    -ms-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    text-shadow:
+        0px -1px 1px rgba(000,000,000,0.2),
+        0px 1px 0px rgba(255,255,255,0.3);
+}
+
+/*グラデーションタイプ6*/
+/* ※設定内容は、グラデーションタイプ5 と同じ */
+.gradation_type_6 input[type="submit"]{
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    color: #000000;
+    opacity:0.4;
+    background: -moz-linear-gradient(
+        top,
+        #fffcf7 0%,
+        #b8b8b8 20%,
+        #999999 50%,
+        #b8b8b8 80%,
+        #fffcf7);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#fffcf7),
+        color-stop(0.20, #b8b8b8),
+        color-stop(0.50, #999999),
+        color-stop(0.80, #b8b8b8),
+        to(#fffcf7));
+    background: -ms-linear-gradient(
+        top,
+        #fffcf7 0%,
+        #b8b8b8 20%,
+        #999999 50%,
+        #b8b8b8 80%,
+        #fffcf7);
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -ms-border-radius: 0px;
+    border-radius: 0px;
+    border: 1px solid #8f8f8f;
+    -moz-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    -webkit-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    -ms-box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    box-shadow:
+        0px 1px 3px rgba(000,000,000,0.5),
+        inset 0px -1px 0px rgba(255,255,255,0.7);
+    text-shadow:
+        0px -1px 1px rgba(000,000,000,0.2),
+        0px 1px 0px rgba(255,255,255,0.3);
+}
+/*グラデーションタイプ7（非活性）*/
+.gradation_type_7 input[type="submit"][disabled]{
+    font-size: 16px;
+    color: #ffffff;
+    padding: 15px 10px;
+    font-weight: bold;
+    background: -moz-linear-gradient(
+            top,
+            #fffcf7 0%,
+            #429dde 19%,
+            #0673cc 50%,
+            #048ae3 85%,
+            #00b9fc);
+    background: -ms-linear-gradient(
+            top,
+            #fffcf7 0%,
+            #429dde 19%,
+            #0673cc 50%,
+            #048ae3 85%,
+            #00b9fc);
+    background: -webkit-gradient(
+            linear, left top, left bottom,
+            from(#fffcf7),
+            color-stop(0.19, #429dde),
+            color-stop(0.50, #0673cc),
+            color-stop(0.85, #048ae3),
+            to(#00b9fc));
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    border: 2px solid #0673cc;
+    -moz-box-shadow:
+            0px 1px 3px rgba(000,000,000,0.5),
+            inset 0px -1px 0px rgba(255,255,255,0.7);
+    -webkit-box-shadow:
+            0px 1px 3px rgba(000,000,000,0.5),
+            inset 0px -1px 0px rgba(255,255,255,0.7);
+    box-shadow:
+            0px 1px 3px rgba(000,000,000,0.5),
+            inset 0px -1px 0px rgba(255,255,255,0.7);
+    text-shadow:
+            0px -1px 1px rgba(000,000,000,0.2),
+            0px 1px 0px rgba(255,255,255,0.3);
+    opacity: 1.0;
+    cursor: pointer;
+}
+
+/*グラデーションタイプ8（オレンジ色）*/
+/*建物グルーピング編集画面で使用*/
+.gradation_type_8 input[type="submit"],
+.gradation_type_8 input[type="button"],
+.gradation_type_8 button{
+        letter-spacing: 0.2em;
+  color: #000000;
+        opacity: 1.0;
+  background: -moz-linear-gradient(
+    top,
+    #fffcf7 0%,
+    #ffc18a 50%,
+    #ffcf87);
+  background: -webkit-gradient(
+    linear, left top, left bottom,
+    from(#fffcf7),
+    color-stop(0.50, #ffc18a),
+    to(#ffcf87));
+  background: -ms-linear-gradient(
+    top,
+    #fffcf7 0%,
+    #ffc18a 50%,
+    #ffcf87);
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  border: 1px solid #ff914c;
+  -moz-box-shadow:
+    0px 1px 3px rgba(000,000,000,0.5),
+    inset 0px -1px 0px rgba(255,255,255,0.7);
+  -webkit-box-shadow:
+    0px 1px 3px rgba(000,000,000,0.5),
+    inset 0px -1px 0px rgba(255,255,255,0.7);
+  box-shadow:
+    0px 1px 3px rgba(000,000,000,0.5),
+    inset 0px -1px 0px rgba(255,255,255,0.7);
+  text-shadow:
+    0px -1px 1px rgba(000,000,000,0.2),
+    0px 1px 0px rgba(255,255,255,0.3);
+        cursor: pointer;
+}
+
+/*グラデーションタイプ8（オレンジ色）*/
+/*建物グルーピング編集画面で使用*/
+.gradation_type_8 input:hover[type="submit"],
+.gradation_type_8 input:hover[type="button"],
+.gradation_type_8 button:hover{
+  background: -moz-linear-gradient(
+    top,
+    #fffcf7 0%,
+    #ffc089 10%,
+    #ffbf8a 50%,
+    #ffcf87);
+  background: -webkit-gradient(
+    linear, left top, left bottom,
+    from(#fffcf7),
+    color-stop(0.10, #ffc089),
+    color-stop(0.50, #ffbf8a),
+    to(#ffcf87));
+  background: -ms-linear-gradient(
+    top,
+    #fffcf7 0%,
+    #ffc089 10%,
+    #ffbf8a 50%,
+    #ffcf87);
+        cursor: pointer;
+}
+
+/***********************************
+*　ボタン関連(サイズパターン)*
+***********************************/
+.button_icon{
+    pointer-events: none;
+}
+
+/*ボタンサイズ大（アイコンなし）*/
+.button_large input[type="submit"],
+.button_large input[type="button"],
+.button_large button,
+.button_large a{
+    font-size:16px;
+    font-weight:bold;
+    letter-spacing: 0.2em;
+    padding: 10px 16px;
+    height:42px;
+}
+
+/*ボタンサイズ中（アイコンなし）*/
+.button_medium input[type="submit"],
+.button_medium input[type="button"],
+.button_medium button,
+.button_medium a{
+    font-size:14px;
+    font-weight:bold;
+    letter-spacing: 0.2em;
+    padding: 6px 16px;
+    height:30px;
+}
+
+/*ボタンサイズ大２（先頭アイコンありの表示範囲）*/
+.button_large_2{
+    position:relative;
+}
+
+/*ボタンサイズ大２（先頭アイコンあり）*/
+.button_large_2 input[type="submit"],
+.button_large_2 input[type="button"],
+.button_large_2 button,
+.button_large_2 a{
+    font-size:16px;
+    font-weight:bold;
+    letter-spacing: 0.2em;
+    padding: 10px 14px 10px 40px;
+    height:42px;
+}
+
+/*ボタンサイズ中２（先頭アイコンありの表示範囲）*/
+.button_medium_2{
+    position:relative;
+}
+
+/*ボタンサイズ中２（先頭アイコンあり）*/
+.button_medium_2 input[type="submit"],
+.button_medium_2 input[type="button"],
+.button_medium_2 button,
+.button_medium_2 a{
+    font-size:14px;
+    font-weight:bold;
+    letter-spacing: 0.2em;
+    padding: 4px 12px 4px 36px;
+    height:30px;
+}
+
+/*ボタンサイズ小の表示範囲（小サイズは文字なしのアイコンのみボタン）*/
+.button_small{
+    position: relative;
+}
+
+
+/*ボタンサイズ小*/
+.button_small input[type="button"],
+.button_small input[type="submit"],
+.button_small button,
+.button_small a{
+    width:30px;
+    height:30px;
+}
+
+/*ボタンサイズ小のアイコン*/
+/*.button_small .button_icon{
+    position:absolute;
+    top:5px;
+    left:5px;
+    z-index:10;
+    pointer-events: none;
+}*/
+
+
+/*ログアウトボタン*/
+#right_header #other input[type="submit"]{
+    letter-spacing: 0.1em;
+    font-size: 14px;
+    font-weight:bold;
+    color: #ffffff;
+    padding: 9px 13px;
+    background: -moz-linear-gradient(
+            top,
+            #ff9b30 0%,
+            #ffc089 10%,
+            #ff5b1f 30%,
+            #ff5b1f 70%,
+            #ffc57a);
+    background: -webkit-gradient(
+            linear, left top, left bottom,
+            from(#ff9b30),
+            color-stop(0.10, #ffc089),
+            color-stop(0.30, #ff5b1f),
+            color-stop(0.70, #ff5b1f),
+            to(#ffc57a));
+    background: -ms-linear-gradient(
+            top,
+            #ff9b30 0%,
+            #ffc089 10%,
+            #ff5b1f 30%,
+            #ff5b1f 70%,
+            #ffc57a);
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    border: 1px solid #ff0703;
+    -moz-box-shadow:
+            0px 1px 3px rgba(000,000,000,0.5),
+            inset 0px -1px 0px rgba(255,255,255,0.7);
+    -webkit-box-shadow:
+            0px 1px 3px rgba(000,000,000,0.5),
+            inset 0px -1px 0px rgba(255,255,255,0.7);
+    box-shadow:
+            0px 1px 3px rgba(000,000,000,0.5),
+            inset 0px -1px 0px rgba(255,255,255,0.7);
+    text-shadow:
+            0px -1px 1px rgba(000,000,000,0.2),
+            0px 1px 0px rgba(255,255,255,0.3);
+}
+
+/*ログアウトボタン（押下時）*/
+#right_header #other input:hover[type="submit"]{
+    background: -moz-linear-gradient(
+            top,
+            #ff9b30 0%,
+            #ff5b1f 10%,
+            #ff5b1f 30%,
+            #ff5b1f 70%,
+            #ffc57a);
+    background: -webkit-gradient(
+            linear, left top, left bottom,
+            from(#ff9b30),
+            color-stop(0.10, #ff5b1f),
+            color-stop(0.30, #ff5b1f),
+            color-stop(0.70, #ff5b1f),
+            to(#ffc57a));
+    background: -ms-linear-gradient(
+            top,
+            #ff9b30 0%,
+            #ff5b1f 10%,
+            #ff5b1f 30%,
+            #ff5b1f 70%,
+            #ffc57a);
+}
+
+/***********************************
+*　共通ヘッダーのボタン*
+***********************************/
+/*メニューに戻るボタン*/
+/*#menu_left input[type="submit"]{
+    margin: 5px 0 0 7px;
+    letter-spacing: 0.2em;
+    font-weight: bold;
+    font-size: 12px;
+    color: #ffffff;
+    padding: 8px 15px;
+    background: -moz-linear-gradient( top, #fffcf7 0%, #3990ce 25%, #1061a3 50%, #2baaf3 85%, #37e6e6);
+    background: -webkit-gradient( linear, left top, left bottom, from(#fffcf7), color-stop(0.25, #3990ce), color-stop(0.50, #1061a3), color-stop(0.90, #2baaf3), to(#37e6e6));
+    background: -ms-linear-gradient( top, #fffcf7 0%, #3990ce 25%, #1061a3 50%, #2baaf3 85%, #37e6e6);
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+    -ms-border-radius: 1px;
+    border-radius: 1px;
+    border: 1px solid #24a1e9;
+    -moz-box-shadow: 0px 1px 3px rgba(000,000,000,0.5), inset 0px -1px 0px rgba(255,255,255,0.7);
+    -webkit-box-shadow: 0px 1px 3px rgba(000,000,000,0.5), inset 0px -1px 0px rgba(255,255,255,0.7);
+    -ms-box-shadow: 0px 1px 3px rgba(000,000,000,0.5), inset 0px -1px 0px rgba(255,255,255,0.7);
+    box-shadow: 0px 1px 3px rgba(000,000,000,0.5), inset 0px -1px 0px rgba(255,255,255,0.7);
+    text-shadow: 0px -1px 1px rgba(000,000,000,0.2), 0px 1px 0px rgba(255,255,255,0.3);
+}*/
+
+/*メニューに戻るボタン(押下時)*/
+#menu_left .back_menu_button:hover[type="submit"]{
+    background: -moz-linear-gradient(
+        top,
+        #ffffff 0%,
+        #16daff 25%,
+        #16daff 50%,
+        #33ebfa 75%,
+        #1ff6fa);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#ffffff),
+        color-stop(0.25, #16daff),
+        color-stop(0.50, #16daff),
+        color-stop(0.75, #33ebfa),
+        to(#1ff6fa));
+    background: -ms-linear-gradient(
+        top,
+        #ffffff 0%,
+        #16daff 25%,
+        #16daff 50%,
+        #33ebfa 75%,
+        #1ff6fa);
+}
+
+/*メニューへ戻るボタン*/
+.back_menu_button{
+    position:relative;
+    margin-left: 16px;
+    margin-top: 0px;
+}
+
+/*メニューへ戻るボタンのアイコン*/
+.back_menu_button_icon{
+    position: absolute;
+    top: 14px;
+    left: 23px;
+    pointer-events: none;
+}
+
+
+/*編集終了ボタン*/
+#menu_left .corp_edit_exit{
+    /*margin: 10px 0 0 0;*/
+    background:rgb(255,221,0);
+    font-size:14px;
+    font-weight:bold;
+    padding:3px 15px;
+    border-radius:20px;
+    border:3px solid rgb(255,234,0);
+
+}
+
+#menu_left .corp_edit_exit:hover{
+    background: rgb(245,190,0);
+}
+
+/*閉じるボタン（ポップアップ用）*/
+.button_close{
+    width: 30px;
+    float:right;
+}
+
+/*ファイルアップロードボタン関連のスタイル*/
+.file {
+  display: inline-block;
+  position: relative;
+  width: 100px;
+  height: 26px;
+}
+.file input[type="submit"] {
+    width: 100px;
+    height: 26px;
+    right: 0;
+    top: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+.openButton{
+    float:left;
+    letter-spacing: 0.2em;
+    color: #ffffff;
+    opacity: 1.0;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+    border-radius: 1px;
+    text-shadow: 0px -1px 1px rgba(000,000,000,0.2), 0px 1px 0px rgba(255,255,255,0.3);
+}
+
+.file_choise_msg{
+    position: absolute;
+    top: 5px;
+    left: 35px;
+    font-size: 14px;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+.file .button_icon{
+    position:absolute;
+    top: 4px;
+    left: 9px;
+}
+
+.filename{
+    font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    font-size: 14px;
+    height: 26px;
+    padding: 5px;
+}
+
+input[type="button"], input[type="submit"], input[type="reset"], input[type="file"]::-webkit-file-upload-button, button {
+    cursor: pointer;
+}
+
+a:focus,
+button:focus,
+input[type="reset"]:focus,
+input[type="submit"]:focus,
+input[type="button"]:focus,
+input[type="file"]:focus,
+.openButton_focus
+{
+    outline: 5px #FFD700 solid;
+}
+
+/*APIキーボタン*/
+.apikey_button{
+    width:30px;
+    height:30px;
+}

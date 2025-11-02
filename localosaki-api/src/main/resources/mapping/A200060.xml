@@ -1,0 +1,154 @@
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+	<!-- *** スケジュール(設定) Eα テンプレート *** -->
+	<!-- ベース部分 -->
+	<template name="base">
+		<field name="productCd" length="2" keepPadding="true" />
+		<field name="address" length="2" keepPadding="true" />
+		<field name="command" length="5" default="X0048" keepPadding="true" />
+	</template>
+
+	<template name="base22">
+		<include template="base" />
+		<field name="compressionDataLength" length="6" default="000000" keepPadding="true" />
+	</template>
+
+	<template name="base.res">
+		<field name="productCd" length="2" keepPadding="true" />
+		<field name="address" length="2" keepPadding="true" />
+		<field name="command" length="5" keepPadding="true" />
+	</template>
+
+	<template name="base22.res">
+		<include template="base.res" />
+		<field name="compressionDataLength" length="6" keepPadding="true" />
+	</template>
+
+	<!-- 共通部分１（送信用） -->
+	<template name="commonRequest_1">
+		<field name="scheduleControl" length="1" keepPadding="true" />
+		<segment name="loadList" collection="list" class="map" occurs="8">
+			<segment name="settingMonthScheduleList" collection="list" class="map" occurs="12">
+				<field name="sundayPattern" length="2" padding="0" justify="right" />
+				<field name="mondayPattern" length="2" padding="0" justify="right" />
+				<field name="tuesdayPattern" length="2" padding="0" justify="right" />
+				<field name="wednesdayPattern" length="2" padding="0" justify="right" />
+				<field name="thursdayPattern" length="2" padding="0" justify="right" />
+				<field name="fridayPattern" length="2" padding="0" justify="right" />
+				<field name="saturdayPattern" length="2" padding="0" justify="right" />
+				<field name="nationalHolidayPattern" length="2" padding="0" justify="right" />
+				<field name="specificDayAssignment1" length="2" padding="0" justify="right" />
+				<field name="specificDayAssignment2" length="2" padding="0" justify="right" />
+				<field name="specificDayAssignment3" length="2" padding="0" justify="right" />
+				<field name="specificDayAssignment4" length="2" padding="0" justify="right" />
+				<field name="specificDayAssignment5" length="2" padding="0" justify="right" />
+				<field name="specificDayAssignment6" length="2" padding="0" justify="right" />
+				<field name="specificDayAssignment7" length="2" padding="0" justify="right" />
+				<field name="specificDayAssignment8" length="2" padding="0" justify="right" />
+				<field name="specificDayAssignment9" length="2" padding="0" justify="right" />
+				<field name="specificDayAssignment10" length="2" padding="0" justify="right" />
+				<field name="specificDayPattern1" length="2" padding="0" justify="right" />
+				<field name="specificDayPattern2" length="2" padding="0" justify="right" />
+				<field name="specificDayPattern3" length="2" padding="0" justify="right" />
+				<field name="specificDayPattern4" length="2" padding="0" justify="right" />
+				<field name="specificDayPattern5" length="2" padding="0" justify="right" />
+				<field name="specificDayPattern6" length="2" padding="0" justify="right" />
+				<field name="specificDayPattern7" length="2" padding="0" justify="right" />
+				<field name="specificDayPattern8" length="2" padding="0" justify="right" />
+				<field name="specificDayPattern9" length="2" padding="0" justify="right" />
+				<field name="specificDayPattern10" length="2" padding="0" justify="right" />
+			</segment>
+		</segment>
+	</template>
+
+
+	<!-- 「00」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="00.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="00.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 「03」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="03.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="03.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 「06」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="06.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="06.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 「12」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="12.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="12.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 「21」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="21.req" format="fixedlength">
+		<record name="response" template="base" class="jp.co.osaki.osol.mng.param.A200060Param">
+			<include template="commonRequest_1" />
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="21.res" format="fixedlength">
+		<record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200060Param">
+		</record>
+	</stream>
+
+	<!-- 「22」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="22.req" format="fixedlength">
+		<record name="response" template="base22" class="jp.co.osaki.osol.mng.param.A200060Param">
+			<include template="commonRequest_1" />
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="22.res" format="fixedlength">
+		<record name="response" template="base22.res" class="jp.co.osaki.osol.mng.param.A200060Param">
+		</record>
+	</stream>
+
+</beanio>

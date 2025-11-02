@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE LoginList SYSTEM "login.dtd">
+<LoginList>
+    <Login Key="OSAKI" Name="大崎電気工業">
+        <CorpType>&大崎電気工業;</CorpType>
+    </Login>
+    <Login Key="OSAKI_ON_ADMIN" Name="大崎電気工業の管理者">
+        <CorpType>&大崎電気工業;</CorpType>
+        <PersonType>&管理者;</PersonType>
+    </Login>
+    <Login Key="OSAKI_ON_PERSON" Name="大崎電気工業の担当者">
+        <CorpType>&大崎電気工業;</CorpType>
+        <PersonType>&担当者;</PersonType>
+    </Login>
+
+    <Login Key="PARTNER" Name="パートナー企業">
+        <CorpType>&パートナー企業;</CorpType>
+    </Login>
+    <Login Key="PARTNER_ON_ADMIN" Name="パートナー企業の管理者">
+        <CorpType>&パートナー企業;</CorpType>
+            <PersonType>&管理者;</PersonType>
+    </Login>
+    <Login Key="PARTNER_ON_PERSON" Name="パートナー企業の担当者">
+        <CorpType>&パートナー企業;</CorpType>
+        <PersonType>&担当者;</PersonType>
+    </Login>
+
+    <Login Key="MAINTENANCE_ON_ADMIN" Name="メンテナンス企業の管理者">
+        <CorpType>&メンテナンス企業;</CorpType>
+        <PersonType>&管理者;</PersonType>
+    </Login>
+    <Login Key="MAINTENANCE_ON_PERSON" Name="メンテナンス企業の担当者">
+        <CorpType>&メンテナンス企業;</CorpType>
+        <PersonType>&担当者;</PersonType>
+    </Login>
+
+    <Login Key="CONTRACT" Name="契約企業">
+        <CorpType>&契約企業;</CorpType>
+    </Login>
+    <Login Key="CONTRACT_ON_ADMIN" Name="契約企業の管理者">
+        <CorpType>&契約企業;</CorpType>
+        <PersonType>&管理者;</PersonType>
+    </Login>
+    <Login Key="CONTRACT_ON_PERSON" Name="契約企業の担当者">
+        <CorpType>&契約企業;</CorpType>
+        <PersonType>&担当者;</PersonType>
+    </Login>
+
+</LoginList>

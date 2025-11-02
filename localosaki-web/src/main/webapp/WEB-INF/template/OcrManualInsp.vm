@@ -1,0 +1,11 @@
+「$buildingName」で任意検針が実行されました。
+$severDate $dayOfWeek の当該メーターの検針値を確定してください
+手順①：AieLinkサーバ(https://aielink.jp) オペレータ確認画面にて当該検針値の確定
+手順②：クラウド検針サーバ(https://osaki-sms.com) 確定前検針データ画面にて当該検針値の確定登録
+
+
+検針日 : $severDate $dayOfWeek
+#foreach($info in $infoList)メーターID : $info.meterId
+#end
+
+大崎電気工業株式会社

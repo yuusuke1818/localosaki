@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      >
+<body>
+
+<ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+    <ui:define name="content_side" class="content">
+        <h:outputStylesheet library="css" name="common/button.css"/>
+        <h:outputStylesheet library="css" name="common/common.css"/>
+        <h:outputStylesheet library="css" name="sms/collect/setting/meterreading/settingCollection.css"/>
+        <form jsfc="h:form" id="smsCollectSettingMeterreadingSettingCollectionBean">
+            <div class="inner_content">
+                <div class="title_area_warp">
+                    <!-- 画面タイトル -->
+                    <div class="title_area_left">
+                        <h2 class="page_title">設定一括収集</h2>
+                        <!-- ヘルプボタン -->
+                        <c:if test="#{indexBean.userGuideBool}">
+                            <h:commandLink class="help_icon"
+                                action="#{indexBean.userGuide()}" target="_blank" />
+                        </c:if>
+                        <p class="page_subtitle">
+                            <h:outputText value="データ収集装置へ設定一括収集ができます。" />
+                        </p>
+                        <rich:messages />
+                    </div>
+                    <div class="clear" />
+
+                    <div id="idDispResult">
+                        <div class="button_area_right gradation_type_1 button_large_2 button_area">
+                            <a4j:commandButton
+                                id="refreshButton"
+                                class="action_button"
+                                value="状態表示更新"
+                                execute="@form" 
+                                render="@form" 
+                                action="#{smsCollectSettingMeterreadingSettingCollectionBean.refresh()}"
+                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                ></a4j:commandButton>
+                            <h:graphicImage class="button_icon" library="images" name="common/com015.png" rendered="true"/>
+
+                            <a4j:commandButton
+                                id="allCollectButton"
+                                class="action_button"
+                                value="一括収集"
+                                execute="@form" 
+                                render="@form" 
+                                action="#{smsCollectSettingMeterreadingSettingCollectionBean.allCollect()}"
+                                onclick="return confirmationDialogOpen($('input[id$=allCollectButton]'))"
+                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                ></a4j:commandButton>
+                            <h:graphicImage class="button_icon" library="images" name="common/com039.png" rendered="true"/>
+                        </div>
+
+                        <br />
+
+                        <h:dataTable id="result" var="item" value="#{smsCollectSettingMeterreadingSettingCollectionBean.resultList}"
+                            style="width: 100%;"
+                            class="settingCollection_tbl"
+                            headerClass="table_header"
+                            columnClasses="settingCollection_tbl_col_1,settingCollection_tbl_col_2,settingCollection_tbl_col_3">
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    <h:commandLink class="settingCollection_link" action="#{smsCollectSettingMeterreadingSettingCollectionBean.chkBoxAll()}">選択</h:commandLink>
+                                </f:facet>
+                                <h:selectBooleanCheckbox value="#{item.checkbox}" class="" disabled="#{item.checkboxDisabled}" />
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">収集コマンド名</f:facet>
+                                <h:outputText id="commandName" value="#{item.commandName}" />
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">操作状態</f:facet>
+                                <h:outputText style='color: #{item.commandError ? "#FF0000" : "#0000D0"}' id="commandStatus" value="#{item.commandStatus}" />
+                            </span>
+                        </h:dataTable>
+                    </div>
+
+                </div>
+            </div>
+
+            <ui:include src="/html/common/confirmationDialog.xhtml" >
+                <ui:param name="confirmationDialogTitle" value="確認" />
+                <ui:param name="confirmationDialogMessage" value="#{smsCollectSettingMeterreadingSettingCollectionBean.beforeRegisterMessage}" />
+            </ui:include>
+        </form>
+    </ui:define>
+</ui:composition>
+
+</body>
+</html>

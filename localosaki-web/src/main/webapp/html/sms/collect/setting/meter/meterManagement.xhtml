@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+    <head jsfc="h:head">
+        <title>メーター管理</title>
+    </head>
+    <h:body>
+        <ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+            <ui:define name="content_side">
+                <h:outputStylesheet library="css" name="common/tab.css" />
+                <h:outputStylesheet library="css" name="sms/collect/setting/meter/metermanagement.css" />
+                <h:outputScript library="js" name="sms/collect/setting/meter/meterManagement.js" />
+                <h:outputScript library="js" name="sms/collect/setting/meter/getCurrentValueTimer.js" />
+                <div class="inner_content" id="meterManagement">
+                    <h:form id="smsCollectSettingMeterMeterManagementBean">
+                        <!-- タブ切替時の再検索用隠し要素 -->
+<!--                          <h:inputHidden id="meterKindHiddenInput" value="#{smsCollectSettingMeterMeterManagementBean.meterKind}" />-->
+                        <h:inputHidden id="meterKind" value="#{smsCollectSettingMeterMeterManagementBean.meterKind}" />
+                        <!-- <a4j:commandButton
+                            class="meterKindHiddenBtn"
+                            style="display: none;"
+                            execute="@form"
+                            render="#{rich:clientId('sTablePanel')} #{rich:clientId('pTablePanel')}"
+                            actionListener="#{smsCollectSettingMeterMeterManagementBean.searchMeterInfo()}">
+                        </a4j:commandButton> -->
+                        <div class="title_area_warp">
+                            <!-- 画面タイトル -->
+                            <div class="title_area_left">
+                                <h2 class="page_title">メーター管理</h2>
+                                <!-- ヘルプボタン -->
+                                <c:if test="#{indexBean.userGuideBool}">
+                                    <h:commandLink class="help_icon"
+                                        action="#{indexBean.userGuide()}" target="_blank" />
+                                </c:if>
+                                <p class="page_subtitle">
+                                    <h:outputText value="各メーターの登録・変更・削除などができます。&lt;br /&gt;
+                                    操作したいメーターを下のタブから選択してください。" escape="false" />
+                                </p>
+                            </div>
+                            <div class="clear" />
+                        <!-- メーター種別 タブ -->
+                        <rich:tabPanel id="tabPanel1" switchType="ajax" onbeforeitemchange="tabClick(event);" >
+                            <rich:tab
+                                    id="tab1"
+                                    onbegin="showBlockModal();"
+                                    oncomplete="setErrMsgArea('1'); changeDispListMode('S'); hideBlockModal(); moveColumnsForLteMDevice();"
+                                    execute="@form"
+                                    render="meterManagement #{rich:clientId('confirmMsgArea')}"
+                                    rendered="#{smsCollectSettingMeterMeterManagementBean.smartPulseTabViewFlg}"
+                                    actionListener="#{smsCollectSettingMeterMeterManagementBean.reload()}">
+                                <f:facet name="headerActive">
+                                    <h:outputText value="スマートメーター" />
+                                </f:facet>
+                                <f:facet name="headerInactive">
+                                    <h:outputText value="スマートメーター" />
+                                </f:facet>
+                                <ui:include src="/html/sms/collect/setting/meter/tab/smart.xhtml" />
+                            </rich:tab>
+                            <rich:tab
+                                    id="tab2"
+                                    onbegin="showBlockModal();"
+                                    oncomplete="setErrMsgArea('1'); changeDispListMode('P'); hideBlockModal();"
+                                    execute="@form"
+                                    render="meterManagement #{rich:clientId('confirmMsgArea')}"
+                                    rendered="#{smsCollectSettingMeterMeterManagementBean.smartPulseTabViewFlg}"
+                                    actionListener="#{smsCollectSettingMeterMeterManagementBean.reload()}">
+                                <f:facet name="headerActive">
+                                    <h:outputText value="パルスメーター" />
+                                </f:facet>
+                                <f:facet name="headerInactive">
+                                    <h:outputText value="パルスメーター" />
+                                </f:facet>
+                                <ui:include src="/html/sms/collect/setting/meter/tab/pulse.xhtml" />
+                            </rich:tab>
+                            <rich:tab
+                                    id="tab3"
+                                    onbegin="showBlockModal();"
+                                    oncomplete="setErrMsgArea('1'); changeDispListMode('W'); hideBlockModal();"
+                                    execute="@form"
+                                    render="meterManagement #{rich:clientId('confirmMsgArea')}"
+                                    rendered="#{smsCollectSettingMeterMeterManagementBean.iotRTabViewFlg}"
+                                    actionListener="#{smsCollectSettingMeterMeterManagementBean.reload()}">
+                                <f:facet name="headerActive">
+                                    <h:outputText value="IoT-R連携用メーター" />
+                                </f:facet>
+                                <f:facet name="headerInactive">
+                                    <h:outputText value="IoT-R連携用メーター" />
+                                </f:facet>
+                                <ui:include src="/html/sms/collect/setting/meter/tab/iotR.xhtml" />
+                            </rich:tab>
+                            <rich:tab
+                                    id="tab4"
+                                    onbegin="showBlockModal();"
+                                    oncomplete="setErrMsgArea('1'); changeDispListMode('H'); hideBlockModal();"
+                                    execute="@form"
+                                    render="meterManagement #{rich:clientId('confirmMsgArea')}"
+                                    rendered="#{smsCollectSettingMeterMeterManagementBean.handyTablViewFlg}"
+                                    actionListener="#{smsCollectSettingMeterMeterManagementBean.reload()}">
+                                <f:facet name="headerActive">
+                                    <h:outputText value="ハンディ検針用メーター" />
+                                </f:facet>
+                                <f:facet name="headerInactive">
+                                    <h:outputText value="ハンディ検針用メーター" />
+                                </f:facet>
+                                <ui:include src="/html/sms/collect/setting/meter/tab/handy.xhtml" />
+                            </rich:tab>
+                            <rich:tab
+                                    id="tab5"
+                                    onbegin="showBlockModal();"
+                                    oncomplete="setErrMsgArea('1'); changeDispListMode('O'); hideBlockModal();"
+                                    execute="@form"
+                                    render="meterManagement #{rich:clientId('confirmMsgArea')}"
+                                    rendered="#{smsCollectSettingMeterMeterManagementBean.ocrTablViewFlg}"
+                                    actionListener="#{smsCollectSettingMeterMeterManagementBean.reload()}">
+                                <f:facet name="headerActive">
+                                    <h:outputText value="AieLink用メーター" />
+                                </f:facet>
+                                <f:facet name="headerInactive">
+                                    <h:outputText value="AieLink用メーター" />
+                                </f:facet>
+                                <ui:include src="/html/sms/collect/setting/meter/tab/ocr.xhtml" />
+                            </rich:tab>
+                        </rich:tabPanel>
+                        </div>
+                    </h:form>
+                    <ui:include src="/html/sms/collect/setting/meter/tab/smart/fileUploadDialog.xhtml" />
+
+                    <ui:include src="/html/sms/collect/setting/meter/tab/smart/bulkErrorDialog.xhtml" />
+
+                    <ui:include src="/html/sms/collect/setting/meter/tab/ocr/ocrBulkErrorDialog.xhtml" />
+                    <a4j:outputPanel id="confirmMsgArea" layout="block" style="display:none;">
+                        <h:outputText id="confirmMsg0" value="#{smsCollectSettingMeterMeterManagementBean.getConfirmMsg(0)}" />
+                    </a4j:outputPanel>
+                    <form jsfc="h:form" id="confirmDialogForm">
+                        <ui:include src="/html/common/confirmationDialog.xhtml" >
+                            <ui:param name="confirmationDialogTitle" value="確認" />
+                            <ui:param name="confirmationDialogMessage" value="" />
+                        </ui:include>
+                    </form>
+                    <form jsfc="h:form" id="alertDialogForm">
+                        <ui:include src="/html/common/alertDialog.xhtml" >
+                            <ui:param name="alertDialogTitle" value="結果" />
+                            <ui:param name="alertDialogMessage" value="#{smsCollectSettingMeterMeterManagementBean.getAlertMsg()}"/>
+                        </ui:include>
+                    </form>
+                    <!-- 編集途中の遷移でアラートを出す -->
+                    <ui:include src="/html/common/changeCautionDialog.xhtml" >
+                        <!-- タブに対応する場合 -->
+                        <ui:param name="changeCautionTargetTabPanel" value="#{rich:component('tabPanel1')}" />
+                    </ui:include>
+
+                    <!-- ExtendedDataTableの列のドラッグ&ドロップ（ユーザ操作）を無効化 -->
+                    <h:outputScript target="body">
+                    (function() {
+                      if (!window.RichFaces || !RichFaces.ui || !RichFaces.ui.ExtendedDataTable) return;
+                      var EDT = RichFaces.ui.ExtendedDataTable.prototype;
+                      EDT.reorder = function(e){};
+                      EDT.beginReorder = function(e){};
+                      EDT.overReorder = function(e){};
+                      EDT.outReorder = function(e){};
+                      EDT.endReorder = function(e){};
+                      EDT.cancelReorder = function(e){};
+                    })();
+                    </h:outputScript>
+
+                    <script type="text/javascript">
+                    var DIALOG_MSG_INS = "#{smsCollectSettingMeterMeterManagementBean.getConfirmMsg(1)}";
+                    var DIALOG_MSG_UPD = "#{smsCollectSettingMeterMeterManagementBean.getConfirmMsg(2)}";
+                    var DIALOG_MSG_DEL = "#{smsCollectSettingMeterMeterManagementBean.getConfirmMsg(3)}";
+                    var DIALOG_MSG_GET_API = "#{smsCollectSettingMeterMeterManagementBean.getConfirmMsg(4)}";
+
+                    /*
+                     * 確認ダイアログ表示(一括登録)
+                     * @param btn [OK]ボタン押下時に処理するボタン
+                     */
+                    function confirmationDialogOpenForBulkIns(btn) {
+                        var msg = document.getElementById("#{rich:clientId('confirmMsg0')}").textContent;
+                        var $label = $('span[id$=confirmationDialogMessage]');
+                        $label.addClass('preline').text(msg);
+                        return confirmationDialogOpen(btn);
+                    }
+
+                    /*
+                     * 確認ダイアログ表示(登録)
+                     * @param btn 押下時したボタン
+                     */
+                    function confirmationDialogOpenForIns(btn) {
+                        $('span[id$=confirmationDialogMessage]').html(DIALOG_MSG_INS);
+                        return confirmationDialogOpen(btn);
+                    }
+
+                    /*
+                     * 確認ダイアログ表示(更新)
+                     * @param btn 押下時したボタン
+                     */
+                    function confirmationDialogOpenForUpd(btn) {
+                        $('span[id$=confirmationDialogMessage]').html(DIALOG_MSG_UPD);
+                        return confirmationDialogOpen(btn);
+                    }
+
+                    /*
+                     * 確認ダイアログ表示(削除)
+                     * @param btn 押下時したボタン
+                     */
+                    function confirmationDialogOpenForDel(btn) {
+                        $('span[id$=confirmationDialogMessage]').html(DIALOG_MSG_DEL);
+                        return confirmationDialogOpen(btn);
+                    }
+
+                    /*
+                     * 確認ダイアログ表示(API取得)
+                     * @param btn 押下時したボタン
+                     */
+                    function confirmationDialogOpenForGetApi(btn) {
+                        $('span[id$=confirmationDialogMessage]').html(DIALOG_MSG_GET_API);
+                        return confirmationDialogOpen(btn);
+                    }
+                    </script>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

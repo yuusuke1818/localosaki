@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:oslib="http://osaki.co.jp/base-component"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:jsf="http://xmlns.jcp.org/jsf">
+<body>
+    <ui:composition template="/html/template/template.xhtml">
+        <ui:param name="isTopPage" value="true" />
+        <ui:define name="content" class="content">
+            <h:outputStylesheet library="css" name="common/sideMenu.css" />
+            <h:outputScript library="js" name="common/accordionMenu.js" />
+            <div class="main_layout">
+                <div class="sub_layout">
+                    <form jsfc="h:form" id="template_server_sidemenu" class="side_button" prependId="false">
+                        <div>
+                            <div class="side_title">SMSサーバー設定</div>
+                        </div>
+                        <div id="accordion" class="accordion_container parent_border">
+                            <div class="accordion_title parent_button">
+                                <h:selectBooleanCheckbox
+                                    value="#{smsServerTopBean.topBeanProperty.selectCollectFlg}"
+                                    class="checkbox" id="checkbox3" />
+                                <label for="checkbox3">データ収集装置</label>
+                            </div>
+                            <div class="accordion_content3">
+                                <div class="child_button">
+                                    <a4j:commandButton id="deviceBtn" value="装置設定"
+                                        onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                        onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                        actionListener="#{smsServerTopBean.topBeanProperty.setSelectId('deviceBtn')}"
+                                        action="#{smsServerSettingCollectSearchBean.init()}">
+                                    </a4j:commandButton>
+                                </div>
+                                <div class="child_button">
+                                    <a4j:commandButton id="buildingBtn" value="建物装置設定"
+                                        onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                        onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                        actionListener="#{smsServerTopBean.topBeanProperty.setSelectId('buildingBtn')}"
+                                        action="#{smsServerSettingBuildingDeviceSearchBean.init()}">
+                                    </a4j:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="parent_button parent_border">
+                            <a4j:commandButton id="HandyBtn" value="ハンディ端末"
+                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                actionListener="#{smsServerTopBean.topBeanProperty.setSelectId('HandyBtn')}"
+                                action="#{smsServerSettingHandySearchBean.init()}">
+                            </a4j:commandButton>
+                        </div>
+                        <div class="parent_button parent_border">
+                            <a4j:commandButton id="ocrBtn" value="AieLink"
+                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                actionListener="#{smsServerTopBean.topBeanProperty.setSelectId('ocrBtn')}"
+                                action="#{smsServerSettingOcrSearchBean.init()}">
+                            </a4j:commandButton>
+                        </div>
+                        <div class="parent_button parent_border" style="position: relative;">
+                            <a4j:commandButton id="IndexBtn" value="メインメニュー"
+                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                action="#{indexBean.init()}">
+                            </a4j:commandButton>
+                                <h:graphicImage style="position: absolute; left: 167px; top: 12px;" library="images" name="common/com080.png" />
+                        </div>
+                    </form>
+                </div>
+                <div id="content_side" class="center_content">
+                    <ui:insert name="content_side">content_side</ui:insert>
+                </div>
+            </div>
+            <script type="text/javascript">
+            //現在選択中メニューの背景色を変更する
+            window.onpageshow = function(){
+                var selectedCss = {'background-color': '#D9E5FF', 'color':'black'}
+                var pathlist = location.pathname.split("/")
+                var page = pathlist[6]
+                switch(page) {
+                case 'collect':
+                    $('#deviceBtn').css(selectedCss)
+                    break
+                case 'buildingdevice':
+                    $('#buildingBtn').css(selectedCss)
+                    break
+                case 'handy':
+                    $('#HandyBtn').css(selectedCss)
+                    break
+                case 'ocr':
+                    $('#ocrBtn').css(selectedCss)
+                    break
+                }
+            };
+            </script>
+        </ui:define>
+    </ui:composition>
+</body>
+</html>

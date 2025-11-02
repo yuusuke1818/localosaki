@@ -1,0 +1,199 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:oslib="http://osaki.co.jp/base-component"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:a4j="http://richfaces.org/a4j">
+<body>
+    <ui:composition template="/html/template/template.xhtml">
+        <ui:param name="isTopPage" value="true" />
+        <ui:define name="content" class="content">
+            <script>
+                    if (#{indexBean.isFirstAccess()}) {
+                        $("#content").hide();
+                    }
+                </script>
+            <h:outputStylesheet library="css" name="menu/index.css" />
+            <h:outputScript library="js" name="menu/menu.js" />
+            <div class="center_content">
+                <form jsfc="h:form" id="menuIndex">
+                    <div class="index_spacing ">
+                        <div class="title_area">
+                            <h:graphicImage class="title_icon" library="images"
+                                name="menu/menu_index009.png" />
+                            <span class="page_title">メニュー</span>
+                        </div>
+                        <h:outputText style="display: none;" id="defaultLoginScreenId"
+                            value="#{indexBean.defaultLoginScreenId}" />
+                        <h:outputText style="display: none;" id="loginCorpTypeIsMaintenance"
+                            value="#{indexBean.loginCorpTypeIsMaintenance}" />
+
+                        <!-- メニューここから -->
+                        <div class="menu_category">
+                            <c:if test="#{indexBean.equipmentMenuVisble}">
+                                <div class="table_menu">
+                                    <div>
+                                        <div>
+                                            <h:graphicImage library="images"
+                                                name="menu/menu_index100.png" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="gradation_type_1 gradation_type_5">
+                                            <a4j:commandButton id="equipmentMenuBtn" value="建物選択"
+                                                execute="@form" render="@form"
+                                                onbegin="showBlockModal()"
+                                                oncomplete="hideBlockModal()"
+                                                action="#{buildingInfoSearchBean.init()}">
+                                            </a4j:commandButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:if>
+
+                            <!-- データダウンロード -->
+                            <c:if test="#{indexBean.equipmentMenuVisble}">
+                                <div class="table_menu">
+                                    <div>
+                                        <div>
+                                            <h:graphicImage library="images" name="menu/menu_index102.png" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="gradation_type_1 gradation_type_5">
+                                            <a4j:commandButton id="settingMenuAggregateBtn" value="データダウンロード"
+                                                execute="@form" render="@form"
+                                                onbegin="showBlockModal()"
+                                                oncomplete="hideBlockModal()"
+                                                action="#{smsAggregateTopBean.init()}">
+                                            </a4j:commandButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:if>
+
+                            <c:if test="#{indexBean.settingMenuVisble}">
+                                <div class="table_menu">
+                                    <div>
+                                        <div>
+                                            <h:graphicImage library="images"
+                                                name="menu/menu_index101.png" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="gradation_type_1 gradation_type_5 button_large">
+                                            <a4j:commandButton id="settingMenuBtn" value="SMSサーバー設定"
+                                                execute="@form" render="@form"
+                                                onbegin="showBlockModal()"
+                                                oncomplete="hideBlockModal()"
+                                                action="#{smsServerTopBean.init()}">
+                                            </a4j:commandButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:if>
+                        </div>
+                        <!-- メニューここまで -->
+                        <br />
+                        <div class="announcement_area">
+                            <div class="title_area">
+                                <h:graphicImage class="title_icon" library="images"
+                                    name="menu/menu_index010.png" />
+                                <span class="page_title">お知らせ</span>
+                            </div>
+                            <table id="announcementListArea" align="center">
+                                <tr>
+                                    <td>
+                                        <div
+                                            class="announcement_background announcement_word-wrap announcement_overflow announcement_topic_size announcement_border">
+                                            <h:dataTable id="result" var="item" value="#{indexBean.desp_list}" style="margin: 8px;">
+                                                <tr>
+                                                    <h:column>
+                                                        <div class="icon_td">
+                                                            <h:graphicImage library="images"
+                                                                name="#{item.dispIconFilePath}"
+                                                                class="icon_size"
+                                                                rendered="#{item.dispIconFlg}" />
+                                                        </div>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <h:panelGroup layout="block" style="#{indexBean.getPublishedDayStyle(item.externalSiteFlg)}">
+                                                            <h:outputText value="#{item.publishedDay}" />
+                                                        </h:panelGroup>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <h:outputText class="announcement_text" value="#{item.title}" rendered="#{indexBean.isOshiraseTextVisible(item.externalSiteFlg)}" />
+                                                        <h:outputLink value="#{item.url}" rendered="#{indexBean.isOshiraseExternalSiteVisible(item.externalSiteFlg)}" target="_blank">
+                                                            <h:outputText class="announcement_text" value="#{item.title}" />
+                                                        </h:outputLink>
+                                                        <h:commandLink value="" rendered="#{indexBean.isOshiraseFileDownloadVisible(item.externalSiteFlg)}"
+                                                                       id="oshiraseDownloadBtn" immediate="true"
+                                                                       type="submit" actionListener="#{indexBean.execFileDownload(item)}" onclick="actionIntervalBlock()">
+                                                                       <h:outputText class="announcement_text" value="#{item.title}" />
+                                                        </h:commandLink>
+                                                    </h:column>
+                                                </tr>
+                                            </h:dataTable>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <ui:remove>
+                        <!-- アクセストークン用 -->
+                    </ui:remove>
+                    <oslib:requestToken />
+                    <div id="sereal_code_area">
+                        <!-- <h:commandButton
+                            id="sampleApiBean"
+                            value="SampleApiBean"
+                            actionListener="#{indexBean.sampleApiBean()}"
+                        /> -->
+                        <c:if test="#{indexBean.getEncryptionToolsVisible()}">
+                            <h:commandButton id="passwordEncryptionForPerson" class="menu_button"
+                                value="パスワード暗号化(ログインユーザ)"
+                                action="#{indexBean.passwordEncryptionForPerson(indexBean.getLoginCorpId(),indexBean.getLoginPersonId())}">
+                            </h:commandButton>
+                            <h:commandButton id="passwordDecryptionForPerson" class="menu_button"
+                                value="パスワード複合化(ログインユーザ)"
+                                action="#{indexBean.passwordDecryptionForPerson(indexBean.getLoginCorpId(),indexBean.getLoginPersonId())}">
+                            </h:commandButton>
+                            <h:commandButton id="passwordEncryptionForPersonAESSalt"
+                                class="menu_button" value="パスワード暗号化-AES-Salt(ログインユーザ)"
+                                action="#{indexBean.passwordEncryptionForPersonAESSalt(indexBean.getLoginCorpId(),indexBean.getLoginPersonId())}">
+                            </h:commandButton>
+                            <h:commandButton id="passwordDecryptionForPersonAESSalt"
+                                class="menu_button" value="パスワード複合化-AES-Salt(ログインユーザ)"
+                                action="#{indexBean.passwordDecryptionForPersonAESSalt(indexBean.getLoginCorpId(),indexBean.getLoginPersonId())}">
+                            </h:commandButton>
+                            <h:commandButton id="passwordEncryptionAll" class="menu_button"
+                                value="パスワード暗号化(全ユーザ)" action="#{indexBean.passwordEncryptionAll()}">
+                            </h:commandButton>
+                            <h:commandButton id="passwordDecryptionAll" class="menu_button"
+                                value="パスワード複合化(全ユーザ)" action="#{indexBean.passwordDecryptionAll()}">
+                            </h:commandButton>
+                            <h:commandButton id="passwordEncryptionAllAESSalt" class="menu_button"
+                                value="パスワード暗号化-AES-Salt(全ユーザ)"
+                                action="#{indexBean.passwordEncryptionAllAESSalt()}">
+                            </h:commandButton>
+                            <h:commandButton id="passwordDecryptionAllAESSalt" class="menu_button"
+                                value="パスワード複合化-AES-Salt(全ユーザ)"
+                                action="#{indexBean.passwordDecryptionAllAESSalt()}">
+                            </h:commandButton>
+                        </c:if>
+                    </div>
+                </form>
+            </div>
+            <script>
+                    history.pushState(null, null, null);
+                    window.addEventListener("popstate", function () {
+                        history.pushState(null, null, null);
+                    });
+                    if (#{indexBean.isFirstAccess()}) {
+                        clickDefaultPageButton();
+                    }
+                </script>
+        </ui:define>
+    </ui:composition>
+</body>
+</html>

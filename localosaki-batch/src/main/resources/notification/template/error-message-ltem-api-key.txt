@@ -1,0 +1,49 @@
+{
+	"type": "message",
+	"attachments": [
+		{
+			"contentType": "application/vnd.microsoft.card.adaptive",
+			"content": {
+				"type": "AdaptiveCard",
+				"body": [
+					{
+						"type": "TextBlock",
+						"text": "<at>水谷 勇人</at> <at>星 拓斗</at> <at>山田 貴弘</at>\n\n__[[${batchName}]]__\n\n__実行環境: [[${environment}]]__\n\nLTE-M APIキー発行処理にて異常が発生しました。\n\nログにて詳細を確認してください。\n\nLTE-M APIキー発行処理をやり直す場合は手動実行を行ってください。\n\n【LTE-M APIキー発行日時】 [[${implementationDate}]]\n\n【エラー内容】 ※詳細はエラーログをご参照ください。\n\n[[${errorContent}]]",
+						"wrap": true
+					}
+				],
+				"$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+				"version": "1.0",
+				"msteams": {
+					"width": "Full",
+					"entities": [
+						{
+							"type": "mention",
+							"text": "<at>水谷 勇人</at>",
+							"mentioned": {
+								"id": "y.mizutani@osaki.co.jp",
+								"name": "水谷 勇人"
+							}
+						},
+						{
+							"type": "mention",
+							"text": "<at>星 拓斗</at>",
+							"mentioned": {
+								"id": "ta.hoshi@osaki.co.jp",
+								"name": "星 拓斗"
+							}
+						},
+						{
+							"type": "mention",
+							"text": "<at>山田 貴弘</at>",
+							"mentioned": {
+								"id": "tak.yamada@osaki.co.jp",
+								"name": "山田 貴弘"
+							}
+						}
+					]
+				}
+			}
+		}
+	]
+}

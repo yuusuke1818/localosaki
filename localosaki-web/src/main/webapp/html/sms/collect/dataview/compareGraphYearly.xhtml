@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <head jsfc="h:head">
+        <title>データ比較グラフ（年報）</title>
+    </head>
+    <body jsfc="h:body">
+        <ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+            <ui:define name="content_side">
+                <h:outputStylesheet library="css" name="common/rfCalendar.css" />
+                <h:outputStylesheet library="css" name="sms/collect/dataview/compareGraph.css" />
+                <h:outputScript library="js" name="common/Chart.min.js" />
+                <h:outputScript library="js" name="sms/collect/dataview/compareGraph.js"/>
+
+                <form jsfc="h:form" id="smsYearlyBean">
+                    <div class="inner_content">
+                        <div jsfc="a4j:outputPanel" id="dailyDataPanel">
+                            <div class="title_area_warp">
+                                <!-- 画面タイトル -->
+                                <div class="title_area_left">
+                                    <h2 class="page_title">データ比較グラフ（年報）</h2>
+                                    <!-- ヘルプボタン -->
+                                    <c:if test="#{indexBean.userGuideBool}">
+                                        <h:commandLink class="help_icon"
+                                            action="#{indexBean.userGuide()}" target="_blank" />
+                                    </c:if>
+                                    <p class="page_subtitle">
+                                        <h:outputText value="各メーターの1ヶ月毎の計量値のデータ比較グラフ(使用量)を表示します。" />
+                                    </p>
+                                </div>
+                                <div class="clear" />
+                            <div class="contents_title contents_accordion_header contents_daily">
+                                <h:graphicImage class="button_icon button_opener" library="images" name="demand/demand_container_opner.png" style="display: none" />
+                                <h:graphicImage class="button_icon button_closer" library="images" name="demand/demand_container_closer.png" />
+                                <span class="contents_title_body">表示条件</span>
+                            </div>
+                            <div class="contents_form_area contents_accordion_body">
+                                <div class="msg">表示内容を変更したい場合は、下記を変更し、[表示]ボタンを押してください。</div>
+                                <div class="conditions">
+                                    <div>
+                                        <label class="TXT008 L1">接続先</label>
+                                        <f:ajax event="change" render="meterMngId dispDirect dispYear1 dispYear2" listener="#{smsCollectDataviewCompareGraphYearlyBean.changeDevIdPulldown()}">
+                                            <select jsfc="h:selectOneMenu" value="#{smsCollectDataviewCompareGraphYearlyBean.devId}" class="SEL1">
+                                                <option jsfc="f:selectItems" value="#{smsCollectDataviewCompareGraphYearlyBean.compareBean1.devIdMap}" />
+                                            </select>
+                                        </f:ajax>
+                                    </div>
+                                    <div>
+                                        <label class="TXT008 L2">メーター表示切替</label>
+                                        <f:ajax event="click" listener="#{smsCollectDataviewCompareGraphYearlyBean.changePageNoPulldown()}">
+                                            <select jsfc="h:selectOneMenu" id="meterMngId" value="#{smsCollectDataviewCompareGraphYearlyBean.meterMngId}" class="SEL2">
+                                                <option jsfc="f:selectItems" value="#{smsCollectDataviewCompareGraphYearlyBean.compareBean1.meterMngIdMap}" />
+                                            </select>
+                                        </f:ajax>
+                                    </div>
+                                </div>
+
+                                <div class="conditions">
+                                    <div>
+                                        <label class="TXT008 L3">メータータイプ</label>
+                                        <c:set var="selectedMeterKind" value="#{smsCollectDataviewCompareGraphYearlyBean.meterKind}" />
+                                        <f:ajax event="change" render="smsYearlyBean:meterMngId" listener="#{smsCollectDataviewCompareGraphYearlyBean.changeMeterKindRadio()}">
+                                            <ui:repeat value="#{smsCollectDataviewCompareGraphYearlyBean.meterKindMap}" var="meterKindEntry">
+                                                <input type="radio" jsf:id="meterKindArea" a:name="#{hiddenMeterKind.clientId}" value="#{meterKindEntry.value}"
+                                                       a:checked="#{meterKindEntry.value eq selectedMeterKind ? 'checked' : null}"
+                                                       style="width: 16px;" />
+                                                <h:outputLabel for="meterKindArea" value="#{meterKindEntry.key}"
+                                                               style="width: 120px; text-align: left; position: relative; right: 10px;" />
+                                            </ui:repeat>
+                                        </f:ajax>
+
+                                        <h:inputHidden id="selectedItem" binding="#{hiddenMeterKind}" value="#{selectedMeterKind}" />
+                                    </div>
+                                </div>
+
+                                <div class="conditions">
+                                    <div>
+                                        <label class="TXT008 L4">表示方向</label>
+                                        <f:ajax event="click" listener="#{smsCollectDataviewCompareGraphYearlyBean.changeDispDirectPulldown()}">
+                                            <select jsfc="h:selectOneMenu" id="dispDirect" value="#{smsCollectDataviewCompareGraphYearlyBean.dispDirect}" class="SEL3">
+                                                <option jsfc="f:selectItems" value="#{smsCollectDataviewCompareGraphYearlyBean.compareBean1.dispDirectMap}" />
+                                            </select>
+                                        </f:ajax>
+                                    </div>
+                                    <div>
+                                        <label class="TXT008 L5">表示種別</label>
+                                        <span class="TXT008 disp">使用量</span>
+                                    </div>
+                                    <div>
+                                        <label class="TXT008 L6">開始月</label>
+                                        <f:ajax event="click" listener="#{smsCollectDataviewCompareGraphYearlyBean.changeStartMonthPulldown()}">
+                                            <select jsfc="h:selectOneMenu" value="#{smsCollectDataviewCompareGraphYearlyBean.startMonth}" class="SEL4">
+                                                <option jsfc="f:selectItems" value="#{smsCollectDataviewCompareGraphYearlyBean.compareBean1.startDateTimeList}" />
+                                            </select>
+                                        </f:ajax>
+                                    </div>
+                                </div>
+
+                                <div class="conditions">
+                                    <div>
+                                        <label class="TXT008 L7">テナント名</label>
+                                        <span class="TXT008" style="width: 10px;">に&nbsp;&nbsp;</span>
+                                        <f:ajax event="blur" render="meterMngId" listener="#{smsCollectDataviewCompareGraphYearlyBean.inputTenantName()}">
+                                            <input type="text" jsfc="h:inputText" id="tenantName"
+                                                   value="#{smsCollectDataviewCompareGraphYearlyBean.tenantName}"
+                                                   style="width: 400px;" />
+                                        </f:ajax>
+                                        <label class="TXT008" style="width: 50px; text-align: left;">を含む</label>
+                                    </div>
+                                </div>
+
+                                <div class="gradation_type_1 button_large_2 button_disp">
+                                    <button jsfc="a4j:commandButton"
+                                        id="reloadButton"
+                                        class="button_width edit_search_start"
+                                        value="表示"
+                                        action="#{smsCollectDataviewCompareGraphYearlyBean.reload()}"
+                                        execute="@form" render="#{rich:clientId('dailyDataPanel')}"
+                                        onbegin="showBlockModal()" oncomplete="hideBlockModal(true);" />
+                                    <h:graphicImage class="button_icon" library="images" name="common/com015.png" />
+                                </div>
+                            </div>
+
+                            <div class="conditions_2">
+                                <div style="width: 180px;"></div>
+                                <div>
+                                    <table class="calendar_table1">
+                                        <tr>
+                                            <th class="cal_header">
+                                                <div class="calendar_table_ym calendar_table_y">
+                                                    #{smsCollectDataviewCompareGraphYearlyBean.titleCompare}1　
+                                                    <f:ajax event="click" listener="#{smsCollectDataviewCompareGraphYearlyBean.changeCompareYear1Pulldown()}">
+                                                        <select jsfc="h:selectOneMenu" id="dispYear1" value="#{smsCollectDataviewCompareGraphYearlyBean.compareBean1.dispYear}" class="SEL3">
+                                                            <option jsfc="f:selectItems" value="#{smsCollectDataviewCompareGraphYearlyBean.compareBean1.dispYearMap}" />
+                                                        </select>
+                                                    </f:ajax>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div style="width: 50px;"></div>
+                                <div>
+                                    <table class="calendar_table2">
+                                        <tr>
+                                            <th class="cal_header">
+                                                <div class="calendar_table_ym calendar_table_y">
+                                                    #{smsCollectDataviewCompareGraphYearlyBean.titleCompare}2　
+                                                    <f:ajax event="click" listener="#{smsCollectDataviewCompareGraphYearlyBean.changeCompareYear2Pulldown()}">
+                                                        <select jsfc="h:selectOneMenu" id="dispYear2" value="#{smsCollectDataviewCompareGraphYearlyBean.compareBean2.dispYear}" class="SEL3">
+                                                            <option jsfc="f:selectItems" value="#{smsCollectDataviewCompareGraphYearlyBean.compareBean2.dispYearMap}" />
+                                                        </select>
+                                                    </f:ajax>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <c:set var="graphHeaderList1" value="#{smsCollectDataviewCompareGraphYearlyBean.compareBean1.loadSurveyDataList}" />
+                            <c:set var="graphListMap1" value="#{smsCollectDataviewCompareGraphYearlyBean.compareBean1.graphListMap}" />
+                            <c:set var="graphHeaderList2" value="#{smsCollectDataviewCompareGraphYearlyBean.compareBean2.loadSurveyDataList}" />
+                            <c:set var="graphListMap2" value="#{smsCollectDataviewCompareGraphYearlyBean.compareBean2.graphListMap}" />
+                            <c:set var="targetTimes" value="#{smsCollectDataviewCompareGraphYearlyBean.dispMonthList}" />
+
+                            <!-- グラフ表示部 -->
+                            <ui:include src="/html/sms/collect/dataview/compareGraphView.xhtml"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="titleCompare" value="#{smsCollectDataviewCompareGraphYearlyBean.titleCompare}" />
+                    <input type="hidden" id="selectableLimitDate" value="#{smsCollectDataviewCompareGraphYearlyBean.compareBean1.selectableLimitDate}" />
+                </form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

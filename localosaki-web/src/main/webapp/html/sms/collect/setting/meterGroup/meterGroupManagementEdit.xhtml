@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      >
+<body>
+
+<ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+    <ui:define name="content_side" class="content">
+        <meta http-equiv="content-language" content="ja" />
+        <h:outputStylesheet library="css" name="common/button.css"/>
+        <h:outputStylesheet library="css" name="common/default.css"/>
+        <h:outputStylesheet library="css" name="common/cssLayout.css"/>
+        <h:outputStylesheet library="css" name="common/common.css"/>
+        <h:outputStylesheet library="css" name="sms/collect/setting/meterGroup/meterGroupManagementEdit.css"/>
+
+        <form jsfc="h:form" id="smsCollectSettingMeterGroupManagementEditBean">
+            <div class="inner_content">
+                <div class="title_area_warp">
+                    <!-- 画面タイトル -->                    
+                    <div class="title_area_left">
+                        <h2 class="page_title">メーターグループ管理</h2>
+                        <p class="page_subtitle">
+                            <h:outputText value="メーターのグループ設定ができます。" />
+                        </p>
+                        <rich:messages />
+                    </div>
+                    <div class="clear" />
+                    <c:if test="#{smsCollectSettingMeterGroupManagementEditBean.editFlg}">
+                        <c:if test="#{smsCollectSettingMeterGroupManagementEditBean.multiEditFlg}">
+                            <h3 class="contents_title editDisp">選択項目設定変更</h3>
+                        </c:if>
+                        <c:if test="#{!smsCollectSettingMeterGroupManagementEditBean.multiEditFlg}">
+                            <h3 class="contents_title editDisp">設定変更</h3>
+                        </c:if>
+                    </c:if>
+                    <c:if test="#{!smsCollectSettingMeterGroupManagementEditBean.editFlg}">
+                        <h3 class="contents_title editDisp">新規登録</h3>
+                    </c:if>
+                    
+                    <div class="contents_form_area editDisp">
+                        <table class="editTable">
+                            <tr style="height: 10px">
+                                <td class="edit_table_col1"></td>
+                                <td class="edit_table_col2"></td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">登録先グループ</td>
+                                <td class="TXT020">
+                                    <h:outputText id="meterGroupId" value="#{smsCollectSettingMeterGroupManagementEditBean.meterGroupName}" />
+                                </td>
+                            </tr>
+                            <c:if test="#{!smsCollectSettingMeterGroupManagementEditBean.multiEditFlg}">
+                                <c:if test="#{smsCollectSettingMeterGroupManagementEditBean.editFlg}">
+                                    <tr>
+                                        <td class="TXT008">登録装置</td>
+                                        <td class="TXT020">
+                                            <h:outputText id="devId" value="#{smsCollectSettingMeterGroupManagementEditBean.devName}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="TXT008">メーター管理番号</td>
+                                        <td class="TXT020">
+                                            <h:outputText id="meterMngId" value="#{smsCollectSettingMeterGroupManagementEditBean.meterMngId}" >
+                                                <f:convertNumber pattern="0000" />
+                                            </h:outputText>
+                                        </td>
+                                    </tr>
+                                </c:if>
+                                <c:if test="#{!smsCollectSettingMeterGroupManagementEditBean.editFlg}">
+                                    <tr>
+                                        <td class="TXT008">登録装置</td>
+                                        <td>
+                                            <f:ajax event="change" render="meterMngIdSelect registBtn autofocus" listener="#{smsCollectSettingMeterGroupManagementEditBean.updateMeterMndIdMap()}">
+                                                <h:selectOneMenu id="devIdSelect" class="EDIT002 check_change checkbox_width autofocus" 
+                                                value="#{smsCollectSettingMeterGroupManagementEditBean.devId}" >
+                                                    <f:selectItems value="#{smsCollectSettingMeterGroupManagementEditBean.devIdMap}" />
+                                                </h:selectOneMenu>
+                                            </f:ajax>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="TXT008">メーター管理番号</td>
+                                        <td>
+                                            <h:selectOneMenu id="meterMngIdSelect" class="EDIT002 check_change checkbox_width" value="#{smsCollectSettingMeterGroupManagementEditBean.meterMngId}" >
+                                                <f:selectItems value="#{smsCollectSettingMeterGroupManagementEditBean.meterMngIdMap}" />
+                                            </h:selectOneMenu>
+                                        </td>
+                                    </tr>
+                                </c:if>
+                            </c:if>
+                            <tr>
+                                <td class="TXT008">加減算</td>
+                                <td>
+                                    <c:if test="#{smsCollectSettingMeterGroupManagementEditBean.editFlg}">
+                                        <h:selectOneMenu id="calcType" class="EDIT002 check_change checkbox_width autofocus" value="#{smsCollectSettingMeterGroupManagementEditBean.calcType}" >
+                                            <f:selectItems value="#{smsCollectSettingMeterGroupManagementEditBean.calcTypeMap}" />
+                                        </h:selectOneMenu>
+                                    </c:if>
+                                    <c:if test="#{!smsCollectSettingMeterGroupManagementEditBean.editFlg}">
+                                        <h:selectOneMenu id="calcType" class="EDIT002 check_change checkbox_width" value="#{smsCollectSettingMeterGroupManagementEditBean.calcType}" >
+                                            <f:selectItems value="#{smsCollectSettingMeterGroupManagementEditBean.calcTypeMap}" />
+                                        </h:selectOneMenu>
+                                    </c:if>
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+                        <br />
+                        <br />
+                        <div class="edit_button_area">
+                            <div id="updateButton" class="gradation_type_1 button_large_2 gradation_type_5 button_area">
+                                <c:if test="#{smsCollectSettingMeterGroupManagementEditBean.editFlg}">
+                                    <a4j:commandButton 
+                                        id="editBtn" 
+                                        value="設定変更"
+                                        action="#{smsCollectSettingMeterGroupManagementEditBean.execUpdate()}"
+                                        onclick="return confirmationDialogOpen($('input[id$=editBtn]'))"
+                                        onbegin="showBlockModal()" oncomplete="hideBlockModal(); clearChangeFlag();">
+                                    </a4j:commandButton>
+                                    <h:graphicImage class="edit_button_icon" library="images" name="common/com067.png" />
+                                </c:if>
+                                <c:if test="#{!smsCollectSettingMeterGroupManagementEditBean.editFlg}">
+                                    <a4j:commandButton 
+                                        id="registBtn" 
+                                        value="登録"
+                                        action="#{smsCollectSettingMeterGroupManagementEditBean.execUpdate()}"
+                                        disabled="#{smsCollectSettingMeterGroupManagementEditBean.registDisabledFlg}"
+                                        onclick="return confirmationDialogOpen($('input[id$=registBtn]'))"
+                                        onbegin="showBlockModal()" oncomplete="hideBlockModal(); clearChangeFlag();">
+                                    </a4j:commandButton>
+                                    <h:graphicImage class="regist_button_icon" library="images" name="common/com067.png" />
+                                </c:if>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ui:include src="/html/common/confirmationDialog.xhtml" >
+                <ui:param name="confirmationDialogTitle" value="確認" />
+                <ui:param name="confirmationDialogMessage" value="#{smsCollectSettingMeterGroupManagementEditBean.confirmMessage}" />
+            </ui:include>
+        </form>
+        
+        <ui:include src="/html/common/changeCautionDialog.xhtml" >
+            <!-- ボタンに対応する場合 -->
+            <!--                                <ui:param name="cautionDialogId" value="editCautionDialog" />-->
+            <ui:param name="changeCautionTargetButton" value="#{smsCollectSettingMeterUserEditBean.acceptButton}" />
+        </ui:include>  
+
+    </ui:define>
+</ui:composition>
+
+</body>
+</html>

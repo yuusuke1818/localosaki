@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:rich="http://richfaces.org/rich" xmlns:cust="http://xmlns.jcp.org/jsf/component"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:a4j="http://richfaces.org/a4j">
+    <div style="margin-top: 0;">
+        <div>
+            <div class="settingBoxGetCurrentValue" style="margin-top: 10px;">
+            <a4j:outputPanel id="s6SwitchContainer" layout="block" styleClass="ltem-get-current-value-scope">
+            <form jsfc="h:form" id="smartCurrentValueForm">
+                <table class="s6Table" style="#{smsCollectSettingMeterMeterManagementBean.ratedCurrentMissingFlg
+                                     ? 'display:none;'
+                                     : ''}">
+                    <tr style="height: 10px">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="gradation_type_1 button_large_2">
+                                <a4j:commandButton
+                                        id="s6GetValueBtnDispNone"
+                                        class="action_button"
+                                        value="LTE-M用 現在値取得"
+                                        style="display: none;"
+                                        execute="@form"
+                                        immediate="true"
+                                        render="@form #{rich:clientId('alertDialog')} #{rich:clientId('sTable')}
+                                            #{rich:clientId('s5Panel')} #{rich:clientId('s6SwitchContainer')}
+                                            smsCollectSettingMeterMeterManagementBean:resultMeterData"
+                                        onclick="try{ startFetchTimer(); }catch(e){}; getCurrentValueSelMeterMngId();"
+                                        onbegin="showBlockModal();"
+                                        oncomplete="hideBlockModal(); clearChangeFlag(); dispButton(); moveColumnsForLteMDevice(); controlExecBtn(); startFetchTimer();"
+                                        actionListener="#{smsCollectSettingMeterMeterManagementBean.execGetCurrentValue(smsCollectSettingMeterMeterManagementBean.nowValMeterMngIdSmart)}">
+                                </a4j:commandButton>
+                            </div>
+                            <div class="#{smsCollectSettingMeterMeterManagementBean.dispUpdateButtonEnabled
+                                ? 'gradation_type_1' : 'gradation_type_5'} button_large_2 button_large_ltem"
+                                style="margin-left:10px; margin-right:auto; text-align:left;">
+                                <h:graphicImage class="button_icon" library="images" name="common/com015.png" />
+                                <a4j:commandButton
+                                    id="s6DispValueLteMDeviceBtn"
+                                    class="action_button"
+                                    value="状態表示更新"
+                                    execute="@form" 
+                                    onclick="getCurrentValueSelMeterMngId()"
+                                    onbegin="showBlockModal();"
+                                    oncomplete="hideBlockModal();"
+                                    render="@form smsCollectSettingMeterMeterManagementBean:resultMeterData"
+                                    actionListener="#{smsCollectSettingMeterMeterManagementBean.execDispUpdate(smsCollectSettingMeterMeterManagementBean.nowValMeterMngIdSmart)}"
+                                    disabled="#{not smsCollectSettingMeterMeterManagementBean.dispUpdateButtonEnabled}">
+                                </a4j:commandButton>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <!-- LTE-M 現在値取得で帳票出力の際に「取得中...」から「取得失敗」へ置換を実施する -->
+                <a4j:jsFunction name="notifyTimeoutToServer"
+                    actionListener="#{smsCollectSettingMeterMeterManagementBean.markTimeoutFailed}">
+                    <a4j:param name="downloadId" value="#{smsCollectSettingMeterMeterManagementBean.currentDownloadId}"/>
+                </a4j:jsFunction>
+                <a4j:outputPanel rendered="#{smsCollectSettingMeterMeterManagementBean.ratedCurrentMissingFlg}" layout="block">
+                        <div style="margin: 20px;">
+                            <h:outputFormat
+                                value="計器：{0} は、サーバと計器間の通信が確立されていないため実行できません。"
+                                style="font-size:16px; font-weight:bold; color:red;">
+                                <f:param value="#{smsCollectSettingMeterMeterManagementBean.ratedCurrentMeterMngId}" />
+                            </h:outputFormat>
+                            <br />
+                            <h:outputFormat
+                                value="下記、一覧表にて該当メーターのチェックを外して再度「現在値取得」を押下してください。"
+                                style="font-size:16px; font-weight:bold; color:red;">
+                            </h:outputFormat>
+                        </div>
+                </a4j:outputPanel>
+            </form>
+            <a4j:outputPanel rendered="#{!smsCollectSettingMeterMeterManagementBean.ratedCurrentMissingFlg}" layout="block">
+            <div jsfc="a4j:outputPanel" id="s6CurrentValueDispPanel" styleClass="ltem-get-current-value-scope">
+                <ui:fragment
+                    rendered="#{smsCollectSettingMeterMeterManagementBean.lteMgetCurrentValueFlg}">
+                    <div class="gradation_type_1 button_large_2 button_large_ltem"
+                        style="top: 95px; left: 200px; display: flex;">
+                        <button jsfc="a4j:commandButton" value="帳票出力"
+                            action="#{smsCollectSettingMeterMeterManagementBean.downloadCsvFileLteM()}"
+                            onbegin="showBlockModal()"
+                            oncomplete="hideBlockModal();
+                                               if($('.rf-msgs-err').size()==0) {
+                                               $('input[id$=downloadFileStartCsvSmartLtem]').click();
+                                               }" />
+                        <button jsfc="h:commandButton" id="downloadFileStartCsvSmartLtem"
+                            style="display: none;"
+                            action="#{smsCollectSettingMeterMeterManagementBean.downloadFileStart()}" />
+                        <h:graphicImage
+                            class="button_icon btnDownloadIconLayout btnRegistrationDataDownloadIconLayout"
+                            library="images" name="common/com039.png" />
+                        <!-- タイマー 前回の現在値取得からの時間を表示 -->
+                        <a4j:outputPanel id="lastFetchPanel" style="margin: 8px 20px; font-size: medium;">
+                            <div id="lastFetchMessage" class="timer ok">
+                                <h:outputText
+                                    value="#{smsCollectSettingMeterMeterManagementBean.ltemApiExecSuccessFlg
+                                        ? '取得完了しました。設定値をご確認ください。'
+                                        : '未取得'}" />
+                            </div>
+                        </a4j:outputPanel>
+                        <a4j:outputPanel id="apiExecSuccessFlgPanel" style="display:none">
+                            <span id="apiExecSuccessFlgText">
+                                #{smsCollectSettingMeterMeterManagementBean.ltemApiExecSuccessFlg}
+                            </span>
+                        </a4j:outputPanel>
+                    </div>
+                </ui:fragment>
+                <br/><br/>
+                <div style="margin-left: 10px">
+                <h:outputText value="※取得完了していないもの（表示「取得中...」）がある場合、「状態表示更新」を押してください。" style="font-size: 14px;" /><br/>
+                <h:outputText value="※３分程度経過しても取得完了しない場合は、「現在値取得」からやりなおしてください。" style="font-size: 14px;" /><br/>
+                <h:outputText value="※やりなおしても取得できない場合は、通信環境が不安定な可能性がありますので、しばらく時間をおいてから「現在値取得」をやりなおしてください。" style="font-size: 14px;" /><br/><br/>
+                <ui:repeat value="#{smsCollectSettingMeterMeterManagementBean.ratedCurrentMessageSet}" var="msg">
+                    <div class="ratedCurrentMissingMessage" style="color:red; font-size:16px; font-weight:bold;">#{msg}</div>
+                </ui:repeat>
+                <h:outputFormat
+                    value="【API実行結果】 API実行メーター数 {0}　メーター管理番号（成功：{1} / 失敗：{2}）"
+                    style="font-size:16px; font-weight:bold;">
+                    <f:param
+                        value="#{(empty smsCollectSettingMeterMeterManagementBean.apiSuccessCount ? 0 : smsCollectSettingMeterMeterManagementBean.apiSuccessCount)
+                                + (empty smsCollectSettingMeterMeterManagementBean.apiFailedCount  ? 0 : smsCollectSettingMeterMeterManagementBean.apiFailedCount)}" />
+                    <f:param
+                        value="#{empty smsCollectSettingMeterMeterManagementBean.apiSuccessCsv
+                                ? '（なし）'
+                                : smsCollectSettingMeterMeterManagementBean.apiSuccessCsv}" />
+                    <f:param
+                        value="#{empty smsCollectSettingMeterMeterManagementBean.apiFailedCsv
+                                ? '（なし）'
+                                : smsCollectSettingMeterMeterManagementBean.apiFailedCsv}" />
+                </h:outputFormat>
+                </div>
+                <div style="display: flex; justify-content: flex-start; align-items: center;">
+                    <div style="display: flex; align-items: center; margin-right: 45px; margin-left: 10px; font-size: 14px;">
+                        <span>状態取得実行時刻：#{empty smsCollectSettingMeterMeterManagementBean.currentValueDispDate ? '-' : smsCollectSettingMeterMeterManagementBean.currentValueDispDate}</span>
+                    </div>
+                    <div style="display: flex; align-items: center; margin-right: 45px;">
+                        <span style="display: inline-block; width: 16px; height: 16px; background-color: rgb(33,96,222); margin: 5px;"></span>
+                        <span>開閉制御</span>
+                    </div>
+                    <div style="display: flex; align-items: center; margin-right: 45px;">
+                        <span style="display: inline-block; width: 16px; height: 16px; background-color: #2dc12d; margin: 5px;"></span>
+                        <span>負荷制限</span>
+                    </div>
+                </div>
+                <div class="tbl contents_table">
+                    <div class="search_result_area">
+                            <rich:extendedDataTable id="resultMeterData" frozenColumns="10" var="item" class="sTbl"
+                                       value="#{smsCollectSettingMeterMeterManagementBean.lteMNowValResponseList}"
+                                       cellpadding="0"
+                                       selectionMode="none"
+                                       rendered="#{!smsCollectSettingMeterManagementBean.lteMNowValResponseList.isEmpty()}"
+                                       columnClasses="column_style_mng_id, column_style_user_code, column_style_tenant_name,
+                                                       column_style_meter_id, column_style_open_mode, column_style_loadLimit_mode,
+                                                       column_style_loadcurrent_ltem, column_style_auto_injection_ltem, column_style_breaker_act_count, column_style_count_clear"
+                                       style="width: 97%;">
+                                <rich:column headerClass="table_header" width="55px"> <f:facet
+                                        name="header">
+                                    管理番号
+                                    </f:facet> <h:outputText id="meterMngId"
+                                    value="#{item.result.meterMngId}" />
+                                </rich:column>
+                                <rich:column headerClass="table_header" width="65px"> <f:facet
+                                        name="header">
+                                    ユーザー<br />コード
+                                    </f:facet> <h:outputText id="tenantId"
+                                        value="#{item.result.tenantId}" rendered="#{item.result.tenantId != null}" /> <h:outputText
+                                        id="tenantIdBlank" value="-" rendered="#{item.result.tenantId == null}" />
+                                </rich:column>
+                                <rich:column headerClass="table_header" width="110px" styleClass="col-tenant"> <f:facet
+                                        name="header">
+                                    テナント番号<br />テナント名
+                                    </f:facet> <ui:fragment
+                                        rendered="#{item.result.tenantId != null}">
+                                        <h:outputText id="buildingNo" value="#{item.result.buildingNo}" />
+                                        <br />
+                                        <h:outputText id="buildingName" value="#{item.result.buildingName}" />
+                                    </ui:fragment> <h:outputText id="buildingNoBlank" value="-"
+                                    rendered="#{item.result.tenantId == null}" />
+                                </rich:column>
+                                <rich:column headerClass="table_header" width="90px">
+                                    <f:facet name="header">
+                                    計器ID
+                                    </f:facet> <h:outputText id="meterId" value="#{item.result.meterId}" />
+                                </rich:column>
+                                <rich:column headerClass="switch_table_header" width="60px">
+                                    <f:facet name="header">
+                                    開閉区分<br />(※1 ※2)
+                                    </f:facet>
+                                    <h:outputText id="openMode" value="#{item.result.openModeDisp}" />
+                                </rich:column>
+                                <rich:column headerClass="loadLimit_table_header" width="105px">
+                                    <f:facet name="header">
+                                    負荷制限<br />(※3)
+                                    </f:facet>
+                                    <h:outputText id="loadlimitMode" value="#{item.result.loadlimitModeDisp}" />
+                                </rich:column>
+                                <rich:column headerClass="loadLimit_table_header" width="70px">
+                                <f:facet name="header">
+                                    負荷電流<br />(A)
+                                    </f:facet>
+                                    <h:outputText id="loadCurrent" value="#{item.result.loadCurrent}" />
+                                </rich:column>
+                                <rich:column headerClass="loadLimit_table_header" width="70px">
+                                    <f:facet name="header">
+                                    自動投入<br />(秒)
+                                    </f:facet>
+                                    <h:outputText id="autoInjection" value="#{item.result.autoInjection}" />
+                                </rich:column>
+                                <rich:column headerClass="loadLimit_table_header" width="120px">
+                                    <f:facet name="header">
+                                    開閉器動作<br />カウントクリア(回)
+                                    </f:facet>
+                                    <h:outputText id="breakerActCount" value="#{item.result.breakerActCount}" />
+                                </rich:column>
+                                <rich:column headerClass="loadLimit_table_header" width="120px">
+                                    <f:facet name="header">
+                                    開閉器<br />カウントクリア(分)
+                                    </f:facet>
+                                    <h:outputText id="countClear" value="#{item.result.countClear}" />
+                                </rich:column>
+                                <rich:column headerClass="loadLimit_table_header" width="13.5px" class="scroll_space"/>
+                            </rich:extendedDataTable>
+                        <div style="display: flex; justify-content: flex-start;">
+                            <span class="current_value_result_total_count">(全#{smsCollectSettingMeterMeterManagementBean.lteMNowValResponseList.size()}台)</span>
+                            <span style="white-space: pre-line;">※1 開閉区分  ( 切 / 入 / 切* / 入* / 機能なし / - )&#10;※2 開閉区分の「切*」「入*」は負荷制限によって状態変化しています。負荷制限は「臨時」が優先されます。&#10;※3 負荷制限 ( 臨時 / 基本 / 無効 / 機能なし )</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a4j:outputPanel>
+            </a4j:outputPanel>
+            </div>
+        </div>
+    </div>
+</html>

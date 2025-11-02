@@ -1,0 +1,71 @@
+.center_content table { border-collapse: collapse; }
+
+.search_result_header_left{
+    position: absolute;
+    left: 5px;
+    top: 10px;
+}
+
+.column_1_style{
+    position:relative;
+    text-align: center;
+    border: 1px #CCC solid;
+    width: 105px;
+}
+
+.column_2_style{
+    border: 1px #CCC solid;
+}
+
+.column_3_style{
+    border: 1px #CCC solid;
+}
+
+.column_4_style,
+.column_4_stylep{
+    border: 1px #CCC solid;
+}
+
+.column_5_style{
+    border: 1px #CCC solid;
+}
+
+.column_1_style .button_icon{
+    position: absolute;
+    margin-top: 8px;
+    left:39px;
+    pointer-events: none;
+}
+
+.column_2_style{
+    width:120px;
+}
+
+.column_3_style{
+    width:210px;
+}
+
+.column_4_style{
+    width:100px;
+}
+.column_4_stylep{
+    width:270px;
+}
+
+.column_5_style{
+    width:400px;
+}
+
+.search_result_area input[type="submit"]{
+    width: 36px;
+}
+
+/*アイコン*/
+/*検索開始*/
+.button_search .button_icon{
+position: absolute;
+    top: 8px;
+    left: 413px;
+    z-index: 10;
+    pointer-events: none;
+}

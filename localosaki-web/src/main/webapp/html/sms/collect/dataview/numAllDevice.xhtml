@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+    <h:outputStylesheet library="css" name="common/cssLayout.css"/>
+    <h:outputStylesheet library="css" name="sms/collect/dataview/num.css" />
+
+    <!-- 列の数 -->
+    <c:set var="columnCount" value="9" />
+    <c:set var="dispDataListSize" value="#{dataViewBean.dispDataList.size()}" />
+    <c:if test="#{dispDataListSize > 0}">
+        <c:set var="columnDataListSize" value="#{dataViewBean.dispDataList.get(0).columnDataList.size()}" />
+        <c:if test="#{columnDataListSize lt 9}">
+            <c:set var="columnCount" value="#{columnDataListSize}" />
+        </c:if>
+    </c:if>
+
+    <!-- 1列目の幅 -->
+    <c:set var="firstColumnWidth" value="87" />
+    <!-- 2列目以降の各列の幅 -->
+    <c:set var="columnWidth" value="93" />
+    <!-- スクロールバーの幅 -->
+    <c:set var="scrollBarWidth" value="15" />
+    <c:if test="#{scrollBarHide}">
+        <c:set var="scrollBarWidth" value="-1" />
+    </c:if>
+
+    <!-- 数値表示部の幅 -->
+    <c:set var="numAreaWidth" value="#{(firstColumnWidth + 1) + ((columnWidth + 1) * columnCount) + (scrollBarWidth + 1)}" />
+
+    <c:if test="#{dataViewBean.dispDataList.size() > 0}">
+        <div class="search_result_area">
+        <rich:extendedDataTable value="#{dataViewBean.dispDataList}" frozenColumns="1"
+                                style="height: #{numAreaHeight}; width: #{numAreaWidth}px;" rowKeyVar="rowState"
+                                headerClass="table_header" class="table_comp table_daily_comp">
+
+            <c:set var="dispDataRow" value="#{dataViewBean.dispDataList.get(rowState)}" />
+            <c:set var="title" value="#{dispDataRow.title}" />
+            <c:set var="columnDataList" value="#{dispDataRow.columnDataList}" />
+
+            <!-- 1列目 -->
+            <rich:column width="#{firstColumnWidth}px">
+                <f:facet name="header">
+                    <div class="th-sep-label th-sep-label-middle-header" id = "devName">
+                        <span class="devNameHeaderInner">
+                            装置名
+                        </span>
+                    </div>
+                    <div class="th-sep-label">管理番号</div>
+                    <div class="th-sep-label">計器ID</div>
+                    <div class="th-sep-label th-sep-label-middle-header">
+                        <span class="tenantNameHeaderInner">
+                            テナント名
+                        </span>
+                    </div>
+                    <div class="th-sep-label">メーター種別</div>
+                    <div class="th-sep-label">単位</div>
+                </f:facet>
+
+                <ui:fragment rendered="#{dispDataRow.footer}">
+                    <div class="column_header th-label-footer">#{title}</div>
+                </ui:fragment>
+                <ui:fragment rendered="#{!dispDataRow.footer}">
+                    <div class="column_header">#{title}</div>
+                </ui:fragment>
+            </rich:column>
+
+            <!-- 2列目以降 -->
+            <c:forEach var="columnData" items="#{columnDataList}" varStatus="statusColumn">
+                <c:set var="devName" value="#{columnData.devName}" />
+                <c:set var="meterId" value="#{columnData.meterId}" />
+                <c:set var="tenantName" value="#{columnData.tenantName}" />
+                <c:set var="meterTypeName" value="#{columnData.meterTypeName}" />
+                <c:set var="unit" value="#{columnData.unit}" />
+                <c:set var="dispValue" value="#{columnData.dispValue}" />
+
+                <rich:column width="#{columnWidth}px">
+                    <f:facet name="header">
+                        <div class="th-sep-label th-sep-label-middle">
+                            <span title="#{devName}">#{columnData.devName}</span>
+                        </div>
+                        <div class="th-sep-label">#{columnData.meterMngIdDisp}</div>
+                        <div class="th-sep-label">
+                            <span title="#{meterId}">#{meterId}</span>
+                        </div>
+                        <div class="th-sep-label th-sep-label-middle">
+                            <span title="#{tenantName}">#{tenantName}</span>
+                        </div>
+                        <div class="th-sep-label">
+                            <span title="#{meterTypeName}">#{meterTypeName}</span>
+                        </div>
+                        <div class="th-sep-label">
+                            <span title="#{unit}">#{unit}</span>
+                        </div>
+                    </f:facet>
+
+                <ui:fragment rendered="#{dispDataRow.footer}">
+                    <div class="column_power_value column_footer_value">
+                        <span class="powerValue">#{dispValue}</span>
+                    </div>
+                </ui:fragment>
+                <ui:fragment rendered="#{!dispDataRow.footer}">
+                    <div class="column_power_value">
+                        <span class="powerValue">#{dispValue}</span>
+                    </div>
+                </ui:fragment>
+                </rich:column>
+            </c:forEach>
+
+            <!-- スクロールバー -->
+            <rich:column width="#{scrollBarWidth}px" rendered="#{!scrollBarHide}">
+                <f:facet name="header">
+                    &nbsp;
+                </f:facet>
+                <div style="background-color: #CCCCCC; height: 44px;">&nbsp;</div>
+            </rich:column>
+        </rich:extendedDataTable>
+        </div>
+    </c:if>
+</html>

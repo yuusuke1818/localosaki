@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:rich="http://richfaces.org/rich" xmlns:cust="http://xmlns.jcp.org/jsf/component"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:a4j="http://richfaces.org/a4j">
+    <div style="margin-top: 0;">
+        <div>
+            <rich:messages id="s2Messages" styleClass="errNonSearch errArea" />
+            <h3 class="contents_title">新規登録(個別)</h3>
+            <form jsfc="h:form" id="smartRegistForm">
+                <div class="contents_form_area">
+                    <table class="s2Table">
+                        <tr style="height: 10px">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008">登録先装置選択</td>
+                            <td class="TXT020" colspan="2">
+                                <!-- <h:outputText id="s2DevName" value="#{smsCollectSettingMeterMeterManagementBean.devName}"></h:outputText>
+                                 -->
+                                <div jsfc="a4j:outputPanel" id="s2DevNamePanel">
+                                    <h:outputText id="s2DevName" value="#{smsCollectSettingMeterMeterManagementBean.smartProperty.devName}"></h:outputText>
+                                    <h:inputHidden value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.devId}" id="s2DevId" />
+                                </div>
+                            </td>
+                            <td>
+                                ※登録先装置を選択
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008">メーター管理番号</td>
+                            <td colspan="2">
+                                <div jsfc="a4j:outputPanel" id="s2MeterMngIdMapPanel">
+                                    <h:selectOneMenu id="s2MeterMngIdSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.meterMngId}" >
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.meterMngIdMap}" />
+                                    </h:selectOneMenu>
+                                </div>
+                            </td>
+                            <td>
+                                ※選択範囲 ： "001～512" (未登録の番号のみ)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008">ユーザーコード</td>
+                            <td colspan="2">
+                                <h:inputText
+                                        id="s2UserCode"
+                                        class="textWidthMedium check_change"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.tenantId}"
+                                        maxlength="6"
+                                        style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}">
+                                </h:inputText>
+                            </td>
+                            <td>
+                                ※入力範囲 ： "1～999999" または "ブランク"
+                            </td>
+                        </tr>
+                        <a4j:outputPanel id="NotLtemFields" layout="block" rendered="#{!smsCollectSettingMeterMeterManagementBean.lteMDeviceFlg}">
+                        <tr>
+                            <td class="TXT008">負荷制限</td>
+                            <td colspan="2">
+                                <h:selectOneMenu id="s2LoadlimitSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.loadlimitMode}" >
+                                    <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.loadlimitMap}" />
+                                </h:selectOneMenu>
+                            </td>
+                            <td>
+                                ※負荷制限機能の有無を選択
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008">負荷電流</td>
+                            <td>
+                                基本設定
+                                <h:selectOneMenu id="s2BasicCurlimitSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.loadCurrent}" >
+                                    <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.curlimitMap}" />
+                                </h:selectOneMenu>
+                                A
+                            </td>
+                            <td>
+                                臨時設定
+                                <h:selectOneMenu id="s2TmpCurlimitSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.tempLoadCurrent}" >
+                                    <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.curlimitMap}" />
+                                </h:selectOneMenu>
+                                A
+                            </td>
+                            <td>
+                                ※負荷制限機能の負荷電流値を選択
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008">自動投入</td>
+                            <td>
+                                基本設定
+                                <h:inputText
+                                        id="s2BasicAutorec"
+                                        class="textWidthSmall check_change"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.autoInjection}"
+                                        maxlength="3"
+                                        style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}">
+                                </h:inputText>
+                                秒
+                            </td>
+                            <td>
+                                臨時設定
+                                <h:inputText
+                                        id="s2TmpAutorec"
+                                        class="textWidthSmall check_change"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.tempAutoInjection}"
+                                        maxlength="3"
+                                        style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}">
+                                </h:inputText>
+                                秒
+                            </td>
+                            <td>
+                                ※入力範囲 ： "0"(なし) or "5～300" (秒)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008">開閉器動作カウント</td>
+                            <td>
+                                基本設定
+                                <h:selectOneMenu id="s2BasiOccountSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.breakerActCount}" >
+                                    <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.occountMap}" />
+                                </h:selectOneMenu>
+                                回
+                            </td>
+                            <td>
+                                臨時設定
+                                <h:selectOneMenu id="s2TmpOccountSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.tempBreakerActCount}" >
+                                    <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.occountMap}" />
+                                </h:selectOneMenu>
+                                回
+                            </td>
+                            <td>
+                                ※選択範囲 ： "0～9" (回)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008">開閉器カウントクリア</td>
+                            <td>
+                                基本設定
+                                <h:selectOneMenu id="s2BasiCntclrSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.countClear}" >
+                                    <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.cntclrMap}" />
+                                </h:selectOneMenu>
+                                分
+                            </td>
+                            <td>
+                                臨時設定
+                                <h:selectOneMenu id="s2TmpCntclrSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.tempCountClear}" >
+                                    <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.cntclrMap}" />
+                                </h:selectOneMenu>
+                                分
+                            </td>
+                            <td>
+                                ※選択範囲 ： "00～60 " (分)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008">開閉区分</td>
+                            <td colspan="2">
+                                <h:selectOneMenu id="s2OcstateSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.openMode}" >
+                                    <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.ocstateMap}" />
+                                </h:selectOneMenu>
+                            </td>
+                            <td>
+                                ※開閉区分を選択
+                            </td>
+                        </tr>
+                        </a4j:outputPanel>
+                        <tr>
+                            <td class="TXT008">計器ID<span class="required"></span></td>
+                            <td colspan="2">
+                                <h:inputText
+                                        id="s2EquipId"
+                                        class="textWidthMedium check_change"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.meterId}"
+                                        maxlength="10"
+                                        style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}">
+                                </h:inputText>
+                            </td>
+                            <td>
+                                ※全10桁 (半角英数字)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008">コメント</td>
+                            <td colspan="2">
+                                <h:inputText
+                                        id="s2Comment"
+                                        class="textWidthLarge check_change"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.memo}"
+                                        maxlength="20">
+                                </h:inputText>
+                            </td>
+                            <td>
+                                ※最大20文字
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008">メーター種別</td>
+                            <td colspan="2">
+                                <h:selectOneMenu id="s2MetertypeSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.meterType}" >
+                                    <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.metertypeMap}" />
+                                </h:selectOneMenu>
+                            </td>
+                            <td>
+                                ※メーターの種別を選択
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008">検満年月</td>
+                            <td colspan="2">
+                                <f:ajax event="click" execute="@form" render="smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2YearDisp">
+                                            <h:selectOneRadio id="s2DispYearCls" value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.dispYearFlg}" styleClass="SELECT001" style="width: 100%; height: 25px;" onchange="dispYearClsChange(this.value)">
+                                                <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.dispYearMap}" />
+                                            </h:selectOneRadio>
+                                    </f:ajax> <br />
+                                    <div jsfc="a4j:outputPanel" id="s2YearDisp">
+                                        <ui:fragment rendered="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.dispYearFlg == '0'}">
+                                            <span id="s2SeirekiDisp"> 西暦 &nbsp;&nbsp; <h:inputText
+                                                    id="s2Year"
+                                                    class="textWidthSmall check_change"
+                                                    value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.examEndYear}"
+                                                    maxlength="4"
+                                                    style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}">
+                                            </h:inputText>
+                                            </span>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.dispYearFlg == '1'}">
+                                        <span id="s2WarekiDisp"> 元号 <h:selectOneMenu
+                                                id="s2GengoSelect"
+                                                class="EDIT002 check_change"
+                                                value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.examEndYmGengo}"
+                                                style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}">
+                                            <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.gengoMap}" />
+                                        </h:selectOneMenu> &nbsp;&nbsp;
+                                        <h:inputText
+                                                id="s2YearWareki"
+                                                class="textWidthSmall check_change"
+                                                value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.examEndYearWareki}"
+                                                maxlength="2"
+                                                style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}">
+                                        </h:inputText>
+                                    </span></ui:fragment></div>
+                                年
+                                <h:inputText
+                                        id="s2Month"
+                                        class="textWidthSmall check_change"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.examEndMonth}"
+                                        maxlength="2"
+                                        style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}">
+                                </h:inputText>
+                                月
+                            </td>
+                            <td>
+                                ※検定有効期間が満了する年月を西暦または和暦で入力
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008">検満通知</td>
+                            <td colspan="2">
+                                <h:selectOneMenu id="s2ExamnoticeSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.examNotice}" >
+                                    <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.examnoticeMap}" />
+                                </h:selectOneMenu>
+                            </td>
+                            <td>
+                                <div jsfc="a4j:outputPanel" id="s2ExamNoticeMonthPanel">
+                                    ※検満年月の
+                                    <font color="red">
+                                        <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.examNoticeMonth}"></h:outputText>ヶ月
+                                    </font>
+                                    前からメール通知します。
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+                    <ui:fragment rendered="#{!smsCollectSettingMeterMeterManagementBean.lteMDeviceFlg}">
+                    <div class="btnRegistLayout">
+                        <h:selectBooleanCheckbox id="s2SendFlg"
+                           value="#{smsCollectSettingMeterMeterManagementBean.smartInsertProperty.sendFlg}" />
+                        <h:outputLabel for="s2SendFlg">：機器に送信する</h:outputLabel>
+                    </div>
+                    </ui:fragment>
+                    <br />
+                    <div class="gradation_type_1 button_large_2 btnRegistLayout">
+                        <!-- 確認メッセージ設定処理を呼び出し → 登録処理呼び出し用ボタンclick -->
+                        <a4j:commandButton
+                            id="s2RegistBtn"
+                            class="action_button"
+                            value="登録"
+                            execute="@form"
+                            render="@form confirmDialogForm:confirmationDialogMessage"
+                            onclick="return confirmationDialogOpenForIns($('input[id$=s2RegistBtn]'))"
+                            oncomplete="$('input[id$=s2RegistBtnHidden]').click();">
+                        </a4j:commandButton>
+                        <h:graphicImage class="btnRegistIconLayout" library="images" name="common/com067.png" />
+                        <a4j:commandButton
+                            id="s2RegistBtnHidden"
+                            style="display: none;"
+                            execute="@form"
+                            render="@form #{rich:clientId('sTablePanel')}
+                                    smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2ExamNoticeMonthPanel
+                                    smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2DevNamePanel
+                                    smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2MeterMngIdMapPanel
+                                    smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2ExamNoticeMonthPanel
+                                    smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2DevNamePanel
+                                    smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2MeterMngIdMapPanel
+                                    smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2ExamNoticeMonthPanel
+                                    smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2DevNamePanel
+                                    smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2MeterMngIdMapPanel"
+                            action="#{smsCollectSettingMeterMeterManagementBean.execRegist(smsCollectSettingMeterMeterManagementBean.smartInsertProperty)}"
+                            onbegin="showBlockModal()"
+                            oncomplete="hideBlockModal(); viewList('S'); clearChangeFlag(); dispButton(); moveColumnsForLteMDevice();">
+                        </a4j:commandButton>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</html>

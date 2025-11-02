@@ -1,0 +1,192 @@
+/***********************************
+*タブ関連のスタイル*
+***********************************/
+.caution_text{
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    font-size:12px;
+    color:black;
+}
+
+.info_text{
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    font-size:12px;
+    color:black;
+}
+
+/*既存のタブ背景を初期化*/
+.rf-tab-hdr-tabline-vis.rf-tab-hdr-tabline-top {
+    background: initial;
+    background-color: initial;
+    border-color: initial;
+    border-style: initial;
+    border-width: initial;
+    border-bottom-width: initial;
+    white-space: initial;
+    position: initial;
+    height: 35px;
+
+    /*IE用対応*/
+    background: none;
+    background-color: #FFFFFF;
+    border-width: 0px;
+    border-bottom-width: 0px;
+}
+
+/*アクティブタブ横幅*/
+.active_tab{
+    width:15%;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+
+}
+
+/*非アクティブタブ横幅*/
+.inactive_tab{
+    width:15%;
+}
+
+.rf-tab-lbl {
+    font-size: 14px;
+}
+
+.rf-tab-lbl .tab_icon{
+    position: absolute;
+    top: 8px;
+    left: 10px;
+}
+
+.rf-tab-lbl .tab_icon_right{
+    top: 11px;
+    right: 8%;
+    width:25px;
+    height: 20px;
+    position: absolute;
+}
+
+
+/*タブ全体*/
+.rf-tab-hdr-tabs {
+    /*position: relative;*/
+    border: 0px;
+    height: 100%;
+    margin-left: -6px;
+    margin-top: -3px;
+}
+
+/*タブ下のボーダー*/
+.rf-tab-hdr-brd{
+    border: 5px solid rgb(0,69,133);
+    border-top: 0px;
+    height: inherit;
+    background: initial;
+}
+
+/*アクティブタブのスタイル*/
+.rf-tab-hdr-top.rf-tab-hdr-act {
+        position: relative;
+        padding: 12px 31px 12px 31px;
+	color: #ffffff;
+	background: -moz-linear-gradient(
+		top,
+		#fffcf7 0%,
+		#0f94d6 15%,
+		#0673cc 50%,
+		#044e94 85%,
+		#004585);
+	background: -webkit-gradient(
+		linear, left top, left bottom,
+		from(#fffcf7),
+		color-stop(0.15, #0f94d6),
+		color-stop(0.50, #0673cc),
+		color-stop(0.85, #044e94),
+		to(#004585));
+	background: -ms-linear-gradient(
+		top,
+		#fffcf7 0%,
+		#0f94d6 15%,
+		#0673cc 50%,
+		#044e94 85%,
+		#004585);
+
+	-moz-border-radius: 6px 6px 0 0;
+	-webkit-border-radius: 6px 6px 0 0;
+        -ms-border-radius: 6px 6px 0 0;
+        border-radius: 6px 6px 0 0;
+        border: none;
+/*        border: 2px solid #0673cc;*/
+	-moz-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px -1px 0px rgba(255,255,255,0.7);
+	-webkit-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px -1px 0px rgba(255,255,255,0.7);
+	-ms-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px -1px 0px rgba(255,255,255,0.7);
+	box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px -1px 0px rgba(255,255,255,0.7);
+	text-shadow:
+		0px -1px 1px rgba(000,000,000,0.2),
+		0px 1px 0px rgba(255,255,255,0.3);
+}
+.rf-tab-hdr-top.rf-tab-hdr-act .tab_icon{
+    opacity: 1;
+}
+
+.rf-tab-hdr-top.rf-tab-hdr-act {
+}
+
+/*非アクティブタブのスタイル*/
+.rf-tab-hdr-top.rf-tab-hdr-inact {
+        position: relative;
+        padding: 12px 33px 12px 33px;
+	color: #000000;
+	background: -moz-linear-gradient(
+		top,
+		#fffcf7 0%,
+		#a1f1fc 15%,
+		#94e7fc 50%,
+		#84ddfb 85%,
+		#84ddfb);
+	background: -webkit-gradient(
+		linear, left top, left bottom,
+		from(#fffcf7),
+		color-stop(0.15, #a1f1fc),
+		color-stop(0.50, #94e7fc),
+		color-stop(0.85, #84ddfb),
+		to(#84ddfb));
+	background: -ms-linear-gradient(
+		top,
+		#fffcf7 0%,
+		#a1f1fc 15%,
+		#94e7fc 50%,
+		#84ddfb 85%,
+		#84ddfb);
+	-moz-border-radius: 6px 6px 0 0;
+	-webkit-border-radius: 6px 6px 0 0;
+        -ms-border-radius: 6px 6px 0 0;
+        border-radius: 6px 6px 0 0;
+        border: none;
+/*	border: 2px solid #b0feff;*/
+	-moz-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px -1px 0px rgba(255,255,255,0.7);
+	-webkit-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px -1px 0px rgba(255,255,255,0.7);
+	-ms-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px -1px 0px rgba(255,255,255,0.7);
+	box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px -1px 0px rgba(255,255,255,0.7);
+	text-shadow:
+		0px -1px 1px rgba(000,000,000,0.2),
+		0px 1px 0px rgba(255,255,255,0.3);
+}
+
+/*タブのコンテンツエリア*/
+.rf-tab-cnt {
+    background: rgb(222,231,239);
+    padding: 0 30px 0 30px;
+}

@@ -1,0 +1,452 @@
+.div_left {
+    float: left;
+}
+
+.user_redcolor_description {
+    color: red;
+    margin-left: 20px;
+    font-size: 12px;
+}
+
+.vartical_separator {
+    border: 1px solid gray;
+    border-right: none;
+    border-bottom: none;
+    border-top: none;
+}
+
+.user_redcolor_description {
+    color: red;
+    margin-left: 20px;
+    font-size: 12px;
+}
+
+.vartical_separator {
+    border: 1px solid gray;
+    border-right: none;
+    border-bottom: none;
+    border-top: none;
+}
+
+.check_item {
+    padding-bottom: 5px;
+}
+
+.nest_item {
+    padding-left: 20px;
+}
+
+.contents_margin_right {
+    margin-right: 10px;
+}
+
+.contents_margin_left {
+    margin-left: 10px;
+}
+.check_item {
+    padding-bottom: 5px;
+}
+
+.nest_item {
+    padding-left: 20px;
+}
+
+.contents_margin_right {
+    margin-right: 10px;
+}
+
+.contents_margin_left {
+    margin-left: 10px;
+}
+
+.table_style {
+    border-collapse: collapse;
+    font-weight: normal;
+    border: 1px #000000 solid;
+    background: #EEEEFF;
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table_header {
+    background-color: blue;
+    color: white;
+    font-weight: normal;
+    border: 1px #000000 solid;
+}
+
+.column_style {
+    border: 1px #000000 solid;
+    background-color: white;
+    text-align: center;
+}
+
+.search_condition_area{
+    /*width: 780px;*/
+}
+
+search_condition_area_corp tr{
+    height:45px;
+    border-bottom:1px solid #CCC;
+}
+
+.search_condition_area_corp tr td{
+    width:250px;
+}
+/*検索条件内のレイアウト*/
+.search_condition_area tr{
+    height:45px;
+    border-bottom:1px solid #CCC;
+}
+
+.search_condition_area tr td:nth-child(1){
+    width:250px;
+}
+
+.search_condition_area tr td:nth-child(2){
+    width:500px;
+}
+
+.search_condition_area tr td:nth-child(3){
+    width:250px;
+}
+
+.search_condition_area tr td:nth-child(4){
+
+}
+
+.search_condition_area tr td:nth-child(5){
+
+}
+
+/*検索開始ボタン*/
+.search_action_button{
+    height: 35px;
+    width: 150px;
+}
+
+/*検索条件内のレイアウト*/
+.search_result_area {
+    border-collapse: collapse;
+    font-weight: normal;
+    border: 1px #CCC solid;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*tableのtbodyのスタイル*/
+.search_result_area tbody tr{
+    height:50px;
+}
+
+.search_result_area tbody tr:nth-child(2n) td{
+    background-color: rgb(200,233,255);
+}
+
+.column_style {
+    border: 1px #CCC solid;
+    background-color: white;
+    text-align: center;
+}
+
+/*ポップアップのOKキャンセルボタン*/
+.popup_button{
+    height: 35px;
+    width: 80px;
+}
+
+div.center_content {
+    padding: 0px 0px 35px 0px
+}
+
+/* メインメニュー テーブル 背景色 幅 */
+/*div.menu_category table {
+    background: rgb(189,230,255);
+    margin: 10px 0px 10px 0px;
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}*/
+
+/*タイトルエリア*/
+.title_area{
+    margin:10px 0;
+}
+
+div.menu_category{
+    margin-bottom: 10px;
+    width:1024px;
+    height:300px;
+}
+/*エネルギー管理、設備管理、集計・報告のエリア*/
+div.menu_category .table_menu_1{
+    float:left;
+    padding: 10px;
+    width:600px;
+    background: rgba(255,255,255,0.4);
+    border: 4px solid #FFFFFF;
+}
+
+/*基本情報のエリア*/
+div.menu_category .table_menu_2{
+    float:right;
+    padding: 10px;
+    width:408px;
+    background: rgba(255,255,255,0.7);
+    border: 4px solid #FFFFFF;
+}
+
+/* メインメニュー テーブル 高さ */
+div.menu_category table tr{
+    height: 55px
+}
+
+/* メインメニュー 以下の項目 幅 */
+div.menu_category table tr th{
+    width: 200px;
+    text-align: center;
+}
+
+/* メインメニュー 各ボタンを表示するテーブル 幅 */
+div.menu_category table tr td{
+    width: 260px;
+    text-align: center;
+}
+
+/* メインメニュー 以下の項目 フォントサイズ */
+span.category_title,
+/* メインメニュー 各ボタンを表示するテーブル フォントサイズ */
+div.menu_category table tr td input{
+    font-size: 16px;
+}
+
+/* メインメニュー 以下の項目 フォント 色 */
+span.category_title {
+    color:rgb(65,105,154);
+    margin-left: 10px
+}
+
+div.scroll_view {
+    overflow: scroll;
+    width: 300px;
+    height: 150px;
+    background-color: #F6F6F6;
+}
+
+/* 文字間隔 */
+.index_spacing{
+    letter-spacing: 1.5px
+}
+
+/* ボタン 角丸 */
+div.menu_category table,
+.button_radius {
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
+/* 命令ボタン 色　*/
+.command_button_color{
+    color: white;
+    background-color: #191970;
+}
+
+/* 命令ボタン 高さ */
+.command_button_height{
+    height: 45px;
+}
+
+/* 命令ボタン 幅 */
+.command_button_width{
+    width: 180px;
+}
+
+/* 命令ボタン フォント */
+.command_button_font{
+    font-weight:bold;
+}
+
+/* 境界線設定　*/
+.button_border{
+    border: none
+}
+
+/* アイコンサイズ */
+.icon_size{
+    width: 40px;
+    height: 20px;
+}
+
+/*お知らせ表示エリア*/
+/*.announcement_area{
+    clear: both;
+}*/
+
+/*メニューボタン*/
+.menu_button{
+    width: 180px;
+}
+
+/* アナウンス 背景色 */
+.announcement_background{
+    background: white
+}
+
+/* アナウンス 文面折り返し */
+.announcement_word-wrap{
+    word-wrap:break-word
+}
+
+/* アナウンス 記事の間隔幅 */
+.announcement_account_width{
+     width: 40px
+}
+
+/* アナウンス スクロール */
+.announcement_overflow{
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+/*
+ アナウンス サイズ */
+.announcement_size{
+    height: 210px;
+    width: 470px;
+}
+
+/* アナウンス トピック サイズ */
+.announcement_topic_size{
+    overflow-y:scroll;
+    height: 140px;
+    width: 1010px;
+}
+
+/* アナウンス 境界線 */
+.announcement_border{
+    border:rgb(0,79,141) solid 4px;
+}
+
+/*アナウンス 案内 高さ */
+/*.announcement_table_height,tr{
+    height: 50px
+}
+*/
+
+/*アナウンス 案内 区切り線 */
+/*.announcement_border_horizontal_separator,tr{
+    border-collapse : collapse;
+    border: 1px solid gray;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+}*/
+
+/* 文字間隔 */
+.login_font,
+.pass_spacing{
+    letter-spacing: 1.5px
+}
+
+.button_search .button_icon{
+    position: absolute;
+    top: 8px;
+    left: 411px;
+}
+
+.select_button_area table tr td{
+    width:160px;
+}
+
+/*アイコン位置調整*/
+.button_select .button_icon{
+    position:absolute;
+    top: 7px;
+    left: 24px;
+}
+
+.button_release .button_icon{
+    position:absolute;
+    top: 7px;
+    left: 24px;
+}
+
+.button_all_select .button_icon{
+    position:absolute;
+    top: 7px;
+    left: 24px;
+}
+
+.button_all_release .button_icon{
+    position:absolute;
+    top: 7px;
+    left: 24px;
+}
+
+.button_regist{
+    margin-top:20px;
+}
+
+.button_regist .button_icon{
+    position:absolute;
+    top: 8px;
+    left: 420px;
+}
+
+.regist_info{
+    font-size:12px;
+    letter-spacing: 1.5px;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+}
+
+.column_style_building_tenant{
+    width:20px;
+    border: 1px solid #CCC;
+    text-align: center;
+}
+
+.column_style_building_tenant_id{
+    width:60px;
+    border: 1px solid #CCC;
+    text-align: left;
+}
+
+.column_style_building_no_name{
+    width:120px;
+    border: 1px solid #CCC;
+    text-align: left;
+}
+
+.column_style_building_address{
+    width:300px;
+    border: 1px solid #CCC;
+}
+
+.column_style_building_Status{
+    width:50px;
+    border: 1px solid #CCC;
+}
+
+.column_style_building_person_flg{
+    width:30px;
+    border: 1px solid #CCC;
+    text-align: center;
+}
+
+.TXT008_margin{
+    margin-left: 5px;
+}
+
+/* 検索条件 建物グルーピング*/
+.table_condition_grouping
+{
+    width: 100%;
+}
+
+.table_condition_grouping_col
+{
+    width: 31%;
+}
+.table_condition_grouping_col_item{
+    width: 19%;
+}

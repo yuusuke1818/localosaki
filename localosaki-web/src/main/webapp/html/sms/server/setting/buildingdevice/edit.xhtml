@@ -1,0 +1,255 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:cust="http://xmlns.jcp.org/jsf/component"
+    xmlns:oslib="http://osaki.co.jp/base-component"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+>
+<body>
+    <ui:composition template="/html/template/template_server_sidemenu.xhtml">
+        <ui:define name="content_side" class="content">
+            <h:outputStylesheet library="css" name="sms/server/setting/buildingdevice/edit.css" />
+            <h:outputStylesheet library="css" name="common/cssLayout.css" />
+            <h:outputScript library="js" name="sms/collect/setting/buildingdevice/edit.js" />
+
+            <form jsfc="h:form" id="smsServerSettingBuildingDeviceEditBean">
+                <div class="inner_content">
+                    <div class="title_area_warp">
+                        <!-- 画面タイトル -->
+                        <div class="title_area_left">
+                            <h2 class="page_title">
+                                <h:outputText value="建物装置設定（装置選択）" />
+                            </h2>
+                            <!-- ヘルプボタン -->
+                            <c:if test="#{indexBean.userGuideBool}">
+                                <h:commandLink class="help_icon" action="#{indexBean.userGuide()}" target="_blank" />
+                            </c:if>
+                            <p class="page_subtitle">
+                                <h:outputText value="建物装置関係情報の登録・削除ができます。" />
+                            </p>
+                        </div>
+                        <div class="clear" />
+                        <div>
+                            <h3 class="contents_title">
+                                <h:outputText value="選択建物" />
+                            </h3>
+                            <div class="contents_form_area">
+                                <table>
+                                    <tr>
+                                        <th class="TXT008">
+                                            企業ID
+                                        </th>
+                                        <td class="TXT020">
+                                           <h:outputText id="outputCorpId"
+                                                value="#{smsServerSettingBuildingDeviceEditBean.editBeanProperty.buildingInfo.corpId}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="TXT008">
+                                            企業名
+                                        </th>
+                                        <td class="TXT020">
+                                           <h:outputText id="outputCorpName"
+                                                value="#{smsServerSettingBuildingDeviceEditBean.editBeanProperty.buildingInfo.corpName}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="TXT008">
+                                            建物番号
+                                        </th>
+                                        <td class="TXT020">
+                                           <h:outputText id="outputBuildingNo"
+                                                value="#{smsServerSettingBuildingDeviceEditBean.editBeanProperty.buildingInfo.buildingNo}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="TXT008">
+                                            建物名
+                                        </th>
+                                        <td class="TXT020">
+                                           <h:outputText id="outputBuildingName"
+                                                value="#{smsServerSettingBuildingDeviceEditBean.editBeanProperty.buildingInfo.buildingName}" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <br />
+                        <!--
+                        <div class="contents_title contents_accordion_header">
+                        	<h:graphicImage class="button_icon button_opener" library="images" name="demand/demand_container_opner.png" style="display: none" />
+                        	<h:graphicImage class="button_icon button_closer" library="images" name="demand/demand_container_closer.png" />
+                        	<span class="contents_title_body">登録前LTE端末リスト</span>
+                        </div>
+                        <div class="contents_form_area contents_accordion_body">
+							<table style="width: auto;">
+								<tr>
+									<td class="lte_id_setting" align="left">
+										<a4j:outputPanel id="buildingDevId1">
+											<div class="search_result_header_wrap page_content_parts page_subtitle">
+												<h:outputText value="装置件数" />
+												<h:outputText class="serach_result_total_count" value="#{smsServerSettingBuildingDeviceEditBean.editBeanProperty.devIdList.size()}" />
+												<h:outputText value="件" />
+											</div>
+											<div class="search_result_area_1">
+												<div class="search_result_head">
+													<h:panelGrid columns="6" class="tab_dev_id" rowClasses="table_header" columnClasses="td_lte_dev_id,td_meter_count,td_meter_id,td_meter_id,td_regist_date,td_add">
+														<h:outputText value="装置コード" />
+														<h:outputText value="メーター台数" />
+														<h:outputText value="計器ID（１）" />
+														<h:outputText value="計器ID（２）" />
+														<h:outputText value="初回通信日時" />
+														<h:outputText value="追加" />
+													</h:panelGrid>
+												</div>
+											</div>
+										</a4j:outputPanel>
+									</td>
+								</tr>
+							</table>
+                        </div>
+                        -->
+                        <rich:messages id="smsServerSettingBuildingDeviceEditBeanMessages" />
+                        <div>
+                            <h3 class="contents_title">建物装置関係情報</h3>
+                            <div class="contents_form_area">
+                                <table style="width: auto;">
+                                    <tr>
+                                        <td class="dev_id_setting" align="left" colspan="3">
+                                            <a4j:outputPanel id="buildingDevId">
+                                                <div class="search_result_header_wrap page_content_parts page_subtitle">
+                                                    <h:outputText value="件数" />
+                                                    <h:outputText class="serach_result_total_count" value="#{smsServerSettingBuildingDeviceEditBean.editBeanProperty.devIdList.size()}" />
+                                                    <h:outputText value="件" />
+                                                </div>
+                                                <div class="search_result_area_1">
+                                                    <div class="search_result_head">
+                                                        <h:panelGrid columns="3" class="tab_dev_id" rowClasses="table_header"
+                                                            columnClasses="td_no,td_dev_id,td_add"
+                                                        >
+                                                            <h:outputText value="No." />
+                                                            <h:outputText value="装置コード" />
+                                                            <h:outputText value="追加/削除" />
+                                                        </h:panelGrid>
+                                                    </div>
+                                                    <c:if test="#{smsServerSettingBuildingDeviceEditBean.dispDetailDevIdFlg()}">
+                                                        <div class="search_result_detail">
+                                                            <h:panelGrid columns="3" class="tab_dev_id" rowClasses="table_detail"
+                                                                columnClasses="td_no,td_dev_id,td_add"
+                                                            >
+                                                                <c:forEach
+                                                                    items="#{smsServerSettingBuildingDeviceEditBean.editBeanProperty.devIdList}"
+                                                                    var="item" varStatus="status"
+                                                                >
+                                                                    <h:outputText id="lblNo_#{status.index}" value="#{status.count}" />
+                                                                    <h:column>
+                                                                        <h:inputText id="dev_id_#{status.index}" value="#{item}"
+                                                                            class="EDIT002 check_change autofocus"
+                                                                            style="#{smsServerSettingBuildingDeviceEditBean.getInvalidStyle(component.clientId)}"
+                                                                            maxlength="8"
+                                                                        />
+                                                                    </h:column>
+                                                                    <h:column>
+                                                                        <a4j:commandButton id="btnDevIdDel_#{status.index}" type="button"
+                                                                            execute="smsServerSettingBuildingDeviceEditBean"
+                                                                            actionListener="#{smsServerSettingBuildingDeviceEditBean.deleteDevId(status.index)}"
+                                                                            render="smsServerSettingBuildingDeviceEditBean" onbegin="showBlockModal();"
+                                                                            oncomplete="hideBlockModal(true);" value=" "
+                                                                        />
+                                                                        <h:graphicImage class="button_icon" library="images" name="common/com020.png" />
+                                                                    </h:column>
+                                                                </c:forEach>
+                                                            </h:panelGrid>
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="#{smsServerSettingBuildingDeviceEditBean.dispAddDevIdFlg()}">
+                                                        <div class="search_result_add">
+                                                            <h:panelGrid columns="3" class="tab_dev_id" rowClasses="table_add"
+                                                                columnClasses="td_no,td_dev_id,td_add"
+                                                            >
+                                                                <h:outputText id="addNo" value="" />
+                                                                <h:inputText id="addDevId"
+                                                                    value="#{smsServerSettingBuildingDeviceEditBean.editBeanProperty.devId}"
+                                                                    style="#{smsServerSettingBuildingDeviceEditBean.getInvalidStyle(component.clientId)}"
+                                                                    class="EDIT002 check_change autofocus" maxlength="8"
+                                                                />
+                                                                <h:column>
+                                                                    <a4j:commandButton id="btnAddDevId" type="button"
+                                                                        execute="smsServerSettingBuildingDeviceEditBean"
+                                                                        actionListener="#{smsServerSettingBuildingDeviceEditBean.addDevId()}"
+                                                                        render="smsServerSettingBuildingDeviceEditBean" onbegin="showBlockModal();"
+                                                                        oncomplete="if (#{!smsServerSettingBuildingDeviceEditBean.editBeanProperty.addDevIdFlg}) {
+                                                                                        hideBlockModal();
+                                                                                        document.getElementById('smsServerSettingBuildingDeviceEditBean:smsServerSettingBuildingDeviceEditBeanMessages').scrollIntoView(false);
+                                                                                    } else {
+                                                                                        hideBlockModal();
+                                                                                        document.getElementById('smsServerSettingBuildingDeviceEditBean:addDevId').focus();
+                                                                                    }"
+                                                                        value=" "
+                                                                    />
+                                                                    <h:graphicImage class="button_icon" library="images" name="common/com014.png" />
+                                                                </h:column>
+                                                            </h:panelGrid>
+                                                        </div>
+                                                    </c:if>
+                                                </div>
+                                            </a4j:outputPanel>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 登録ボタン -->
+                        <div class="button_area_center gradation_type_1 button_large_2 button_regist" style="position: relative;">
+                            <a4j:commandButton id="RegistButton" styleClass="action_button" value="登録"
+                                onclick="return check('#{smsServerSettingBuildingDeviceEditBean.dialogMessage}');"
+                                render="@form" onbegin="showBlockModal()" oncomplete="hideBlockModal();clearChangeFlag();"
+                                action="#{smsServerSettingBuildingDeviceEditBean.regist()}"
+                            >
+                            </a4j:commandButton>
+                            <h:graphicImage class="button_icon img_regist_beseinfo" library="images" name="common/com067.png" />
+                            <span style="position: absolute; top: 12px;">
+                            </span>
+                        </div>
+                    </div>
+
+                    <ui:include src="/html/common/changeCautionDialog.xhtml" />
+
+                    <!-- アクセストークン用 -->
+                    <oslib:requestToken />
+                    <ui:remove>確認ダイアログ</ui:remove>
+                    <ui:include src="/html/common/confirmationDialog.xhtml">
+                        <ui:param name="confirmationDialogTitle" value="確認" />
+                        <ui:param name="confirmationDialogMessage" value="#{smsServerSettingBuildingDeviceEditBean.dialogMessage}" />
+                    </ui:include>
+                    <script type="text/javascript">
+                    function check(nomalMsgTxt) {
+                        if (confirmationDialogOpen($('input[id$=RegistButton]'))) {
+                            return true;
+                        }
+                        $('span[id$=confirmationDialogMessage]').html(nomalMsgTxt);
+                        return false;
+                    }
+                    </script>
+                    <script type="text/javascript">
+                        function functionCheck(check) {
+                            if(functionCheckDialog(check)){
+                                showBlockModal();
+                                return true;
+                            }
+                            return false;
+                        }
+                    </script>
+                </div>
+            </form>
+        </ui:define>
+    </ui:composition>
+</body>
+</html>

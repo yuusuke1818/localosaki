@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:rich="http://richfaces.org/rich">
+    <h:outputStylesheet library="css" name="common/popup.css"/>
+    <h:outputStylesheet library="css" name="common/button.css"/>
+    <h:outputStylesheet library="css" name="login/checkOshirase.css"/>
+    <h:form id="checkOshirasePopupForm">
+        <rich:popupPanel id="checkOshirasePopupWindow" modal="true" moveable="true" resizeable="false" 
+                         zindex="500" domElementAttachment="parent" width="800" height="360" onshow="hideBlockModal();checkAutoFocusOnShowRichPanel(event);">
+            <f:facet name="header">
+                <div class="pop_title_area">
+                    <div class="left" style="vertical-align: middle;">
+                        <h:graphicImage class="oshiraseIcon" library="images" name="menu/menu_index010.png" />
+                        <h:outputText class="pop_page_title" value="お知らせ" style="left: 50px;"/>
+                    </div>
+                    <div class="pop_button_close">
+                        <h:commandButton type="button" onclick="#{rich:component('checkOshirasePopupWindow')}.hide();">
+                            <f:ajax event="click" listener="#{indexBean.uploadLastOshiraseCheckTime()}" 
+                                    execute="lastOshiraseCheckFlg" render="lastOshiraseCheckFlg" />
+                        </h:commandButton>
+                    </div>
+                </div>
+            </f:facet>
+            <h:panelGrid id="oshiraseMain" class="oshirasePopupTable" columnClasses="showFlgColumn">
+                <h:column>
+                    <h:outputText class="viewFlgMessage" value="　"/>
+                    <h:selectBooleanCheckbox id="lastOshiraseCheckFlg" value="#{indexBean.lastOshiraseCheckFlg}"
+                                             style="margin-left: 22px; margin-top: 5px;"  rendered="#{indexBean.isFirstAccess()}"/>
+                    <h:outputText class="viewFlgMessage" value="新着のお知らせが届くまでは、次回から表示しない"  rendered="#{indexBean.isFirstAccess()}"/>
+                </h:column>
+                <h:column>
+                    <div class="announcement_area">
+                        <table id="announcementListArea" align="center">
+                            <tr>
+                                <td>
+                                    <div style="height: 215px;" class="announcement_background_popup announcement_word-wrap announcement_overflow announcement_topic_size_popup announcement_border_popup">
+                                        <h:dataTable id="result" var="item" value="#{indexBean.desp_list}" style="margin: 8px;">
+                                            <tr>
+                                                <h:column>
+                                                    <div class="icon_td">
+                                                        <h:graphicImage library="images" name="#{item.dispIconFilePath}" rendered="#{item.dispIconFlg}"/>
+                                                    </div>
+                                                </h:column>
+                                                <h:column>
+                                                    <h:panelGroup layout="block" style="#{indexBean.getPublishedDayStyle(item.externalSiteFlg)}">
+                                                        <h:outputText value="#{item.publishedDay}" />
+                                                    </h:panelGroup>
+                                                </h:column>
+                                                <h:column>
+                                                    <h:outputText class="announcement_text" value="#{item.title}" rendered="#{indexBean.isOshiraseTextVisible(item.externalSiteFlg)}" />
+                                                    <h:outputLink value="#{item.url}" rendered="#{indexBean.isOshiraseExternalSiteVisible(item.externalSiteFlg)}" target="_blank">
+                                                        <h:outputText class="announcement_text" value="#{item.title}" />
+                                                    </h:outputLink>
+                                                    <h:commandLink value="" rendered="#{indexBean.isOshiraseFileDownloadVisible(item.externalSiteFlg)}" 
+                                                                   id="oshiraseDownloadBtn" immediate="true" 
+                                                                   type="submit" actionListener="#{indexBean.execFileDownload(item)}" onclick="actionIntervalBlock()">
+                                                                   <h:outputText class="announcement_text" value="#{item.title}" />
+                                                    </h:commandLink>
+                                                </h:column>
+                                            </tr>
+                                        </h:dataTable>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </h:column>
+            </h:panelGrid>
+        </rich:popupPanel>
+    </h:form>
+</html>
+

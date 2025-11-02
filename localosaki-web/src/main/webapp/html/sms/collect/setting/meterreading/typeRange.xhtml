@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      >
+<body>
+
+<ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+    <ui:define name="content_side" class="content">
+        <meta http-equiv="content-language" content="ja" />
+        <h:outputStylesheet library="css" name="common/button.css"/>
+        <h:outputStylesheet library="css" name="common/default.css"/>
+        <h:outputStylesheet library="css" name="common/cssLayout.css"/>
+        <h:outputStylesheet library="css" name="common/common.css"/>
+        <h:outputStylesheet library="css" name="sms/collect/setting/meterreading/type.css"/>
+
+        <form jsfc="h:form" id="smsCollectSettingMeterreadingTypeRangeBean">
+            <div class="inner_content">
+                <div class="title_area_warp">
+                    <!-- 画面タイトル -->
+                    <div class="title_area_left">
+                        <h2 class="page_title">種別設定編集</h2>
+                        <!-- ヘルプボタン -->
+                        <c:if test="#{indexBean.userGuideBool}">
+                            <h:commandLink class="help_icon"
+                                action="#{indexBean.userGuide()}" target="_blank" />
+                        </c:if>
+                        <p class="page_subtitle">
+                            <h:outputText value="メーター種別の設定ができます。&lt;br/&gt;
+                                内容を変更し、登録ボタンを押してください。" escape="false" />
+                        </p>
+                        <rich:messages />
+                    </div>
+                    <div class="clear" />
+
+                    <h3 class="contents_title">種別設定</h3>
+                    <div class="contents_form_area">
+                        <div class="contents_form_area_row">
+                            <div class="TXT008">名称</div>
+                            <div>
+                                <h:inputText
+                                    class="check_change typeRange_txt_std autofocus" maxlength="10"
+                                    id="meterTypeName" value="#{smsCollectSettingMeterreadingTypeRangeBean.meterType.meterTypeName}"
+                                    style="#{smsCollectSettingMeterreadingTypeRangeBean.getInvalidStyle(component.clientId)}" />
+                            </div>
+                            　　※全角10文字以内
+                        </div>
+                        <div class="contents_form_area_row">
+                            <div class="TXT008">CO2排出係数</div>
+                            <div>
+                                <h:inputText
+                                    class="check_change typeRange_txt_std" maxlength="5"
+                                    id="co2Coefficient" value="#{smsCollectSettingMeterreadingTypeRangeBean.meterType.co2Coefficient}"
+                                    style="#{smsCollectSettingMeterreadingTypeRangeBean.getInvalidStyle(component.clientId)}" />
+                            </div>
+                            　　※0.000 ～ 9.999の範囲
+                        </div>
+                        <div class="contents_form_area_row">
+                            <div class="TXT008">CO2排出係数単位</div>
+                            <div>
+                                <select jsfc="h:selectOneMenu"
+                                                 id="unitCo2Coefficient"
+                                                 value="#{smsCollectSettingMeterreadingTypeRangeBean.meterType.unitCo2Coefficient}"
+                                                 styleClass="check_change typeRange_sel_std"
+                                                 onkeydown="searchConditionKeydown()">
+                                    <option jsfc="f:selectItems" value="#{smsCollectSettingMeterreadingTypeRangeBean.unitCo2CoefficientMap}" />
+                                </select>
+                            </div>
+                        </div>
+                        <div class="contents_form_area_row">
+                            <div class="TXT008">単位</div>
+                            <div>
+                                <h:inputText
+                                    class="check_change typeRange_txt_std" maxlength="10"
+                                    id="unitUsageBased" value="#{smsCollectSettingMeterreadingTypeRangeBean.meterType.unitUsageBased}" />
+                            </div>
+                        </div>
+                        <div class="contents_form_area_row">
+                            <div class="TXT008">電気メニュー</div>
+                            <div>
+                                <h:outputText id="menuName" value="#{smsCollectSettingMeterreadingTypeRangeBean.meterType.menuName}" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="contents_title">従量範囲設定</h3>
+                    <div class="contents_form_area">
+                        <span class="page_subtitle">従量範囲を設定します。<br/>※入力範囲 1～999999(半角数字)</span>
+
+                        <div class="search_result_area typeRange_range_list">
+                            <div class="search_result_head">
+                                <h:panelGrid columns="2" class="tab_dev_id" rowClasses="table_header"
+                                    columnClasses="typeRange_col_1,typeRange_col_2">
+                                    <h:outputText value="従量範囲設定値" />
+                                    <h:outputText value="追加/削除" />
+                                </h:panelGrid>
+                            </div>
+                            <div class="search_result_detail">
+                                <h:panelGrid columns="2" class="tab_dev_id" rowClasses="table_detail"
+                                    columnClasses="typeRange_col_1,typeRange_col_2">
+                                    <c:forEach items="#{smsCollectSettingMeterreadingTypeRangeBean.meterRangeList}"
+                                               var="item" varStatus="status">
+                                        <h:column>
+                                            <h:inputText
+                                                class="check_change typeRange_txt_rangeValue" maxlength="6"
+                                                id="rangeValue_#{status.index}" value="#{item.rangeValueEdit}"
+                                                style="#{smsCollectSettingMeterreadingTypeRangeBean.getInvalidStyle(component.clientId)}" />
+                                        </h:column>
+                                        <h:column>
+                                            <button jsfc="h:commandButton" id="deleteRowButton" class="button_small button_building_edit" value=""
+                                                    onclick="setChangeFlag();"
+                                                    action="#{smsCollectSettingMeterreadingTypeRangeBean.deleteRowButton(item)}" >
+                                                <h:graphicImage class="button_edit" library="images" name="common/com020.png" />  
+                                            </button>
+                                        </h:column>
+                                    </c:forEach>
+                                </h:panelGrid>
+                            </div>
+                            <div class="search_result_add">
+                                <h:panelGrid columns="2" class="tab_dev_id" rowClasses="table_add"
+                                    columnClasses="typeRange_col_1,typeRange_col_2">
+                                    <h:column>
+                                        <h:inputText
+                                            class="check_change typeRange_txt_rangeValue" maxlength="6"
+                                            id="addRangeValue" value="#{smsCollectSettingMeterreadingTypeRangeBean.addRangeValue}"
+                                            style="#{smsCollectSettingMeterreadingTypeRangeBean.getInvalidStyle(component.clientId)}" />
+                                    </h:column>
+                                    <h:column>
+                                        <button jsfc="h:commandButton" id="addRowButton" class="button_small button_building_edit" value=""
+                                                onclick="setChangeFlag();"
+                                                action="#{smsCollectSettingMeterreadingTypeRangeBean.addRowButton()}" >
+                                            <h:graphicImage class="button_edit" library="images" name="common/com014.png" />
+                                        </button>
+                                    </h:column>
+                                </h:panelGrid>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="button_area_center gradation_type_1 button_large_2 button_area">
+                        <a4j:commandButton
+                            id="updateButton"
+                            class="action_button"
+                            value="登録"
+                            execute="@form"
+                            render="@form"
+                            action="#{smsCollectSettingMeterreadingTypeRangeBean.regist()}"
+                            onclick="return confirmationDialogOpen($('input[id$=updateButton]'))"
+                            onbegin="showBlockModal()" oncomplete="hideBlockModal(); clearChangeFlag();"
+                            ></a4j:commandButton>
+                        <h:graphicImage class="button_icon" library="images" name="common/com067.png" rendered="true"/>
+                    </div>
+
+                </div>
+            </div>
+
+            <ui:include src="/html/common/changeCautionDialog.xhtml" />
+
+            <ui:include src="/html/common/confirmationDialog.xhtml" >
+                <ui:param name="confirmationDialogTitle" value="確認" />
+                <ui:param name="confirmationDialogMessage" value="#{smsCollectSettingMeterreadingTypeRangeBean.beforeRegisterMessage}" />
+            </ui:include>
+        </form>
+    </ui:define>
+</ui:composition>
+
+</body>
+</html>

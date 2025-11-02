@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:rich="http://richfaces.org/rich">
+    <h:outputStylesheet library="css" name="common/popup.css"/>
+    <!-- 登録内容を変更して登録を押さないままにタブ遷移する時、新規登録を押した時に変更を破棄しても遷移するのか確認するポップアップ -->
+
+    <rich:popupPanel id="changeCautionDialogFreeMessage" modal="true" moveable="true" resizeable="false"
+                     top="180" width="480" height="200" domElementAttachment="form" zindex="320"
+                     onshow="checkAutoFocusOnShowRichPanel(event);">
+        <!-- z-index:150 ヘッダ部分の後ろに隠れるのを避ける為 -->    
+
+        <f:facet name="header">
+            <div class="pop_title_area">
+                <div class="left">
+                    <span class="pop_page_title">確認</span>
+                </div>
+                <div class="pop_button_close">
+                    <input type="button" value="" onclick="#{rich:component('changeCautionDialogFreeMessage')}.hide()">
+                    </input>
+                </div>
+            </div>
+        </f:facet>
+
+        <div class="inner_content content_width" style="text-align: center;">
+            <table jsfc="h:panelGrid" columns="1" style="width: 100%;">
+                <span jsfc="h:column">
+                    <div class="page_subtitle">
+                        <h:outputText value="#{dialogMessage}" />
+                    </div>
+                </span>
+                <span jsfc="h:column">
+                    <table class="change_caution_button_area">
+                        <tr>
+                            <td class="gradation_type_1 button_large_2 ok_button" style="width:180px">
+                                <h:button id="changeCautionDialogFreeMessageConfirmButton" value="OK"
+                                          style="width:160px;"
+                                      onclick="tabChange(#{changeCautionTargetTabPanel}); return !tabTrigger;" /><!-- binding="#{changeCautionTargetButton}"  -->
+                                <h:graphicImage style="pointer-events: none;" class="button_icon2" library="images" name="common/com067.png" />
+                            </td>
+                            <td class="gradation_type_4 button_large_2 cancel_button">
+                                <input type="button" id="changeCautionDialogFreeMessageDialogCancelButton" value="キャンセル"
+                                       style="width:160px;"
+                                       onclick="#{rich:component('changeCautionDialogFreeMessage')}.hide(); return false;">
+                                </input>
+                                <h:graphicImage style="pointer-events: none;" class="button_icon" library="images" name="common/com021.png" />
+                            </td>
+                        </tr>
+                    </table>
+                </span>
+            </table>
+        </div>
+    </rich:popupPanel>
+
+    <script type="text/javascript">
+        var newItem = null;
+        var tabTrigger = false;
+        function tabChangeCheck(event) {
+            newItem = event.rf.data.newItem;
+            if (isChange) {
+                tabTrigger = true;
+        #{rich:component('changeCautionDialogFreeMessage')}.show();
+                $('input[id$=changeCautionDialogFreeMessageCancelButton]').focus();
+                return false;   //タブ切り替えを却下
+            }
+            return true;    //タブ切り替えを許可
+        }
+        var button = null;
+        function actionChangeCheck(ctrl) {
+            if (isChange) {
+                tabTrigger = false;
+                button = ctrl;
+        #{rich:component('changeCautionDialogFreeMessage')}.show();
+                $('input[id$=changeCautionDialogFreeMessageCancelButton]').focus();
+                return false;
+            }
+            return true;
+        }
+        function tabChange(tabPanel) {
+            isChange = false;
+        #{rich:component('changeCautionDialogFreeMessage')}.hide();
+            if (tabTrigger) {
+                tabPanel.switchToItem(newItem.id);
+
+            } else {
+                button.click();
+                button = null;
+            }
+        }
+        function clearChangeFlag() { //登録ボタンから呼ぶ
+            isChange = false;
+        }
+        function setChangeFlag() { //下のchangeイベントから取れないような要素から
+            isChange = true;
+        }
+
+    </script>
+
+</html>

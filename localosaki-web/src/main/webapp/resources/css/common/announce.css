@@ -1,0 +1,59 @@
+/* アナウンス 背景色 */
+.announcement_background{
+    background: white
+}
+
+/* アナウンス 文面折り返し */
+.announcement_word-wrap{
+    word-wrap:break-word
+}
+
+/* アナウンス 記事の間隔幅 */
+.announcement_account_width{
+     width: 40px
+}
+
+/* アナウンス スクロール */
+.announcement_overflow{
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+/*
+ アナウンス サイズ */
+.announcement_size{
+    height: 210px;
+    width: 470px;
+}
+
+/* アナウンス トピック サイズ */
+.announcement_topic_size{
+    overflow-y:scroll;
+    height: 140px;
+    width: 1010px;
+}
+
+/* アナウンス 境界線 */
+.announcement_border{
+    border:rgb(0,79,141) solid 4px;
+}
+
+/*アナウンス 案内 高さ */
+/*.announcement_table_height,tr{
+    height: 50px
+}
+*/ 
+
+/*アナウンス 案内 区切り線 */
+.announcement_border_horizontal_separator,tr{
+    border-collapse : collapse;
+    border: 1px solid gray;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+}
+
+/* 文字間隔 */
+.login_font,
+.pass_spacing{
+    letter-spacing: 1.5px 
+}

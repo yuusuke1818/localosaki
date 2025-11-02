@@ -1,0 +1,132 @@
+body {
+    background-color: #ffffff;
+    font-size: 12px;
+    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    color: #000000;  
+    margin: 10px;
+}
+
+h1 {
+    font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    border-bottom: 1px solid #AFAFAF; 
+    font-size:  16px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #D20005;
+}
+
+/*IE用のtd内改行*/
+td{
+   word-break:break-all;
+}
+a:link, a:visited {
+  color: #045491;
+  font-weight : bold;
+  text-decoration: none;
+}
+
+a:link:hover, a:visited:hover  {
+  color: #045491;
+  font-weight : bold;
+  text-decoration : underline;
+}
+
+/*a:focus { outline:none; }*/
+
+/* placeholder */
+input:-ms-input-placeholder{
+    color: #8f8f8f;
+    font-weight: normal;
+}
+input::-webkit-input-placeholder{
+    color: #8f8f8f;
+    font-weight: normal;
+}
+
+/* ボタン 角丸 */
+.button_radius {
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
+/* ログアウトボタン サイズ　*/
+.logout_button_size{
+    height: 30px;
+    width: 110px;
+    border: none;
+}
+
+/* ログアウトボタン 　色*/
+.logout_button_color{
+    color: #222222;
+    background: #CCCCCC;
+}
+
+/* 文字間隔 */
+.temp_spacing{
+    letter-spacing: 1.5px 
+}
+
+/* ボタンのフォントサイズ */
+.button_font_size{
+    font-size : 17px
+}
+
+/*コンテンツ右寄せ*/
+.contents_right{
+    text-align: right;
+}
+
+/*コンテンツ左寄せ*/
+.contents_left{
+    text-align: left;
+}
+
+/*コンテンツ中央*/
+.contents_center{
+    text-align: center;
+}
+
+/*
+        background:#fff;
+	padding:10px 20px;
+	border:2px solid #aaa;
+*/
+/* 操作ブロックモーダル */
+#block-modal-content{
+	width:80px;
+        height:80px;
+	margin:1.5em auto 0;
+	background-color:rgba(0,0,0,0);
+	z-index:502;
+	display:none;
+        position:fixed;
+}
+
+#block-modal-overlay{
+	z-index:501;
+	display:none;
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:120%;
+	background-color:rgba(0,0,0,0.75);
+}
+
+#sereal_code_area{
+        text-align: right;
+        margin-right: 20px;
+}
+
+/*グレイアウト*/
+input[disabled]
+{
+    background: lightgray;
+}
+
+/* 回り込み解除 */
+div.clear {
+    clear: both;
+}

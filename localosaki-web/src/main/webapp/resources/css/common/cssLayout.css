@@ -1,0 +1,962 @@
+html{
+    min-height: 100%;
+    position: relative;
+    overflow-y: scroll;
+}
+
+body { font-family : sans-serif ; }
+
+/***********************************
+*　　共通ヘッダー、フッター、背景のスタイル*
+***********************************/
+
+/*ヘッダーエリア*/
+#top {
+    position: relative;
+    background-color: transparent;
+    color: black;
+    padding: 5px;
+    margin: 0px 0px 0px 0px;
+    height: 150px;
+}
+
+#top a:link, #top a:visited {
+    color: white;
+    font-weight : bold;
+    text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+    color: black;
+    font-weight : bold;
+    text-decoration : underline;
+}
+
+/*社名*/
+#top .company_name{
+    font-size: 18px;
+    letter-spacing: 0.2em;
+    margin-top: 7px;
+    margin-left: 20px;
+    letter-spacing: 0.2em;
+    font-weight: bold;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+}
+
+/*左ヘッダーと右ヘッダーを合わせた領域*/
+#header_wrap{
+    position:relative;
+    margin:0 auto;
+    width:1024px
+}
+
+/*左ヘッダー*/
+#left_header {
+    /*float: left;*/
+    position: absolute;
+    top:-12px;
+    left:-2px;
+    z-index: 110;
+    padding: 5px;
+    width: 680px;
+}
+
+/*右ヘッダー*/
+#right_header {
+    /*    float: right;*/
+    position: absolute;
+    top:0px;
+    right:0px;
+    z-index: 120;
+    padding: 5px;
+    width: 1000px;
+    height: 65px;
+}
+
+/*ユーザー名表示エリア*/
+#right_header #user_name_area {
+    position:absolute;
+    right:0px;
+    bottom:-32px;
+    background-color: rgb(0,79,141);
+    color:#FFFFFF;
+    font-size:14px;
+    font-weight:bold;
+    padding-top: 10px;
+    padding-left:10px;
+    padding-right:10px;
+    max-width: 1200px;
+    min-width: 305px;
+    height:50px;
+    border-radius:10px 10px 0 0;
+    box-shadow: 0px -27px 10px -3px rgba(0,0,0,0.6) inset;
+    -webkit-box-shadow: 0px -27px 10px -3px rgba(0,0,0,0.6) inset;
+    -moz-box-shadow: 0px -27px 10px -3px rgba(0,0,0,0.6) inset;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    letter-spacing: 0.1em;
+}
+
+/*ユーザー名表示エリア*/
+#right_header #user_name_area span{
+    margin-right: 10px;
+}
+
+#right_header #user_name_area .user_name_contents{
+    margin-top:-7px;
+    height: 70%;
+    min-width:100%;
+}
+
+#right_header #user_name_area .user_name{
+    min-width: 275px;
+}
+
+#right_header #user_name_area .api_key_icon{
+    width: 30px;
+}
+
+/*その他（よくあるご質問、お問い合わせ、ログアウト）*/
+#right_header #other {
+    position:absolute;
+    right:0px;
+    top:-18px;
+}
+
+#right_header #other td a{
+    margin-right:20px;
+    font-size:14px;
+    text-decoration: underline;
+}
+
+/*ナビゲーションエリア*/
+#navi_area{
+    position:absolute;
+    top:100px;
+    left: 0px;
+    width:100%;
+    min-width:1039px;
+    height:25px;
+    background-color: rgb(0,79,141);
+    z-index: 130;
+}
+
+/*ナビゲーションエリア　メニュー*/
+#navi_area #navi_menu{
+    margin: 0 auto;
+    width:1024px;
+    height:60px;
+}
+
+/*メニュー左*/
+#navi_area #navi_menu #menu_left{
+    position:relative;
+    float:left;
+    margin-left: -8px;
+    margin-top: -2px;
+}
+
+#navi_area #navi_menu #menu_left table {
+    border-collapse: collapse;
+}
+
+#navi_area #navi_menu #menu_left tr{
+    height: 50px;
+    vertical-align: top;
+}
+
+#navi_area #navi_menu #menu_left tr td{
+    vertical-align: middle;
+}
+
+/*メニュー右*/
+#navi_area #navi_menu #menu_right{
+    float:right;
+    text-align: right;
+    width:400px;
+}
+
+.top_page_target_company{
+    margin-left:189px;
+    margin-right:15px;
+    margin-top: 0px;
+    font-size:24px;
+    color:rgb(255,221,0);
+    font-weight:bold;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    letter-spacing: 0.15em;
+    min-width: 0px;
+    max-width: 720px;
+    word-wrap: break-word;
+}
+
+.top_page_target_company span{
+    font-size:14px;
+    margin-left:10px;
+    letter-spacing: 0.1em;
+}
+
+.target_company{
+    margin-left:10px;
+    margin-right:15px;
+    margin-top: 0px;
+    font-size:24px;
+    color:rgb(255,221,0);
+    font-weight:bold;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    letter-spacing: 0.15em;
+    min-width: 0px;
+    max-width: 720px;
+    word-wrap: break-word;
+}
+
+.target_company span{
+    font-size:14px;
+    margin-left:10px;
+    letter-spacing: 0.1em;
+}
+
+/*免責事項*/
+#menseki{
+    margin: auto;
+    margin-top: -70px;
+    line-height: 1.5em;
+    font-size: 11px;
+    width: 580px;
+}
+
+/*フッター領域*/
+#bottom {
+    position: absolute;
+    bottom:0px;
+    left:0px;
+    width:100%;
+}
+
+/*シリアルコードエリア*/
+#bottom #sereal_code_area{
+    position: absolute;
+    bottom:80px;
+    right:55px;
+    z-index: 100;
+}
+
+/*シリアルコード*/
+#bottom #sereal_code_area .sereal_code{
+    font-size:14px;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+}
+
+/*コピーライトの表示エリア*/
+#bottom #copyright_area{
+    position: absolute;
+    bottom:0px;
+    background-color: rgb(0,79,141);
+    padding: 5px 0px 5px 0px;
+    margin: 0px 0px 0px 0px;
+    width:100%;
+    height: 15px;
+    text-align: center;
+    color:#FFFFFF;
+}
+
+/*フッターロゴ（ログイン画面）*/
+#bottom #footer_logo_login{
+    position: absolute;
+    left:40px;
+    bottom:40px;
+    width:140px;
+}
+
+/*パスワード変更画面*/
+.editPW_title_area{
+    margin-left: 30px;
+    width:750px;
+}
+
+/*フッターリンクエリア*/
+#bottom #footer_link_area{
+    position: absolute;
+    right:0px;
+    bottom:40px;
+    width:400px;
+}
+#bottom #footer_link_area a:link, a:visited {
+    margin-right: 40px;
+    font-size: 12px;
+    font-weight: bold;
+    color:#0090FF;
+}
+
+/*フッターロゴ表示領域（ログイン画面）*/
+#bottom #footer_logo_area_login{
+    margin-left: 23px;
+    margin-bottom: 40px;
+    cursor: pointer;
+}
+
+/*フッターロゴ表示領域（ログイン後画面）*/
+#bottom #footer_logo_area{
+    width: 100%;
+    text-align: center;
+}
+
+/*フッターロゴ（ログイン後画面）*/
+#bottom #footer_logo_area #footer_logo_main{
+    width:140px;
+    margin-bottom: 30px;
+}
+
+/*背景画像（中央）*/
+#back_center{
+    position:absolute;
+    top:0px;
+    left:0px;
+    width:100%;
+    min-width:1039px;
+    height:100%;
+    z-index: -20;
+    background-image:url("#{resource['images/back_center.png']}");
+    background-repeat: repeat-x;
+}
+
+/*背景画像（左）*/
+#back_left{
+    position:absolute;
+    top:-3px;
+    left:0px;
+    width:1000px;
+    height:100%;
+    z-index: -10;
+    background-image:url("#{resource['images/back_left.png']}");
+    background-repeat: no-repeat;
+}
+
+/*背景画像（右）*/
+#back_right{
+    position:absolute;
+    top:-3px;
+    right:0px;
+    width:1000px;
+    height:100%;
+    z-index: -10;
+    background-image:url("#{resource['images/back_right.png']}");
+    background-repeat: no-repeat;
+}
+
+/***********************************
+*	ページ内レイアウト	*
+***********************************/
+
+/*コンテンツエリア*/
+.center_content {
+    position: relative;
+    margin-right: auto;
+    margin-left : auto;
+    width:1024px;
+    margin-bottom: 80px;
+    /*min-height: 300px;*/
+    padding: 5px;
+    z-index: 140;
+    clear:both;
+}
+
+/*コンテンツ内側の間隔*/
+div.inner_content {
+    position: relative;
+    background-color: #FFFFFF;
+    margin-top:12px;
+    padding: 10px 40px;
+    min-height: 495px;
+    width: 944px;
+}
+
+div.inner_content_sms {
+    position: relative;
+    background-color: #FFFFFF;
+    margin-top:12px;
+    padding: 10px 40px;
+    min-height: 495px;
+    width: 944px;
+}
+
+.rf-pp-cntr .inner_content{
+    position: relative;
+    background-color: #FFFFFF;
+    margin-top:12px;
+    padding: 10px 40px;
+    max-width: 1024px;
+    width:initial;
+}
+
+/*タイトルエリアラップ*/
+.title_area_warp{
+    width:100%;
+
+}
+
+/*タイトルエリア左寄せ*/
+.title_area_left{
+    float:left;
+    width:60%;
+}
+
+/*タイトルエリア左寄せ*/
+.title_area_left_manual_inspection{
+    float:left;
+    width:100%;
+}
+
+/*タイトルエリア右寄せ（新規登録ボタン等を配置するエリア）*/
+.title_area_right{
+    float:right;
+    width:40%;
+}
+
+/*タイトルアイコン*/
+.title_icon{
+    margin-bottom:-7px;
+    margin-right: 5px;
+}
+
+/*ページタイトル*/
+.page_title{
+    font-size: 25px;
+    font-weight:bold;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    letter-spacing: 2px;
+    height: 20px;
+    display:inline-block;
+    margin-bottom: 0;
+}
+
+/*ページサブタイトル*/
+.page_subtitle{
+    color: #000000;
+    font-size:14px;
+    letter-spacing: 1.5px;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    height: 35px;
+}
+
+/***********************************
+*	パンくずリスト関連	*
+***********************************/
+/*パンくずリスト*/
+.bread {
+    width:100%;
+    height:56px;
+    position:relative;
+    clear:both;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+}
+
+/*パンくずサイズ*/
+.bread .bread_parts_size{
+    height: 40px;
+    width:205px;
+}
+
+/*パンくず内文言(非アクティブ)*/
+.bread_name_gray{
+    position:absolute;
+    top:9px;
+    left:75px;
+    font-size: 15px;
+    letter-spacing: 0.1em;
+    color:#AAA;
+}
+
+/*パンくず内文言(アクティブ)*/
+.bread_name_active{
+    position:absolute;
+    top:9px;
+    left:75px;
+    font-size: 15px;
+    letter-spacing: 0.1em;
+    color:#FFFFFF;
+}
+
+/*パンくず内文言アイコン*/
+.bread_icon{
+    position:absolute;
+    top:0px;
+    left:-45px;
+}
+.bread_icon img{
+    width: 40px;
+    height: 20px;
+}
+
+/*パンくずパーツ1*/
+.bread .bread_parts_1{
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+/*パンくずパーツ2*/
+.bread .bread_parts_2{
+    position:absolute;
+    top:0px;
+    left:191px;
+}
+
+/*パンくずパーツ3*/
+.bread .bread_parts_3{
+    position:absolute;
+    top:0px;
+    left:383px;
+}
+
+/*パンくずパーツ4*/
+.bread .bread_parts_4{
+    position:absolute;
+    top:0px;
+    left:532px;
+}
+
+
+
+/*検索条件削除ボタン表示エリア*/
+/*.column_style_del_button{
+    position:relative;
+}*/
+
+
+/*********************************************
+*動的検索関連*
+**********************************************/
+
+/*検索条件表示エリア*/
+.search_condition_area{
+    width:100%;
+}
+
+/*検索条件を使用するための説明文*/
+.search_description{
+    width:100%;
+    padding-bottom:5px;
+    border-bottom:1px solid #CCC;
+    font-size:16px;
+    letter-spacing: 0.1em;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    height: 45px;
+}
+.search_description p{
+    margin-top: 0px;
+}
+
+/*説明文の注釈*/
+.search_description span{
+    font-size:12px;
+    color:red;
+}
+
+/*動的検索条件リストのスタイル*/
+.rf-dt-r{
+    border-bottom: 1px solid #CCC;
+    height: 50px;
+    font-weight:bold;
+}
+.rf-dt td{
+    font-size:14px;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+}
+
+.delete_button .button_icon{
+    position: absolute;
+    top: 16px;
+    left: 12px;
+    text-align: right;
+    pointer-events: none;
+}
+
+/*検索開始ボタン*/
+.button_search{
+    margin-top:20px;
+}
+
+/*表示条件ヘッダー*/
+.contents_title.contents_accordion_header {
+    position: relative;
+    padding-left: 40px;
+    cursor: pointer;
+}
+
+/*印刷条件ヘッダー*/
+.contents_title.contents_accordion_printing_header {
+    position: relative;
+    padding-left: 40px;
+    cursor: pointer;
+}
+
+/*表示条件、印刷条件の矢印*/
+.contents_title .button_icon {
+	position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+/*********************************************
+*検索結果関連*
+**********************************************/
+
+/*検索結果表示エリア*/
+.search_result_area{
+    width:100%;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+}
+
+/*検索結果のヘッダーのスタイル*/
+.search_result_area .table_header {
+    background-color: rgb(0,79,141);
+    color: white;
+    font-weight: bold;
+    border: 1px #CCC solid;
+    height:34px;
+}
+
+/*検索結果のtbodyのスタイル*/
+.search_result_area tbody tr{
+    height:50px;
+}
+
+/*検索結果の1リストに2行表示させるパターンの背景色対応１*/
+.search_result_area tbody tr:nth-child(2n) {
+    background-color: rgb(200,233,255);
+}
+
+/*検索結果の1リストに2行表示させるパターンの背景色対応２*/
+.search_result_area tbody tr:nth-child(2n-1) table tbody tr:nth-child(2n) {
+    background-color: #FFF;
+}
+
+/*リスト内アクションボタン(グラデーション直接指定)*/
+.search_result_area tbody tr input[type="submit"],
+.search_result_area tbody tr input[type="button"]{
+    height:36px;
+    background: -moz-linear-gradient( top, #fffcf7 0%, #3990ce 25%, #1061a3 50%, #2baaf3 85%, #37e6e6);
+    background: -webkit-gradient( linear, left top, left bottom, from(#fffcf7), color-stop(0.25, #3990ce), color-stop(0.40, #1061a3), color-stop(0.50, #1061a3), color-stop(0.90, #2baaf3), to(#2baaf3));
+    background: -ms-linear-gradient( top, #fffcf7 0%, #3990ce 25%, #1061a3 50%, #2baaf3 85%, #37e6e6);
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+    border-radius: 1px;
+    border: 1px solid #24a1e9;
+    -moz-box-shadow: 0px 1px 3px rgba(000,000,000,0.5), inset 0px -1px 0px rgba(255,255,255,0.7);
+    -webkit-box-shadow: 0px 1px 3px rgba(000,000,000,0.5), inset 0px -1px 0px rgba(255,255,255,0.7);
+    -ms-box-shadow: 0px 1px 3px rgba(000,000,000,0.5), inset 0px -1px 0px rgba(255,255,255,0.7);
+
+    box-shadow: 0px 1px 3px rgba(000,000,000,0.5), inset 0px -1px 0px rgba(255,255,255,0.7);
+    text-shadow: 0px -1px 1px rgba(000,000,000,0.2), 0px 1px 0px rgba(255,255,255,0.3);
+
+    color: #FFFFFF;
+}
+
+.search_result_area tbody tr input:hover[type="submit"],
+.search_result_area tbody tr input:hover[type="button"]
+{
+    background: -moz-linear-gradient( top, #fffcf7 0%, #3990ce 10%, #1061a3 40%, #2baaf3 90%, #fffcf7);
+    background: -webkit-gradient( linear, left top, left bottom, from(#fffcf7), color-stop(0.10, #3990ce), color-stop(0.40, #1061a3), color-stop(0.50, #1061a3), color-stop(0.90, #2baaf3), to(#2baaf3));
+    background: -ms-linear-gradient( top, #fffcf7 0%, #3990ce 10%, #1061a3 40%, #2baaf3 90%, #37e6e6);
+    cursor: pointer;
+}
+
+.search_result_area tbody tr input[type="submit"][disabled],
+.search_result_area tbody tr input[type="button"][disabled]{
+    color: #000000;
+    opacity:0.4;
+    background: -moz-linear-gradient(top,#fffcf7 0%,#b8b8b8 20%,#999999 50%,#b8b8b8 80%,#fffcf7);
+    background: -webkit-gradient(linear, left top, left bottom,from(#fffcf7),color-stop(0.20, #b8b8b8),color-stop(0.50, #999999),color-stop(0.80, #b8b8b8),to(#fffcf7));
+    background: -ms-linear-gradient(top,#fffcf7 0%,#b8b8b8 20%,#999999 50%,#b8b8b8 80%,#fffcf7);
+    border: 1px solid #8f8f8f;
+}
+.search_result_area tbody tr input[type="submit"][disabled] + img,
+.search_result_area tbody tr input[type="button"][disabled] + img{
+    opacity: 0.4;
+}
+
+/*検索結果件数表示エリア*/
+.search_result_header_wrap{
+    position:relative;
+    width:100%;
+    height:40px;
+}
+
+/*検索結果件数表示エリア（左）*/
+.search_result_header_left{
+    position:absolute;
+    left:0px;
+    letter-spacing: 1.5px;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+}
+
+/*検索結果件数表示エリア（右）*/
+.search_result_header_right{
+    position:absolute;
+    right:0px;
+    bottom:0px;
+    text-align: right;
+}
+
+/*.search_result_header_right .button_icon{
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+}*/
+
+/*検索結果総件数*/
+.serach_result_total_count {
+    font-size:22px;
+    color: rgb(0,79,141);
+}
+
+/*検索条件に戻るボタン*/
+.search_back_button{
+    position:absolute;
+    left:280px;
+    top:10px;
+}
+
+/*コンテンツタイトル*/
+.contents_title{
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    letter-spacing: 0.1em;
+    padding:5px 10px;
+    font-weight:bold;
+    color:#FFFFFF;
+    font-size: 16px;
+    background: -moz-linear-gradient(
+            top,
+            #00a5eb 0%,
+            #008cd2 25%,
+            #265c8a);
+    background: -webkit-gradient(
+            linear, left top, left bottom,
+            from(#00a5eb),
+            color-stop(0.25, #008cd2),
+            to(#265c8a));
+    background: -ms-linear-gradient(
+            top,
+            #00a5eb 0%,
+            #008cd2 25%,
+            #265c8a);
+    border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    border: 1px solid #003366;
+}
+
+/*コンテンツの入力フォームエリア*/
+.contents_form_area{
+    background-color: #FFF;
+    padding: 20px;
+    margin-top: -15px;
+    border: 1px solid #CCC;
+    border-top: none;
+}
+
+/*コンテンツの入力フォームエリア内にあるテーブル*/
+.contents_form_area table{
+    width:100%;
+}
+
+.contents_form_area table tr{
+    height:40px;
+}
+
+/*コンテンツサブタイトル*/
+.contents_subtitle{
+    margin-left: 20px;
+    color: red;
+    font-size:12px;
+}
+
+/*必須文言表示エリア*/
+.required{
+    font-size: 12px;
+/*    background-color: rgb(255,123,15);
+    color: #FFFFFF;
+    padding: 0 5px;
+    margin-left: 5px;*/
+    display: inline-block;
+    width:40px;
+    height: 20px;
+    background-image:url("#{resource['images/common/com001.png']}");
+    background-position:bottom;
+    background-repeat:no-repeat;
+}
+
+/*コンテンツエリア*/
+.contents_area{
+    padding:10px;
+    border:1px solid #CCC;
+    margin-bottom:20px;
+}
+/*********************************************
+*ページングパーツ関連*
+**********************************************/
+#nextButton{
+    background-color: #FFF;
+    border: 0px;
+}
+
+#prevButton{
+    background-color: #FFF;
+    border: 0px;
+}
+
+#paging_area{
+    padding-top: 15px;
+    font-size: 13px;
+    width: 100%;
+}
+#paging_area a, #paging_area span{
+    padding: 0px 7px 0px 7px;
+    font-size: 17px;
+    width: 100%;
+}
+#prevButton_area{
+    margin-right: 15px;
+}
+#nextButton_area{
+    margin-left: 15px;
+}
+
+/*********************************************
+*フォーム関連の共通パーツ*（長さなどの画面固有の要素以外をここで定義）
+**********************************************/
+
+/*文字サイズ、テキストボックスの基本スタイル*/
+textarea, input[type="text"], input[type="password"], select {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #C4C0B9;
+    font-size: 14px;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    color: #000000;
+}
+
+/*フォームラベルテキスト*/
+.TXT008{
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    font-weight:bold;
+    height:26px;
+    letter-spacing:1.5px;
+    text-align: left;
+    font-size: 14px;
+}
+
+/*フォーム非活性テキスト*/
+.TXT020{
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    font-size:16px;
+    background-color:#f7f7f7;
+    height:26px;
+    padding:5px 0px 5px 0px;
+}
+
+/*フォーム非活性テキスト(数字)*/
+.TXT021{
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    font-size:16px;
+    background-color:#f7f7f7;
+    padding:5px 0px 5px 0px;
+    height:26px;
+    text-align:right;
+}
+
+/*注釈*/
+.TXT023{
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    font-size:12px;
+    color:red;
+}
+
+/*フォームエディットテキスト*/
+.EDIT002{
+   height:26px;
+}
+
+/*フォームエディットテキスト（数値など右寄せ）*/
+.EDIT005{
+  height:26px;
+  text-align: right;
+}
+
+/*フォームセレクトボックス*/
+.SELECT001{
+    height: 30px;
+}
+
+/*********************************************
+*バリデーション関連*
+**********************************************/
+span.rf-msgs-sum, .rf-msg-sum, .rf-msgs-sum{
+    font-size: 15px;
+    font-weight : bold;
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+}
+/*バリデーションメッセージの枠 (一旦保留)*/
+.announcement_background {
+    background-color: rgb(252,230,232);
+    display: block;
+    padding:10px;
+    margin-bottom:10px;
+    border: 2px solid rgb(255,64,74);
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    font-size:14px;
+}
+
+input[type="checkbox"]{
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+input[type="radio"]{
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-bottom: 7px;
+}
+
+/*ヘルプアイコン*/
+.help_icon{
+    background-image:url("#{resource['images/common/com006.png']}");
+    background-repeat:no-repeat;
+    width:18px;
+    height:18px;
+    display:inline-block;
+    padding-bottom: 2px;
+    margin-left: 5px;
+}
+
+/*TOPへ戻る*/
+#page-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        font-size: 77%;
+}
+#page-top a {
+        text-decoration: none;
+        color: #fff;
+        width: 80px;
+        padding: 50px 10px;
+        text-align: center;
+        display: block;
+        border-radius: 5px;
+        background-image:url("#{resource['images/common/com024.png']}");
+        background-repeat: no-repeat;
+}
+
+/*上下中央*/
+.contents_vertical_centering{
+    display: flex;
+    align-items: center;
+}
+
+/*左右中央*/
+.contents_horisontal_centering{
+    display: flex;
+    justify-content: center;
+}

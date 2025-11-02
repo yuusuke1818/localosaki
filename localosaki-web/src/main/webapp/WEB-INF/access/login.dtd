@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PUBLIC ID: osol-login
+    SYSTEM ID: "login.dtd"
+-->
+<!-- ログインロールリスト -->
+<!ELEMENT LoginList (Login*)>
+    <!-- ログインロール[企業種別(1),担当者種別(0 or 1)] -->
+    <!ELEMENT Login (CorpType, PersonType?)>
+    <!-- ロールキー(必須) -->
+    <!ATTLIST Login Key ID #REQUIRED>
+    <!-- ロール名(必須) -->
+    <!ATTLIST Login Name CDATA #REQUIRED>
+        <!-- 企業種別 -->
+        <!ELEMENT CorpType (#PCDATA)>
+            <!-- 企業種別の値 CorpType -->
+            <!ENTITY 大崎電気工業 "0">
+            <!ENTITY パートナー企業 "1">
+            <!ENTITY メンテナンス企業 "2">
+            <!ENTITY 契約企業 "3">
+        <!-- 担当者種別 -->
+        <!ELEMENT PersonType (#PCDATA)>
+            <!-- 担当者種別の値 PersonType -->
+            <!ENTITY 管理者 "0">
+            <!ENTITY 担当者 "1">

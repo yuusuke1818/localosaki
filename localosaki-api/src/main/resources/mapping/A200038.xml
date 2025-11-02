@@ -1,0 +1,132 @@
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+	<!-- *** 負荷制御実績(取得) テンプレート *** -->
+	<!-- ベース部分 -->
+	<template name="base_000306">
+		<field name="productCd" length="2" keepPadding="true" />
+		<field name="address" length="2" keepPadding="true" />
+		<field name="command" length="1" default="J" keepPadding="true" />
+		<field name="targetDate" length="4" keepPadding="true" />
+	</template>
+
+	<template name="base_12">
+		<field name="productCd" length="2" keepPadding="true" />
+		<field name="address" length="2" keepPadding="true" />
+		<field name="command" length="1" default="J" keepPadding="true" />
+		<field name="selectTarget" length="2" padding="0" justify="right" />
+		<field name="hist" length="2" padding="0" justify="right" />
+	</template>
+
+	<template name="base.res">
+		<field name="productCd" length="2" keepPadding="true" />
+		<field name="address" length="2" keepPadding="true" />
+		<field name="command" length="5" keepPadding="true" />
+	</template>
+
+	<!-- 共通部分（受信:FV2,FVPD,FVPαD用） -->
+	<template name="commonResponse_000306">
+		<field name="measureDayTime" length="10" keepPadding="true" />
+		<field name="aggregateHour" length="6" keepPadding="true" />
+	</template>
+
+	<!-- 共通部分（受信:FVPαG2用） -->
+	<template name="commonResponse_12">
+		<field name="measureDayTime" length="10" keepPadding="true" />
+	</template>
+
+
+	<!-- 「00」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="00.req" format="fixedlength">
+		<record name="request" template="base_000306" class="jp.co.osaki.osol.mng.param.A200038Param" />
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="00.res" format="fixedlength">
+		<record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200038Param">
+			<include template="commonResponse_000306" />
+			<segment name="loadInfoList" collection="list" class="map" occurs="6">
+				<field name="daySumMinute" length="4" keepPadding="true" />
+			</segment>
+		</record>
+	</stream>
+
+	<!-- 「03」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="03.req" format="fixedlength">
+		<record name="request" template="base_000306" class="jp.co.osaki.osol.mng.param.A200038Param" />
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="03.res" format="fixedlength">
+		<record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200038Param">
+			<include template="commonResponse_000306" />
+			<segment name="loadInfoList" collection="list" class="map" occurs="6">
+				<field name="daySumMinute" length="4" keepPadding="true" />
+			</segment>
+		</record>
+	</stream>
+
+	<!-- 「06」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="06.req" format="fixedlength">
+		<record name="param" template="base_000306" class="jp.co.osaki.osol.mng.param.A200038Param" />
+
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="06.res" format="fixedlength">
+		<record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200038Param">
+			<include template="commonResponse_000306" />
+			<segment name="loadInfoList" collection="list" class="map" occurs="12">
+				<field name="daySumMinute" length="4" keepPadding="true" />
+			</segment>
+		</record>
+	</stream>
+
+	<!-- 「12」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="12.req" format="fixedlength">
+		<record name="param" template="base_12" class="jp.co.osaki.osol.mng.param.A200038Param" />
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="12.res" format="fixedlength">
+		<record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200038Param">
+			<include template="commonResponse_12" />
+			<segment name="loadInfoList" collection="list" class="map" occurs="36">
+				<field name="daySumMinute" length="4" keepPadding="true" />
+			</segment>
+		</record>
+	</stream>
+
+	<!-- 「21」非対応 -->
+	<!-- 送信文 -->
+	<stream name="21.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+	<!-- 受信文 -->
+	<stream name="21.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 「22」非対応 -->
+	<!-- 送信文 -->
+	<stream name="22.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+	<!-- 受信文 -->
+	<stream name="22.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+</beanio>

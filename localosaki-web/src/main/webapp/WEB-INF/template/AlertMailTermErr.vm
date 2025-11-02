@@ -1,0 +1,16 @@
+$devName($devId)の装置で
+通信端末異常が発生しましたので通知します。
+
+管理番号 状態 テナント名 検針日時 種別
+
+#foreach($meter in $meterList)$meter.meterMngId $meter.termState $meter.tenantName $meter.inspDate $meter.meterType
+#end
+
+通信端末状態が異常状態のままであるのは以下の端末です。
+
+管理番号 テナント名 検針日時 種別
+
+#foreach($meter in $errMeterList)$meter.meterMngId $meter.tenantName $meter.inspDate $meter.meterType
+#end
+
+大崎電気工業株式会社

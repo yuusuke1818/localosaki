@@ -1,0 +1,270 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+  xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:f="http://java.sun.com/jsf/core" xmlns:cust="http://xmlns.jcp.org/jsf/component"
+  xmlns:oslib="http://osaki.co.jp/base-component" xmlns:rich="http://richfaces.org/rich"
+  xmlns:a4j="http://richfaces.org/a4j">
+<h:body>
+  <ui:composition template="/html/template/template_aggregate_sidemenu.xhtml">
+    <ui:define name="content_side" class="content">
+      <h:outputStylesheet library="css" name="common/rfCalendar.css" />
+      <h:outputStylesheet library="css" name="sms/aggregate/daily.css" />
+      <form jsfc="h:form" id="smsAggregateDailyBean">
+        <div class="inner_content">
+          <div class="title_area_warp">
+            <!-- 画面タイトル -->
+            <div class="title_area_left">
+              <h2 class="page_title">日報データ</h2>
+              <!-- ヘルプボタン -->
+              <c:if test="#{indexBean.userGuideBool}">
+                <h:commandLink class="help_icon" action="#{indexBean.userGuide()}" target="_blank" />
+              </c:if>
+            </div>
+          </div>
+          <div class="clear" />
+          <!-- メッセージ表示部分 -->
+          <rich:messages id="Messages" showSummary="true" />
+          <!-- 説明文 -->
+          <div class="search_description">
+            <p>日報を期間指定してダウンロードできます。</p>
+          </div>
+
+          <!-- 出力条件指定 -->
+          <div class="contents_title">
+            <span class="contents_title_body">出力条件指定</span>
+            <h:graphicImage library="images" name="common/com001.png" rendered="true" />
+          </div>
+          <div class="contents_form_area">
+            <div class="conditions">
+              <div class="condition_row">
+                <label class="TXT008 L1">期間</label>
+                <div class="condition_contents">
+                  <h:inputText id="calStartText" class="check_change autofocus"
+                    value="#{smsAggregateDailyBean.startDate}" maxlength="10"
+                    style="#{smsAggregateDailyBean.getInvalidStyle(component.clientId)}">
+                    <f:ajax event="change" render="idCalStart" />
+                    <f:passThroughAttribute name="placeholder" value="YYYY/MM/DD" />
+                  </h:inputText>
+                  <div class="btnCal">
+                    <rich:calendar id="idCalStart" class="calDayDaily" datePattern="yyyy/MM/dd"
+                      enableManualInput="false" showWeeksBar="false" showFooter="false"
+                      required="false" showInput="false"
+                      buttonIcon="#{request.contextPath}/resources/images/common/com030.png"
+                      zindex="50" styleClass="calobj" value="#{smsAggregateDailyBean.calStartDate}">
+                      <f:ajax event="change" render="calStartText" />
+                    </rich:calendar>
+                  </div>
+                  <h:outputText value="～" styleClass="date_sep" />
+                  <h:inputText id="calEndText" class="check_change autofocus"
+                    value="#{smsAggregateDailyBean.endDate}" maxlength="10"
+                    style="#{smsAggregateDailyBean.getInvalidStyle(component.clientId)}">
+                    <f:ajax event="change" render="idCalEnd" />
+                    <f:passThroughAttribute name="placeholder" value="YYYY/MM/DD" />
+                  </h:inputText>
+                  <div class="btnCal">
+                    <rich:calendar id="idCalEnd" class="calDayDaily" datePattern="yyyy/MM/dd"
+                      enableManualInput="false" showWeeksBar="false" showFooter="false"
+                      required="false" showInput="false"
+                      buttonIcon="#{request.contextPath}/resources/images/common/com030.png"
+                      zindex="50" styleClass="calobj" value="#{smsAggregateDailyBean.calEndDate}">
+                      <f:ajax event="change" render="calEndText" />
+                    </rich:calendar>
+                  </div>
+                  <div id="spanMessage">
+                    <span>※最大１年間の指定が可能です。</span>
+                  </div>
+                  <div id="spanMessage">
+                    <span style="color: red">※指定した期間に応じてダウンロード待ち時間が長くなります。</span>
+                  </div>
+                </div>
+              </div>
+              <div class="condition_row">
+                <label class="TXT008 L1">表示種別</label>
+                <div class="condition_contents">
+                  <div jsfc="h:selectOneRadio" value="#{smsAggregateDailyBean.dispType}"
+                    class="dispType">
+                    <option jsfc="f:selectItems" value="#{smsAggregateDailyBean.dispTypeMap}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 説明文 -->
+          <div class="search_description">
+            <p>検索条件を設定して[検索開始]を押してください。</p>
+          </div>
+
+          <!-- 動的検索条件テーブル -->
+          <div class="gradation_type_1">
+            <a4j:outputPanel id="commonSearchResult">
+              <rich:dataTable id="searchConditionTable" rows="0"
+                value="#{smsAggregateDailyBean.conditionList}" var="item"
+                style="margin-top: 5px;
+                       width: 100%;
+                       border: 0px;
+                       table-layout: fixed;">
+                <!--検索条件表示部分 -->
+                <span jsfc="h:column" styleClass="condition_msg" style="width: 20%; border: 0px">
+                  <h:selectOneMenu id="selectConditionCd" value="#{item.selectConditionCd}"
+                    styleClass="SELECT001" rendered="#{item.selectEnable}" style="height: 30px;">
+                    <f:ajax event="change" execute="smsAggregateDailyBean:searchConditionTable"
+                      render="smsAggregateDailyBean:searchConditionTable"
+                      listener="#{smsAggregateDailyBean.changeConditionCd(item.orderNo)}"
+                      onevent="autoFocusOnSelectCondition" />
+                    <option jsfc="f:selectItems" value="#{item.selectConditionMap}" />
+                  </h:selectOneMenu>
+                  <h:outputText value="#{item.selectConditionCd}" rendered="#{item.selectDisable}" />
+                </span>
+                <!--接続詞表示部分 -->
+                <span jsfc="h:column" style="width: 10%; text-align: center; border: 0px;">
+                  <input jsfc="h:outputText" value="#{item.searchSubjectConjunction}"
+                    style="width: 100%; text-align: center"
+                    rendered="#{item.searchSubjectConjunctionEnable}" />
+                </span>
+                <!--ドロップダウンリストまたは検索キーワード表示部分 -->
+                <span jsfc="h:column" style="width: 40%; border: 0px;">
+                  <!-- 都道府県-->
+                  <h:selectOneMenu id="prefectureCd" value="#{item.prefectureCd}"
+                    styleClass="SELECT001" rendered="#{item.prefectureSelectEnable}"
+                    style="width: 100%; height: 25px;" onkeydown="searchConditionKeydown()">
+                    <option jsfc="f:selectItems" value="#{smsAggregateDailyBean.prefectureMap}" />
+                  </h:selectOneMenu>
+                  <!--キーワード -->
+                  <h:inputText id="conditionKeyword" value="#{item.conditionKeyword}"
+                    styleClass="EDIT002" class="autofocus" rendered="#{item.keywordSelectEnable}"
+                    style="width: 100%; height: 25px;" maxlength="50"
+                    onkeydown="searchConditionKeydown()" />
+                </span>
+                <!--「を含む」表示部分 -->
+                <span jsfc="h:column" style="width: 12%; text-align: center; border: 0px;">
+                  <input jsfc="h:outputText" value="#{item.mutchingTypeCd}"
+                    rendered="${!empty item.mutchingTypeCd}"
+                    style="width: 100%; height: 25px; text-align: center;" />
+                </span>
+                <!--削除ボタン表示部分 -->
+                <span jsfc="h:column" styleClass="gradation_type_3 button_medium_2 delete_button"
+                  style="width: 10%; border: 0px;">
+                  <h:commandButton id="delButton" value="削除" rendered="#{item.deleteButtonEnable}"
+                    style="width: 100%; height: 25px;">
+                    <f:ajax event="click" execute="smsAggregateDailyBean:searchConditionTable"
+                      render="smsAggregateDailyBean:searchConditionTable"
+                      listener="#{smsAggregateDailyBean.deleteCondition(item.orderNo)}" />
+                  </h:commandButton>
+                  <h:graphicImage class="button_icon" library="images"
+                    rendered="#{item.deleteButtonEnable}" name="common/com020.png" />
+                </span>
+              </rich:dataTable>
+            </a4j:outputPanel>
+          </div>
+          <!-- 検索ボタン -->
+          <div class="button_area_center gradation_type_1 button_large_2 button_search">
+            <input id="searchButton" class="action_button" jsfc="h:commandButton" value="検索開始">
+              <a4j:ajax event="click" execute="@form" render="@form"
+                listener="#{smsAggregateDailyBean.search()}" onbegin="showBlockModal()"
+                oncomplete="hideBlockModal()" /> </input>
+            <h:graphicImage class="button_icon" library="images" name="common/com028.png" />
+          </div>
+
+          <!-- 検索結果サマリー表示 -->
+          <ui:fragment rendered="#{smsAggregateDailyBean.dailyBeanProperty.searchedFlg}">
+            <div class="search_result_header_wrap">
+              <div id="listReroad">
+                <div class="search_result_header_left page_content_parts">
+                  検索条件に該当する建物情報
+                  <span class="serach_result_total_count" jsfc="h:outputText"
+                    value=" #{smsAggregateDailyBean.pagingList.resultCount}" />
+                  件
+                </div>
+              </div>
+            </div>
+            <!-- 検索結果リスト表示 -->
+            <div class="search_result_area">
+              <h:dataTable id="result" var="item" style="width: 100%;"
+                value="#{smsAggregateDailyBean.pagingList.pageList}" headerClass="table_header"
+                columnClasses="#{smsAggregateDailyBean.dailyBeanProperty.columnClassesStr}"
+                rendered="#{smsAggregateDailyBean.pagingList.resultCount != '0'}">
+                <span jsfc="h:column"
+                  rendered="#{smsAggregateDailyBean.dailyBeanProperty.corpId == null}">
+                  <f:facet name="header">企業ID<br />企業名</f:facet>
+                  <h:panelGrid columns="1">
+                    <h:outputText id="corpId" value="#{item.corpId}" />
+                    <h:outputText id="corpName" value="#{item.corpName}" />
+                  </h:panelGrid>
+                </span>
+                <span jsfc="h:column">
+                  <f:facet name="header">
+                  </f:facet>
+                  <h:graphicImage class="button_icon" library="images" name="common/com074.png"
+                    rendered="#{item.tenantFlg}" />
+                  <h:graphicImage class="button_icon" library="images" name="common/com075.png"
+                    rendered="#{!item.tenantFlg}" />
+                </span>
+                <span jsfc="h:column">
+                  <f:facet name="header">建物番号<br />建物名</f:facet>
+                  <h:panelGrid columns="1">
+                    <h:outputText id="buildingNo" value="#{item.buildingNo}" />
+                    <h:outputText id="buildingName" value="#{item.buildingName}" />
+                  </h:panelGrid>
+                </span>
+                <span jsfc="h:column">
+                  <f:facet name="header">住所</f:facet>
+                  <h:outputText id="buildingAddress" value="#{item.buildingAddress}" />
+                </span>
+                <span jsfc="h:column">
+                  <f:facet name="header">ダウンロード</f:facet>
+                  <button jsfc="a4j:commandButton" id="editButton" class="button_small" value=" "
+                    execute="@form" render="calStartText calEndText" onclick="showBlockModal();"
+                    actionListener="#{smsAggregateDailyBean.mkFile}" onbegin="showBlockModal();"
+                    oncomplete="hideBlockModal(); if($('.rf-msgs-err').size()==0) $('input[id$=downloadStart]').click();"
+                    rendered="#{smsAggregateDailyBean.isAuthCheck(item.corpId)}">
+                    <f:attribute name="corpId" value="#{item.corpId}" />
+                    <f:attribute name="buildingId" value="#{item.buildingId}" />
+                    <f:attribute name="buildingName" value="#{item.buildingName}" />
+                    <f:attribute name="tenantFlg" value="#{item.tenantFlg}" />
+                    <h:graphicImage class="button_dl" library="images" name="common/com040.png" />
+                  </button>
+                </span>
+              </h:dataTable>
+            </div>
+            <!-- ページング -->
+            <ui:fragment rendered="#{smsAggregateDailyBean.pagingList.resultCount != '0'}">
+              <div class="contents_center">
+                <div id="paging_area">
+                  <span id="prevButton_area">
+                    <h:commandLink id="prevButton" value="&lt;&nbsp;&nbsp;前へ"
+                      actionListener="#{smsAggregateDailyBean.prevPage}"
+                      disabled="#{!smsAggregateDailyBean.pagingList.isPrevPage()}">
+                      <f:ajax execute="@form" render="@form" />
+                      <f:attribute name="page"
+                        value="#{smsAggregateDailyBean.pagingList.currentPage}" />
+                    </h:commandLink>
+                  </span>
+                  <cust:pageIndex id="pageJumpButton"
+                    value="#{smsAggregateDailyBean.pagingList.pageValue}"
+                    action="#{smsAggregateDailyBean.pageJump()}">
+                    <ui:include src="/html/common/paging/index.xhtml" />
+                  </cust:pageIndex>
+                  <span id="nextButton_area">
+                    <h:commandLink id="nextButton" class="nextButton" value="後へ&nbsp;&nbsp;&gt; "
+                      actionListener="#{smsAggregateDailyBean.nextPage}"
+                      disabled="#{!smsAggregateDailyBean.pagingList.isNextPage()}">
+                      <f:ajax execute="@form" render="@form" />
+                      <f:attribute name="page"
+                        value="#{smsAggregateDailyBean.pagingList.currentPage}" />
+                    </h:commandLink>
+                  </span>
+                </div>
+              </div>
+            </ui:fragment>
+          </ui:fragment>
+        </div>
+        <!-- ダウンロードボタン -->
+        <button jsfc="h:commandButton" id="downloadStart" style="display: none;"
+          action="#{smsAggregateDailyBean.downloadFileStart()}" />
+      </form>
+    </ui:define>
+  </ui:composition>
+</h:body>
+</html>

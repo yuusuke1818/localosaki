@@ -1,0 +1,30 @@
+.TXT008 {
+  width: 200px;
+}
+
+/* ボタンのセンタリング */
+.button_area_center {
+  margin: 20px 0;
+  text-align: center;
+}
+
+/*追加/登録ボタン*/
+.button_regist input[type="submit"] {
+  width: 150px;
+}
+
+.button_regist .img_regist_beseinfo {
+  position: relative;
+  left: -125px;
+  top: 7px;
+}
+
+.button_regist .img_regist {
+  position: absolute;
+  left: 380px;
+  top: 10px;
+}
+
+.check_del_dev {
+  margin-left: 20px;
+}

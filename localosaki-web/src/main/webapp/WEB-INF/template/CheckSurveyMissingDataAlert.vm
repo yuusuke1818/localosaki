@@ -1,0 +1,5 @@
+
+装置名:$devId
+データ件数:$countSurvey
+欠落データ件数:$missingDataNumber
+

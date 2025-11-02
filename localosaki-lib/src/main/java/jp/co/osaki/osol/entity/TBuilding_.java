@@ -1,0 +1,87 @@
+package jp.co.osaki.osol.entity;
+
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Date;
+
+import javax.annotation.Generated;
+import javax.persistence.metamodel.ListAttribute;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
+
+@Generated(value="Dali", date="2018-08-07T18:06:58.358+0900")
+@StaticMetamodel(TBuilding.class)
+public class TBuilding_ {
+    public static volatile SingularAttribute<TBuilding, TBuildingPK> id;
+    public static volatile SingularAttribute<TBuilding, String> address;
+    public static volatile SingularAttribute<TBuilding, String> addressBuilding;
+    public static volatile SingularAttribute<TBuilding, String> basementCount;
+    public static volatile SingularAttribute<TBuilding, String> biko;
+    public static volatile SingularAttribute<TBuilding, Timestamp> buildingDelDate;
+    public static volatile SingularAttribute<TBuilding, String> buildingDelPersonCorpId;
+    public static volatile SingularAttribute<TBuilding, String> buildingDelPersonId;
+    public static volatile SingularAttribute<TBuilding, String> buildingName;
+    public static volatile SingularAttribute<TBuilding, String> buildingNameKana;
+    public static volatile SingularAttribute<TBuilding, String> buildingNo;
+    public static volatile SingularAttribute<TBuilding, String> buildingTansyukuName;
+    public static volatile SingularAttribute<TBuilding, String> buildingType;
+    public static volatile SingularAttribute<TBuilding, BigDecimal> commonUsedRate;
+    public static volatile SingularAttribute<TBuilding, Date> conpletedYm;
+    public static volatile SingularAttribute<TBuilding, Timestamp> createDate;
+    public static volatile SingularAttribute<TBuilding, Long> createUserId;
+    public static volatile SingularAttribute<TBuilding, Integer> delFlg;
+    public static volatile SingularAttribute<TBuilding, Long> divisionBuildingId;
+    public static volatile SingularAttribute<TBuilding, String> divisionCorpId;
+    public static volatile SingularAttribute<TBuilding, String> engManageFactoryNo;
+    public static volatile SingularAttribute<TBuilding, String> engManageFactoryType;
+    public static volatile SingularAttribute<TBuilding, String> estimateUse;
+    public static volatile SingularAttribute<TBuilding, String> faxNo;
+    public static volatile SingularAttribute<TBuilding, String> floorCount;
+    public static volatile SingularAttribute<TBuilding, Integer> freonDischargeOffice;
+    public static volatile SingularAttribute<TBuilding, BigDecimal> kubunShoyuRate;
+    public static volatile SingularAttribute<TBuilding, String> nyukyoTypeCd;
+    public static volatile SingularAttribute<TBuilding, Integer> publicFlg;
+    public static volatile SingularAttribute<TBuilding, String> telNo;
+    public static volatile SingularAttribute<TBuilding, Date> totalEndYm;
+    public static volatile SingularAttribute<TBuilding, Date> totalStartYm;
+    public static volatile SingularAttribute<TBuilding, Timestamp> updateDate;
+    public static volatile SingularAttribute<TBuilding, Long> updateUserId;
+    public static volatile SingularAttribute<TBuilding, Integer> version;
+    public static volatile SingularAttribute<TBuilding, String> zipCd;
+    public static volatile SingularAttribute<TBuilding, MWeatherCity> MWeatherCity;
+    public static volatile ListAttribute<TBuilding, TSignageContent> TSignageContents;
+    public static volatile ListAttribute<TBuilding, MBuildUnitDenominator> MBuildUnitDenominators;
+    public static volatile ListAttribute<TBuilding, MEnergyUseTargetMonthly> MEnergyUseTargetMonthlies;
+    public static volatile ListAttribute<TBuilding, MFacility> MFacilities;
+    public static volatile ListAttribute<TBuilding, TAvailableEnergy> TAvailableEnergies;
+    public static volatile SingularAttribute<TBuilding, MCorp> MCorp;
+    public static volatile SingularAttribute<TBuilding, MMunicipality> MMunicipality;
+    public static volatile SingularAttribute<TBuilding, MPrefecture> MPrefecture;
+    public static volatile ListAttribute<TBuilding, TBuildingDocument> TBuildingDocuments;
+    public static volatile ListAttribute<TBuilding, TBuildingEstimateKind> TBuildingEstimateKinds;
+    public static volatile ListAttribute<TBuilding, TBuildingGroup> TBuildingGroups;
+    public static volatile ListAttribute<TBuilding, TBuildingPerson> TBuildingPersons;
+    public static volatile ListAttribute<TBuilding, TBuildingSubtype> TBuildingSubtypes;
+    public static volatile ListAttribute<TBuilding, TMaintenance> TMaintenances;
+    public static volatile ListAttribute<TBuilding, TBuildingPlanFulfillment> TBuildingPlanFulfillments;
+    public static volatile ListAttribute<TBuilding, MBuildingDm> MBuildingDms;
+    public static volatile ListAttribute<TBuilding, MBuildingSm> MBuildingSm;
+    public static volatile ListAttribute<TBuilding, MAllNightDay> MAllNightDays;
+    public static volatile ListAttribute<TBuilding, MBuildingInfo> MBuildingInfos;
+    public static volatile ListAttribute<TBuilding, MClaimantInfo> MClaimantInfos;
+    public static volatile ListAttribute<TBuilding, MComDivrate> MComDivrates;
+    public static volatile ListAttribute<TBuilding, MComType> MComTypes;
+    public static volatile ListAttribute<TBuilding, MDevRelation> MDevRelations;
+    public static volatile ListAttribute<TBuilding, MMeterGroupName> MMeterGroupNames;
+    public static volatile ListAttribute<TBuilding, MPriceMenu> MPriceMenus;
+    public static volatile ListAttribute<TBuilding, MPriceMenuFamily> MPriceMenuFamilies;
+    public static volatile ListAttribute<TBuilding, MPriceMenuLighta> MPriceMenuLightas;
+    public static volatile ListAttribute<TBuilding, MPriceMenuLightb> MPriceMenuLightbs;
+    public static volatile ListAttribute<TBuilding, MTenantPriceInfo> MTenantPriceInfos;
+    public static volatile ListAttribute<TBuilding, MTenantSm> MTenantSms;
+    public static volatile ListAttribute<TBuilding, MTypeStage> MTypeStages;
+    public static volatile ListAttribute<TBuilding, MVarious> MVariouses;
+    public static volatile ListAttribute<TBuilding, MBuildingSms> MBuildingSms;
+    public static volatile ListAttribute<TBuilding, TBuildDevMeterRelation> TBuildDevMeterRelations;
+    public static volatile ListAttribute<TBuilding, MMeterType> MMeterTypes;
+}

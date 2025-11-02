@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:rich="http://richfaces.org/rich" xmlns:cust="http://xmlns.jcp.org/jsf/component"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:a4j="http://richfaces.org/a4j">
+
+    <!-- <script>
+        // ファイルが選択されたときに、ファイル名を表示する
+        function changeFile() {
+            var file = $('input[type=file]').prop('files')[0];
+            $('.ocrFilename').html(htmlEscape(file.name));
+            document.getElementById('smsCollectSettingMeterMeterManagementBean:ocrLumpRegistUploadForm:file_input_name').value = file.name;
+        }
+
+        // input type="file" タグを再作成する（初期化のため）
+        function remakeInputFile() {
+            var file = document.getElementById('smsCollectSettingMeterMeterManagementBean:ocrLumpRegistUploadForm:file_input');
+            file.parentNode.innerHTML = file.parentNode.innerHTML;
+        }
+
+        // ファイル名を初期化する
+        function clearFileName() {
+            $('.ocrFilename').html('');
+            document.getElementById('smsCollectSettingMeterMeterManagementBean:ocrLumpRegistUploadForm:file_input_name').value = '';
+        }
+    </script> -->
+
+    <div style="margin-top: 0;">
+        <div>
+            <rich:messages id="o3Messages" styleClass="errNonSearch errArea" />
+            <h3 class="contents_title">一括登録</h3>
+            <div class="contents_form_area">
+                <table class="o3Table">
+                    <tr style="height: 10px">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="TXT008">登録先装置選択</td>
+                        <td class="TXT020">
+                            <div jsfc="a4j:outputPanel" id="o3DevNamePanel">
+                                <h:outputText id="o3DevName" value="#{smsCollectSettingMeterMeterManagementBean.ocrProperty.devName}"></h:outputText>
+                                <h:inputHidden value="#{smsCollectSettingMeterMeterManagementBean.ocrInsertProperty.devId}" id="o3DevId" />
+                            </div>
+                        </td>
+                        <td>
+                            ※登録先装置を選択
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="TXT008" rowspan="2">ファイル選択</td>
+                        <td>
+                            <div class="gradation_type_1 button_medium_2 button_print1">
+                                <button jsfc="a4j:commandButton"
+                                    id="ocrDownloadRegistrationDataCsvFileButton"
+                                    class="button_width"
+                                    value="登録データダウンロード"
+                                    action="#{smsCollectSettingMeterMeterManagementBean.downloadRegistrationDataCsvFile(smsCollectSettingMeterMeterManagementBean.devName)}"
+                                    onbegin="showBlockModal()"
+                                    oncomplete="hideBlockModal();
+                                               if($('.rf-msgs-err').size()==0) {
+                                               $('input[id$=ocrDownloadRegistrationDataCsvStart]').click();
+                                               }" />
+                                <button jsfc="h:commandButton" id="ocrDownloadRegistrationDataCsvStart" style="display: none;"
+                                        action="#{smsCollectSettingMeterMeterManagementBean.downloadFileStart()}" />
+                                <h:graphicImage class="button_icon btnDownloadIconLayout btnRegistrationDataDownloadIconLayout" library="images" name="common/com039.png" />
+                            </div>
+                        </td>
+                        <td>
+                            ※現在の登録データをダウンロード
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="filename_cell">
+                            <div class="gradation_type_1 button_medium_2 button_print1">
+                                <a4j:commandButton type="button"
+                                    class="button_width"
+                                    render="fileUploadDialog ocrFileName"
+                                    onbegin="showBlockModal();"
+                                    oncomplete="hideBlockModal(); #{rich:component('fileUploadDialog')}.show();"
+                                    value="ファイル選択">
+                                    <f:actionListener binding="#{smsCollectSettingMeterMeterManagementBean.setReflectControl('ocrFileName')}"/>
+                                </a4j:commandButton>
+                                <h:graphicImage class="button_icon btnDownloadIconLayout btnFileSelIconLayout" library="images" name="common/com039.png" />
+                            </div>
+                            <div class="filename_wrap">
+                                <span style="padding:0;" class="file_name" id="ocrFileName" jsfc="h:outputText" value="#{smsCollectSettingMeterMeterManagementBean.uploadFileName}"></span>
+                            </div>
+                        </td>
+                        <td>
+                            ※登録データファイルを選択
+                        </td>
+                    </tr>
+                    <!-- 下記「登録データダウンロード」に置き換わったためコメントアウト -->
+                    <!-- <tr>
+                        <td>
+                            <div class="gradation_type_1 button_medium_2 button_print1">
+                                <button jsfc="a4j:commandButton"
+                                    id="downloadCsvFileButton"
+                                    class="button_width"
+                                    value="データテンプレート"
+                                    action="#{smsCollectSettingMeterMeterManagementBean.downloadTemplateCsvFile()}"
+                                    onbegin="showBlockModal()"
+                                    oncomplete="hideBlockModal();
+                                               if($('.rf-msgs-err').size()==0) {
+                                               $('input[id$=downloadCsvStart]').click();
+                                               }" />
+                                <button jsfc="h:commandButton" id="downloadCsvStart" style="display: none;"
+                                        action="#{smsCollectSettingMeterMeterManagementBean.downloadFileStart()}" />
+                                <h:graphicImage class="button_icon btnDownloadIconLayout" library="images" name="common/com039.png" />
+                            </div>
+                        </td>
+                        <td>
+                            ※登録データ用テンプレートをダウンロード
+                        </td>
+                    </tr> -->
+                </table>
+
+                <form jsfc="h:form" id="ocrLumpRegistUploadForm">
+                    <div style="display:none;">
+                        <!-- <h:inputText id="file_input_name" class="file_input_name" value="#{smsCollectSettingMeterMeterManagementBean.uploadFileName}"></h:inputText> -->
+                        <!-- <div id="file_input_val" class="file_input_val" value="#{smsCollectSettingMeterMeterManagementBean.uploadFile}"></div> -->
+                        <!-- <h:inputFile id="file_input_val" class="file_input_val" /> -->
+                    </div>
+                    <br />
+                    <div class="gradation_type_1 button_large_2 btnRegistLayout">
+                        <!-- 確認メッセージ設定処理を呼び出し → 登録処理呼び出し用ボタンclick -->
+                        <a4j:commandButton
+                            id="o3RegistBtn"
+                            class="action_button"
+                            value="登録"
+                            form="ocrLumpRegistUploadForm"
+                            execute="@form"
+                            render="@form confirmDialogForm:confirmationDialogMessage #{rich:component('bulkErrorDialog')}"
+                            onclick="return confirmationDialogOpenForBulkIns($('input[id$=o3RegistBtn]'))"
+                            oncomplete="$('input[id$=o3RegistBtnHidden]').click();">
+                        </a4j:commandButton>
+                        <h:graphicImage class="btnRegistIconLayout" library="images" name="common/com067.png" />
+                        <a4j:commandButton
+                            id="o3RegistBtnHidden"
+                            style="display: none;"
+                            form="ocrLumpRegistUploadForm"
+                            execute="@form"
+                            render="@form,bulkErrorDialog,ocrFileName,
+                                    #{rich:clientId('oTablePanel')},
+                                    smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2ExamNoticeMonthPanel,
+                                    smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2DevNamePanel,
+                                    smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2MeterMngIdMapPanel,
+                                    smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2ExamNoticeMonthPanel,
+                                    smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2DevNamePanel,
+                                    smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2MeterMngIdMapPanel,
+                                    smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2ExamNoticeMonthPanel,
+                                    smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2DevNamePanel,
+                                    smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2MeterMngIdMapPanel,
+                                    smsCollectSettingMeterMeterManagementBean:smartSearchForm:s1SearchConditionPanel,
+                                    smsCollectSettingMeterMeterManagementBean:pulseSearchForm:p1SearchConditionPanel,
+                                    smsCollectSettingMeterMeterManagementBean:iotRSearchForm:w1SearchConditionPanel,
+                                    smsCollectSettingMeterMeterManagementBean:handySearchForm:h1SearchConditionPanel,
+                                    smsCollectSettingMeterMeterManagementBean:ocrSearchForm:o1SearchConditionPanel"
+                            action="#{smsCollectSettingMeterMeterManagementBean.execLumpRegist()}"
+                            onbegin="showBlockModal()"
+                            oncomplete="hideBlockModal(); viewList('O'); if(#{smsCollectSettingMeterMeterManagementBean.bulkErrorList.isEmpty()}) {console.log('OK')} else {#{rich:component('bulkErrorDialog')}.show();}; clearChangeFlag(); dispButton();">
+                        </a4j:commandButton>
+
+                    </div>
+                    <!-- <ui:include src="/html/common/confirmationDialog.xhtml" >
+                        <ui:param name="confirmationDialogTitle" value="確認" />
+                        <ui:param name="confirmationDialogMessage" value="#{smsCollectSettingMeterMeterManagementBean.beforeRegisterMessage}" />
+                    </ui:include> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</html>

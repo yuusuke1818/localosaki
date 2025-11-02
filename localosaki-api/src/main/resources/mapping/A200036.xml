@@ -1,0 +1,159 @@
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+  <!-- *** RS485回線異常履歴(取得) テンプレート *** -->
+  <!-- ベース部分 -->
+  <template name="base">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" default="V0008" keepPadding="true" />
+  </template>
+
+  <template name="base22">
+    <include template="base" />
+    <field name="compressionDataLength" length="6" default="000000" keepPadding="true" />
+  </template>
+
+  <template name="base.res">
+    <field name="productCd" length="2" keepPadding="true"  />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" keepPadding="true" />
+    <field name="settingDate" length="11" keepPadding="true" />
+
+  </template>
+
+  <template name="base21.res">
+    <field name="productCd" length="2" keepPadding="true"  />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" keepPadding="true" />
+  </template>
+
+  <template name="base22.res">
+    <include template="base21.res" />
+    <field name="compressionDataLength" length="6" keepPadding="true" />
+  </template>
+
+  <!-- 共通部分（受信:FV2用） -->
+  <template name="commonResponse_00">
+    <segment name="circuitErrorHistListLON" collection="list" class="map" occurs="100">
+      <field name="plagueTime" length="13" keepPadding="true" />
+      <field name="occurOrRestorationFlg" length="1" keepPadding="true" />
+      <field name="plagueTerminalAddress" length="2" keepPadding="true" />
+    </segment>
+  </template>
+
+  <!-- 共通部分2（受信:FVPD,FVPαD,FVPαG2用） -->
+  <template name="commonResponse_030612">
+    <segment name="circuitErrorHistListRS485" collection="list" class="map" occurs="100">
+      <field name="plagueTime" length="13" keepPadding="true" />
+      <field name="occurOrRestorationFlg" length="1" keepPadding="true" />
+      <field name="plagueTerminalAddress" length="2" keepPadding="true" />
+    </segment>
+  </template>
+
+  <!-- 共通部分3（受信:Eα, Eα2用） -->
+  <template name="commonResponse3">
+    <segment name="circuitErrorHistListRS485" collection="list" class="map" occurs="100">
+      <field name="plagueTime" length="12" keepPadding="true" />
+      <field name="occurOrRestorationFlg" length="1" keepPadding="true" />
+      <field name="plagueTerminalAddress" length="2" keepPadding="true" />
+    </segment>
+  </template>
+
+
+  <!-- 「00」 -->
+  <!-- 送信文 -->
+  <stream name="00.req" format="fixedlength">
+    <record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200036Param">
+    </record>
+  </stream>
+  <!-- 受信文 -->
+  <!-- ※ベース情報＋αは個別に設定する。テンプレート利用は、include を利用する -->
+  <stream name="00.res" format="fixedlength">
+    <record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200036Param">
+      <include template="commonResponse_00" />
+    </record>
+  </stream>
+
+
+  <!-- 「03」 -->
+  <!-- 送信文 -->
+  <stream name="03.req" format="fixedlength">
+    <record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200036Param">
+    </record>
+  </stream>
+  <!-- 受信文 -->
+  <stream name="03.res" format="fixedlength">
+    <record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200036Param">
+      <include template="commonResponse_030612" />
+    </record>
+  </stream>
+
+  <!-- 「06」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="06.req" format="fixedlength">
+    <record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200036Param">
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="06.res" format="fixedlength">
+    <record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200036Param">
+      <include template="commonResponse_030612" />
+    </record>
+  </stream>
+
+  <!-- 「12」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="12.req" format="fixedlength">
+    <record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200036Param">
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="12.res" format="fixedlength">
+    <record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200036Param">
+      <include template="commonResponse_030612" />
+    </record>
+  </stream>
+
+  <!-- 「21」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="21.req" format="fixedlength">
+    <record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200036Param">
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="21.res" format="fixedlength">
+    <record name="param" template="base21.res" class="jp.co.osaki.osol.mng.param.A200036Param">
+      <field name="settingDate" length="10" keepPadding="true" />
+      <include template="commonResponse3" />
+    </record>
+  </stream>
+
+  <!-- 「22」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="22.req" format="fixedlength">
+    <record name="param" template="base22" class="jp.co.osaki.osol.mng.param.A200036Param">
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="22.res" format="fixedlength">
+    <record name="param" template="base22.res" class="jp.co.osaki.osol.mng.param.A200036Param">
+      <field name="settingDate" length="10" keepPadding="true" />
+      <include template="commonResponse3" />
+    </record>
+  </stream>
+
+  <!-- 応答データ無し -->
+  <stream name="res_data.none" format="fixedlength">
+    <record name="response" class="jp.co.osaki.osol.mng.param.A200036Param">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" keepPadding="true" />
+    </record>
+  </stream>
+
+</beanio>

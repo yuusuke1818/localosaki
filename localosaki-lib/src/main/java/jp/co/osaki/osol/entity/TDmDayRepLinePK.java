@@ -1,0 +1,107 @@
+package jp.co.osaki.osol.entity;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+/**
+ * The primary key class for the t_dm_day_rep_line database table.
+ * 
+ */
+@Embeddable
+public class TDmDayRepLinePK implements Serializable {
+	//default serial version id, required for serializable classes.
+	private static final long serialVersionUID = 1L;
+
+	@Column(name="corp_id", insertable=false, updatable=false, unique=true, nullable=false, length=50)
+	private String corpId;
+
+	@Column(name="building_id", insertable=false, updatable=false, unique=true, nullable=false)
+	private Long buildingId;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name="measurement_date", insertable=false, updatable=false, unique=true, nullable=false)
+	private java.util.Date measurementDate;
+
+	@Column(name="jigen_no", insertable=false, updatable=false, unique=true, nullable=false, precision=2)
+	private BigDecimal jigenNo;
+
+	@Column(name="line_group_id", insertable=false, updatable=false, unique=true, nullable=false)
+	private Long lineGroupId;
+
+	@Column(name="line_no", insertable=false, updatable=false, unique=true, nullable=false, length=4)
+	private String lineNo;
+
+	public TDmDayRepLinePK() {
+	}
+	public String getCorpId() {
+		return this.corpId;
+	}
+	public void setCorpId(String corpId) {
+		this.corpId = corpId;
+	}
+	public Long getBuildingId() {
+		return this.buildingId;
+	}
+	public void setBuildingId(Long buildingId) {
+		this.buildingId = buildingId;
+	}
+	public java.util.Date getMeasurementDate() {
+		return this.measurementDate;
+	}
+	public void setMeasurementDate(java.util.Date measurementDate) {
+		this.measurementDate = measurementDate;
+	}
+	public BigDecimal getJigenNo() {
+		return this.jigenNo;
+	}
+	public void setJigenNo(BigDecimal jigenNo) {
+		this.jigenNo = jigenNo;
+	}
+	public Long getLineGroupId() {
+		return this.lineGroupId;
+	}
+	public void setLineGroupId(Long lineGroupId) {
+		this.lineGroupId = lineGroupId;
+	}
+	public String getLineNo() {
+		return this.lineNo;
+	}
+	public void setLineNo(String lineNo) {
+		this.lineNo = lineNo;
+	}
+
+	public boolean equals(Object other) {
+		if (this == other) {
+			return true;
+		}
+		if (!(other instanceof TDmDayRepLinePK)) {
+			return false;
+		}
+		TDmDayRepLinePK castOther = (TDmDayRepLinePK)other;
+		return 
+			this.corpId.equals(castOther.corpId)
+			&& this.buildingId.equals(castOther.buildingId)
+			&& this.measurementDate.equals(castOther.measurementDate)
+			&& this.jigenNo.equals(castOther.jigenNo)
+			&& this.lineGroupId.equals(castOther.lineGroupId)
+			&& this.lineNo.equals(castOther.lineNo);
+	}
+
+	public int hashCode() {
+		final int prime = 31;
+		int hash = 17;
+		hash = hash * prime + this.corpId.hashCode();
+		hash = hash * prime + this.buildingId.hashCode();
+		hash = hash * prime + this.measurementDate.hashCode();
+		hash = hash * prime + this.jigenNo.hashCode();
+		hash = hash * prime + this.lineGroupId.hashCode();
+		hash = hash * prime + this.lineNo.hashCode();
+		
+		return hash;
+	}
+}

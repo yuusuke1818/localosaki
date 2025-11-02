@@ -1,0 +1,410 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <head>
+        <title><h:outputText value="#{smsCollectSettingMeterUserEditBean.titleMsg}"/></title>
+    </head>
+    <body>
+        <ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+            <ui:define name="content_side">
+             
+                <h:outputStylesheet library="css" name="sms/collect/setting/meterUser/edit.css"/>
+                <!--
+                <h:outputScript library="js" name="user/edit.js"/>
+                 -->
+                <form jsfc="h:form" id="smsCollectSettingMeterUserEditBean">                
+                    <div class="inner_content">
+                        <div class="title_area_warp">
+                            <!-- 画面タイトル -->
+                            <div class="title_area_left">
+                                <h2 class="page_title"><h:outputText value="#{smsCollectSettingMeterUserEditBean.titleMsg}"/></h2>
+                                <ui:remove><!-- ヘルプボタン 新規と編集で変えないといけない --></ui:remove>
+                                <c:if test="#{smsCollectSettingMeterUserEditBean.editMode}">
+                                    <c:if test="#{indexBean.userGuideBool}">
+                                        <h:commandLink class="help_icon" action="#{indexBean.userGuide()}" target="_blank" />
+                                    </c:if>
+                                </c:if>
+                            <c:if test="#{!smsCollectSettingMeterUserEditBean.editMode}">
+                                <c:if test="#{indexBean.userGuideBool}">
+                                    <h:commandLink class="help_icon" action="#{indexBean.userGuide()}" target="_blank" />
+                                </c:if>
+                            </c:if>
+                            <p class="page_subtitle">
+                                <h:outputText value="ユーザー情報の編集ができます。" />
+                            </p>
+                            #{smsCollectSettingMeterUserEditBean.setRegisterMessage()}
+                            <!-- メッセージ表示部分 -->
+                            <span class="rf-msgs">
+                            <c:forEach items="#{smsCollectSettingMeterUserEditBean.infoMessages}" var="msg">
+                                <div class="rf-msg-inf"><h:outputText class="rf-msgs-sum" value="#{msg}" /></div>
+                            </c:forEach> 
+                            <c:forEach items="#{smsCollectSettingMeterUserEditBean.errorMessages}" var="msg">
+                                <div class="rf-msgs-err"><h:outputText class="rf-msgs-sum" value="#{msg}" /></div>
+                            </c:forEach>
+                            </span>
+                            <rich:messages id="messages"/>
+                            <span class="caution_text">
+                                <h:outputText value="※入力後は登録ボタンを押してください。"/>
+                            </span>
+                            </div>
+                        <div class="clear" />
+                        <h3 class="contents_title">ユーザー情報</h3>
+                        <div class="contents_form_area">
+                            <table class="user_info_area">
+                                <tr style="height: 10px">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="TXT008 column_ttl">ユーザーID<span class="required"></span></td>
+                                    <td>
+                                        <ui:fragment rendered="#{smsCollectSettingMeterUserEditBean.editMode}">
+                                            <span jsfc="h:outputText" class="TXT020" value="#{smsCollectSettingMeterUserEditBean.personId}" />
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{!smsCollectSettingMeterUserEditBean.editMode}">
+                                            <h:inputText class="EDIT002 check_change autofocus" value="#{smsCollectSettingMeterUserEditBean.personId}" id="personId" maxlength="50"
+                                                         style="#{smsCollectSettingMeterUserEditBean.getInvalidStyle(component.clientId)}">
+                                                <f:passThroughAttribute name="placeholder" value="半角"/>
+                                            </h:inputText>
+                                        </ui:fragment>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="TXT008 column_ttl">ユーザー名<span class="required"></span></td>
+                                    <td>
+                                        <h:inputText class="EDIT002 check_change autofocus" value="#{smsCollectSettingMeterUserEditBean.personName}" id="userName" maxlength="50" 
+                                                     style="#{smsCollectSettingMeterUserEditBean.getInvalidStyle(component.clientId)}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="TXT008 column_ttl">ユーザー名ふりがな</td>
+                                    <td>
+                                        <h:inputText class="EDIT002 check_change" value="#{smsCollectSettingMeterUserEditBean.furigana}" id="furigana" maxlength="100"
+                                                     style="#{smsCollectSettingMeterUserEditBean.getInvalidStyle(component.clientId)}">
+                                        </h:inputText>
+                                    </td>
+                                </tr>
+
+                                <tr style="height: 10px">
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td class="TXT008 column_ttl">メールアドレス</td>
+                                    <td><h:inputText class="EDIT002 check_change" value="#{smsCollectSettingMeterUserEditBean.mailAddress}" id="mailAddress" maxlength="100"
+                                                     style="#{smsCollectSettingMeterUserEditBean.getInvalidStyle(component.clientId)}">
+                                            <f:passThroughAttribute name="placeholder" value="半角"/>
+                                        </h:inputText></td>
+                                </tr>
+                                <tr>
+                                    <td class="TXT008 column_ttl">メールアドレス確認</td>
+                                    <td><h:inputText class="EDIT002 check_change" value="#{smsCollectSettingMeterUserEditBean.mailAddressConfirm}" id="mailAddressConfirm" maxlength="100"
+                                                     style="#{smsCollectSettingMeterUserEditBean.getInvalidStyle(component.clientId)}">
+                                            <f:passThroughAttribute name="placeholder" value="半角"/>
+                                        </h:inputText></td>
+                                </tr>
+                                <tr>
+                                    <td class="TXT008 column_ttl">電話番号</td>
+                                    <td>
+                                        <input jsfc="h:inputText" class="EDIT002 check_change" value="#{smsCollectSettingMeterUserEditBean.tel}" maxlength="50"
+                                               style="#{smsCollectSettingMeterUserEditBean.getInvalidStyle(component.clientId)}"
+                                               id="tel" >
+                                            <f:passThroughAttribute name="placeholder" value="例）03-4568-1234 （内線：9999)"/>
+                                        </input>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="TXT008 column_ttl">FAX番号</td>
+                                    <td>
+                                        <input jsfc="h:inputText" class="EDIT002 check_change" value="#{smsCollectSettingMeterUserEditBean.fax}" maxlength="50"
+                                               style="#{smsCollectSettingMeterUserEditBean.getInvalidStyle(component.clientId)}"
+                                               id="fax">
+                                            <f:passThroughAttribute name="placeholder" value="例）03-4568-1234"/>
+                                        </input>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="TXT008 column_ttl">部署名</td>
+                                    <td>
+                                        <input jsfc="h:inputText" class="EDIT002 check_change" value="#{smsCollectSettingMeterUserEditBean.departmentName}" id="departmentName" maxlength="50" 
+                                               style="#{smsCollectSettingMeterUserEditBean.getInvalidStyle(component.clientId)}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="TXT008 column_ttl">役職名</td>
+                                    <td>
+                                        <input jsfc="h:inputText" class="EDIT002 check_change" value="#{smsCollectSettingMeterUserEditBean.positionName}" id="positionName" maxlength="50" 
+                                               style="#{smsCollectSettingMeterUserEditBean.getInvalidStyle(component.clientId)}"/>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <ui:fragment rendered="#{smsCollectSettingMeterUserEditBean.editMode}">
+                                <table>
+                                    <tr>
+                                        <td class="TXT008 column_ttl">アカウント状態</td>
+                                        <td class="TXT008 account_status">
+                                            <h:outputText  id="accountStatus" value="#{smsCollectSettingMeterUserEditBean.accountStatus}"></h:outputText>
+                                        </td>
+                                        <td class="TXT008">
+                                            <h:selectBooleanCheckbox class="check_change check_delete" 
+                                                                     value="#{smsCollectSettingMeterUserEditBean.account_stop_flg}" 
+                                                                     id="accountStopFlgCheckbox"/>アカウント状態を停止する
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="TXT008">
+                                        </td>
+                                        <td class="TXT023">
+                                            <ui:fragment rendered="#{smsCollectSettingMeterUserEditBean.meterUserEditBeanProperty.unlockMsgFlg}">
+                                                ※仮パスワード発行でロック解除可能です。
+                                            </ui:fragment>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </ui:fragment>
+<!--                             
+                            <ui:fragment rendered="#{smsCollectSettingMeterUserEditBean.editMode}">
+                                <div class="gradation_type_1 button_medium_2 button_building_setting">
+                                    <input jsfc="h:commandButton"  action="#{smsCollectSettingMeterUserEditBean.doAction()}" 
+                                        onclick="if (actionChangeCheck($('input[id$=settingBuilding]'))) {
+                                                showBlockModal()
+                                            } else {
+                                                return false
+                                            }
+                                            ;" class="button_size_tanto" id="settingBuilding" value="担当テナント設定">
+                                        <h:graphicImage class="button_icon" library="images" name="user/user_list001.png" />
+                                    </input>
+                                </div>
+                            </ui:fragment>
+                             -->
+                                <ui:fragment rendered="#{smsCollectSettingMeterUserEditBean.editMode}">
+                                <div class="gradation_type_1 gradation_type_5 button_medium_2 button_building_setting">
+                                
+                                    <input jsfc="h:commandButton"
+                                        onclick="if (actionChangeCheck($('input[id$=settingBuilding]'))) {
+                                                showBlockModal()
+                                            } else {
+                                                return false
+                                            }
+                                            ;" class="button_size_tanto" id="settingBuilding" value="担当テナント設定"
+                                                disabled="#{smsCollectSettingMeterUserEditBean.personDisabled}"
+                                                action="#{smsCollectSettingMeterUserEditBean.onclickTenantPerson()}">
+                                        <h:graphicImage class="button_icon" library="images" name="user/user_list001.png" />
+                                    </input>
+<!--                                     
+                                    <a4j:commandButton 
+                                         id="settingTenant" 
+                                         class="button_icon"
+                                         value="担当テナント設定"
+                                         action="#{smsCollectSettingMeterUserEditBean.onclickTenantPerson()}"
+                                         execute="@form" 
+                                         render="@form" 
+                                         onbegin="showBlockModal()" 
+                                         oncomplete="hideBlockModal()"
+                                         disabled="#{smsCollectSettingMeterUserEditBean.personDisabled}">
+                                    </a4j:commandButton>
+                                    <h:graphicImage class="button_icon" library="images" name="user/user_list001.png" />
+                                     -->
+                                </div>
+                            </ui:fragment>
+                        </div>
+
+                        <!--編集者本人：パスワード変更　編集者本人以外：仮パスワード発行-->
+                        <ui:fragment rendered="#{!smsCollectSettingMeterUserEditBean.meterUserEditBeanProperty.selfFlg}"  >
+                            <h3 class="contents_title">
+                                <font>仮パスワード発行</font>
+                            </h3>
+                            <div class="contents_form_area">
+                                <table class="user_info_area">
+                                    <tr>
+                                        <td class="TXT008 column_ttl">
+                                            あなたのパスワード
+                                            <ui:fragment rendered="#{!smsCollectSettingMeterUserEditBean.editMode}">
+                                                <span class="required" />
+                                            </ui:fragment>
+                                        </td>
+                                        <td align="left">
+                                            <h:inputSecret class="EDIT002 check_change" value="#{smsCollectSettingMeterUserEditBean.yourPassword}" id="passwordSecret" maxlength="20"
+                                                           style="#{smsCollectSettingMeterUserEditBean.getInvalidStyle(component.clientId)}">
+                                                <f:passThroughAttribute name="placeholder" value="半角"/>
+                                            </h:inputSecret>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="TXT008 column_ttl">
+                                            仮パスワード
+                                            <ui:fragment  rendered="#{!smsCollectSettingMeterUserEditBean.editMode}">
+                                                <span class="required" />
+                                            </ui:fragment>
+                                        </td>
+                                        <td align="left" >
+                                            <input class="EDIT002 check_change" jsfc="h:inputSecret" value="#{smsCollectSettingMeterUserEditBean.tempPassword}"
+                                                   style="#{smsCollectSettingMeterUserEditBean.getInvalidStyle(component.clientId)}"
+                                                   id="tempPasswordSecret" maxlength="20">
+                                            </input>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="TXT008 column_ttl">
+                                            仮パスワード確認
+                                            <ui:fragment  rendered="#{!smsCollectSettingMeterUserEditBean.editMode}">
+                                                <span class="required" />
+                                            </ui:fragment>
+                                        </td>
+                                        <td align="left">
+                                            <input class="EDIT002 check_change" jsfc="h:inputSecret" value="#{smsCollectSettingMeterUserEditBean.tempPasswordConfirm}"
+                                                   style="#{smsCollectSettingMeterUserEditBean.getInvalidStyle(component.clientId)}"
+                                                   id="tempPasswordConfirmSecret" maxlength="20">
+                                            </input>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="TXT008 column_ttl">仮パスワード有効期限</td>
+                                        <td class="TXT008 expiry_date" >
+                                            <h:selectOneRadio class="check_change" value="#{smsCollectSettingMeterUserEditBean.expiryDate}" id="selectOneRadioPassword">
+                                                <f:selectItem itemLabel="1日" itemValue="#{smsCollectSettingMeterUserEditBean.expiryDateDay}" id="daySelect"/>
+                                                <f:selectItem itemLabel="1週間" itemValue="#{smsCollectSettingMeterUserEditBean.expiryDateWeek}" id="weekSelect"/>
+                                            </h:selectOneRadio>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </ui:fragment>
+
+                        <ui:fragment rendered="#{smsCollectSettingMeterUserEditBean.meterUserEditBeanProperty.selfFlg}" >
+                            <h3 class="contents_title">
+                                <font>パスワード変更</font>
+                            </h3>
+                            <div class="contents_form_area">
+                                <table class="user_info_area">
+                                    <tr>
+                                        <td class="TXT008 column_ttl">現在のパスワード</td>
+                                        <td>
+                                            <input jsfc="h:inputSecret" class="input_box check_change" value="#{smsCollectSettingMeterUserEditBean.nowPassword}" maxlength="20"
+                                                   id="nowPassword"
+                                                   style="#{smsCollectSettingMeterUserEditBean.getInvalidStyle(component.clientId)}">
+                                                <f:passThroughAttribute name="placeholder" value="半角"/>
+                                            </input>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="TXT008 column_ttl">新しいパスワード</td>
+                                        <td>
+                                            <h:inputSecret class="input_box_height input_box_width check_change"
+                                                           id="newPassword" maxlength="20"
+                                                           style="#{smsCollectSettingMeterUserEditBean.getInvalidStyle(component.clientId)}"
+                                                           value="#{smsCollectSettingMeterUserEditBean.newPassword}">
+                                                <f:passThroughAttribute name="placeholder" value="半角"/>
+                                            </h:inputSecret>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="TXT008 column_ttl">パスワード確認</td>
+                                        <td>
+                                            <input type="password" jsfc="h:inputSecret" 
+                                                   class="input_box_height input_box_width check_change"
+                                                   style="#{smsCollectSettingMeterUserEditBean.getInvalidStyle(component.clientId)}"
+                                                   id="confirmPassword" maxlength="20"
+                                                   value="#{smsCollectSettingMeterUserEditBean.newPasswordConfirm}">
+                                                <f:passThroughAttribute name="placeholder" value="半角"/>
+                                            </input>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <td class="TXT023">
+                                ※パスワードの有効期限は#{smsCollectSettingMeterUserEditBean.passwordLimitDays}日間です
+                                </td>
+                            </div>
+                        </ui:fragment>
+                        <br></br>
+
+                        <a4j:outputPanel id="panelAuth">
+                         
+                        </a4j:outputPanel>
+                        
+                        <div style="height: 20px;">
+                        </div>
+
+                        <br/>
+
+                        <div class="contents_center button_area_center gradation_type_1 button_large_2 button_regist">
+                            <ui:fragment rendered="#{smsCollectSettingMeterUserEditBean.editMode}">
+                                <a4j:commandButton value="登録" 
+                                                   id="regist_button"
+                                                   class="guard"
+                                                   onclick="return confirmDialog_update('#{smsCollectSettingMeterUserEditBean.deletePopupMsg}', '#{smsCollectSettingMeterUserEditBean.beforeRegisterMessage}');"
+                                                   render="@form"
+                                                   onbegin="showBlockModal();"
+                                                   oncomplete="hideBlockModal(); clearChangeFlag();"
+                                                   actionListener="#{smsCollectSettingMeterUserEditBean.meterUserUpdate()}" />
+                                <h:graphicImage class="button_icon" library="images" name="common/com067.png" />
+                            </ui:fragment>
+                            <ui:fragment rendered="#{!smsCollectSettingMeterUserEditBean.editMode}">
+                                <a4j:commandButton value="登録" 
+                                                   id="regist_button2"
+                                                   class="guard"
+                                                   onclick="return confirmDialog_regist();"
+                                                   actionListener="#{smsCollectSettingMeterUserEditBean.meterUserUpdate()}"
+                                                   render="@form"
+                                                   onbegin="showBlockModal()" oncomplete="hideBlockModal(); clearChangeFlag();"/>
+                                <h:graphicImage class="button_icon" library="images" name="common/com067.png" />
+                            </ui:fragment>
+                        </div>
+                        </div>
+                    </div>
+                    <ui:include src="/html/common/confirmationDialog.xhtml" >
+                        <ui:param name="confirmationDialogTitle" value="確認" />
+                        <ui:param name="confirmationDialogMessage" value="#{smsCollectSettingMeterUserEditBean.getBeforeRegisterMessage()}" />
+                    </ui:include>
+                    <script type="text/javascript">
+                        function confirmDialog_update(deleteMsgTxt, nomalMsgTxt) {
+                            if (confirmationDialogOpen($('input[id$=regist_button]'))) {
+                                return true;
+                            }
+                            var isDelete = $(".check_delete").prop('checked');
+                            if (isDelete) {
+                                $('span[id$=confirmationDialogMessage]').html(deleteMsgTxt);
+                            } else {
+                                $('span[id$=confirmationDialogMessage]').html(nomalMsgTxt);
+                            }
+                            return false;
+                        }
+
+                        function confirmDialog_regist(deleteMsgTxt, nomalMsgTxt) {
+                            if (confirmationDialogOpen($('input[id$=regist_button2]'))) {
+                                return true;
+                            }
+                            var isDelete = $(".check_delete").prop('checked');
+                            if (isDelete) {
+                                $('span[id$=confirmationDialogMessage]').html(deleteMsgTxt);
+                            } else {
+                                $('span[id$=confirmationDialogMessage]').html(nomalMsgTxt);
+                            }
+                            return false;
+                        }
+                    </script>
+                    <!--アクセストークン用--> 
+                    <oslib:requestToken />
+
+                </form>
+                <ui:include src="/html/common/changeCautionDialog.xhtml" >
+                    <!-- ボタンに対応する場合 -->
+                    <!--                                <ui:param name="cautionDialogId" value="editCautionDialog" />-->
+                    <ui:param name="changeCautionTargetButton" value="#{smsCollectSettingMeterUserEditBean.acceptButton}" />
+                </ui:include>                
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
+

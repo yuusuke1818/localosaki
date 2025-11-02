@@ -1,0 +1,247 @@
+<beanio xmlns="http://www.beanio.org/2012/03"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+  <!-- *** 複数建物・テナント一括温度制御(取得) テンプレート *** -->
+  <!-- ベース部分 温度制御 -->
+  <template name="base.temp">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="1" default="V" keepPadding="true" />
+    <field name="settingChangeHist" length="1" default="0" keepPadding="true" />
+    <field name="command" length="3" default="011" keepPadding="true" />
+  </template>
+
+  <!-- ベース部分 イベント制御 -->
+  <template name="base.event">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="1" default="V" keepPadding="true" />
+    <field name="settingChangeHist" length="1" default="0" keepPadding="true" />
+    <field name="command" length="3" default="045" keepPadding="true" />
+  </template>
+
+  <template name="base22.event">
+    <include template="base.event" />
+    <field name="compressionDataLength" length="6" default="000000" keepPadding="true" />
+  </template>
+
+  <template name="base.res">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" keepPadding="true" />
+  </template>
+
+  <template name="base22.res">
+    <include template="base.res" />
+    <field name="compressionDataLength" length="6" keepPadding="true" />
+  </template>
+
+  <!-- 共通部分１（受信用） -->
+  <template name="commonResponse">
+    <field name="settingDate" length="11" keepPadding="true" />
+    <field name="ctrlTH" length="1" keepPadding="true" />
+    <field name="ctrlTermsTH" length="1" keepPadding="true" />
+    <field name="terminalEquipaddressCW" length="2" keepPadding="true" />
+    <field name="demandGangCtrlTermsEx" length="1" keepPadding="true" />
+    <field name="demandGangCtrlTermsCa" length="1" keepPadding="true" />
+    <field name="demandGangCtrlTermsBl" length="1" keepPadding="true" />
+    <field name="demandGangCtrlTermsLi" length="1" keepPadding="true" />
+    <field name="demandGangCtrlTermsHi" length="1" keepPadding="true" />
+    <segment name="ctrlTimeZoneTHList" collection="list"
+      class="map" occurs="6">
+      <field name="startHour" length="2" keepPadding="true" />
+      <field name="startMinute" length="2" keepPadding="true" />
+      <field name="endHour" length="2" keepPadding="true" />
+      <field name="endMinute" length="2" keepPadding="true" />
+    </segment>
+  </template>
+
+  <!-- 共通部分２（受信用） -->
+  <template name="commonResponse2">
+    <field name="settingDate" length="10" />
+  </template>
+
+  <!-- 共通部分３（受信用） -->
+  <template name="commonResponse3">
+    <segment name="settingEventCtrlList" collection="list" class="map" occurs="3">
+      <field name="measuredTarget" length="1" keepPadding="true" />
+      <field name="measuredValue" length="3" keepPadding="true" />
+      <field name="ctrlThreshold" length="6" keepPadding="true"/>
+      <field name="ctrlTerms" length="1" keepPadding="true" />
+      <field name="eventTerms" length="1" keepPadding="true" />
+      <field name="returnWidth" length="5" keepPadding="true" />
+    </segment>
+  </template>
+
+  <!-- 共通部分４（受信用） -->
+  <template name="commonResponse4">
+    <segment name="settingEventCtrlList" collection="list" class="map" occurs="3">
+      <field name="measuredTarget" length="1" keepPadding="true" />
+      <field name="measuredValue" length="3" keepPadding="true" />
+      <field name="ctrlThreshold" length="6" keepPadding="true"/>
+      <field name="comparePoint" length="3" keepPadding="true"/>
+      <field name="ctrlTerms" length="1" keepPadding="true" />
+      <field name="eventTerms" length="1" keepPadding="true" />
+      <field name="returnWidth" length="5" keepPadding="true" />
+    </segment>
+  </template>
+
+
+  <!-- 「00」製品に対する設定 (温度制御) -->
+  <!-- 送信文 -->
+  <stream name="00.req" format="fixedlength">
+    <record name="request" template="base.temp"
+      class="jp.co.osaki.osol.mng.param.A200041Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="00.res" format="fixedlength">
+    <record name="response" template="base.res"
+      class="jp.co.osaki.osol.mng.param.A200041Param">
+      <include template="commonResponse" />
+      <segment name="settingCtrlPortList" collection="list"
+        class="map" occurs="16">
+        <field name="ctrlPermissionTH" length="1" keepPadding="true" />
+        <field name="demandGangCtrlPermission" length="1" keepPadding="true" />
+        <field name="sensoraddressTH" length="2" keepPadding="true" />
+        <field name="temperatureMax" length="2" keepPadding="true" />
+        <field name="temperatureMin" length="2" keepPadding="true" />
+        <field name="humidityMax" length="2" keepPadding="true" />
+        <field name="humidityMin" length="2" keepPadding="true" />
+        <field name="temperatureReturnWidth" length="3" keepPadding="true" />
+        <field name="humidityReturnWidth" length="3" keepPadding="true" />
+        <field name="loadBlockHoldTime" length="2" keepPadding="true" />
+        <field name="loadReturnHoldTime" length="2" keepPadding="true" />
+      </segment>
+    </record>
+  </stream>
+
+  <!-- 「03」製品に対する設定 (温度制御) -->
+  <!-- 送信文 -->
+  <stream name="03.req" format="fixedlength">
+    <record name="request" template="base.temp"
+      class="jp.co.osaki.osol.mng.param.A200041Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="03.res" format="fixedlength">
+    <record name="response" template="base.res"
+      class="jp.co.osaki.osol.mng.param.A200041Param">
+      <include template="commonResponse" />
+      <segment name="settingCtrlPortList" collection="list"
+        class="map" occurs="16">
+        <field name="ctrlPermissionTH" length="1" keepPadding="true" />
+        <field name="demandGangCtrlPermission" length="1" keepPadding="true" />
+        <field name="sensoraddressTH" length="2" keepPadding="true" />
+        <field name="temperatureMax" length="2" keepPadding="true" />
+        <field name="temperatureMin" length="2" keepPadding="true" />
+        <field name="humidityMax" length="2" keepPadding="true" />
+        <field name="humidityMin" length="2" keepPadding="true" />
+        <field name="temperatureReturnWidth" length="3" keepPadding="true" />
+        <field name="humidityReturnWidth" length="3" keepPadding="true" />
+        <field name="loadBlockHoldTime" length="2" keepPadding="true" />
+        <field name="loadReturnHoldTime" length="2" keepPadding="true" />
+      </segment>
+    </record>
+  </stream>
+
+  <!-- 「06」製品に対する設定 (温度制御) -->
+  <!-- 送信文 -->
+  <stream name="06.req" format="fixedlength">
+    <record name="param" template="base.temp"
+      class="jp.co.osaki.osol.mng.param.A200041Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="06.res" format="fixedlength">
+    <record name="param" template="base.res"
+      class="jp.co.osaki.osol.mng.param.A200041Param">
+      <include template="commonResponse" />
+      <segment name="settingCtrlPortList" collection="list"
+        class="map" occurs="16">
+        <field name="ctrlPermissionTH" length="1" keepPadding="true" />
+        <field name="switchChoiceCW" length="1" keepPadding="true" />
+        <field name="sensoraddressTH" length="2" keepPadding="true" />
+        <field name="temperatureMax" length="2" keepPadding="true" />
+        <field name="temperatureMin" length="2" keepPadding="true" />
+        <field name="humidityMax" length="2" keepPadding="true" />
+        <field name="humidityMin" length="2" keepPadding="true" />
+        <field name="temperatureReturnWidth" length="3" keepPadding="true" />
+        <field name="humidityReturnWidth" length="3" keepPadding="true" />
+        <field name="loadBlockHoldTime" length="2" keepPadding="true" />
+        <field name="loadReturnHoldTime" length="2" keepPadding="true" />
+      </segment>
+    </record>
+  </stream>
+
+  <!-- 「12」製品に対する設定 (イベント制御) -->
+  <!-- 送信文 -->
+  <stream name="12.req" format="fixedlength">
+    <record name="param" template="base.event"
+      class="jp.co.osaki.osol.mng.param.A200041Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="12.res" format="fixedlength">
+    <record name="response" template="base.res"
+      class="jp.co.osaki.osol.mng.param.A200041Param">
+      <field name="settingDate" length="11" keepPadding="true" />
+      <segment name="loadList" collection="list" class="map"
+        occurs="36">
+        <field name="eventCtrlFlg" length="1" keepPadding="true" />
+        <segment name="settingEventCtrlList" collection="list"
+          class="map" occurs="3">
+          <field name="measuredValue" length="2" keepPadding="true" />
+          <field name="ctrlThreshold" length="4" keepPadding="true" />
+          <field name="ctrlTerms" length="1" keepPadding="true" />
+          <field name="eventTerms" length="1" keepPadding="true" />
+          <field name="returnWidth" length="3" keepPadding="true" />
+        </segment>
+        <field name="blockHoldTime" length="2" keepPadding="true" />
+        <field name="returnHoldTime" length="2" keepPadding="true" />
+      </segment>
+    </record>
+  </stream>
+
+  <!-- 「21」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="21.req" format="fixedlength">
+    <record name="param" template="base.event" class="jp.co.osaki.osol.mng.param.A200041Param">
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="21.res" format="fixedlength">
+    <record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200041Param">
+      <include template="commonResponse2" />
+      <segment name="loadList" collection="list" class="map" occurs="80">
+        <field name="eventCtrlFlg" length="1" keepPadding="true" />
+        <include template="commonResponse3" />
+        <field name="blockHoldTime" length="2" keepPadding="true" />
+        <field name="returnHoldTime" length="2" keepPadding="true" />
+      </segment>
+    </record>
+  </stream>
+
+  <!-- 「22」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="22.req" format="fixedlength">
+    <record name="param" template="base22.event" class="jp.co.osaki.osol.mng.param.A200041Param">
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="22.res" format="fixedlength">
+    <record name="param" template="base22.res" class="jp.co.osaki.osol.mng.param.A200041Param">
+      <include template="commonResponse2" />
+      <segment name="loadList" collection="list" class="map" occurs="80">
+        <field name="eventCtrlFlg" length="1" keepPadding="true" />
+        <include template="commonResponse4" />
+        <field name="blockHoldTime" length="2" keepPadding="true" />
+        <field name="returnHoldTime" length="2" keepPadding="true" />
+      </segment>
+    </record>
+  </stream>
+
+</beanio>

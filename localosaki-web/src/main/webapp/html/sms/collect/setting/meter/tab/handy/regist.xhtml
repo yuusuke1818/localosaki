@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:rich="http://richfaces.org/rich" xmlns:cust="http://xmlns.jcp.org/jsf/component"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:a4j="http://richfaces.org/a4j">
+    <div style="margin-top: 0;">
+        <div>
+            <rich:messages id="h2Messages" styleClass="errNonSearch errArea" />
+            <h3 class="contents_title">新規登録(個別)</h3>
+            <form jsfc="h:form" id="handyRegistForm">
+                <div class="contents_form_area">
+                    <h:inputHidden value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.tenantId}" id="h2TenantId" />
+                    <table class="h2Table">
+                        <tr>
+                            <td class="TXT008" colspan="2">登録先装置選択</td>
+                            <td class="TXT020 regist_devName" colspan="2">
+                                <div jsfc="a4j:outputPanel" id="h2DevNamePanel">
+                                    <h:outputText id="h2DevName" value="#{smsCollectSettingMeterMeterManagementBean.handyProperty.devName}"></h:outputText>
+                                    <h:inputHidden value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.devId}" id="h2DevId" />
+                                </div>
+                            </td>
+                            <td>
+                                ※登録先装置を選択
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008" colspan="2">メーター管理番号</td>
+                            <td colspan="2">
+                                <div jsfc="a4j:outputPanel" id="h2MeterMngIdMapPanel">
+                                    <h:selectOneMenu id="h2MeterMngIdSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.meterMngId}" >
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.meterMngIdMap}" />
+                                    </h:selectOneMenu>
+                                </div>
+                            </td>
+                            <td>
+                                ※選択範囲 ： "001～512" (未登録の番号のみ)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008" colspan="2">ユーザーコード</td>
+                            <td colspan="2">
+                                <h:inputText
+                                        id="h2UserCode"
+                                        class="textWidthMedium check_change"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.tenantId}"
+                                        maxlength="6"
+                                        style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                            </td>
+                            <td>
+                                ※入力範囲 ： "1～999999" または "ブランク"
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008" colspan="2">無線種別</td>
+                            <td colspan="2">
+                                <h:selectOneMenu id="h2HandyTypeSelect"  class="EDIT002 check_change disabledControl h2HandyType" value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.handyType}" >
+                                    <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.handyTypeMap}" />
+                                </h:selectOneMenu>
+                            </td>
+                            <td>
+                                ※ハイブリッド水道メーター/カレント式電力量計<br/>
+                                　/電子式水道メーターから選択
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008" colspan="2">乗率<span class="required"></span></td>
+                            <td colspan="2">
+                                <h:inputText
+                                        id="h2Multi"
+                                        class="textWidthSmall check_change"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.multi}"
+                                        maxlength="4"
+                                        style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                            </td>
+                            <td>
+                                ※入力範囲："1～9999"
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008" colspan="2">計器ID<span class="required"></span></td>
+                            <td colspan="2">
+                                <h:inputText
+                                        id="h2EquipId"
+                                        class="textWidthMedium check_change"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.meterId}"
+                                        maxlength="10"
+                                        style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                            </td>
+                            <td>
+                                ※全10桁 (半角英数字)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008" colspan="2">無線ID<span class="required"></span></td>
+                            <td colspan="2">
+                                <h:inputText
+                                        id="h2WirelessId"
+                                        class="textWidthMedium check_change"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.wirelessId}"
+                                        maxlength="12"
+                                        style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                            </td>
+                            <td>
+                                ※全12桁 (半角英数字)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008">リレー無線ID</td>
+                            <td class="TXT008_2">1</td>
+                            <td colspan="2">
+                                <h:inputText
+                                        id="h2Hop1Id"
+                                        class="textWidthMedium check_change"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.hop1Id}"
+                                        maxlength="12"
+                                        style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                            </td>
+                            <td>
+                                ※全12桁 (半角英数字)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2" style="vertical-align:top;">
+                                <div class="gradation_type_1 button_medium btnHistoryLayout" style="text-align:left;">
+                                    <a4j:commandButton
+                                            id="h2HistoryBtn"
+                                            value="履歴"
+                                            style="width:80px;"
+                                            render="hopIdHistoryList #{rich:clientId('historyHop1Id')} #{rich:clientId('historyHop2Id')} #{rich:clientId('historyHop3Id')}"
+                                            actionListener="#{smsCollectSettingMeterMeterManagementBean.btnHopIdHistoryClick(smsCollectSettingMeterMeterManagementBean.handyInsertProperty)}"
+                                            execute="@form"
+                                            oncomplete="#{rich:component('hopIdHistoryPopup')}.show();">
+                                         <!--<h:graphicImage class="btnHistoryIconLayout" library="images" name="common/com063.png" />-->
+                                    </a4j:commandButton>
+                                </div>
+                            </td>
+                            <td class="TXT008_2">2</td>
+                            <td colspan="2">
+                                <h:inputText
+                                        id="h2Hop2Id"
+                                        class="textWidthMedium check_change"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.hop2Id}"
+                                        maxlength="12"
+                                        style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                            </td>
+                            <td>
+                                ※全12桁 (半角英数字)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008_2">3</td>
+                            <td colspan="2">
+                                <h:inputText
+                                        id="h2Hop3Id"
+                                        class="textWidthMediumcheck_change"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.hop3Id}"
+                                        maxlength="12"
+                                        style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                            </td>
+                            <td>
+                                ※全12桁 (半角英数字)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008" colspan="2">ポーリンググループNo</td>
+                            <td colspan="2">
+                                <h:inputText
+                                        id="h2PollingId"
+                                        class="textWidthMedium check_change"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.pollingId}"
+                                        maxlength="12"
+                                        style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                            </td>
+                            <td>
+                                ※全12桁 (半角英数字)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008" colspan="2">メーター種別</td>
+                            <td colspan="2">
+                                <h:selectOneMenu id="h2MetertypeSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.meterType}" >
+                                    <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.metertypeMap}" />
+                                </h:selectOneMenu>
+                            </td>
+                            <td>
+                                ※メーターの種別を選択
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008" colspan="2">検満年月</td>
+                            <td colspan="2">
+                                <f:ajax event="click" execute="@form" render="smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2YearDisp">
+                                            <h:selectOneRadio id="h2DispYearCls" value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.dispYearFlg}" styleClass="SELECT001" style="width: 100%; height: 25px;" onchange="dispYearClsChange(this.value)">
+                                                <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.dispYearMap}" />
+                                            </h:selectOneRadio>
+                                    </f:ajax> <br />
+                                    <div jsfc="a4j:outputPanel" id="h2YearDisp">
+                                        <ui:fragment rendered="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.dispYearFlg == '0'}">
+                                            <span id="h2SeirekiDisp"> 西暦 &nbsp;&nbsp; <h:inputText
+                                                    id="h2Year" class="textWidthSmall check_change" value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.examEndYear}" maxlength="4"
+                                                    style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                                            </span>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.dispYearFlg == '1'}">
+                                        <span id="h2WarekiDisp"> 元号 <h:selectOneMenu id="h2GengoSelect" class="EDIT002 check_change"
+                                                value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.examEndYmGengo}"
+                                                style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}">
+                                            <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.gengoMap}" />
+                                        </h:selectOneMenu> &nbsp;&nbsp;
+                                        <h:inputText
+                                                id="h2YearWareki"
+                                                class="textWidthSmall check_change"
+                                                value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.examEndYearWareki}"
+                                                maxlength="2"
+                                                style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                                    </span></ui:fragment></div>
+                                年
+                                <h:inputText
+                                        id="h2Month"
+                                        class="textWidthSmall check_change"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.examEndMonth}"
+                                        style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                                月
+                            </td>
+                            <td>
+                                ※検定有効期間が満了する年月を西暦または和暦で入力
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="TXT008" colspan="2">検満通知</td>
+                            <td colspan="2">
+                                <h:selectOneMenu id="h2ExamnoticeSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.handyInsertProperty.examNotice}" >
+                                    <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.examnoticeMap}" />
+                                </h:selectOneMenu>
+                            </td>
+                            <td>
+                                <div jsfc="a4j:outputPanel" id="h2ExamNoticeMonthPanel">
+                                    ※検満年月の
+                                    <font color="red">
+                                        <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.examNoticeMonth}"></h:outputText>ヶ月
+                                    </font>
+                                    前からメール通知します。
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+                    <br />
+                    <div class="gradation_type_1 button_large_2 btnRegistLayout">
+                        <a4j:commandButton
+                            id="h2RegistBtn"
+                            class="action_button"
+                            value="登録"
+                            execute="@form"
+                            render="@form confirmDialogForm:confirmationDialogMessage"
+                            onclick="return confirmationDialogOpenForIns($('input[id$=h2RegistBtn]'))"
+                            oncomplete="$('input[id$=h2RegistBtnHidden]').click();">
+                        </a4j:commandButton>
+                        <h:graphicImage class="btnRegistIconLayout" library="images" name="common/com067.png" />
+                        <a4j:commandButton
+                            id="h2RegistBtnHidden"
+                            style="display: none;"
+                            execute="@form"
+                            render="@form #{rich:clientId('hTablePanel')}
+                                    smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2ExamNoticeMonthPanel
+                                    smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2DevNamePanel
+                                    smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2MeterMngIdMapPanel
+                                    smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2ExamNoticeMonthPanel
+                                    smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2DevNamePanel
+                                    smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2MeterMngIdMapPanel
+                                    smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2ExamNoticeMonthPanel
+                                    smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2DevNamePanel
+                                    smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2MeterMngIdMapPanel"
+                            action="#{smsCollectSettingMeterMeterManagementBean.execRegist(smsCollectSettingMeterMeterManagementBean.handyInsertProperty)}"
+                            onbegin="showBlockModal()"
+                            oncomplete="hideBlockModal(); viewList('H'); clearChangeFlag(); dispButton();">
+                        </a4j:commandButton>
+                    </div>
+                </div>
+            </form>
+            <!-- リレー無線ID履歴ポップアップ -->
+            <ui:include src="/html/sms/collect/setting/meter/tab/handy/hopIdHistoryPopup.xhtml" />
+        </div>
+    </div>
+</html>

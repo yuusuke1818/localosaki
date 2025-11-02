@@ -1,0 +1,262 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:cust="http://xmlns.jcp.org/jsf/component"
+    xmlns:oslib="http://osaki.co.jp/base-component" xmlns:rich="http://richfaces.org/rich"
+    xmlns:a4j="http://richfaces.org/a4j">
+<h:body>
+    <ui:composition template="/html/template/template_server_sidemenu.xhtml">
+        <ui:define name="content_side" class="content">
+            <h:outputStylesheet library="css" name="sms/server/setting/ocr/search.css" />
+            <form jsfc="h:form" id="smsServerSettingOcrSearchBean">
+                <div class="inner_content">
+                    <div class="title_area_warp">
+                        <!-- 画面タイトル -->
+                        <div class="title_area_left">
+                            <h2 class="page_title">AieLink一覧</h2>
+                            <!-- ヘルプボタン -->
+                            <c:if test="#{indexBean.userGuideBool}">
+                                <h:commandLink class="help_icon"
+                                    action="#{indexBean.userGuide()}" target="_blank" />
+                            </c:if>
+                            <p class="page_subtitle">
+                                <h:outputText value="AieLink情報の新規登録、または編集ができます。" />
+                            </p>
+                        </div>
+                        <div class="title_area_right">
+                            <div class="gradation_type_1 button_large_2 new_regist_button">
+                                <a4j:commandButton id="EditBtn" value="新規登録"
+                                    action="#{smsServerSettingOcrSearchBean.execNextScreen(null)}"
+                                    onbegin="showBlockModal()" oncomplete="hideBlockModal()" />
+                                <h:graphicImage class="button_icon" library="images"
+                                    name="common/com013.png" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear" />
+                    <!-- メッセージ表示部分 -->
+                    <!--<div>-->
+                    <rich:messages id="Messages" showSummary="true" />
+                    <!--</div>-->
+                    <!-- 説明文 -->
+                    <div class="search_description">
+                        <p>検索条件を設定して[検索開始]を押してください。</p>
+                    </div>
+
+                    <!-- 動的検索条件テーブル -->
+                    <div class="gradation_type_1">
+                        <a4j:outputPanel id="commonSearchResult">
+                            <rich:dataTable id="searchConditionTable" rows="0"
+                                value="#{smsServerSettingOcrSearchBean.conditionList}" var="item"
+                                style="margin-top: 5px;
+                                            width: 100%;
+                                            border: 0px;
+                                            table-layout: fixed;">
+                                <!--検索条件表示部分 -->
+                                <span jsfc="h:column" styleClass="condition_msg"
+                                    style="width: 20%; border: 0px"> <h:selectOneMenu
+                                        id="selectConditionCd" value="#{item.selectConditionCd}"
+                                        styleClass="SELECT001" rendered="#{item.selectEnable}"
+                                        style="height: 30px;">
+                                        <f:ajax event="change"
+                                            execute="smsServerSettingOcrSearchBean:searchConditionTable"
+                                            render="smsServerSettingOcrSearchBean:searchConditionTable"
+                                            listener="#{smsServerSettingOcrSearchBean.changeConditionCd(item.orderNo)}"
+                                            onevent="autoFocusOnSelectCondition" />
+                                        <option jsfc="f:selectItems"
+                                            value="#{item.selectConditionMap}" />
+                                    </h:selectOneMenu>
+                                    <h:outputText value="#{item.selectConditionCd}" rendered="#{item.selectDisable}" />
+                                </span>
+                                <!--接続詞表示部分 -->
+                                <span jsfc="h:column"
+                                    style="width: 10%; text-align: center; border: 0px;"> <input
+                                    jsfc="h:outputText" value="#{item.searchSubjectConjunction}"
+                                    style="width: 100%; text-align: center"
+                                    rendered="#{item.searchSubjectConjunctionEnable}" />
+                                </span>
+                                <!--ドロップダウンリストまたは検索キーワード表示部分 -->
+                                <span jsfc="h:column" style="width: 40%; border: 0px;"> <!-- 装置ID-->
+                                    <h:selectOneMenu id="conditionDevId" value="#{item.devId}"
+                                        styleClass="SELECT001" rendered="#{item.devIdSelectEnable}"
+                                        style="width: 100%; height: 25px;"
+                                        onkeydown="searchConditionKeydown()">
+                                        <option jsfc="f:selectItems"
+                                            value="#{smsServerSettingOcrSearchBean.searchBeanProperty.ocrDeviceIdMap}" />
+                                    </h:selectOneMenu>
+                                    <!-- 削除状態 -->
+                                    <h:selectOneMenu id="conditionDevStatus" value="#{item.delFlg}" styleClass="SELECT001" rendered="#{item.delFlgSelectEnable}"
+                                                     style="width: 100%; height: 25px;" onkeydown="searchConditionKeydown()">
+                                        <option jsfc="f:selectItems" value="#{smsServerSettingOcrSearchBean.searchBeanProperty.ocrDeviceStatusMap}" />
+                                    </h:selectOneMenu>
+                                    <!--キーワード -->
+                                    <h:inputText id="conditionKeyword"
+                                        value="#{item.conditionKeyword}" styleClass="EDIT002"
+                                        class="autofocus" rendered="#{item.keywordSelectEnable}"
+                                        style="width: 100%; height: 25px;" maxlength="50"
+                                        onkeydown="searchConditionKeydown()" />
+                                </span>
+                                <!--「を含む」表示部分 -->
+                                <span jsfc="h:column"
+                                    style="width: 12%; text-align: center; border: 0px;"> <input
+                                    jsfc="h:outputText" value="#{item.mutchingTypeCd}"
+                                    rendered="${!empty item.mutchingTypeCd}"
+                                    style="width: 100%; height: 25px; text-align: center;" />
+                                </span>
+
+                                <!--削除ボタン表示部分 -->
+                                <span jsfc="h:column" styleClass="gradation_type_3 button_medium_2 delete_button" style="width: 10%; border:  0px;">
+                                    <h:commandButton id="delButton" value="削除" rendered="#{item.deleteButtonEnable}"
+                                                     style="width: 100%; height: 25px;">
+                                        <f:ajax event="click"
+                                                execute="smsServerSettingOcrSearchBean:searchConditionTable"
+                                                render="smsServerSettingOcrSearchBean:searchConditionTable"
+                                                listener="#{smsServerSettingOcrSearchBean.deleteCondition(item.orderNo)}"/>
+                                    </h:commandButton>
+                                    <h:graphicImage class="button_icon" library="images" rendered="#{item.deleteButtonEnable}" name="common/com020.png" />
+                                </span>
+                            </rich:dataTable>
+                        </a4j:outputPanel>
+                    </div>
+                    <!-- 検索ボタン -->
+                    <div class="button_area_center gradation_type_1 button_large_2 button_search">
+                        <input id="searchButton" class="action_button" jsfc="h:commandButton" value="検索開始">
+                            <a4j:ajax event="click" execute="@form"
+                                render="@form"
+                                listener="#{smsServerSettingOcrSearchBean.search()}"
+                                onbegin="showBlockModal()" oncomplete="hideBlockModal()" />
+                        </input>
+                        <h:graphicImage class="button_icon" library="images"
+                            name="common/com028.png" />
+                    </div>
+
+                    <!-- 検索結果サマリー表示 -->
+                    <ui:fragment id="searchResultArea"
+                        rendered="#{smsServerSettingOcrSearchBean.searchBeanProperty.searchedFlg}">
+                        <div class="search_result_header_wrap">
+                            <div id="listReroad">
+                                <div class="search_result_header_left page_content_parts">
+                                    検索条件に該当するAieLink情報 <span class="serach_result_total_count"
+                                        jsfc="h:outputText"
+                                        value=" #{smsServerSettingOcrSearchBean.infoPagingList.resultCount}" />
+                                    件
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 検索結果リスト表示 -->
+                        <div class="search_result_area">
+                            <h:dataTable id="result" var="item" style="width: 100%;"
+                                value="#{smsServerSettingOcrSearchBean.infoPagingList.pageList}"
+                                headerClass="table_header"
+                                columnClasses="column_style_id, column_style_name, column_style_examNoticeMonth, column_style_status, column_style_edit"
+                                rendered="#{smsServerSettingOcrSearchBean.infoPagingList.resultCount != '0'}">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="装置コード" escape="false" />
+                                    </f:facet>
+                                    <h:panelGrid columns="1">
+                                        <h:outputText id="devId" value="#{item.devId}" />
+                                    </h:panelGrid>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="装置名称" />
+                                    </f:facet>
+                                    <h:outputText id="devName" value="#{item.name}" />
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="検満通知月" />
+                                    </f:facet>
+                                    <ui:fragment rendered="#{!empty item.examNoticeMonth}">
+                                        <h:outputText id="examNoticeMonth" value="#{item.examNoticeMonth}ヶ月前" />
+                                    </ui:fragment>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="稼働状況" escape="false" />
+                                    </f:facet>
+                                    <h:panelGrid columns="1">
+                                        <h:outputText id="devStatus" value="稼働中"
+                                            rendered="#{item.delFlg == 0}" />
+                                        <h:outputText id="devDelStatus" value="削除済"
+                                            rendered="#{item.delFlg != 0}" />
+                                    </h:panelGrid>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="編集" />
+                                    </f:facet>
+                                    <h:commandButton id="editButton"
+                                        class="button_small button_edit" value=" "
+                                        style="width:36px;"
+                                        onclick="showBlockModal();"
+                                        action="#{smsServerSettingOcrSearchBean.execNextScreen(item)}">
+                                        <h:graphicImage class="button_edit_image" library="images"
+                                            name="common/com018.png" />
+                                    </h:commandButton>
+                                </h:column>
+                            </h:dataTable>
+                        </div>
+                        <!-- ページング -->
+                        <ui:fragment
+                            rendered="#{smsServerSettingOcrSearchBean.infoPagingList.resultCount != '0'}">
+                            <div class="contents_center">
+                                <div id="paging_area">
+                                    <span id="prevButton_area"> <h:commandLink
+                                            id="prevButton" value="&lt;&nbsp;&nbsp;前へ"
+                                            actionListener="#{smsServerSettingOcrSearchBean.prevPage}"
+                                            disabled="#{!smsServerSettingOcrSearchBean.infoPagingList.isPrevPage()}">
+                                            <f:ajax execute="@form" render="@form" />
+                                            <f:attribute name="page"
+                                                value="#{smsServerSettingOcrSearchBean.infoPagingList.currentPage}" />
+                                        </h:commandLink>
+                                    </span>
+                                    <cust:pageIndex id="pageJumpButton"
+                                        value="#{smsServerSettingOcrSearchBean.infoPagingList.pageValue}"
+                                        action="#{smsServerSettingOcrSearchBean.pageJump()}">
+                                        <ui:include src="/html/common/paging/index.xhtml" />
+                                    </cust:pageIndex>
+                                    <span id="nextButton_area"> <h:commandLink
+                                            id="nextButton" class="nextButton"
+                                            value="後へ&nbsp;&nbsp;&gt; "
+                                            actionListener="#{smsServerSettingOcrSearchBean.nextPage}"
+                                            disabled="#{!smsServerSettingOcrSearchBean.infoPagingList.isNextPage()}">
+                                            <f:ajax execute="@form" render="@form" />
+                                            <f:attribute name="page"
+                                                value="#{smsServerSettingOcrSearchBean.infoPagingList.currentPage}" />
+                                        </h:commandLink>
+                                    </span>
+                                </div>
+                            </div>
+                        </ui:fragment>
+                    </ui:fragment>
+                </div>
+                <!-- アクセストークン用 -->
+                <oslib:requestToken />
+                <ui:remove>確認ダイアログ</ui:remove>
+                <ui:include src="/html/common/confirmationDialog.xhtml">
+                    <ui:param name="confirmationDialogTitle" value="確認" />
+                    <ui:param name="confirmationDialogMessage" value="メッセージ" />
+                </ui:include>
+                <script type="text/javascript">
+                        function outputBuildingListCheck() {
+                            if (confirmationDialogOpen($('input[id$=outputBuildingListButton]'))) {
+                                return true;
+                            }
+                            return false;
+                        }
+                        function functionCheck(check) {
+                            if(functionCheckDialog(check)){
+                                showBlockModal();
+                                return true;
+                            }
+                            return false;
+                        }
+                    </script>
+            </form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

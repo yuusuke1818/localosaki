@@ -1,0 +1,127 @@
+/***********************************
+*ドラッグアンドドロップ関連のスタイル*
+* 企業情報・設備、建物情報・使用エネルギー登録、建物グルーピング *
+***********************************/
+
+/*コンテンツのベース背景*/
+.dr_base_panel{
+    background: -moz-linear-gradient(
+        top,
+        #c9f1ff 0%,
+        #a8d2ff);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#c9f1ff),
+        to(#a8d2ff));
+    background: -ms-linear-gradient(
+        top,
+        #c9f1ff 0%,
+        #a8d2ff);
+    border: 1px solid #acd9e6;
+    width: 900px;
+}
+
+.drag_and_drop_collapsiblePanel {
+    width: 900px; 
+    margin-left: -20px
+}
+
+.drag_and_drop_source_invisible {
+    display: none;
+}
+
+.rf-cp-gr {
+    background-color:initial;
+    background-image:none;
+}
+
+.rf-cp-hdr{
+    background-color:initial;
+    border-color:initial;
+}
+
+.rf-cp-hdr {
+    cursor: pointer;
+    background-color: transparent;
+    border-color: transparent;
+    border-top-left-radius: 0px; 
+    border-top-right-radius: 0px; 
+    font-size: 11px; 
+    color: #000000; 
+    font-weight: bold; 
+    font-family: Arial, Verdana, sans-serif; 
+    border-width: 0px; 
+    border-style: solid; 
+    background-position: top left; 
+    background-repeat: repeat-x; 
+    background-image:none;
+    padding: 0px;
+    border-style: none;
+    border-width: 0px
+}
+
+.rf-p-b {
+    color:#FFFFFF;
+    font-family:initial;
+    padding:0px;
+}
+
+/* ドラッグ中のオブジェクト */
+.rf-ind-drag {
+    font-size:          20px;
+    cursor:             pointer;
+    width:              390px;
+    border:             0px solid gray;
+    padding:            2px;
+    overflow:           hidden;
+    z-index:            300;
+    vertical-align:     middle;
+    /*float:              right;*/
+    /*float:              left;*/
+}
+
+/* ドラッグオブジェクトのドロップ可能エリアでのレイアウト */
+.rf-ind-acpt {
+    border:6px solid green;
+    z-index: 350;
+}
+/* ドラッグオブジェクトのドロップ不可エリアでのレイアウト */
+.rf-ind-rejt {
+    border:6px solid red;
+    z-index: 350;
+}
+/* ドロップオブジェクトのドロップ可能エリアでのレイアウト */
+.rf-drp-hlight{
+    border:     5px dashed gray;
+    z-index:    300;
+    height:     50px;
+    opacity:    1.0;
+}
+
+/* ドロップ可能エリア初期値 */
+.rf-p{
+    height: 60px;
+    width: 900px;
+    position: absolute;
+    opacity: 0.0;
+    margin-left: -20px
+}
+
+/*ドラッグ中の点線部分の大きさ */
+.rf-drp-hvr{
+    height: 60px;
+    opacity:    1.0;
+    width: 900px;
+    margin-top: 0px;
+    position: relative;
+    margin-left: -20px
+}
+
+/* タイトルがしまっているときのアイコン */
+.rf-ico-chevron-up{
+    background-image:   none;
+}
+/* タイトルがあいているときのアイコン */
+.rf-ico-chevron-down{
+    background-image:   none;
+}

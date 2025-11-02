@@ -1,0 +1,737 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:oslib="http://osaki.co.jp/base-component">
+    <!-- # 基本情報タブ -->
+    <a4j:outputPanel id="smsCollectSettingTenantEditBaseInfoPanel">
+        <div id="tab_contents">
+            <p class="page_subtitle">テナントの基本情報の編集ができます。</p>
+            <div>
+                <h3 class="contents_title">テナント選択</h3>
+                <div class="contents_form_area">
+                    <table>
+                        <tr>
+                            <th class="TXT008 column_style1">選択<span class="required"></span></th>
+                            <td>
+                                <h:selectOneRadio id="buldingTenantRadioBtn" class="TXT008"
+                                    value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.tenantFlg}"
+                                    style="width: 250px">
+                                    <f:selectItem itemLabel="テナント" itemValue="true" id="radioTenant"/>
+                                </h:selectOneRadio>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="TXT008 column_style1">テナント所属建物番号</th>
+                            <td class="TXT020">
+                                <h:inputHidden id="divisionCorpId"
+                                               value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.divisionCorpId}" />
+                                <h:inputHidden id="divisionCorpName"
+                                               value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.divisionCorpName}" />
+                                <h:inputHidden id="divisionBuildingId"
+                                                value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.divisionBuildingId}" />
+                                <h:outputText id="divisionBuildingNo"  
+                                                value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.divisionBuildingNo}" />
+                            </td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <th class="TXT008 column_style1">テナント所属建物名</th>
+                            <td class="TXT020">
+                                <h:outputText id="divisionBuildingName" 
+                                            value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.divisionBuildingName}" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <h3 class="contents_title">
+                    <h:outputText id="buildingTenantTitleInfo" value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.buildingTenant}情報" />
+                </h3>
+                <div class="contents_form_area">
+                    <table>
+                        <tr>
+                            <th class="column_style_userCode TXT008 ">
+                                <h:outputText id="userCodeLabel" value="ユーザーコード" />
+                                <span class="required"></span>
+                            </th>
+                            <c:if test="#{!smsCollectSettingMeterTenantEditBean.editBeanProperty.updateProcessFlg}">
+                                <td colspan="3">
+                                    <!-- 新規登録時 -->
+                                    <h:inputText id="userCode" styleClass="check_change EDIT002 autofocus" value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.tenantId}"
+                                                 style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                                 onblur="changeTenantNo();"
+                                                 maxlength="6">
+                                         <f:passThroughAttribute name="placeholder" value="入力範囲：1～999999 (半角)"/>
+                                     </h:inputText>
+                                     <span class="TXT023" style="padding-left:15px;">※建物内において重複登録不可</span>
+                                </td>
+                            </c:if>
+                            
+                            <c:if test="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.updateProcessFlg}">
+                                <td class="TXT020">
+                                    <!-- 更新時 -->
+                                    <h:outputText id="userCodeOP" styleClass="TXT020" value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.tenantId}"/>
+                                </td>
+                            </c:if>
+                        </tr>
+                        <tr>
+                            <th class="column_style1 TXT008 ">
+                                <h:outputText id="buildingTenantLabel" value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.buildingTenant}番号" />
+                                <span class="required"></span>
+                            </th>
+                            <c:if test="#{!smsCollectSettingMeterTenantEditBean.editBeanProperty.updateProcessFlg}">
+                                <td colspan="3">
+                                    <!-- 新規登録時 -->
+                                    <h:inputText id="buildingNo" styleClass="check_change EDIT002 autofocus" value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.buildingNo}"
+                                                 style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                                 maxlength="50">
+                                     </h:inputText>
+                                     <span class="TXT023" style="padding-left:15px;">※企業内において重複登録不可</span>
+                                </td>
+                            </c:if>
+                            <c:if test="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.updateProcessFlg}">
+                                <td class="TXT020">
+                                    <!-- 更新時 -->
+                                    <h:outputText id="buildingNoOP" styleClass="TXT020" value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.buildingNo}" />
+                                </td>
+                                
+                            </c:if>
+                            <td colspan="3" />
+                        </tr>
+                        <tr>
+                            <th class="column_style1 TXT008">
+                                <h:outputText id="buildingTenantName" value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.buildingTenant}名" />
+                                <span class="required"></span>
+                            </th>
+                            <td style="width:400px;">
+                                <h:inputText id="buildingName" styleClass="check_change EDIT002 autofocus"
+                                             style="width: 370px; #{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                             value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.buildingName}" maxlength="50" />
+                            </td>
+                            <th class="column_style4 TXT008" style="display:inline-block;position:relative;left:-5px;width:115px;top:1px">短縮名称<span class="required"></span></th>
+                            <td class="column_style5" style="position:relative;top:2px;display:inline-block;">
+                                <h:inputText id="buildingTansyukuName" styleClass="check_change EDIT002" 
+                                             style="width:87px; #{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                             value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.buildingTansyukuName}" maxlength="5" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="column_style1 TXT008">ふりがな</th>
+                            <td colspan="4">
+                                <h:inputText id="buildingNameKana" styleClass="check_change EDIT002"
+                                             style="width: 370px; #{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                             value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.buildingNameKana}"
+                                             maxlength="100">
+                                </h:inputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="column_style1 TXT008">郵便番号</th>
+                            <td colspan="4">
+                                <h:inputText id="zipCd" styleClass="check_change EDIT002" value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.zipCd}"
+                                             style="width:120px; #{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                             maxlength="8">
+                                    <f:passThroughAttribute name="placeholder" value="例）000-0000"/>
+                                </h:inputText>
+                                <a href='#{smsCollectSettingMeterTenantEditBean.getLinkUrl("002")}' target="blank" id="zipCdLink">
+                                    <input jsfc="h:outputText"
+                                           style="font-size: 12px;"
+                                           value='#{smsCollectSettingMeterTenantEditBean.getLinkTitle("002")}' />
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="column_style1 TXT008">都道府県<span class="required"></span></th>
+                            <td class="column_style2">
+                                <h:selectOneMenu value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.prefectureCd}" class="check_change character_padding SELECT001"
+                                                 id="prefectureCd" style="width: 122px">
+                                    <f:ajax event="change" execute="prefectureCd" render="commonMunicipalitySearchForm"
+                                            listener="#{smsCollectSettingMeterTenantEditBean.changePrefectureCd()}"/>
+                                    <f:selectItems value="#{smsCollectSettingMeterTenantEditBean.prefectureMap}" />
+                                </h:selectOneMenu>
+                            </td>
+                            <td class="column_style3"/>
+                            <td class="column_style4"/>
+                            <td class="column_style5"/>
+                        </tr>
+                        <tr>
+                            <th class="column_style1 TXT008">自治体コード</th>
+                            <td class="column_style2" colspan="3">
+                                <h:inputText class="check_change character_padding EDIT002"
+                                             style="width: 120px; float:left; #{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                             id="municipalityCd" value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.municipalityCd}"
+                                             maxlength="5"
+                                             onchange="unicipalityChange();" onblur="unicipalityLostFocus();"
+                                             >
+                                    <f:passThroughAttribute name="placeholder" value="半角"/>
+                                </h:inputText>
+                                <a4j:commandButton id="checkUnicipalityHiddenButton" style="display: none;"
+                                                   onbegin="showBlockModal();" oncomplete="hideBlockModal(true); afterCheckUnicipality();"
+                                                   action="#{smsCollectSettingMeterTenantEditBean.changeMunicipality}"
+                                                   execute="#{rich:clientId('prefectureCd')} #{rich:clientId('municipalityName')} #{rich:clientId('municipalityCd')}"
+                                                   render="commonMunicipalitySearchForm #{rich:clientId('prefectureCd')} #{rich:clientId('municipalityName')} #{rich:clientId('municipalityCd')}"
+                                                   />
+                                <span class="gradation_type_1 button_small" style="display: inline-block">
+                                    <h:commandButton type="submit" id="searchBuildingButton" styleClass="BTN017" value="">
+                                        <a4j:ajax event="click"
+                                                  execute="companyEditStandardInfoPanel"
+                                                  render="commonMunicipalitySearchForm"
+                                                  listener="#{smsCollectSettingMeterTenantEditBean.changeCommonMunicipalityPrefectureCd(smsCollectSettingMeterTenantEditBean.editBeanProperty.prefectureCd)}"
+                                                  oncomplete="#{rich:component('commonSearchMunicipalityDialog')}.show();"/>
+                                    </h:commandButton>
+                                    <h:graphicImage style="position:absolute; top:2px; right:3px;" class="button_icon" library="images" name="common/com028.png" />
+                                </span>
+                                <span class="TXT023 municipality_notes">
+                                    ※自治体コードを検索すると、<br/>
+                                    　都道府県、市区町村番地を上書きします。
+                                </span>
+                            </td>
+                            <td class="column_style5"/>
+                        </tr>
+                        <tr>
+                            <th class="column_style1 TXT008">市区町村番地<span class="required"></span></th>
+                            <td colspan="4">
+                                <h:inputText id="municipalityName"
+                                             styleClass="check_change EDIT002"
+                                             style="width:675px; #{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                             value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.municipalityName}" maxlength="50" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="column_style1 TXT008">ビル名</th>
+                            <td colspan="4">
+                                <h:inputText id="addressBuilding" styleClass="check_change EDIT002" style="width:675px" value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.addressBuilding}" maxlength="50"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="column_style1 TXT008">電話番号</th>
+                            <td class="column_style2" colspan="3">
+                                <h:inputText id="telNo"
+                                             style="width: 235px; #{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                             styleClass="check_change EDIT002"
+                                             value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.telNo}" maxlength="50">
+                                    <f:passThroughAttribute name="placeholder" value="例）03-4568-1234 （内線：9999)"/>
+                                </h:inputText>
+                                <span class="TXT023" style="padding-left:15px;">※必要に応じて内線番号を入力ください。</span>
+                            </td>
+                            <td class="column_style5" />
+                        </tr>
+                        <tr>
+                            <th class="column_style1 TXT008">FAX番号</th>
+                            <td class="column_style2">
+                                <h:inputText id="faxNo"
+                                             style="width: 200px; #{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                             styleClass="check_change EDIT002"
+                                             value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.faxNo}" maxlength="50">
+                                    <f:passThroughAttribute name="placeholder" value="例）03-4568-1234"/>
+                                </h:inputText>
+                            </td>
+                            <td class="column_style3"/>
+                            <td class="column_style4"/>
+                            <td class="column_style5"/>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="contents_title">
+                    <h:outputText id="buildingTenantTitleUse" value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.buildingTenant}利用機能" />
+                </h3>
+                <div class="contents_form_area">
+                    <table>
+                        <tr>
+                            <th class="TXT008">集計開始年月<span class="required"></span></th>
+                            <td>
+                                <h:inputText id="totalStartYm" styleClass="check_change EDIT002 style_yyyymm"
+                                             style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                             value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.totalStartYm}"
+                                             maxlength="7">
+                                    <f:passThroughAttribute name="placeholder" value="YYYY/MM"/>
+                                </h:inputText>
+                            </td>
+                            <th class="TXT008">集計終了年月</th>
+                            <td>
+                                <h:inputText id="totalEndYm"
+                                             style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                             styleClass="check_change EDIT002 style_yyyymm"
+                                             value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.totalEndYm}"
+                                             maxlength="7">
+                                    <f:passThroughAttribute name="placeholder" value="YYYY/MM"/>
+                                </h:inputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <td colspan="4" valign="top">
+                                    <span class="TXT023">※集計開始年月、集計終了年月は、YYYY/MM形式の半角で入力してください。</span>
+                                </td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="TXT008">推計機能</th>
+                            <td style="padding-right:120px;">
+                                <h:selectOneMenu id="estimateUse" styleClass="check_change SELECT001 estimateUse"
+                                                 style="/* width: 185px;  */#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                                 value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.estimateUse}">
+                                    <f:ajax event="change"  execute="estimateUse" render="suikeiShubetsuId" />
+                                    <option jsfc="f:selectItems" value="#{smsCollectSettingMeterTenantEditBean.suikeifuncMap}" />
+                                </h:selectOneMenu>
+
+                            </td>
+                            <th class="TXT008">推計種別</th>
+                            <td>
+                                <h:selectOneMenu id="suikeiShubetsuId" styleClass="check_change SELECT001 suikei_shubetsu_id"
+                                                 style="width: 100%; #{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                                 disabled="#{!smsCollectSettingMeterTenantEditBean.isEstimateUse()}"
+                                                 value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.estimateId}" >
+                                    <option jsfc="f:selectItems" value="#{smsCollectSettingMeterTenantEditBean.suikeitypeMap}" />
+                                </h:selectOneMenu>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- メーターテナント情報欄 -->
+            <h3 class="contents_title">
+                <h:outputText id="meterTenantInfo" value="メーターテナント情報" />
+            </h3>
+            <div class="contents_form_area">
+                    <table>
+                        <tr>
+                            <th class="TXT008">固定費１</th>
+                            <td>
+                                <h:outputText value="名称" class="page_subtitle fixed_cost_name" />
+                                <h:inputText id="fixedCost1" styleClass="check_change EDIT002 fixed_cost_name_input"
+                                             style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                             value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.fixedName1}"
+                                             maxlength="20">
+                                    <f:passThroughAttribute name="placeholder" value="２０文字まで"/>
+                                </h:inputText>
+                            </td>
+                            <td class="fixed_cost_price_block">
+                                <h:outputText value="金額" class="page_subtitle fixed_cost_price" />
+                                <h:inputText id="price1"
+                                             style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                             styleClass="check_change EDIT002 fixed_cost_price_input"
+                                             value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.fixedPrice1}"
+                                             maxlength="6">
+                                    <f:passThroughAttribute name="placeholder" value="1～999999(半角数字)"/>
+                                </h:inputText>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th class="TXT008">固定費２</th>
+                            <td>
+                                <h:outputText value="名称" class="page_subtitle fixed_cost_name" />
+                                <h:inputText id="fixedCost2" styleClass="check_change EDIT002 fixed_cost_name_input"
+                                             style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                             value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.fixedName2}"
+                                             maxlength="20">
+                                    <f:passThroughAttribute name="placeholder" value="２０文字まで"/>
+                                </h:inputText>
+                            </td>
+                            <td class="fixed_cost_price_block">
+                                <h:outputText value="金額" class="page_subtitle fixed_cost_price" />
+                                <h:inputText id="price2"
+                                             style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                             styleClass="check_change EDIT002 fixed_cost_price_input"
+                                             value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.fixedPrice2}"
+                                             maxlength="6">
+                                    <f:passThroughAttribute name="placeholder" value="1～999999(半角数字)"/>
+                                </h:inputText>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th class="TXT008">固定費３</th>
+                            <td>
+                                <h:outputText value="名称" class="page_subtitle fixed_cost_name" />
+                                <h:inputText id="fixedCost3" styleClass="check_change EDIT002 fixed_cost_name_input"
+                                             style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                             value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.fixedName3}"
+                                             maxlength="20">
+                                    <f:passThroughAttribute name="placeholder" value="２０文字まで"/>
+                                </h:inputText>
+                            </td>
+                            <td class="fixed_cost_price_block">
+                                <h:outputText value="金額" class="page_subtitle fixed_cost_price" />
+                                <h:inputText id="price3"
+                                             style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                             styleClass="check_change EDIT002 fixed_cost_price_input"
+                                             value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.fixedPrice3}"
+                                             maxlength="6">
+                                    <f:passThroughAttribute name="placeholder" value="1～999999(半角数字)"/>
+                                </h:inputText>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th class="TXT008">固定費４</th>
+                            <td>
+                                <h:outputText value="名称" class="page_subtitle fixed_cost_name" />
+                                <h:inputText id="fixedCost4" styleClass="check_change EDIT002 fixed_cost_name_input"
+                                             style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                             value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.fixedName4}"
+                                             maxlength="20">
+                                    <f:passThroughAttribute name="placeholder" value="２０文字まで"/>
+                                </h:inputText>
+                            </td>
+                            <td class="fixed_cost_price_block">
+                                <h:outputText value="金額" class="page_subtitle fixed_cost_price" />
+                                <h:inputText id="price4"
+                                             style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                             styleClass="check_change EDIT002 fixed_cost_price_input"
+                                             value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.fixedPrice4}"
+                                             maxlength="6">
+                                    <f:passThroughAttribute name="placeholder" value="1～999999(半角数字)"/>
+                                </h:inputText>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th class="column_style1 TXT008">電灯料金メニュー</th>
+                            <td class="column_style2">
+                                <h:selectOneMenu id="priceMenu"
+                                                 style="width:50%; #{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                                 styleClass="check_change SELECT001"
+                                                 value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.priceMenuNo}"
+                                                 onchange="changeElectricPriceMenu(this);">
+                                    <option jsfc="f:selectItems" value="#{smsCollectSettingMeterTenantEditBean.priceMenuMap}" />
+                                </h:selectOneMenu>
+                                <span class="gradation_type_1 button_small" style="display: inline-block">
+
+                                </span>
+                            </td>
+
+                            <td class="gradation_type_1 gradation_type_5 button_medium_2 price_menu_btn" >
+                                <h:graphicImage class="button_edit button_icon settingTypeButton_img" library="images" name="common/com018.png" />
+                                <a4j:commandButton type="button" id="settingTypeButton_0"
+                                        class="button_small button_building_edit settingTypeButton_btn"
+                                        execute="smsCollectSettingTenantEditBaseInfoPanel"
+                                        actionListener="#{smsCollectSettingMeterTenantEditBean.detailRowBtnAction(
+                                        smsCollectSettingMeterTenantEditBean.editBeanProperty.priceMenuNo - 1)}"
+                                        render="smsCollectSettingTenantEditBaseInfoPopup"
+                                        onbegin="showBlockModal();"
+                                        oncomplete="
+                                            if (#{smsCollectSettingMeterTenantEditBean.popupIndex != -1}) {
+                                                #{rich:component('smsCollectSettingTenantEditBaseInfoPopup')}.show();
+                                            } else {
+                                                hideBlockModal();
+                                            }"
+                                        value="詳細設定"
+                                        disabled="#{!smsCollectSettingMeterTenantEditBean.editBeanProperty.updateProcessFlg}" />
+                            </td>
+                            <td class="column_style5"/>
+                        </tr>
+
+                        <!-- 
+                        <tr>
+                            <th class="column_style1 TXT008">契約容量</th>
+                            <td class="column_style2">
+                                <h:selectOneMenu id="contCapacity"
+                                                 style="width:30%; #{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}"
+                                                 styleClass="check_change SELECT001"
+                                                 value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.contractCapacity}">
+                                    <option jsfc="f:selectItems" value="#{smsCollectSettingMeterTenantEditBean.contCapacityMap}" />
+                                </h:selectOneMenu>
+                            </td>
+                        </tr>
+                         -->
+                        <c:forEach items="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.editDetailPopupInfoList}" var ="item" varStatus="sts" >
+                            <c:if test="#{item.meterType != 1}">
+                                <tr>
+                                    <th class="column_style1 TXT008">
+                                        <h:outputText value="#{item.meterTypeName}" />
+                                    </th>
+
+                                    <td class="gradation_type_1 gradation_type_5 button_medium_2" style="display: inline-block">
+
+                                    <h:graphicImage class="button_edit button_icon settingTypeButton_img" library="images" name="common/com018.png" />
+                                    <a4j:commandButton type="button" id="settingTypeButton_#{sts.index + 1}"
+                                        class="button_small button_building_edit settingTypeButton_btn"
+                                        execute="smsCollectSettingTenantEditBaseInfoPanel"
+                                        actionListener="#{smsCollectSettingMeterTenantEditBean.detailRowBtnAction(sts.index)}"
+                                        render="smsCollectSettingTenantEditBaseInfoPopup"
+                                        onbegin="showBlockModal();"
+                                        oncomplete="#{rich:component('smsCollectSettingTenantEditBaseInfoPopup')}.show();"
+                                        value="詳細設定"
+                                        disabled="#{!smsCollectSettingMeterTenantEditBean.editBeanProperty.updateProcessFlg}" />
+
+                                    </td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+
+                        <tr style="height: 160px;" >
+                            <th class="column_style1 TXT008 grid_group_sub_title" >
+                                グループ設定(%)
+                            </th>
+                            <td colspan="2">
+                                <h:panelGrid columns="5"
+                                             class="grid_group_rate"
+                                             rowClasses="grid_group_rate_th,grid_group_rate_td,grid_group_rate_th,grid_group_rate_td"
+                                             columnClasses="grid_group_rate_column,grid_group_rate_column,grid_group_rate_column,grid_group_rate_column,grid_group_rate_column"
+                                             cellpadding="0"
+                                             cellspacing="1" style="width: auto; display: inline-block;">
+
+                                    <!-- グループ1～グループ5設定 -->
+                                    <c:forEach begin="0" end="4" step="1"
+                                        items="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.meterGroupNameList}" var ="item" varStatus="sts" >
+                                        <h:outputText value="#{item.meterGroupName}" class="grid_group_rate_txt" />
+                                    </c:forEach>
+
+                                   <h:inputText class="check_change EDIT005 grid_group_rate_input" id="group_rate_0"
+                                        value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.divRate1}"
+                                        style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}" maxlength="3">
+                                    </h:inputText>
+
+                                    <h:inputText class="check_change EDIT005 grid_group_rate_input" id="group_rate_1"
+                                        value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.divRate2}"
+                                        style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}" maxlength="3">
+                                    </h:inputText>
+
+                                    <h:inputText class="check_change EDIT005 grid_group_rate_input" id="group_rate_2"
+                                        value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.divRate3}"
+                                        style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}" maxlength="3">
+                                    </h:inputText>
+
+                                    <h:inputText class="check_change EDIT005 grid_group_rate_input" id="group_rate_3"
+                                        value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.divRate4}"
+                                        style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}" maxlength="3">
+                                    </h:inputText>
+
+                                    <h:inputText class="check_change EDIT005 grid_group_rate_input" id="group_rate_4"
+                                        value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.divRate5}"
+                                        style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}" maxlength="3">
+                                    </h:inputText>
+
+                                    <!-- グループ6～グループ10設定 -->
+                                    <c:forEach begin="5" end="9" step="1"
+                                        items="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.meterGroupNameList}" var ="item" varStatus="sts" >
+                                        <h:outputText value="#{item.meterGroupName}" class="grid_group_rate_txt" />
+                                    </c:forEach>
+
+                                    <h:inputText class="check_change EDIT005 grid_group_rate_input" id="group_rate_5"
+                                            value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.divRate6}"
+                                            style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}" maxlength="3">
+                                    </h:inputText>
+
+                                    <h:inputText class="check_change EDIT005 grid_group_rate_input" id="group_rate_6"
+                                            value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.divRate7}"
+                                            style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}" maxlength="3">
+                                    </h:inputText>
+
+                                    <h:inputText class="check_change EDIT005 grid_group_rate_input" id="group_rate_7"
+                                            value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.divRate8}"
+                                            style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}" maxlength="3">
+                                    </h:inputText>
+
+                                    <h:inputText class="check_change EDIT005 grid_group_rate_input" id="group_rate_8"
+                                            value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.divRate9}"
+                                            style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}" maxlength="3">
+                                    </h:inputText>
+
+                                    <h:inputText class="check_change EDIT005 grid_group_rate_input" id="group_rate_9"
+                                            value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.divRate10}"
+                                            style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}" maxlength="3">
+                                    </h:inputText>
+                               </h:panelGrid>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <th class="column_style1 TXT008">登録計器（メーター）ID</th>
+                            <td>
+<!--
+                                <h:inputTextarea rows="8" id="registr_meter_id" styleClass="check_change TXT020 registr_meter_id_style" readonly="true"
+                                                     value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.meterListStr}"
+                                                     style="#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}">
+                                </h:inputTextarea>
+                                 -->
+
+                                <pre>
+                                    <h:outputText id="registr_meter_id"
+                                        styleClass="TXT020"
+                                        value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.meterListStr}" />
+                                </pre>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div>
+                    <h3 class="contents_title">備考</h3>
+                    <div class="contents_form_area">
+                        <table>
+                            <tr>
+                                <td>
+                                    <h:inputTextarea rows="8" id="biko" styleClass="check_change"
+                                                     value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.biko}"
+                                                     style="width:99%;#{smsCollectSettingMeterTenantEditBean.getInvalidStyle(component.clientId)}">
+                                    </h:inputTextarea>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            <div class="button_area_center gradation_type_1 button_large_2" style="position:relative;">
+                <!-- 新規時と編集時でアイコン位置ずらす -->
+                <h:graphicImage class="button_icon regist_beseinfo_img" library="images" name="common/com067.png"/>
+                <a4j:commandButton  id="RegistButton" styleClass="action_button button_regist" value="登録"
+                                    onclick="return deleteCheck('#{smsCollectSettingMeterTenantEditBean.deletePopupMsg}',
+                                                '#{smsCollectSettingMeterTenantEditBean.dialogMessage}');"
+                                    execute="smsCollectSettingTenantEditBaseInfoPanel"
+                                    render="smsCollectSettingMeterTenantEditBean"
+                                    onbegin="showBlockModal()" oncomplete="hideBlockModal(); clearChangeFlag();"
+                                    action="#{smsCollectSettingMeterTenantEditBean.updateTenantInfo()}">
+                    <h:graphicImage class="button_icon regist_beseinfo_img" library="images" name="common/com067.png" rendered=""/>
+                </a4j:commandButton>
+
+                <span style="position:absolute; top:12px;">
+                    <h:selectBooleanCheckbox value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.bDelFlg}" styleClass="check_change check_delete"
+                        rendered="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.updateProcessFlg}">
+                        <span class="TXT008 check_del_building">
+                            <h:outputText id="checkDelBuildingLabel" value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.buildingTenant}を削除する" />
+                        </span>
+                    </h:selectBooleanCheckbox>
+                </span>
+
+                <c:if test="#{smsCollectSettingMeterTenantEditBean.publicSettingVisble}">
+                    <span style="position:absolute; top:12px; margin-left: 240px;">
+                        <h:selectBooleanCheckbox value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.bPublicFlg}" styleClass="check_change">
+                            <span class="TXT008 check_del_building">
+                                <h:outputText id="checkPublicBuildingLabel" value="公開する" />
+                            </span>
+                        </h:selectBooleanCheckbox>
+                    </span>
+                </c:if>
+            </div>
+        </div>
+        <ui:include src="/html/sms/collect/setting/meterTenant/editTenantBaseInfoDetail.xhtml" >
+            <ui:param name="reflectControl"
+                value="smsCollectSettingMeterTenantEditBean:prefectureCd smsCollectSettingMeterTenantEditBean:municipalityCd smsCollectSettingMeterTenantEditBean:municipalityName" />
+        </ui:include>
+        <h:inputHidden id="updateProcessFlg" value="#{smsCollectSettingMeterTenantEditBean.editBeanProperty.updateProcessFlg}" />
+    </a4j:outputPanel>
+
+    <script type="text/javascript">
+        function deleteCheck(deleteMsgTxt, nomalMsgTxt) {
+            if (confirmationDialogOpen($('input[id$=RegistButton]'))) {
+                return true;
+            }
+            var isDelete = $(".check_delete").prop('checked');
+            if (isDelete) {
+                $('span[id$=confirmationDialogMessage]').html(deleteMsgTxt);
+            } else {
+                $('span[id$=confirmationDialogMessage]').html(nomalMsgTxt);
+            }
+            return false;
+        }
+    </script>
+    <script type="text/javascript">
+        //自治体検索フォーカス制御
+        var unicipalityChangeFlag = false;
+        var unicipalityFocusControl;
+        function unicipalityChange() {
+            unicipalityChangeFlag = true;
+        }
+        function unicipalityLostFocus() {
+            if (unicipalityChangeFlag) {
+                unicipalityChangeFlag = false;
+                unicipalityFocusControl = $(":focus")[0];
+                $('input[id$=checkUnicipalityHiddenButton]').click();
+            }
+        }
+        function afterCheckUnicipality() {
+            if (unicipalityFocusControl.id === "buildingInfoEditBean:prefectureCd") {
+                $('select[id$=prefectureCd]').focus();
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        //建物検索フォーカス制御
+        var divisionBuildingChangeFlag = false;
+        var divisionBuildingFocusControl;
+        function divisionBuildingChange() {
+            divisionBuildingChangeFlag = true;
+        }
+        function divisionBuildingLostFocus() {
+            if (divisionBuildingChangeFlag) {
+                divisionBuildingChangeFlag = false;
+                divisionBuildingFocusControl = $(":focus")[0];
+                $('input[id$=checkDivisionBuildingHiddenButton]').click();
+            }
+        }
+        function afterCheckDivisionBuilding() {
+            if (divisionBuildingFocusControl.id === "buildingInfoEditBean:divisionBuildingNo") {
+                $('select[id$=buildingInfoEditBean:divisionBuildingNo]').focus();
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            changeBuildingTenant();
+
+            if (#{smsCollectSettingMeterTenantEditBean.editBeanProperty.updateProcessFlg}){
+                if (#{smsCollectSettingMeterTenantEditBean.editBeanProperty.priceMenuNo == 0
+                    || smsCollectSettingMeterTenantEditBean.editBeanProperty.priceMenuNo == null}){
+                    $('input[id$=settingTypeButton_0]').prop("disabled", true);
+                } else {
+                    $('input[id$=settingTypeButton_0]').prop("disabled", false);
+                }
+            }
+
+        });
+        //建物・テナント選択
+        function changeBuildingTenant() {
+            var index = $('input:radio:checked').val();
+            if(index === 'true'){
+
+                $('input[id$=divisionBuildingNo]').prop('disabled',false);
+                $('input[id$=divisionBuildingName]').prop('disabled',false);
+                $('input[id$=searchBuildingOnlyButton]').prop('disabled',false);
+
+                if (#{!buildingInfoEditBean.controlDivisionBuildingFlg}) {
+                    $('input[id$=searchBuildingOnlyButton]').prop('disabled',true);
+                }
+
+                //テナント選択時に非表示にする項目の内容クリア
+                $('select[id$=nyukyoTypeCd]').prop('value',$('select[id$=nyukyoTypeCd]').children().first().val());
+                $('input[id$=floorCount]').prop('value', '');
+                $('input[id$=basementCount]').prop('value', '');
+                $('input[id$=commonUsedRate]').prop('value', '');
+                $('input[id$=kubunShoyuRate]').prop('value','');
+                $('input[id$=conpletedYm]').prop('value','');
+                $('select[id$=engManageFactoryType]').prop('value',$('select[id$=engManageFactoryType]').children().first().val());
+                $('input[id$=engManageFactoryNo]').prop('value','');
+                $('select[id$=subtypeId]').prop('value',$('select[id$=subtypeId]').children().first().val());
+                $('input[id$=freonDischargeOfficeFlg]').prop('checked',false);
+
+                $('.showBuildingOnly').hide();
+
+        } else {
+                $('input[id$=divisionBuildingNo]').prop('disabled',true);
+                $('input[id$=divisionBuildingName]').prop('disabled',true);
+                $('input[id$=searchBuildingOnlyButton]').prop('disabled',true);
+                $('input[id$=divisionCorpId]').prop('value', '');
+                $('input[id$=divisionCorpName]').prop('value', '');
+                $('input[id$=divisionBuildingId]').prop('value', '');
+                $('input[id$=divisionBuildingNo]').prop('value', '');
+                $('input[id$=divisionBuildingName]').prop('value','');
+
+                $('.showBuildingOnly').show();
+            }
+        }
+    </script>
+</html>

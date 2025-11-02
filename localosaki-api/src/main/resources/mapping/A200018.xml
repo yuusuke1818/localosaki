@@ -1,0 +1,122 @@
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+	<!-- *** FVPα用追加基本(取得) テンプレート *** -->
+	<!-- ベース部分 -->
+	<template name="base">
+		<field name="productCd" length="2" keepPadding="true" />
+		<field name="address" length="2" keepPadding="true" />
+		<field name="command" length="1" default="V" keepPadding="true" />
+		<field name="settingChangeHist" length="1" default="0" keepPadding="true" />
+		<field name="command" length="3" default="018" keepPadding="true" />
+	</template>
+
+	<template name="base.res">
+		<field name="productCd" length="2" keepPadding="true" />
+		<field name="address" length="2" keepPadding="true" />
+		<field name="command" length="5" keepPadding="true" />
+	</template>
+
+	<!-- 共通部分１（受信用） -->
+	<template name="commonResponse">
+		<field name="settingDate" length="11" keepPadding="true" />
+		<field name="outputFunctionSelect" length="1" keepPadding="true" />
+		<field name="timeLimitPulseOutput" length="1" keepPadding="true" />
+		<field name="timeLimitPulseOutputLag" length="2" keepPadding="true" />
+		<field name="timeLimitPulseOutputTime" length="3" keepPadding="true" />
+		<field name="timeLimitPulseOutputStart" length="2" keepPadding="true" />
+		<field name="timeLimitPulseOutputEnd" length="2" keepPadding="true" />
+		<field name="convartCoefficientCO2" length="3" keepPadding="true" />
+		<field name="powerRate" length="4" keepPadding="true" />
+		<field name="useUnitCost" length="4" keepPadding="true" />
+		<field name="waitTimeRS485" length="4" keepPadding="true" />
+		<field name="buzzer" length="1" keepPadding="true" />
+		<field name="nonMeasureAlert" length="1" keepPadding="true" />
+	</template>
+
+	<!-- 「00」(非対応) -->
+	<!-- 送信文 -->
+	<stream name="00.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+	<!-- 受信文 -->
+	<stream name="00.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 「03」(非対応) -->
+	<!-- 送信文 -->
+	<stream name="03.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+	<!-- 受信文 -->
+	<stream name="03.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 「06」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="06.req" format="fixedlength">
+		<record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200018Param">
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="06.res" format="fixedlength">
+		<record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200018Param">
+			<include template="commonResponse" />
+		</record>
+	</stream>
+
+	<!-- 「12」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="12.req" format="fixedlength">
+		<record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200018Param">
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="12.res" format="fixedlength">
+		<record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200018Param">
+			<include template="commonResponse" />
+			<field name="scheduleCtrl" length="1" keepPadding="true" />
+		</record>
+	</stream>
+
+	<!-- 「21」非対応 -->
+	<!-- 送信文 -->
+	<stream name="21.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+	<!-- 受信文 -->
+	<stream name="21.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 「22」非対応 -->
+	<!-- 送信文 -->
+	<stream name="22.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+	<!-- 受信文 -->
+	<stream name="22.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+</beanio>

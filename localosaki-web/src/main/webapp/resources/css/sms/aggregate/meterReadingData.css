@@ -1,0 +1,309 @@
+#smsAggregateMeterReadingDataBean .contents_form_area {
+  margin-top: 0;
+  margin-bottom: 45px;
+}
+
+.contents_title_body {
+  margin-right: 5px;
+}
+
+.condition_row+.condition_row {
+  margin-top: 10px;
+}
+
+.condition_row_flex {
+  margin-top: 10px;
+  display: flex;
+}
+
+.L1 {
+  display: inline-block;
+  width: 120px;
+  vertical-align: top;
+  padding-top: 10px;
+}
+
+.L2 {
+	font-size: 11px;
+}
+
+.condition_contents table.dispType {
+  display: inline-block;
+  height: 25px;
+}
+
+.condition_contents table.dispType td {
+  width: 100px;
+}
+
+.condition_contents {
+  display: inline-block;
+}
+
+.condition_contents_flex {
+  display: flex;
+}
+
+.condition_contents_flex_2 {
+  display: flex;
+  margin-top:4px;
+}
+
+.condition_contents input[type='text'] {
+  width: 100px;
+}
+
+.btnCal {
+  display: inline-block;
+  margin-left: -5px;
+}
+
+.date_sep {
+  margin: 0 7px;
+}
+
+.contents_form_area table.rf-cal-extr {
+  width: 200px;
+}
+
+.contents_form_area table.rf-cal-extr tr {
+  height: 30px;
+}
+
+.contents_form_area table.rf-cal-monthpicker-cnt tr {
+  height: 25px;
+}
+
+.button_large_2 .button_icon {
+  position: relative;
+  left: -122px;
+  top: 6px;
+}
+
+.search_result_area table {
+  border-collapse: collapse;
+}
+
+.search_result_area table tbody tr {
+  height: 25px;
+}
+
+.search_result_area>table>thead>tr>th, .search_result_area>table>tbody>tr>td
+  {
+  border: 1px #CCC solid;
+  padding: 5px;
+}
+
+.search_result_area table td.column_style_tenant_flg {
+  text-align: center;
+}
+
+.search_result_area table td.column_style_meter_reading_serial_number {
+  text-align: center;
+}
+
+.search_result_area table td.column_style_insp_type_name {
+  text-align: center;
+}
+
+.search_result_area table td.column_style_corp {
+  width: 200px;
+}
+
+.search_result_area table td.column_style_tenant_flg {
+  width: 50px;
+}
+
+.search_result_area table td.column_style_building {
+  width: auto;
+}
+
+.search_result_area table td.column_style_meter_reading_date {
+  width: 150px;
+}
+
+.search_result_area table td.column_style_meter_reading_serial_number {
+  width: 80px;
+}
+
+.search_result_area table td.column_style_insp_type_name {
+  width: 80px;
+}
+
+.search_result_area table .button_small {
+  width: 32px;
+}
+
+.search_result_area table .button_dl {
+  position: absolute;
+  top: 22px;
+  left: 33px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.contents_header {
+  position: absolute;
+  position: relative;
+  margin: 12px 55px 20px 10px;
+}
+
+.btn_icon_input {
+  width: 90px;
+  height: 70px;
+  padding-top: 40px;
+  vertical-align: bottom;
+}
+
+.button_search_result {
+  position: absolute;
+  margin-left: 8px;
+  margin-top: 5px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.button_async_status {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  margin-left: 30px;
+  margin-top: 12px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+
+
+/*                      */
+/* 予約情報表示テーブル */
+/*                      */
+
+/** 共通フォーマット **/
+.reservation_status_area table {
+  border-collapse: collapse;
+}
+
+.reservation_status_area table tbody tr {
+  height: 25px;
+}
+
+.reservation_status_area>table>thead>tr>th, .reservation_status_area>table>tbody>tr>td
+  {
+  border: 1px #CCC solid;
+  padding: 5px;
+}
+
+.reservation_status_area .table_header {
+	background-color: rgb(0,79,141);
+    color: white;
+    font-weight: bold;
+    border: 1px #CCC solid;
+    height:34px;
+}
+
+/*検索結果の1リストに2行表示させるパターンの背景色対応１*/
+.reservation_status_area table tr:nth-child(2n) {
+    background-color: rgb(200,233,255);
+}
+
+/*検索結果の1リストに2行表示させるパターンの背景色対応２*/
+.reservation_status_area table tr:nth-child(2n-1) table tr:nth-child(2n) {
+    background-color: #FFF;
+}
+
+
+/** 予約情報テーブル特有 **/
+.reservation_content>table>tbody>tr>td:nth-child(1),
+.reservation_content>table>tbody>tr>td:nth-child(3),
+.reservation_content>table>tbody>tr>td:nth-child(4),
+.reservation_content>table>tbody>tr>td:nth-child(5) {
+	text-align: center;
+}
+
+/* NEW */
+.request_date {
+	width: 15%;
+}
+
+.output_condition {
+	width: 70%;
+}
+
+.download_button_area {
+	width: 15%;
+}
+
+/* セル内の文字折り返しなし・同じ幅（最大デマンド値と前年同月値） */
+
+.equal-width {
+	white-space: nowrap;
+	width: 10%;
+}
+
+/*ダウンロードボタン*/
+.async_download_button {
+	position:relative;
+    text-align: center;
+    margin: auto;
+}
+
+.async_download_button_icon {
+	position: absolute;
+    top: 8px;
+    left: 7px;
+    pointer-events: none;
+}
+
+
+
+
+
+
+
+/*ページ*/
+
+
+#reserve_status_paging_area{
+    padding-top: 15px;
+    font-size: 13px;
+    width: 100%;
+}
+#reserve_status_paging_area a, #reserve_status_paging_area span{
+    padding: 0px 7px 0px 7px;
+    font-size: 17px;
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+.button_download{
+    margin-top: 20px;
+}
+.button_download input[type="submit"]{
+    width: 210px;
+}
+
+.dl_button_icon {
+    position: absolute;
+    margin-left: -195px;
+    margin-top: 12px;
+    pointer-events: none;
+}
+
+.th-sep-label {
+  height: 30px;
+  line-height: 20px;
+  padding: 8px;
+}
+
+.th-sep-label span {
+  font-size: 12px;
+  font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo,
+    'ＭＳ Ｐゴシック', sans-serif;
+}
