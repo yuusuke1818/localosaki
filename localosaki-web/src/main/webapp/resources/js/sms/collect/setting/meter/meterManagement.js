@@ -203,6 +203,16 @@ function setDeleteBtnDisabled(id, disabled) {
  * ボタンの活性/非活性切替処理
  */
 function dispButton() {
+    const cd610Val = $('input[id$="functionCd610Exists"]').val();
+    const cd610Exists = String(cd610Val).toLowerCase() === 'true';
+    
+    if (!cd610Exists) {
+        $(".button_edit_2").addClass('gradation_type_5').removeClass('gradation_type_3').removeClass('gradation_type_1');
+        $(".button_edit_2 input[type='button']").prop('disabled', true);
+        $(".button_new").removeClass('gradation_type_1').addClass('gradation_type_3');
+        return;
+    }
+    
     const chk = $(".tbl input[type='checkbox']:checked").length;
     if (chk > 0) {
         $(".button_edit").removeClass('gradation_type_5').removeClass('gradation_type_1').addClass('gradation_type_3');

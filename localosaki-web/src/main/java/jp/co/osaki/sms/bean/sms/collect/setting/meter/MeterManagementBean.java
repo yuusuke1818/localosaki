@@ -865,6 +865,17 @@ public class MeterManagementBean extends SmsConversationBean implements Serializ
         this.batchRegistEnabled = batchRegistEnabled;
     }
 
+    /** function_cd='610'のレコード存在フラグ */
+    private boolean functionCd610Exists = true;
+
+    public boolean isFunctionCd610Exists() {
+        return functionCd610Exists;
+    }
+
+    public void setFunctionCd610Exists(boolean functionCd610Exists) {
+        this.functionCd610Exists = functionCd610Exists;
+    }
+
     @Override
     public String init() {
         conversationStart();
@@ -1260,23 +1271,30 @@ public class MeterManagementBean extends SmsConversationBean implements Serializ
     }
 
     /**
-     * 一括登録ボタンの活性/非活性を判定する
-     * 大崎権限（corp_id が osaki または osakitest00）の場合は活性化
-     * それ以外で m_corp_function_use に function_cd='610' が存在する場合は非活性化
+     * 一括登録ボタンおよび設定変更・現在値取得ボタンの活性/非活性を判定する
+     * 
+     * function_cd='610'のレコードが存在する場合：
+     * - 大崎権限（corp_id が osaki または osakitest00）：一括登録を活性化
+     * - 大崎権限以外：一括登録を非活性化
+     * 
+     * function_cd='610'のレコードが存在しない場合：
+     * - 全ての企業で一括登録・設定変更・現在値取得を非活性化
      */
     private void checkBatchRegistrationEnabled() {
         String corpId = getLoginCorpId();
         
-        if ("osaki".equals(corpId) || "osakitest00".equals(corpId)) {
-            batchRegistEnabled = true;
+        MCorpFunctionUse functionUse = MCorpFunctionUseDao.find("610", corpId);
+        functionCd610Exists = (functionUse != null);
+        
+        if (!functionCd610Exists) {
+            batchRegistEnabled = false;
             return;
         }
         
-        MCorpFunctionUse functionUse = MCorpFunctionUseDao.find("610", corpId);
-        if (functionUse != null) {
-            batchRegistEnabled = false;
-        } else {
+        if ("osaki".equals(corpId) || "osakitest00".equals(corpId)) {
             batchRegistEnabled = true;
+        } else {
+            batchRegistEnabled = false;
         }
     }
 
@@ -4222,6 +4240,12 @@ public class MeterManagementBean extends SmsConversationBean implements Serializ
         eventLogger.debug(MeterManagementBean.class.getPackage().getName()
                 .concat(" smsCollectSettingMeterMeterManagementBean:execEdit():START"));
 
+        if (MeterManagementConstants.UPDATE_TYPE_SETTING.equals(updateType) && !functionCd610Exists) {
+            addErrorMessage("設定変更の実行権限がありません。");
+            eventLogger.warn("Setting change attempted without function_cd=610. corpId=" + getLoginCorpId());
+            return;
+        }
+
         // 「LTE-M かつ 設定変更」の場合
         if (lteMDeviceFlg && MeterManagementConstants.UPDATE_TYPE_SETTING.equals(updateType)) {
 
@@ -5729,6 +5753,12 @@ public class MeterManagementBean extends SmsConversationBean implements Serializ
 
         eventLogger.debug(MeterManagementBean.class.getPackage().getName()
                 .concat(" smsCollectSettingMeterMeterManagementBean:execGetCurrentValue():START"));
+
+        if (!functionCd610Exists) {
+            addErrorMessage("現在値取得の実行権限がありません。");
+            eventLogger.warn("Current value acquisition attempted without function_cd=610. corpId=" + getLoginCorpId());
+            return;
+        }
 
         // スマートメーター かつ LTE-Mの場合
         if (Objects.equals(meterKind, METER_KIND.SMART.getVal()) && lteMDeviceFlg) {

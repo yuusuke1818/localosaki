@@ -31,7 +31,8 @@
                                         p1SearchConditionPanel
                                         h1SearchConditionPanel
                                         o1SearchConditionPanel"
-                                listener="#{smsCollectSettingMeterMeterManagementBean.changeDevIdSel(smsCollectSettingMeterMeterManagementBean.pulseProperty.devId)}">
+                                listener="#{smsCollectSettingMeterMeterManagementBean.changeDevIdSel(smsCollectSettingMeterMeterManagementBean.pulseProperty.devId)}"
+                                oncomplete="dispButton();">
                                 <select jsfc="h:selectOneMenu"
                                     value="#{smsCollectSettingMeterMeterManagementBean.pulseProperty.devId}"
                                     class="SEL1 selDev sDevIdSel autofocus">

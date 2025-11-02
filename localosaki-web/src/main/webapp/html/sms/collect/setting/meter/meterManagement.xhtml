@@ -24,6 +24,7 @@
                         <!-- タブ切替時の再検索用隠し要素 -->
 <!--                          <h:inputHidden id="meterKindHiddenInput" value="#{smsCollectSettingMeterMeterManagementBean.meterKind}" />-->
                         <h:inputHidden id="meterKind" value="#{smsCollectSettingMeterMeterManagementBean.meterKind}" />
+                        <h:inputHidden id="functionCd610Exists" value="#{smsCollectSettingMeterMeterManagementBean.functionCd610Exists}" />
                         <!-- <a4j:commandButton
                             class="meterKindHiddenBtn"
                             style="display: none;"
@@ -51,7 +52,7 @@
                             <rich:tab
                                     id="tab1"
                                     onbegin="showBlockModal();"
-                                    oncomplete="setErrMsgArea('1'); changeDispListMode('S'); hideBlockModal(); moveColumnsForLteMDevice();"
+                                    oncomplete="setErrMsgArea('1'); changeDispListMode('S'); hideBlockModal(); moveColumnsForLteMDevice(); dispButton();"
                                     execute="@form"
                                     render="meterManagement #{rich:clientId('confirmMsgArea')}"
                                     rendered="#{smsCollectSettingMeterMeterManagementBean.smartPulseTabViewFlg}"
@@ -67,7 +68,7 @@
                             <rich:tab
                                     id="tab2"
                                     onbegin="showBlockModal();"
-                                    oncomplete="setErrMsgArea('1'); changeDispListMode('P'); hideBlockModal();"
+                                    oncomplete="setErrMsgArea('1'); changeDispListMode('P'); hideBlockModal(); dispButton();"
                                     execute="@form"
                                     render="meterManagement #{rich:clientId('confirmMsgArea')}"
                                     rendered="#{smsCollectSettingMeterMeterManagementBean.smartPulseTabViewFlg}"
