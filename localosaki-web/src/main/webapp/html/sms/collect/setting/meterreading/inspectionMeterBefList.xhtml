@@ -1,0 +1,278 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      >
+<body>
+
+<ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+    <ui:define name="content_side" class="content">
+        <meta http-equiv="content-language" content="ja" />
+        <h:outputStylesheet library="css" name="common/button.css"/>
+        <h:outputStylesheet library="css" name="common/default.css"/>
+        <h:outputStylesheet library="css" name="common/cssLayout.css"/>
+        <h:outputStylesheet library="css" name="common/common.css"/>
+        <h:outputStylesheet library="css" name="sms/collect/setting/meterreading/inspectionMeterBef.css"/>
+        <h:outputScript library="js" name="sms/collect/setting/meterreading/meterreading_common.js"/>
+
+        <form jsfc="h:form" id="smsCollectSettingMeterreadingInspectionMeterBefListBean">
+            <div class="inner_content">
+                <div class="title_area_warp">
+                    <!-- 画面タイトル -->
+                    <div class="title_area_left">
+                        <h2 class="page_title">確定前検針データ</h2>
+                        <!-- ヘルプボタン -->
+                        <c:if test="#{indexBean.userGuideBool}">
+                            <h:commandLink class="help_icon"
+                                action="#{indexBean.userGuide()}" target="_blank" />
+                        </c:if>
+                        <p class="page_subtitle">
+                            <h:outputText value="確定前検針データから、検針データへの登録ができます。&lt;br/&gt;
+                                また、確定前検針データの削除ができます。" escape="false" />
+                        </p>
+                        <rich:messages />
+                    </div>
+                    <div class="clear" />
+
+                    <div class="contents_title contents_accordion_header">
+                        <h:graphicImage class="button_icon button_opener" library="images" name="demand/demand_container_opner.png" style="display: none;" />
+                        <h:graphicImage class="button_icon button_closer" library="images" name="demand/demand_container_closer.png" />
+                        <span class="contents_title_body">表示条件</span>
+                    </div>
+                    <div class="contents_form_area contents_accordion_body">
+                        <span class="msg">表示内容を変更したい場合は、下記を変更し、［表示更新］ボタンを押してください。</span>
+                        <div class="contents_form_area_row">
+                            <span class="page_subtitle">接続先</span>
+                            <div>
+                                <select jsfc="h:selectOneMenu"
+                                                 id="devId"
+                                                 value="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.devId}"
+                                                 styleClass="inspectionMeterBef_sel_std"
+                                                 onkeydown="searchConditionKeydown()">
+                                    <option jsfc="f:selectItems" value="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.devNameMap}" />
+                                </select>
+                            </div>
+                            <span class="page_subtitle">データ表示種別</span>
+                            <div>
+                                <select jsfc="h:selectOneMenu"
+                                                 id="dispDataType"
+                                                 value="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.dispDataType}"
+                                                 styleClass="inspectionMeterBef_sel_std"
+                                                 onkeydown="searchConditionKeydown()">
+                                    <option jsfc="f:selectItems" value="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.dispDataTypeMap}" />
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="button_area_center gradation_type_1 button_large_2 button_area">
+                            <a4j:commandButton
+                                id="searchButton"
+                                class="action_button"
+                                value="表示更新"
+                                execute="@form" 
+                                render="@form" 
+                                action="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.search()}"
+                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                ></a4j:commandButton>
+                            <h:graphicImage class="button_icon" library="images" name="common/com015.png" rendered="true"/>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="button_area_right gradation_type_1 button_large_2 button_area">
+                            <a4j:commandButton
+                                id="entryButton"
+                                class="action_button"
+                                value="確定登録"
+                                execute="@form" 
+                                render="@form" 
+                                action="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.execEntry()}"
+                                onclick="setIsForcedWrite(false)"
+                                onbegin="showBlockModal()" oncomplete="hideBlockModal(); confMsg();">
+                            </a4j:commandButton>
+                            <h:graphicImage class="button_icon" library="images" name="common/com018.png" rendered="true"/>
+
+                            <a4j:commandButton
+                                id="deleteButton"
+                                class="action_button"
+                                value="選択削除"
+                                execute="@form" 
+                                render="@form" 
+                                action="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.delete()}"
+                                onclick="return confirmationDialog($('input[id$=deleteButton]'), '#{smsCollectSettingMeterreadingInspectionMeterBefListBean.beforeDeleteMessage}')"
+                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                ></a4j:commandButton>
+                            <h:graphicImage class="button_icon" library="images" name="common/com019.png" rendered="true"/>
+                        </div>
+                    </div>
+
+                    <div class="search_result_header_wrap">
+                        <div id="listReroad">
+                            <div class="search_result_header_left page_content_parts">
+                                検索条件に該当する確定前検針データ情報 <span class="serach_result_total_count"
+                                    jsfc="h:outputText"
+                                    value="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.resultCount}" />
+                                件
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 検索結果リスト表示 -->
+                    <div class="search_result_area">
+                        <h:dataTable id="result" var="item" value="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.smsCollectSettingMeterreadingInspectionMeterBefPaging.pageList}"
+                            style="width: 100%;"
+                            headerClass="table_header"
+                            columnClasses="column_style_checkbox,column_style_meterMngId,column_style_userCode,column_style_tenant,column_style_meterTypeName,column_style_latestInspVal,column_style_multi,column_style_latestInspDate"
+                            rendered="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.smsCollectSettingMeterreadingInspectionMeterBefPaging.resultCount > 0}">
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    <h:commandLink class="inspectionMeterBef_link" action="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.chkBoxAll()}">選択</h:commandLink>
+                                </f:facet>
+                                <h:selectBooleanCheckbox value="#{item.checkbox}" class="" rendered="#{item.isInspection}" />
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    管理番号
+                                </f:facet>
+                                <h:outputText id="meterMngId" class="#{item.duplicate ? 'duplicate' : ''}" value="#{item.meterMngId}" />
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    ユーザーコード
+                                </f:facet>
+                                <h:outputText id="userCode" class="#{item.duplicate ? 'duplicate' : ''}" value="#{item.userCode}" />
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    テナント番号<br/>
+                                    テナント名
+                                </f:facet>
+                                <h:outputText id="tenantNo" class="#{item.duplicate ? 'duplicate' : ''}" value="#{item.tenantNo}" /><br />
+                                <h:outputText id="tenantName" class="#{item.duplicate ? 'duplicate' : ''}" value="#{item.tenantName}" />
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    種別
+                                </f:facet>
+                                <h:outputText id="meterTypeName" value="#{item.meterTypeName}" />
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    検針値
+                                </f:facet>
+                                <h:outputText id="latestInspVal" value="#{item.latestInspVal}" rendered="#{item.isInspection}" />
+                                <h:outputText class="noDataMsg" value="未取得" rendered="#{!item.isInspection}" />
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    乗率
+                                </f:facet>
+                                <h:outputText id="multi" value="#{item.multi}" />
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    <c:if test="#{!smsCollectSettingMeterreadingInspectionMeterBefListBean.isOcr()}">
+                                    データ取得日時
+                                    </c:if>
+                                    <c:if test="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.isOcr()}">
+                                        計測日時
+                                    </c:if>
+                                </f:facet>
+                                <h:outputText id="latestInspDate" value="#{item.latestInspDateDisp}" rendered="#{item.isInspection}" />
+                                <h:outputText class="noDataMsg" value="　　　未取得" rendered="#{!item.isInspection}" />
+                            </span>
+                        </h:dataTable>
+                    </div>
+
+                    <!-- ページング -->
+                    <ui:fragment
+                        rendered="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.smsCollectSettingMeterreadingInspectionMeterBefPaging.resultCount != '0'}">
+                        <div class="contents_center">
+                            <div id="paging_area">
+                                <span id="prevButton_area"> <h:commandLink
+                                        id="prevButton" value="&lt;&nbsp;&nbsp;前へ"
+                                        actionListener="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.prevPage}"
+                                        disabled="#{!smsCollectSettingMeterreadingInspectionMeterBefListBean.smsCollectSettingMeterreadingInspectionMeterBefPaging.isPrevPage()}">
+                                        <f:ajax execute="@form" render="@form" />
+                                        <f:attribute name="page"
+                                            value="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.smsCollectSettingMeterreadingInspectionMeterBefPaging.currentPage}" />
+                                    </h:commandLink>
+                                </span>
+                                <cust:pageIndex id="pageJumpButton"
+                                    value="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.smsCollectSettingMeterreadingInspectionMeterBefPaging.pageValue}"
+                                    action="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.pageJump()}">
+                                    <ui:include src="/html/common/paging/index.xhtml" />
+                                </cust:pageIndex>
+                                <span id="nextButton_area"> <h:commandLink
+                                        id="nextButton" class="nextButton"
+                                        value="後へ&nbsp;&nbsp;&gt; "
+                                        actionListener="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.nextPage}"
+                                        disabled="#{!smsCollectSettingMeterreadingInspectionMeterBefListBean.smsCollectSettingMeterreadingInspectionMeterBefPaging.isNextPage()}">
+                                        <f:ajax execute="@form" render="@form" />
+                                        <f:attribute name="page"
+                                            value="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.smsCollectSettingMeterreadingInspectionMeterBefPaging.currentPage}" />
+                                    </h:commandLink>
+                                </span>
+                            </div>
+                        </div>
+                    </ui:fragment>
+                </div>
+            </div>
+
+            <h:inputHidden id="isForcedWrite" value="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.isForcedWrite}" /> 
+
+            <ui:include src="/html/common/confirmationDialog.xhtml" >
+                <ui:param name="confirmationDialogTitle" value="確認" />
+                <ui:param name="confirmationDialogMessage" value="" />
+            </ui:include>
+
+            <script type="text/javascript">
+            /* 処理後に（確認メッセージがあれば）確認ダイアログを表示する
+             * ※「確定登録」ボタンの後処理
+             */
+            function confMsg() {
+                let confMissingId  = "#{smsCollectSettingMeterreadingInspectionMeterBefListBean.confMissingId}";
+                if (confMissingId != "") {
+                    // 登録すべきメーター管理番号が登録対象になっていない（未計測や未選択） → 強制実行確認ダイアログを表示 ※[OK]ボタン押下時は、実行ボタンの処理を行う
+                    setIsForcedWrite(true); // 強制実行 ※[OK]ボタンを押下して実行したときは、チェック処理をスキップする
+                    confirmationDialog($('input[id$=entryButton]'), confMissingId);
+                }
+            }
+
+            /*
+             * 強制実行フラグセット
+             * ※登録処理の流れ：[登録]ボタン押下 → 強制実行フラグを false にして実行 → 登録前のチェック処理でNG → 確認ダイアログ表示(ON:強制実行/キャんセル:登録キャンセル) → [OK]ボタンを押下 → 強制実行フラグを true にして実行 → (登録前のチェック処理をスキップして)登録処理を実施
+             * ※この処理は、ダイアログ内の[OK]ボタン押下時にも実行される。confirmationDialogShowing 変数 で判別する
+             * @param flg true:強制実行(チェック処理をスキップする)(確認ダイアログで[OK]ボタンを押下したときの動作)  false:強制実行しない(通常:[登録]ボタン押下時の動作)
+             */
+            function setIsForcedWrite(flg) {
+                if (!confirmationDialogShowing) { // ダイアログ処理内ので[OK]ボタン押下によって再帰的に呼ばれたケースではない
+                    $('input[id$=isForcedWrite]').val(flg);
+                }
+            }
+
+            /*
+             * 確認ダイアログ表示
+             * [OK]ボタン押下時は、実行ボタンの処理を行う
+             * @param btn 押下時したボタン
+             * @param msg 確認メッセージ
+             */
+            function confirmationDialog(btn, msg) {
+                $('span[id$=confirmationDialogMessage]').html(msg);
+                return confirmationDialogOpen(btn);
+            }
+            </script>
+        </form>
+    </ui:define>
+</ui:composition>
+
+</body>
+</html>

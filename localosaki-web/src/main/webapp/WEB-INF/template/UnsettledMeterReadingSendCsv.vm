@@ -1,0 +1,6 @@
+#foreach ($record in $recordList)
+#set ($pattern = "$record.buildingName、 $record.devName、 $record.meterTypeName、管理番号：$record.meterMngId、テナント名：$record.tenantName")
+$pattern
+#end
+
+大崎電気工業株式会社

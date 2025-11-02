@@ -1,0 +1,17 @@
+$devName($devId)の装置で
+メーター異常が発生しましたので通知します。
+
+管理番号 メーターID   状態 テナント名 検針日時 種別
+
+#foreach($meter in $meterList)$meter.meterMngId $meter.meterId $meter.meterState $meter.tenantName $meter.inspDate $meter.meterType
+#end
+
+
+メーター状態が異常状態のままであるのは以下のメーターです。
+
+管理番号 メーターID   テナント名 検針日時 種別
+
+#foreach($meter in $errMeterList)$meter.meterMngId $meter.meterId $meter.tenantName $meter.inspDate $meter.meterType
+#end
+
+大崎電気工業株式会社

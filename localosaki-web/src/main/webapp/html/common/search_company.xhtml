@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+<rich:popupPanel id="commonSearchCompanyDialog" modal="true" moveable="true" resizeable="false"
+                 top="180" width="800" height="450" domElementAttachment="form" zindex="150" onshow="checkAutoFocusOnShowRichPanel(event);">
+        <!-- z-index:150 ヘッダ部分の後ろに隠れるのを避ける為 -->
+
+        <form jsfc="h:form" id="commonCompanySearchForm">
+
+            <f:facet name="header">
+                <h:outputText value="企業検索" />
+            </f:facet>
+            <f:facet name="controls">
+                <div class="cellM" style="width:50px;">
+                    <input jsfc="h:commandButton" value="閉じる" onclick="#{rich:component('commonSearchCompanyDialog')}.hide(); return false;" immediate="false">
+                    </input>
+                </div>
+            </f:facet>
+        
+            <div class="table topTitle">
+              <div class="contents_detail">
+                    <table align="center" jsfc="h:dataTable" var="item" value="#{commonSearchCompanyBean.conditionList}" id="commonCompanyCondition" headerClass="table_header"
+                       columnClasses="column_style, column_style, column_style, column_style, column_style, column_style, column_style, column_style">
+
+                        <span jsfc="h:column">
+                            <h:selectOneMenu value="#{item.selectConditionCd}" rendered="#{item.selectEnable}" id="commonCompanySelectCondition">
+                                <f:ajax execute="@form" render="@form" event="change" listener="#{commonSearchCompanyBean.changeConditionCd(item.orderNo)}" />
+                                <option jsfc="f:selectItems" value="#{item.selectConditionMap}" />
+                            </h:selectOneMenu>
+                            <h:outputText value="#{item.selectConditionCd}" rendered="#{item.selectDisable}" />
+                        </span>
+                        
+                        <span jsfc="h:column">
+                            <!--都道府県 -->
+                            <h:selectOneMenu value="#{item.prefectureCd}" rendered="#{item.prefectureSelectEnable}" id="commonCompanySelectPrefecture">
+                                <option jsfc="f:selectItems" value="#{commonSearchCompanyBean.prefectureMap}" />
+                            </h:selectOneMenu>
+                            <!--企業種別 -->
+                            <h:selectManyCheckbox value="#{item.companyKindCd}" rendered="#{item.companyKindSelectEnable}" id="commonCompanyCheckKind">
+                                <option jsfc="f:selectItems" value="#{commonSearchCompanyBean.companyKindMap}" />
+                            </h:selectManyCheckbox>
+                            <!--キーワード -->
+                            <h:inputText value="#{item.conditionKeyword}" class="autofocus" rendered="#{item.keywordSelectEnable}" id="commonCompanyKeyword" />
+                        </span>
+                        <span jsfc="h:column" >
+                            <span jsfc="h:column" >
+                                <h:outputText value="#{item.mutchingTypeCd}" />
+                            </span>
+                        </span>
+                        <span jsfc="h:column" >
+                            <h:commandButton value="条件削除" styleClass="transition_button_size color_botton_close" rendered="#{item.deleteButtonEnable}" 
+                                   action="#{commonSearchCompanyBean.deleteCondition(item.orderNo)}" >
+                                <f:ajax execute="@form" render="@form" />
+                            </h:commandButton>
+                        </span>
+                    </table>
+                </div>
+                <div>検索条件を入力し、検索ボタンを押してください。</div>
+                <div class="output_button">
+                    <h:commandButton value="検索" styleClass="transition_button_size color_botton_regist" action="#{commonSearchCompanyBean.search()}">
+                        <!--<f:ajax execute="@form" render="@form" />-->
+                        <a4j:ajax execute="@form" render="@form" onbegin="showBlockModal()" oncomplete="hideBlockModal()" />
+                    </h:commandButton>
+                </div>
+
+            </div>
+            <!--検索結果 -->
+            <div>
+                <div>
+                    <h3 class="contents_title">検索結果</h3>
+                    <div class="page_content_parts" id="listReroad">
+                        <div class="div_left">
+                            <span jsfc="h:outputText" value="検索条件に該当する企業情報 ：#{commonSearchCompanyBean.companySelectPaging.resultCount}件" />
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <table align="center" jsfc="h:dataTable" id="result" var="item" value="#{commonSearchCompanyBean.companySelectPaging.pageList}" class="search_result" headerClass="table_header"
+                           columnClasses="column_style, column_style, column_style, column_style, column_style, column_style, column_style, column_style">
+                        <span jsfc="h:column">
+                            <span jsfc="f:facet" name="header">
+                                <span jsfc="h:outputText" value="選択"/>
+                            </span>
+                                <input jsfc="h:commandButton" value="選択" onclick="showBlockModal();" action="#{commonSearchCompanyBean.select(item)}"  >
+                            <!--@allでrenderすることでdialogは非表示になるがhideしておかないとその後の遷移がおかしくなるのでoneventでhideしておく -->
+                                <f:ajax execute="@all" render="@all" onevent="#{rich:component('commonSearchCompanyDialog')}.hide();"  />
+                            </input>
+                        </span>
+                      <span jsfc="h:column">
+                            <span jsfc="f:facet" name="header">
+                                <span jsfc="h:outputText" value="企業ID"/>
+                            </span>
+                            <span jsfc="h:outputText" id="corpId" value="#{item.corpId}" />
+                        </span>
+                       <span jsfc="h:column">
+                            <span jsfc="f:facet" name="header">
+                                <span jsfc="h:outputText" value="企業名"/>
+                            </span>
+                            <span jsfc="h:outputText" id="corpName" value="#{item.corpName}" />
+                        </span>
+                        <span jsfc="h:column">
+                            <span jsfc="f:facet" name="header">
+                                <span jsfc="h:outputText" value="企業種別"/>
+                            </span>
+                            <span jsfc="h:outputText" id="corpType" value="#{item.companyKind}" />
+                        </span>
+    
+                        <span jsfc="h:column">
+                            <span jsfc="f:facet" name="header">
+                                <span jsfc="h:outputText" value="住所"/>
+                            </span>
+                            <span jsfc="h:outputText" id="address" value="#{item.address}" />
+                        </span>
+                    </table>
+                </div>
+                <div>
+                    <div align="center" >
+                        <h:commandButton  value="←" actionListener="#{commonSearchCompanyBean.prevPage}" disabled="#{!commonSearchCompanyBean.companySelectPaging.isPrevPage()}">
+                            <f:ajax execute="@form" render="@form" />
+                            <f:attribute name="page" value="#{commonSearchCompanyBean.companySelectPaging.currentPage}" />
+                        </h:commandButton>
+
+                        <cust:pageIndex value="#{commonSearchCompanyBean.companySelectPaging.pageValue}" action="#{commonSearchCompanyBean.pageJump()}" >
+                            <ui:include src="/html/common/paging/index.xhtml" />
+                        </cust:pageIndex>
+
+                        <h:commandButton  value="→" actionListener="#{commonSearchCompanyBean.nextPage}" disabled="#{!commonSearchCompanyBean.companySelectPaging.isNextPage()}">
+                            <a4j:ajax execute="@form" render="@form" />
+                            <f:attribute name="page" value="#{commonSearchCompanyBean.companySelectPaging.currentPage}" />
+                        </h:commandButton>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </rich:popupPanel>
+</html>
+

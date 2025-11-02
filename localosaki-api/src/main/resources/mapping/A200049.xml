@@ -1,0 +1,166 @@
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+  <!-- *** デマンド(取得) Eα テンプレート *** -->
+  <!-- ベース部分 -->
+  <template name="base">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="1" default="V" keepPadding="true" />
+    <field name="settingChangeHist" length="1" default="0" keepPadding="true" />
+    <field name="command" length="3" default="001" keepPadding="true" />
+  </template>
+
+  <template name="base22">
+    <include template="base" />
+    <field name="compressionDataLength" length="6" default="000000" keepPadding="true" />
+  </template>
+
+  <template name="base.res">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" keepPadding="true" />
+  </template>
+
+  <template name="base22.res">
+    <include template="base.res" />
+    <field name="compressionDataLength" length="6" keepPadding="true" />
+  </template>
+
+  <!-- 共通部分１（受信用） -->
+  <template name="commonResponse1">
+    <field name="settingDate" length="10" keepPadding="true" />
+    <field name="pulseWeight" length="7" keepPadding="true" />
+    <field name="targetPower" length="4" keepPadding="true" />
+    <field name="clockMirrorMethod" length="1" keepPadding="true" />
+    <field name="initialPower" length="2" keepPadding="true" />
+    <field name="highLoadCapacity" length="3" keepPadding="true" />
+    <field name="limitPower" length="3" keepPadding="true" />
+    <field name="blockPower" length="4" keepPadding="true" />
+    <field name="returnPower" length="4" keepPadding="true" />
+    <field name="alertLockTime" length="2" keepPadding="true" />
+    <field name="multiBlockTime" length="2" keepPadding="true" />
+    <field name="_minLoadBlockTimeList" length="2" collection="list" occurs="16" />
+    <field name="blockMethod" length="1" keepPadding="true" />
+    <field name="_loadBlockMethodList" length="1" collection="list" occurs="16" />
+    <field name="_loadBlockRankList" length="3" collection="list" occurs="16" />
+  </template>
+
+  <!-- 共通部分２（受信用） -->
+  <template name="commonResponse2">
+    <field name="_loadBlockCapacityList" collection="list" length="4" occurs="16" />
+    <field name='switchTarget' length='1' keepPadding="true" />
+    <field name='targetPowerMultiplier' length='3' keepPadding="true" />
+    <field name="_maxDemandMonthList" length="4" collection="list" occurs="12" />
+    <field name="_maxTargetPowerMonthList" length="4" collection="list" occurs="12" />
+  </template>
+
+  <!-- 共通部分３（受信用） -->
+  <template name="commonResponse3">
+    <field name='noWeighingDetTime' length='2' keepPadding="true" />
+    <field name='fuzzy' length='1' keepPadding="true" />
+    <field name='switchCoolingAndHeating' length='1' keepPadding="true" />
+    <field name='switchCoolingAndHeatingRefPoint' length='3' keepPadding="true" />
+  </template>
+
+  <!-- 「00」非対応 -->
+  <!-- 送信文 -->
+  <stream name="00.req" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="00.res" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 「03」非対応 -->
+  <!-- 送信文 -->
+  <stream name="03.req" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="03.res" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 「06」非対応 -->
+  <!-- 送信文 -->
+  <stream name="06.req" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="06.res" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 「12」非対応 -->
+  <!-- 送信文 -->
+  <stream name="12.req" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="12.res" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 「21」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="21.req" format="fixedlength">
+    <record name="request" template="base" class="jp.co.osaki.osol.mng.param.A200049Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="21.res" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200049Param">
+      <include template="commonResponse1" />
+      <include template="commonResponse2" />
+      <include template="commonResponse3" />
+    </record>
+  </stream>
+
+  <!-- 「22」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="22.req" format="fixedlength">
+    <record name="request" template="base22" class="jp.co.osaki.osol.mng.param.A200049Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="22.res" format="fixedlength">
+    <record name="response" template="base22.res" class="jp.co.osaki.osol.mng.param.A200049Param">
+      <include template="commonResponse1" />
+      <field name="_temperatureRefPointList" length="3" collection="list" occurs="16" />
+      <include template="commonResponse2" />
+      <segment name="timeList" collection="list" class="map" occurs="48">
+        <field name="targetPower" length="4" keepPadding="true" />
+      </segment>
+      <include template="commonResponse3" />
+    </record>
+  </stream>
+
+  <!-- 応答データ無し -->
+  <stream name="res_data.none" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200049Param">
+    </record>
+  </stream>
+
+</beanio>

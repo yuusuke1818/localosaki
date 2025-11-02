@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_1.xsd">
+ <description>大崎電気工業向け OSOLシステム</description>
+ <display-name>OSOL</display-name>
+ <context-param>
+  <description>アプリケーション名</description>
+  <param-name>APPLICATION_NAME</param-name>
+  <param-value/>
+ </context-param>
+ <context-param>
+  <description>アプリケーションバージョン</description>
+  <param-name>APPLICATION_VERSION</param-name>
+  <param-value>1.7.8</param-value>
+ </context-param>
+ <filter>
+  <description>リクエストログフィルタ</description>
+  <filter-name>BaseRequestLogFilter</filter-name>
+  <filter-class>jp.skygroup.enl.webap.base.filter.BaseRequestLogFilter</filter-class>
+  <init-param>
+   <description>RequestHeaderの出力有無(true:出力 false:未出力)</description>
+   <param-name>outputRequestHeader</param-name>
+   <param-value>true</param-value>
+  </init-param>
+  <init-param>
+   <description>RequestParameterの出力有無(true:出力 false:未出力)</description>
+   <param-name>outputParameter</param-name>
+   <param-value>true</param-value>
+  </init-param>
+  <init-param>
+   <description>QueryStringの出力有無(true:出力 false:未出力)</description>
+   <param-name>outputQueryString</param-name>
+   <param-value>true</param-value>
+  </init-param>
+  <init-param>
+   <description>SessionKeyの出力有無(true:出力 false:未出力)</description>
+   <param-name>outputSessionKey</param-name>
+   <param-value>false</param-value>
+  </init-param>
+  <init-param>
+   <description>出力するSessionKeyのリスト</description>
+   <param-name>outputSessionKeyList</param-name>
+   <param-value></param-value>
+  </init-param>
+  <init-param>
+   <description>値をマスキングするRequestParameterのリスト</description>
+   <param-name>maskingParameterList</param-name>
+   <param-value>loginBean:password,loginEditPasswordBean:newPassword,loginEditPasswordBean:confirmPassword,apiKey,password</param-value>
+  </init-param>
+ </filter>
+ <filter>
+  <description>レスポンスキャッシュ無効フィルタ</description>
+  <filter-name>BaseResponseNoCacheFilter</filter-name>
+  <filter-class>jp.skygroup.enl.webap.base.filter.BaseResponseNoCacheFilter</filter-class>
+ </filter>
+ <filter>
+  <description>クリックジャキング攻撃対策フィルタ</description>
+  <filter-name>XFrameOptionsFilter</filter-name>
+  <filter-class>jp.skygroup.enl.webap.base.filter.BaseXFrameOptionsFilter</filter-class>
+  <init-param>
+   <description>X-Frame-Options Setting Value</description>
+   <param-name>X-Frame-Options</param-name>
+   <param-value>SAMEORIGIN</param-value>
+  </init-param>
+ </filter>
+ <filter-mapping>
+  <filter-name>BaseRequestLogFilter</filter-name>
+  <url-pattern>*</url-pattern>
+ </filter-mapping>
+ <filter-mapping>
+  <filter-name>BaseResponseNoCacheFilter</filter-name>
+  <url-pattern>*</url-pattern>
+ </filter-mapping>
+ <filter-mapping>
+  <filter-name>XFrameOptionsFilter</filter-name>
+  <url-pattern>*</url-pattern>
+ </filter-mapping>
+</web-app>

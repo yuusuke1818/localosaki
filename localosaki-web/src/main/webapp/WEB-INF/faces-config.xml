@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    <application>
+        <!-- メッセージバンドル -->
+        <message-bundle>
+            ValidationMessages
+        </message-bundle>
+        <!-- リソースバンドル -->
+        <resource-bundle>
+            <base-name>ValidationMessages</base-name>
+            <var>ValRes</var>
+        </resource-bundle>
+        <!-- 言語設定 -->
+        <locale-config>
+            <default-locale>ja_JP</default-locale>
+        </locale-config>
+    </application>
+    <!-- カスタムバリデータ -->
+    <validator>
+        <validator-id>DateFormatValidation</validator-id>
+        <validator-class>jp.co.osaki.sms.validation.DateFormatValidation</validator-class>
+    </validator>
+    <validator>
+        <validator-id>PasswordValidation</validator-id>
+        <validator-class>jp.co.osaki.sms.validation.PasswordValidation</validator-class>
+    </validator>
+    <validator>
+        <validator-id>RangeNumericValidation</validator-id>
+        <validator-class>jp.co.osaki.sms.validation.RangeNumericValidation</validator-class>
+    </validator>
+    <validator>
+        <validator-id>NotNullValidation</validator-id>
+        <validator-class>jp.co.osaki.sms.validation.NotNullValidation</validator-class>
+    </validator>
+    <!-- 例外ハンドラ -->
+    <factory>
+        <exception-handler-factory>jp.skygroup.enl.webap.base.BaseExceptionHandlerFactory</exception-handler-factory>
+    </factory>
+    <!-- ナビゲーションルール -->
+    <navigation-rule>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/html/login/login.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>editPassword</from-outcome>
+            <to-view-id>/html/login/editPassword.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>top</from-outcome>
+            <to-view-id>/html/menu/index.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>error</from-outcome>
+            <to-view-id>/html/error/exceptionError.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <!-- メニュー画面からの遷移 -->
+    <navigation-rule>
+        <from-view-id>/html/menu/index.xhtml</from-view-id>
+        <!-- 建物選択画面 -->
+        <navigation-case>
+            <from-outcome>buildingSearch</from-outcome>
+            <to-view-id>/html/building/info/search.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- SMS集計分析 メイン画面 -->
+        <navigation-case>
+            <from-outcome>aggregateTop</from-outcome>
+            <to-view-id>/html/sms/aggregate/top.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- SMSサーバ設定 メイン画面 -->
+        <navigation-case>
+            <from-outcome>serverTop</from-outcome>
+            <to-view-id>/html/sms/server/top.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <!-- 建物選択画面からの遷移 -->
+    <navigation-rule>
+        <from-view-id>/html/building/info/search.xhtml</from-view-id>
+        <!-- データ収集装置 メイン画面 -->
+        <navigation-case>
+            <from-outcome>collectTop</from-outcome>
+            <to-view-id>/html/sms/collect/top.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
+    <!-- データ収集装置の遷移 -->
+    <navigation-rule>
+        <from-view-id>/html/sms/collect/*</from-view-id>
+        <!-- 検針データ画面 -->
+        <navigation-case>
+            <from-outcome>meterReadingData</from-outcome>
+            <to-view-id>/html/sms/collect/dataview/meterReadingData/meterReadingData.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- 日報データ画面 -->
+        <navigation-case>
+            <from-outcome>daily</from-outcome>
+            <to-view-id>/html/sms/collect/dataview/daily.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- 月報データ画面 -->
+        <navigation-case>
+            <from-outcome>monthly</from-outcome>
+            <to-view-id>/html/sms/collect/dataview/monthly.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- 年報データ画面 -->
+        <navigation-case>
+            <from-outcome>yearly</from-outcome>
+            <to-view-id>/html/sms/collect/dataview/yearly.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- データ比較グラフ（日報）画面 -->
+        <navigation-case>
+            <from-outcome>compareGraphDaily</from-outcome>
+            <to-view-id>/html/sms/collect/dataview/compareGraphDaily.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- データ比較グラフ（月報）画面 -->
+        <navigation-case>
+            <from-outcome>compareGraphMonthly</from-outcome>
+            <to-view-id>/html/sms/collect/dataview/compareGraphMonthly.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- データ比較グラフ（年報）画面 -->
+        <navigation-case>
+            <from-outcome>compareGraphYearly</from-outcome>
+            <to-view-id>/html/sms/collect/dataview/compareGraphYearly.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- 各種設定画面 -->
+        <navigation-case>
+            <from-outcome>smsCollectSettingMeterreadingVarious</from-outcome>
+            <to-view-id>/html/sms/collect/setting/meterreading/various.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- 種別設定画面(一覧) -->
+        <navigation-case>
+            <from-outcome>smsCollectSettingMeterreadingType</from-outcome>
+            <to-view-id>/html/sms/collect/setting/meterreading/type.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- 種別設定編集画面 -->
+        <navigation-case>
+            <from-outcome>smsCollectSettingMeterreadingTypeRange</from-outcome>
+            <to-view-id>/html/sms/collect/setting/meterreading/typeRange.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- 自動検針画面 -->
+        <navigation-case>
+            <from-outcome>autoInspectionEdit</from-outcome>
+            <to-view-id>/html/sms/collect/setting/meterreading/autoinspection/edit.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- 確定前検針データ一覧表示画面 -->
+        <navigation-case>
+            <from-outcome>smsCollectSettingMeterreadingInspectionMeterBefList</from-outcome>
+            <to-view-id>/html/sms/collect/setting/meterreading/inspectionMeterBefList.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- 確定前検針データ一覧表示画面 -->
+        <navigation-case>
+            <from-outcome>smsCollectSettingMeterreadingInspectionMeterBef</from-outcome>
+            <to-view-id>/html/sms/collect/setting/meterreading/inspectionMeterBef.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- 設定一括収集画面 -->
+        <navigation-case>
+            <from-outcome>smsCollectSettingMeterreadingSettingCollection</from-outcome>
+            <to-view-id>/html/sms/collect/setting/meterreading/settingCollection.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- メーター管理画面 -->
+        <navigation-case>
+            <from-outcome>meterManagement</from-outcome>
+            <to-view-id>/html/sms/collect/setting/meter/meterManagement.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- メーターテナント検索画面 -->
+        <navigation-case>
+            <from-outcome>meterTenantSearch</from-outcome>
+            <to-view-id>/html/sms/collect/setting/meterTenant/search.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- メーターテナント管理画面 -->
+        <navigation-case>
+            <from-outcome>meterTenantEdit</from-outcome>
+            <to-view-id>/html/sms/collect/setting/meterTenant/edit.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- メーターテナント一括登録画面 -->
+        <navigation-case>
+            <from-outcome>meterTenantBulkEdit</from-outcome>
+            <to-view-id>/html/sms/collect/setting/meterTenant/bulkEdit.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- メーターユーザー一覧画面 -->
+        <navigation-case>
+            <from-outcome>meterUserList</from-outcome>
+            <to-view-id>/html/sms/collect/setting/meterUser/list.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- メーターユーザー登録・編集画面 -->
+        <navigation-case>
+            <from-outcome>meterUserEdit</from-outcome>
+            <to-view-id>/html/sms/collect/setting/meterUser/edit.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- メーターユーザー担当テナント設定画面 -->
+        <navigation-case>
+            <from-outcome>meterUserTenantPerson</from-outcome>
+            <to-view-id>/html/sms/collect/setting/meterUser/tenantPerson.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- メーターグループ管理画面 -->
+        <navigation-case>
+            <from-outcome>meterGroupManagement</from-outcome>
+            <to-view-id>/html/sms/collect/setting/meterGroup/meterGroupManagement.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- メーターグループ登録・編集画面 -->
+        <navigation-case>
+            <from-outcome>meterGroupManagementEdit</from-outcome>
+            <to-view-id>/html/sms/collect/setting/meterGroup/meterGroupManagementEdit.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- メーターグループ名設定画面 -->
+        <navigation-case>
+            <from-outcome>meterGroupManagementGroupNameEdit</from-outcome>
+            <to-view-id>/html/sms/collect/setting/meterGroup/meterGroupManagementGroupNameEdit.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- コンセントレータ管理画面 -->
+        <navigation-case>
+            <from-outcome>concentratorManagement</from-outcome>
+            <to-view-id>/html/sms/collect/setting/concentrator/concentratorManagement.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- コンセントレータ登録・編集画面 -->
+        <navigation-case>
+            <from-outcome>concentratorManagementEdit</from-outcome>
+            <to-view-id>/html/sms/collect/setting/concentrator/concentratorManagementEdit.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- 異常情報画面 -->
+        <navigation-case>
+            <from-outcome>errorInfo</from-outcome>
+            <to-view-id>/html/sms/collect/setting/errorinfo/info.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- 中継装置管理画面 -->
+        <navigation-case>
+            <from-outcome>repeaterManagement</from-outcome>
+            <to-view-id>/html/sms/collect/setting/repeater/repeaterManagement.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- 中継装置登録・編集画面 -->
+        <navigation-case>
+            <from-outcome>repeaterManagementEdit</from-outcome>
+            <to-view-id>/html/sms/collect/setting/repeater/repeaterManagementEdit.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- 任意検針画面 -->
+        <navigation-case>
+           <from-outcome>manualInspection</from-outcome>
+           <to-view-id>/html/sms/collect/setting/meterreading/manualInspection.xhtml</to-view-id>
+           <redirect />
+        </navigation-case>
+        <!-- 建物選択画面 -->
+        <navigation-case>
+            <from-outcome>buildingSearch</from-outcome>
+            <to-view-id>/html/building/info/search.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
+    <!-- SMSサーバー設定の遷移 -->
+    <navigation-rule>
+        <from-view-id>/html/sms/server/*</from-view-id>
+        <!-- SMSサーバー設定TOP画面 -->
+        <navigation-case>
+            <from-outcome>serverTop</from-outcome>
+            <to-view-id>/html/sms/server/top.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- ハンディ端末 検索画面 -->
+        <navigation-case>
+            <from-outcome>handySearch</from-outcome>
+            <to-view-id>/html/sms/server/setting/handy/search.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- ハンディ端末 登録・編集画面 -->
+        <navigation-case>
+            <from-outcome>handyEdit</from-outcome>
+            <to-view-id>/html/sms/server/setting/handy/edit.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- 装置 検索画面 -->
+        <navigation-case>
+            <from-outcome>collectSearch</from-outcome>
+            <to-view-id>/html/sms/server/setting/collect/search.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- 装置 登録・編集画面 -->
+        <navigation-case>
+            <from-outcome>collectEdit</from-outcome>
+            <to-view-id>/html/sms/server/setting/collect/edit.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- 建物装置 建物検索画面 -->
+        <navigation-case>
+            <from-outcome>buildingdeviceSearch</from-outcome>
+            <to-view-id>/html/sms/server/setting/buildingdevice/search.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- 建物装置 装置設定画面 -->
+        <navigation-case>
+            <from-outcome>buildingdeviceEdit</from-outcome>
+            <to-view-id>/html/sms/server/setting/buildingdevice/edit.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!--AieLink 検索画面-->
+        <navigation-case>
+            <from-outcome>ocrSearch</from-outcome>
+            <to-view-id>/html/sms/server/setting/ocr/search.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!--AieLink 登録・編集画面-->
+        <navigation-case>
+            <from-outcome>ocrEdit</from-outcome>
+            <to-view-id>/html/sms/server/setting/ocr/edit.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
+    <!-- SMS集計分析の遷移 -->
+    <navigation-rule>
+        <from-view-id>/html/sms/aggregate/*</from-view-id>
+        <!-- SMS集計分析 日報画面 -->
+        <navigation-case>
+            <from-outcome>dailyAggregate</from-outcome>
+            <to-view-id>/html/sms/aggregate/daily.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <!-- SMS集計分析 検針データ画面 -->
+        <navigation-case>
+            <from-outcome>meterReadingDataAggregate</from-outcome>
+            <to-view-id>/html/sms/aggregate/meterReadingData.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
+</faces-config>

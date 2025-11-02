@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:cust="http://xmlns.jcp.org/jsf/component"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:a4j="http://richfaces.org/a4j">
+<div style="margin-top: 0;">
+    <div>
+        <rich:messages id="w2Messages" styleClass="errNonSearch errArea" />
+        <h3 class="contents_title">新規登録(個別)</h3>
+        <form jsfc="h:form" id="iotRRegistForm">
+            <div class="contents_form_area">
+                <table class="w2Table">
+                    <tr style="height: 10px">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="TXT008">登録先装置選択</td>
+                        <td class="TXT020" colspan="2">
+                            <div jsfc="a4j:outputPanel" id="w2DevNamePanel">
+                                <h:outputText id="w2DevName"
+                                    value="#{smsCollectSettingMeterMeterManagementBean.iotRProperty.devName}"></h:outputText>
+                                <h:inputHidden
+                                    value="#{smsCollectSettingMeterMeterManagementBean.iotRInsertProperty.devId}"
+                                    id="w2DevId" />
+                            </div>
+                        </td>
+                        <td>※登録先装置を選択</td>
+                    </tr>
+                    <tr>
+                        <td class="TXT008">メーター管理番号</td>
+                        <td colspan="2">
+                            <div jsfc="a4j:outputPanel" id="w2MeterMngIdMapPanel">
+                                <h:selectOneMenu id="w2MeterMngIdSelect"
+                                    class="EDIT002 check_change"
+                                    value="#{smsCollectSettingMeterMeterManagementBean.iotRInsertProperty.meterMngId}">
+                                    <f:selectItems
+                                        value="#{smsCollectSettingMeterMeterManagementBean.meterMngIdMap}" />
+                                </h:selectOneMenu>
+                            </div>
+                        </td>
+                        <td>※選択範囲 ： "001～512" (未登録の番号のみ)</td>
+                    </tr>
+                    <tr>
+                        <td class="TXT008">ユーザーコード</td>
+                        <td colspan="2"><h:inputText id="w2UserCode"
+                                class="textWidthMedium check_change"
+                                value="#{smsCollectSettingMeterMeterManagementBean.iotRInsertProperty.tenantId}"
+                                maxlength="6"
+                                style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                        </td>
+                        <td>※入力範囲 ： "1～999999" または "ブランク"</td>
+                    </tr>
+                    <tr>
+                        <td class="TXT008">計器ID<span class="required"></span></td>
+                        <td colspan="2"><h:inputText id="w2EquipId"
+                                class="textWidthMedium check_change"
+                                value="#{smsCollectSettingMeterMeterManagementBean.iotRInsertProperty.meterId}"
+                                maxlength="10"
+                                style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                        </td>
+                        <td>※全10桁 (半角英数字)</td>
+                    </tr>
+                    <tr>
+                        <td class="TXT008">コメント</td>
+                        <td colspan="2"><h:inputText id="w2Comment"
+                                class="textWidthLarge check_change"
+                                value="#{smsCollectSettingMeterMeterManagementBean.iotRInsertProperty.memo}"
+                                maxlength="20"></h:inputText>
+                        </td>
+                        <td>※最大20文字</td>
+                    </tr>
+                    <tr>
+                        <td class="TXT008">メーター種別</td>
+                        <td colspan="2"><h:selectOneMenu id="w2MetertypeSelect"
+                                class="EDIT002 check_change"
+                                value="#{smsCollectSettingMeterMeterManagementBean.iotRInsertProperty.meterType}">
+                                <f:selectItems
+                                    value="#{smsCollectSettingMeterMeterManagementBean.metertypeMap}" />
+                            </h:selectOneMenu></td>
+                        <td>※メーターの種別を選択</td>
+                    </tr>
+                    <tr>
+                        <td class="TXT008">検満年月</td>
+                        <td colspan="2"><f:ajax event="click"
+                                            execute="@form"
+                                            render="smsCollectSettingMeterMeterManagementBean:iotRRegistForm:w2YearDisp">
+                                            <h:selectOneRadio id="w2DispYearCls"
+                                value="#{smsCollectSettingMeterMeterManagementBean.iotRInsertProperty.dispYearFlg}"
+                                styleClass="SELECT001" style="width: 100%; height: 25px;"
+                                onchange="dispYearClsChange(this.value)">
+                                <f:selectItems
+                                    value="#{smsCollectSettingMeterMeterManagementBean.dispYearMap}" />
+                            </h:selectOneRadio></f:ajax> <br /> <div jsfc="a4j:outputPanel" id="w2YearDisp">
+                            <ui:fragment rendered="#{smsCollectSettingMeterMeterManagementBean.iotRInsertProperty.dispYearFlg == '0'}">
+                            <span id="w2SeirekiDisp"> 西暦 &nbsp;&nbsp; <h:inputText
+                                    id="w2Year" class="textWidthSmall check_change"
+                                    value="#{smsCollectSettingMeterMeterManagementBean.iotRInsertProperty.examEndYear}" maxlength="4"
+                                    style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                        </span></ui:fragment><ui:fragment rendered="#{smsCollectSettingMeterMeterManagementBean.iotRInsertProperty.dispYearFlg == '1'}">
+                         <span id="w2WarekiDisp"> 元号 <h:selectOneMenu
+                                    id="w2GengoSelect" class="EDIT002 check_change"
+                                    value="#{smsCollectSettingMeterMeterManagementBean.iotRInsertProperty.examEndYmGengo}"
+                                    style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}">
+                                    <f:selectItems
+                                        value="#{smsCollectSettingMeterMeterManagementBean.gengoMap}" />
+                                </h:selectOneMenu> &nbsp;&nbsp; <h:inputText id="w2YearWareki"
+                                    class="textWidthSmall check_change"
+                                    value="#{smsCollectSettingMeterMeterManagementBean.iotRInsertProperty.examEndYearWareki}" maxlength="2"
+                                    style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                        </span></ui:fragment></div> 年 <h:inputText id="w2Month" class="textWidthSmall check_change"
+                                value="#{smsCollectSettingMeterMeterManagementBean.iotRInsertProperty.examEndMonth}" maxlength="2"
+                                style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                            月</td>
+                        <td>※検定有効期間が満了する年月を西暦または和暦で入力</td>
+                    </tr>
+                    <tr>
+                        <td class="TXT008">検満通知</td>
+                        <td colspan="2"><h:selectOneMenu id="w2ExamnoticeSelect"
+                                class="EDIT002 check_change"
+                                value="#{smsCollectSettingMeterMeterManagementBean.iotRInsertProperty.examNotice}">
+                                <f:selectItems
+                                    value="#{smsCollectSettingMeterMeterManagementBean.examnoticeMap}" />
+                            </h:selectOneMenu></td>
+                        <td>
+                            <div jsfc="a4j:outputPanel" id="w2ExamNoticeMonthPanel">
+                                ※検満年月の <font color="red"> <h:outputText
+                                        value="#{smsCollectSettingMeterMeterManagementBean.examNoticeMonth}"></h:outputText>ヶ月
+                                </font> 前からメール通知します。
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <div class="gradation_type_1 button_large_2 btnRegistLayout">
+                    <!-- 確認メッセージ設定処理を呼び出し → 登録処理呼び出し用ボタンclick -->
+                    <a4j:commandButton id="w2RegistBtn" class="action_button"
+                        value="登録" execute="@form"
+                        render="@form confirmDialogForm:confirmationDialogMessage"
+                        onclick="return confirmationDialogOpenForIns($('input[id$=w2RegistBtn]'))"
+                        oncomplete="$('input[id$=w2RegistBtnHidden]').click();">
+                    </a4j:commandButton>
+                    <h:graphicImage class="btnRegistIconLayout" library="images"
+                        name="common/com067.png" />
+                    <a4j:commandButton id="w2RegistBtnHidden" style="display: none;"
+                        execute="@form"
+                        render="@form #{rich:clientId('wTablePanel')}
+                                smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2ExamNoticeMonthPanel
+                                smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2DevNamePanel
+                                smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2MeterMngIdMapPanel
+                                smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2ExamNoticeMonthPanel
+                                smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2DevNamePanel
+                                smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2MeterMngIdMapPanel
+                                smsCollectSettingMeterMeterManagementBean:iotRRegistForm:w2ExamNoticeMonthPanel
+                                smsCollectSettingMeterMeterManagementBean:iotRRegistForm:w2DevNamePanel
+                                smsCollectSettingMeterMeterManagementBean:iotRRegistForm:w2MeterMngIdMapPanel
+                                smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2ExamNoticeMonthPanel
+                                smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2DevNamePanel
+                                smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2MeterMngIdMapPanel"
+                        action="#{smsCollectSettingMeterMeterManagementBean.execRegist(smsCollectSettingMeterMeterManagementBean.iotRInsertProperty)}"
+                        onbegin="showBlockModal()"
+                        oncomplete="hideBlockModal(); viewList('W'); clearChangeFlag(); dispButton();">
+                    </a4j:commandButton>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</html>

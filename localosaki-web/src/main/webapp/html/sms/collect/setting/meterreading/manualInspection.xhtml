@@ -1,0 +1,352 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      >
+<body>
+<ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+    <ui:define name="content_side" class="content">
+        <meta http-equiv="content-language" content="ja" />
+        <h:outputStylesheet library="css" name="common/rfCalendar.css" />
+        <h:outputStylesheet library="css" name="common/button.css"/>
+        <h:outputStylesheet library="css" name="common/default.css"/>
+        <h:outputStylesheet library="css" name="common/cssLayout.css"/>
+        <h:outputStylesheet library="css" name="common/common.css"/>
+        <h:outputStylesheet library="css" name="sms/collect/setting/meterreading/manualInspection.css"/>
+        <h:outputScript library="js" name="sms/collect/dataview/compareGraph.js"/>
+
+        <form jsfc="h:form" id="smsCollectSettingMeterreadingManualInspectionBean">
+            <div class="inner_content">
+                <div class="title_area_warp">
+                    <!-- 画面タイトル -->
+                    <div class="title_area_left_manual_inspection">
+                        <h2 class="page_title">任意検針</h2>
+                        <!-- ヘルプボタン -->
+                        <c:if test="#{indexBean.userGuideBool}">
+                            <h:commandLink class="help_icon" action="#{indexBean.userGuide()}" target="_blank" />
+                        </c:if>
+                        <p class="page_subtitle">
+                            <h:outputText value="対象となるスマートメーターの任意検針ができます。" />
+                        </p>
+                        <rich:messages escape="false"/>
+                    </div>
+                    <div class="clear" />
+                    <div class="contents_title contents_accordion_header">
+                        <h:graphicImage class="button_icon button_opener" library="images" name="demand/demand_container_opner.png" style="display: none;" />
+                        <h:graphicImage class="button_icon button_closer" library="images" name="demand/demand_container_closer.png" />
+                        <span class="contents_title_body">表示条件</span>
+                    </div>
+
+                    <div class="contents_form_area contents_accordion_body">
+                        <span class="msg">
+                            表示内容を変更したい場合は、下記を変更し、［表示更新］ボタンを押してください。
+                        </span>
+                        <a4j:outputPanel id="commonSearchResult">
+                            <rich:dataTable id="searchConditionTable" rows="0"
+                                value="#{smsCollectSettingMeterreadingManualInspectionBean.conditionList}" var="item"
+                                style="margin-top: 10px;
+                                            width: 100%;
+                                            border: 0px;
+                                            table-layout: fixed;
+                                            margin-bottom: -40px;">
+                                <!--検索条件表示部分 -->
+                                <span jsfc="h:column" styleClass="condition_msg"
+                                    style="width: 20%; border: 0px">
+                                    <h:selectOneMenu
+                                        id="selectConditionCd" value="#{item.selectConditionCd}"
+                                        styleClass="SELECT001" rendered="#{item.selectEnable}"
+                                        style="height: 30px;">
+                                        <f:ajax event="change"
+                                            execute="smsCollectSettingMeterreadingManualInspectionBean:searchConditionTable"
+                                            render="smsCollectSettingMeterreadingManualInspectionBean:searchConditionTable"
+                                            listener="#{smsCollectSettingMeterreadingManualInspectionBean.changeConditionCd(item.orderNo)}"
+                                            onevent="autoFocusOnSelectCondition" />
+                                        <option jsfc="f:selectItems"
+                                            value="#{item.selectConditionMap}" />
+                                    </h:selectOneMenu>
+                                    <h:outputText value="#{item.selectConditionCd}" rendered="#{item.selectDisable}" />
+                                </span>
+                                <!--接続詞表示部分 -->
+                                <span jsfc="h:column"
+                                    style="width: 5%; text-align: left; border: 0px;"> <input
+                                    jsfc="h:outputText" value="#{item.searchSubjectConjunction}"
+                                    style="width: 100%; text-align: left"
+                                    rendered="#{item.searchSubjectConjunctionEnable}" />
+                                </span>
+                                <!--ドロップダウンリストまたは検索キーワード表示部分 -->
+                                <span jsfc="h:column" style="width: 40%; border: 0px;">
+                                    <!-- ユーザコード選択 -->
+                                    <h:selectOneMenu id="conditionUserCd" value="#{item.userCd}"
+                                        styleClass="SELECT001" rendered="#{item.userCdSelectEnable}"
+                                        style="width: 100%; height: 30px;"
+                                        onkeydown="searchConditionKeydown()">
+                                        <option jsfc="f:selectItems"
+                                            value="#{smsCollectSettingMeterreadingManualInspectionBean.searchBeanProperty.userCdMap}" />
+                                    </h:selectOneMenu>
+                                    <!-- 種別選択 -->
+                                    <h:selectOneMenu id="conditionMeterTypeName" value="#{item.meterTypeName}"
+                                        styleClass="SELECT001" rendered="#{item.meterTypeNameSelectEnable}"
+                                        style="width: 100%; height: 30px;"
+                                        onkeydown="searchConditionKeydown()">
+                                        <option jsfc="f:selectItems"
+                                            value="#{smsCollectSettingMeterreadingManualInspectionBean.searchBeanProperty.meterTypeNameMap}" />
+                                    </h:selectOneMenu>
+                                    <!-- 予約検針日時 -->
+                                    <span jsfc="h:column" rendered="#{item.reservationDtSelectEnable}">
+                                        <div style="display: flex; align-items: center;">
+                                            <div style="width: 130px;"><h:outputText id="idReserveInspDate" value="#{item.reserveInspYMDFmt}" /></div>
+                                            <div style="width: 60px;">
+                                                <rich:calendar id="idReserveInspDaily" class="calDayDaily" datePattern="yyyy/MM/dd"
+                                                               enableManualInput="false" showWeeksBar="false" showFooter="false"
+                                                               required="false" showInput="false"
+                                                               value="#{item.reserveInspYMD}"
+                                                               buttonIcon="#{request.contextPath}/resources/images/common/com030.png"
+                                                               dayDisableFunction="isSelectableDate"
+                                                               dayClassFunction="setCalendarDisableStyle"
+                                                               zindex="50"
+                                                               styleClass="calobj">
+                                                    <f:ajax event="change" render="idReserveInspDate" />
+                                                </rich:calendar>
+                                            </div>
+                                            <div>
+                                                時間
+                                                <h:selectOneMenu id="idReserveInspH" value="#{item.reserveInspH}"
+                                                    styleClass="SELECT001"
+                                                    style="height: 30px;"
+                                                    onkeydown="searchConditionKeydown()">
+                                                    <option jsfc="f:selectItems"
+                                                        value="#{smsCollectSettingMeterreadingManualInspectionBean.searchBeanProperty.reserveInspHMap}" />
+                                                </h:selectOneMenu>
+                                                ：
+                                                <h:selectOneMenu id="idReserveInspM" value="#{item.reserveInspM}"
+                                                    styleClass="SELECT001"
+                                                    style="height: 30px;"
+                                                    onkeydown="searchConditionKeydown()">
+                                                    <option jsfc="f:selectItems"
+                                                        value="#{smsCollectSettingMeterreadingManualInspectionBean.searchBeanProperty.reserveInspMMap}" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                    </span>
+                                    <!--キーワード -->
+                                    <h:inputText id="conditionKeyword"
+                                        value="#{item.conditionKeyword}" styleClass="EDIT002"
+                                        class="autofocus" rendered="#{item.keywordSelectEnable}"
+                                        style="width: 100%; height: 30px;" maxlength="50"
+                                        onkeydown="searchConditionKeydown()" />
+                                </span>
+                                <!--「を含む」表示部分 -->
+                                <span jsfc="h:column"
+                                    style="width: 12%; text-align: center; border: 0px;"> <input
+                                    jsfc="h:outputText" value="#{item.mutchingTypeCd}"
+                                    rendered="${!empty item.mutchingTypeCd}"
+                                    style="width: 100%; height: 25px; text-align: center;" />
+                                </span>
+                                <!--削除ボタン表示部分 -->
+                                <span jsfc="h:column" styleClass="gradation_type_3 button_medium_2 delete_button" style="width: 10%; border:  0px;">
+                                    <h:commandButton id="delButton" value="削除" rendered="#{item.deleteButtonEnable}" 
+                                                     style="width: 100%; height: 30px;">
+                                        <f:ajax event="click" 
+                                                execute="smsCollectSettingMeterreadingManualInspectionBean:searchConditionTable" 
+                                                render="smsCollectSettingMeterreadingManualInspectionBean:searchConditionTable" 
+                                                listener="#{smsCollectSettingMeterreadingManualInspectionBean.deleteCondition(item.orderNo)}"/>
+                                    </h:commandButton>
+                                    <h:graphicImage class="button_icon" library="images" rendered="#{item.deleteButtonEnable}" name="common/com020.png" />
+                                </span> 
+                            </rich:dataTable>
+                        </a4j:outputPanel>
+                        <div class="button_area_center gradation_type_1 button_large_2 button_area">
+                            <a4j:commandButton
+                                id="searchButton"
+                                class="action_button"
+                                value="表示更新"
+                                execute="@form" 
+                                render="@form" 
+                                action="#{smsCollectSettingMeterreadingManualInspectionBean.search()}"
+                                onbegin="showBlockModal()" oncomplete="hideBlockModal(); ctrlBtnDisabled();">
+                            </a4j:commandButton>
+                            <h:graphicImage class="reload_button_icon" library="images" name="common/com015.png" rendered="true"/>
+                        </div>
+                    </div>
+
+                    <div class="button_area_right gradation_type_1 gradation_type_5 button_large_2 button_area">
+                        <button jsfc="a4j:commandButton"
+                            id="reserveInspButton"
+                            class="action_button"
+                            value="予約検針"
+                            execute="@form"
+                            render="manualInspectionReserveDialog"
+                            oncomplete="#{rich:component('manualInspectionReserveDialog')}.show();"
+                            />
+                        <h:graphicImage class="button_icon" library="images" name="system/system001.png" />
+                        <button jsfc="a4j:commandButton"
+                            id="updateButton"
+                            class="action_button"
+                            value="任意検針"
+                            action="#{smsCollectSettingMeterreadingManualInspectionBean.regist()}"
+                            onclick="return confirmationDialogOpenForIns($('input[id$=updateButton]'))"
+                            execute="@form"
+                            render="#{rich:clientId('ManualInspectionPanel')}"
+                            onbegin="showBlockModal()"
+                            oncomplete="if (#{!smsCollectSettingMeterreadingManualInspectionBean.chkResult}) {
+                                            hideBlockModal(true); scrollTo(0,0);
+                                        } else {
+                                            scrollTo(0,0); hideBlockModal(true); clearChangeFlag();
+                                        }" />
+                        <h:graphicImage class="button_icon" library="images" name="common/com067.png" />
+                    </div>
+
+                    <div class="search_result_area">
+                        <c:if test="#{smsCollectSettingMeterreadingManualInspectionBean.searchBeanProperty.searchedFlg}">
+                            <div class="search_result_pop_header_wrap">
+                                <div class="page_content_parts" id="listReroad1">
+                                    <div class="search_result_pop_header_left">
+                                        検索条件に該当する任意検針データ情報 
+                                        <span jsfc="h:outputText" class="serach_result_total_count" value="#{smsCollectSettingMeterreadingManualInspectionBean.searchBeanProperty.resultCount}" />
+                                        件
+                                    </div>
+                                </div>
+                            </div>
+                            <c:if test="#{smsCollectSettingMeterreadingManualInspectionBean.searchBeanProperty.resultCount != 0}" >
+                                <h:dataTable var="item" value="#{smsCollectSettingMeterreadingManualInspectionBean.manualInspectionDataList}"
+                                    style="width: 100%;"
+                                    headerClass="table_header"
+                                    columnClasses="column_style_checkbox,column_style_devName,column_style_meterMngId,column_style_meterId,column_style_meterTypeName,column_style_userCd,column_style_buildingName,column_style_reserveInspDate">
+                                    <span jsfc="h:column">
+                                        <f:facet name="header">
+                                            <a4j:commandLink id="selectAllCheck" style="color:#FFF;font-size:12px;text-decoration:underline;"
+                                                             execute="@form" render="@form"
+                                                             actionListener="#{smsCollectSettingMeterreadingManualInspectionBean.selectAllCheckbox()}"
+                                                             oncomplete="
+                                                                 if (#{!smsCollectSettingMeterreadingManualInspectionBean.chkResult}) {
+                                                                     scrollTo(0,0);
+                                                                 } ctrlBtnDisabled();">
+                                                             選択</a4j:commandLink>
+                                        </f:facet>
+                                        <h:selectBooleanCheckbox id="targetCheckBox" value="#{item.checkBox}" onclick="ctrlBtnDisabled();">
+                                            <a4j:ajax execute="@form" render="targetCheckBox"
+                                                      listener="#{smsCollectSettingMeterreadingManualInspectionBean.checkSelectedCheckBox()}" 
+                                                      oncomplete="
+                                                          if (#{!smsCollectSettingMeterreadingManualInspectionBean.chkResult}) {
+                                                              scrollTo(0,0);
+                                                          }"/>
+                                        </h:selectBooleanCheckbox>
+                                    </span>
+                                    <span jsfc="h:column">
+                                        <f:facet name="header">
+                                            装置名
+                                        </f:facet>
+                                        <h:outputText id="devName" value="#{item.devName}" />
+                                    </span>
+                                    <span jsfc="h:column">
+                                        <f:facet name="header">
+                                            管理番号
+                                        </f:facet>
+                                        <h:outputText id="meterMngId" value="#{item.meterMngId}">
+                                            <f:convertNumber pattern="0000" />
+                                        </h:outputText>
+                                    </span>
+                                    <span jsfc="h:column">
+                                        <f:facet name="header">
+                                           計器ID
+                                        </f:facet>
+                                        <h:outputText id="meterId" value="#{item.meterId}" />
+                                    </span>
+                                    <span jsfc="h:column">
+                                        <f:facet name="header">
+                                            種別
+                                        </f:facet>
+                                        <h:outputText id="meterTypeName" value="#{item.meterTypeName}" />
+                                    </span>
+                                    <span jsfc="h:column">
+                                        <f:facet name="header">
+                                            ユーザーコード
+                                        </f:facet>
+                                        <h:outputText id="userCd" value="#{item.userCd}" />
+                                    </span>
+                                    <span jsfc="h:column">
+                                        <f:facet name="header">
+                                            テナント名
+                                        </f:facet>
+                                        <h:outputText id="buildingName" value="#{item.buildingName}" />
+                                    </span>
+                                    <span jsfc="h:column">
+                                        <f:facet name="header">
+                                            予約検針日時
+                                        </f:facet>
+                                        <h:outputText id="reserveInspDate" value="#{item.reserveInspDate}" />
+                                    </span>
+                                </h:dataTable>
+                            </c:if>
+                        </c:if>
+                    </div>
+                </div>
+            </div>
+
+            <ui:include src="/html/common/confirmationDialog.xhtml">
+                <ui:param name="confirmationDialogTitle" value="確認" />
+                <ui:param name="confirmationDialogMessage" value="" />
+            </ui:include>
+
+            <ui:include src="/html/sms/collect/setting/meterreading/manualInspectionReserveDialog.xhtml" />
+
+            <script type="text/javascript">
+            var DIALOG_MSG_INS = "#{smsCollectSettingMeterreadingManualInspectionBean.getBeforeRegisterMessage(1)}";
+            var DIALOG_MSG_UPD = "#{smsCollectSettingMeterreadingManualInspectionBean.getBeforeRegisterMessage(2)}";
+            var DIALOG_MSG_DEL = "#{smsCollectSettingMeterreadingManualInspectionBean.getBeforeRegisterMessage(3)}";
+
+            $(window).on("load", function() {
+                // 画面表示時の処理
+                ctrlBtnDisabled();
+            });
+
+            /*
+             * 確認ダイアログ表示(登録)
+             * @param btn 押下時したボタン
+             */
+            function confirmationDialogOpenForIns(btn) {
+                $('span[id$=confirmationDialogMessage]').html(DIALOG_MSG_INS);
+                return confirmationDialogOpen(btn);
+            }
+
+            /*
+             * 確認ダイアログ表示(更新)
+             * @param btn 押下時したボタン
+             */
+            function confirmationDialogOpenForUpd(btn) {
+                $('span[id$=confirmationDialogMessage]').html(DIALOG_MSG_UPD);
+                return confirmationDialogOpen(btn);
+            }
+
+            /*
+             * 確認ダイアログ表示(削除)
+             * @param btn 押下時したボタン
+             */
+            function confirmationDialogOpenForDel(btn) {
+                $('span[id$=confirmationDialogMessage]').html(DIALOG_MSG_DEL);
+                return confirmationDialogOpen(btn);
+            }
+
+            /*
+             * 選択チェックボックス が選択されたときに 予約検針 ボタン・任意検針 ボタン を活性にする
+             * ※画面表示時、検索時、選択チェックボックス、全選択・全解除、予約検針日時登録・削除(処理後に再検索があるため) に実施
+             */
+            function ctrlBtnDisabled() {
+                let cbs = $("[id$=targetCheckBox]:checked"); // 選択チェックボックス
+                let isNoCheck = (cbs === null || cbs.size() == 0); // 選択行無フラグ   true:選択行なし
+                $("[id$=reserveInspButton]").prop('disabled', isNoCheck);   // 予約検針 ボタン
+                $("[id$=updateButton]").prop('disabled', isNoCheck);        // 任意検針 ボタン
+            }
+            </script>
+        </form>
+    </ui:define>
+</ui:composition>
+</body>
+</html>

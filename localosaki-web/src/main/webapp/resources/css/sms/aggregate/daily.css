@@ -1,0 +1,115 @@
+#smsAggregateDailyBean .contents_form_area {
+  margin-top: 0;
+  margin-bottom: 35px;
+}
+
+.contents_title_body {
+  margin-right: 5px;
+}
+
+.condition_row+.condition_row {
+  margin-top: 10px;
+}
+
+.L1 {
+  display: inline-block;
+  width: 100px;
+  vertical-align: top;
+  padding-top: 10px;
+}
+
+.condition_contents table.dispType {
+  display: inline-block;
+  height: 25px;
+}
+
+.condition_contents table.dispType td {
+  width: 100px;
+}
+
+.condition_contents {
+  display: inline-block;
+}
+
+.condition_contents input[type='text'] {
+  width: 100px;
+}
+
+.btnCal {
+  display: inline-block;
+  margin-left: -5px;
+}
+
+.date_sep {
+  margin: 0 7px;
+}
+
+.contents_form_area table.rf-cal-extr {
+  width: 200px;
+}
+
+.contents_form_area table.rf-cal-extr tr {
+  height: 30px;
+}
+
+.contents_form_area table.rf-cal-monthpicker-cnt tr {
+  height: 25px;
+}
+
+.button_large_2 .button_icon {
+  position: relative;
+  left: -122px;
+  top: 6px;
+}
+
+.search_result_area table {
+  border-collapse: collapse;
+}
+
+.search_result_area table tbody tr {
+  height: 25px;
+}
+
+.search_result_area>table>thead>tr>th, .search_result_area>table>tbody>tr>td
+  {
+  border: 1px #CCC solid;
+  padding: 5px;
+}
+
+.search_result_area table td.column_style_tenant_flg {
+  text-align: center;
+}
+
+.search_result_area table td.column_style_corp {
+  width: 200px;
+}
+
+.search_result_area table td.column_style_tenant_flg {
+  width: 50px;
+}
+
+.search_result_area table td.column_style_building {
+  width: 200px;
+}
+
+.search_result_area table td.column_style_address {
+  width: auto;
+}
+
+.search_result_area table td.column_style_auto_insp_btn {
+  position: relative;
+  text-align: center;
+  width: 72px;
+}
+
+.search_result_area table .button_small {
+  width: 32px;
+}
+
+.search_result_area table .button_dl {
+  position: absolute;
+  top: 22px;
+  left: 33px;
+  pointer-events: none;
+  z-index: 10;
+}

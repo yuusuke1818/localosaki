@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RoleList SYSTEM "role.dtd">
+<RoleList>
+
+    <!-- 大崎 -->
+    <Role Key="OSAKI" Name="大崎電気工業">
+        <Login>OSAKI</Login>
+    </Role>
+    <Role Key="OSAKI_ON_ADMIN" Name="大崎電気工業の自企業：管理者">
+        <Login>OSAKI_ON_ADMIN</Login>
+    </Role>
+    <Role Key="OSAKI_ON_PERSON" Name="大崎電気工業の自企業：担当者">
+        <Login>OSAKI_ON_PERSON</Login>
+    </Role>
+    <Role Key="OSAKI_FOR_CORP" Name="大崎電気工業の操作企業：管理担当">
+        <Login>OSAKI</Login>
+        <Operation>CORP</Operation>
+    </Role>
+
+    <!-- パートナー -->
+    <Role Key="PARTNER" Name="パートナー企業">
+        <Login>PARTNER</Login>
+    </Role>
+    <Role Key="PARTNER_ON_ADMIN" Name="パートナー企業の自企業：管理者">
+        <Login>PARTNER_ON_ADMIN</Login>
+    </Role>
+    <Role Key="PARTNER_ON_PERSON" Name="パートナー企業の自企業：担当者">
+        <Login>PARTNER_ON_PERSON</Login>
+    </Role>
+    <Role Key="PARTNER_FOR_CORP" Name="パートナー企業の操作企業：管理担当">
+        <Login>PARTNER</Login>
+        <Operation>CORP</Operation>
+    </Role>
+    <Role Key="PARTNER_FOR_BUILDING" Name="パートナー企業の操作企業：建物・テナント担当">
+        <Login>PARTNER</Login>
+        <Operation>BUILDING</Operation>
+    </Role>
+
+    <!-- メンテナンス -->
+    <Role Key="MAINTENANCE_ON_ADMIN" Name="メンテナンス企業の自企業：管理者">
+        <Login>MAINTENANCE_ON_ADMIN</Login>
+    </Role>
+    <Role Key="MAINTENANCE_ON_PERSON" Name="メンテナンス企業の自企業：担当者">
+        <Login>MAINTENANCE_ON_PERSON</Login>
+    </Role>
+    
+    <!-- 契約企業 -->
+    <Role Key="CONTRACT_ON_ADMIN" Name="契約企業の管理者">
+        <Login>CONTRACT_ON_ADMIN</Login>
+    </Role>
+    <Role Key="CONTRACT_ON_PERSON" Name="契約企業の担当者">
+        <Login>CONTRACT_ON_PERSON</Login>
+    </Role>
+</RoleList>

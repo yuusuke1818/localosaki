@@ -1,0 +1,268 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+    <h:body>
+        <ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+        <ui:define name="content_side">
+                <h:outputStylesheet library="css" name="common/tab.css" />
+                <h:outputStylesheet library="css" name="sms/collect/setting/meterTenant/search.css"/>
+                <h:outputScript library="js" name="sms/collect/setting/meterTenant/search.js"/>
+                <form jsfc="h:form" id="smsCollectSettingMeterTenantSearchBean">
+                    <div class="inner_content">
+                        <div class="title_area_warp">
+                            <!-- 画面タイトル -->
+                            <div class="title_area_left">
+                                <h2 class="page_title">メーターテナント管理</h2>
+                                <!-- ヘルプボタン -->
+                                <c:if test="#{indexBean.userGuideBool}">
+                                  <h:commandLink class="help_icon" 
+                                           action="#{indexBean.userGuide()}" target="_blank" />
+                                </c:if>
+                                <p class="page_subtitle">
+                                    <h:outputText value="テナント情報の新規登録、または編集ができます。" />
+                                </p>
+                            </div>
+                            <c:if test="#{smsCollectSettingMeterTenantSearchBean.smsAuthControl}">
+                                <div class="title_area_right" align="right">
+                                    <div class="gradation_type_1 button_large_2 new_regist_button">
+                                        <a4j:commandButton id="EditBtn" value="新規登録" action="#{smsCollectSettingMeterTenantSearchBean.execNextScreen(null, 0)}"
+                                                           onbegin="showBlockModal()" oncomplete="hideBlockModal()" />
+                                        <h:graphicImage class="button_icon" library="images" name="common/com013.png" />
+                                    </div>
+                                    <div class="gradation_type_1 button_large_2 bulk_regist_button">
+                                        <a4j:commandButton id="bulkEditBtn" value="一括登録" action="#{smsCollectSettingMeterTenantSearchBean.execMoveBulkEdit()}"
+                                                           onbegin="showBlockModal()" oncomplete="hideBlockModal()" />
+                                        <h:graphicImage class="button_icon" library="images" name="common/com013.png" />
+                                    </div>
+                                </div>
+                            </c:if>
+                        </div>
+                        <div class="clear" />
+                        <!-- メッセージ表示部分 -->
+                        <!--<div>-->
+                        <rich:messages id="Messages" showSummary="true" />
+                        <!--</div>-->
+                        <!-- 説明文 -->
+                        <div class="search_description">
+                            <p>検索条件を設定して[検索開始]を押してください。</p>
+                        </div>
+
+                        <!-- 動的検索条件テーブル -->
+                        <div class="gradation_type_1">
+                        <a4j:outputPanel id="commonSearchResult" >
+                            <rich:dataTable id="searchConditionTable" rows="0"
+                                            value="#{smsCollectSettingMeterTenantSearchBean.conditionList}"
+                                            var="item" 
+                                            style="margin-top: 5px;
+                                            width: 100%;
+                                            border: 0px;
+                                            table-layout: fixed;">
+                                <!--検索条件表示部分 -->
+                                <span jsfc="h:column" styleClass="condition_msg" style="width: 20%; border:0px">
+                                    <h:selectOneMenu  id="selectConditionCd" value="#{item.selectConditionCd}" styleClass="SELECT001" rendered="#{item.selectEnable}"
+                                                      style="height: 30px;">
+                                        <f:ajax event="change" execute="smsCollectSettingMeterTenantSearchBean:searchConditionTable" render="smsCollectSettingMeterTenantSearchBean:searchConditionTable" 
+                                                listener="#{smsCollectSettingMeterTenantSearchBean.changeConditionCd(item.orderNo)}"
+                                                onevent="autoFocusOnSelectCondition" />
+
+                                        <option jsfc="f:selectItems" value="#{item.selectConditionMap}" />
+                                    </h:selectOneMenu>
+                                    <h:outputText value="#{item.selectConditionCd}" rendered="#{item.selectDisable}" />
+                                </span>
+                                <!--接続詞表示部分 -->
+                                <span jsfc="h:column" style="width: 10%; text-align: center; border:  0px;">
+                                    <input jsfc="h:outputText" value="#{item.searchSubjectConjunction}" style="width: 100%;text-align: center" rendered="#{item.searchSubjectConjunctionEnable}"/>
+                                </span>
+                                <!--ドロップダウンリストまたは検索キーワード表示部分 -->
+                                <span jsfc="h:column" style="width: 40%; border:  0px;">
+                                    <!-- 都道府県-->
+                                    <h:selectOneMenu id="prefectureCd" value="#{item.prefectureCd}" styleClass="SELECT001" rendered="#{item.prefectureSelectEnable}"
+                                                     style="width: 100%; height: 25px;" onkeydown="searchConditionKeydown()">
+                                        <option jsfc="f:selectItems" value="#{smsCollectSettingMeterTenantSearchBean.prefectureMap}" />
+                                    </h:selectOneMenu>
+
+                                    <!--建物・テナント状況 -->
+                                    <h:selectOneMenu id="buildingStatusCd" value="#{item.buildingStatusCd}" styleClass="SELECT001" rendered="#{item.buildingStatusSelectEnable}"
+                                                     style="width: 100%; height: 25px;" onkeydown="searchConditionKeydown()">
+                                        <option jsfc="f:selectItems" value="#{smsCollectSettingMeterTenantSearchBean.buildingStatusMap}" />
+                                    </h:selectOneMenu>
+
+                                    <!--キーワード -->
+                                    <h:inputText id="conditionKeyword" value="#{item.conditionKeyword}" styleClass="EDIT002" class="autofocus" rendered="#{item.keywordSelectEnable}" 
+                                                 style="width: 100%; height: 25px;" maxlength="#{smsCollectSettingMeterTenantSearchBean.getConditionKeywordMaxLength(item.tenantIdSelectEnable)}" 
+                                                 onkeydown="searchConditionKeydown()" />
+                                </span>
+                                <!--「を含む」表示部分 -->
+                                <span jsfc="h:column"  style="width: 12%; text-align: center; border:  0px;">
+                                    <input jsfc="h:outputText" value="#{item.mutchingTypeCd}" rendered="${!empty item.mutchingTypeCd}" style="width: 100%; height: 25px; text-align: center;"/>
+                                </span> 
+
+                                <!--削除ボタン表示部分 -->
+                                <span jsfc="h:column" styleClass="gradation_type_3 button_medium_2 delete_button" style="width: 10%; border:  0px;">
+                                    <h:commandButton id="delButton" value="削除" rendered="#{item.deleteButtonEnable}" 
+                                                     style="width: 100%; height: 25px;">
+                                        <f:ajax event="click" 
+                                                execute="smsCollectSettingMeterTenantSearchBean:searchConditionTable" 
+                                                render="smsCollectSettingMeterTenantSearchBean:searchConditionTable" 
+                                                listener="#{smsCollectSettingMeterTenantSearchBean.deleteCondition(item.orderNo)}"/>
+                                    </h:commandButton>
+                                    <h:graphicImage class="button_icon" library="images" rendered="#{item.deleteButtonEnable}" name="common/com020.png" />
+                                </span> 
+                            </rich:dataTable>
+                        </a4j:outputPanel>
+                        </div>
+                        <!-- 検索ボタン -->
+                        <div class="button_area_center gradation_type_1 button_large_2 button_search">
+                            <input id="searchButton" class="action_button" jsfc="h:commandButton" value="検索開始">
+                                <!--<f:ajax event="click" execute="@form" render="@form" listener="#{buildingInfoSearchBean.search()}" />-->
+                                <a4j:ajax event="click" execute="@form" render="@form" 
+                                          listener="#{smsCollectSettingMeterTenantSearchBean.search()}" 
+                                          onbegin="showBlockModal()" 
+                                          oncomplete="hideBlockModal()" />
+                            </input>
+                            <h:graphicImage class="button_icon" library="images" name="common/com028.png" />
+                        </div>
+
+                        <!-- 検索結果サマリー表示 -->
+                        <ui:fragment id="searchResultArea" rendered="#{smsCollectSettingMeterTenantSearchBean.buildingInfoSearchBeanProperty.searchedFlg}">
+                            <div class="search_result_header_wrap">
+                                <div id="listReroad">
+                                    <div class="search_result_header_left page_content_parts">
+                                        検索条件に該当するテナント情報
+                                        <span class="serach_result_total_count" jsfc="h:outputText" value=" #{smsCollectSettingMeterTenantSearchBean.tenantInfoPagingList.resultCount}" />
+                                        件
+                                    </div>
+                                    <br/><br/>
+                                </div>
+                            </div>
+                            <!-- 検索結果リスト表示 -->
+                            <div class="search_result_area">
+                                <h:dataTable id="result" var="item" style="width: 100%;" value="#{smsCollectSettingMeterTenantSearchBean.tenantInfoPagingList.pageList}"
+                                             headerClass="table_header" 
+                                             columnClasses="#{smsCollectSettingMeterTenantSearchBean.buildingInfoSearchBeanProperty.columnClassesStr}"
+                                             rendered="#{smsCollectSettingMeterTenantSearchBean.tenantInfoPagingList.resultCount != '0'}">
+                                    <h:column>
+                                        <f:facet name="header">
+                                        </f:facet>
+                                        <h:graphicImage class="button_icon" library="images" name="common/com074.png" rendered="#{item.tenantFlg}" />
+                                        <h:graphicImage class="button_icon" library="images" name="common/com075.png" rendered="#{!item.tenantFlg}" />
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="ユーザーコード"  escape="false" />
+                                        </f:facet>
+                                        <h:panelGrid columns="1">
+                                            <h:outputText id="userCode" value="#{item.tenantId}" />
+                                        </h:panelGrid>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="テナント番号&lt;BR&gt;テナント名"  escape="false" />
+                                        </f:facet>
+                                        <h:panelGrid columns="1">
+                                            <h:outputText id="buildingNo" value="#{item.buildingNo}" />
+                                            <h:outputText id="buildingName" value="#{item.buildingName}" />
+                                        </h:panelGrid>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="住所"/>
+                                        </f:facet>
+                                        <h:outputText id="buildingAddress" value="#{item.buildingAddress}" />
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="稼働状況"  escape="false" />
+                                            <!-- <h:outputText value="稼働状況&lt;BR&gt;入居形態"  escape="false" /> -->
+                                        </f:facet>
+                                        <h:panelGrid columns="1">
+                                            <h:outputText id="buildingStatus" value="#{item.buildingStatus}" />
+                                            <!-- <h:outputText id="nyukyoType" value="#{item.nyukyoType}" /> -->
+                                        </h:panelGrid>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="編集"/>
+                                        </f:facet>
+                                        <h:commandButton style="position: relative; top:-4px; left:-4px;" id="editButton" class="button_small button_building_edit" value=" "
+                                                         onclick="showBlockModal();" action="#{smsCollectSettingMeterTenantSearchBean.execNextScreen(item, 1)}" >
+                                            <h:graphicImage style="position: relative; top:1px; left:-4px;" class="button_edit" library="images" name="common/com018.png" />
+                                        </h:commandButton>
+                                    </h:column>
+                                    <c:if test="#{smsCollectSettingMeterTenantSearchBean.smsAuthControl}">
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="複製"/>
+                                            </f:facet>
+                                            <h:commandButton style="position: relative; top:-6px; left:-2px;" id="copyButton" class="button_small button_building_copy" value=" "
+                                                             onclick="showBlockModal();" action="#{smsCollectSettingMeterTenantSearchBean.execNextScreen(item, 0)}" >
+                                                <h:graphicImage style="position: relative; top:3px; left:-2px;" class="button_copy" library="images" name="plan/plan_copy.png" />
+                                            </h:commandButton>
+                                        </h:column>
+                                    </c:if>
+                                </h:dataTable>
+                            </div>
+                            <!-- ページング -->
+                            <ui:fragment rendered="#{smsCollectSettingMeterTenantSearchBean.tenantInfoPagingList.resultCount != '0'}">
+                                <div class="contents_center">
+                                    <div id="paging_area">
+                                        <span id="prevButton_area">
+                                            <h:commandLink id="prevButton" value="&lt;&nbsp;&nbsp;前へ" actionListener="#{smsCollectSettingMeterTenantSearchBean.prevPage}" 
+                                                           disabled="#{!smsCollectSettingMeterTenantSearchBean.tenantInfoPagingList.isPrevPage()}">
+                                                <f:ajax execute="@form" render="@form" />
+                                                <f:attribute name="page" value="#{smsCollectSettingMeterTenantSearchBean.tenantInfoPagingList.currentPage}" />
+                                            </h:commandLink>
+                                        </span>
+                                        <cust:pageIndex id="pageJumpButton" value="#{smsCollectSettingMeterTenantSearchBean.tenantInfoPagingList.pageValue}" 
+                                                        action="#{smsCollectSettingMeterTenantSearchBean.pageJump()}" >
+                                            <ui:include src="/html/common/paging/index.xhtml" />
+                                        </cust:pageIndex>
+                                        <span id="nextButton_area">
+                                            <h:commandLink id="nextButton" class="nextButton" value="後へ&nbsp;&nbsp;&gt; " actionListener="#{smsCollectSettingMeterTenantSearchBean.nextPage}" 
+                                                           disabled="#{!smsCollectSettingMeterTenantSearchBean.tenantInfoPagingList.isNextPage()}">
+                                                <f:ajax execute="@form" render="@form" />
+                                                <f:attribute name="page" value="#{smsCollectSettingMeterTenantSearchBean.tenantInfoPagingList.currentPage}" />
+                                            </h:commandLink>
+                                        </span>
+                                    </div>
+                                </div>
+                            </ui:fragment>    
+                        </ui:fragment>
+                    </div>                    
+                    <!-- アクセストークン用 -->
+                    <oslib:requestToken />
+                    <ui:remove>確認ダイアログ</ui:remove>
+                    <ui:include src="/html/common/confirmationDialog.xhtml" >
+                        <ui:param name="confirmationDialogTitle" value="確認" />
+                        <ui:param name="confirmationDialogMessage" value="#{buildingInfoSearchBean.buildingGroupingNotOutputMessage}" />
+                    </ui:include>
+                    <script type="text/javascript">
+                        function outputBuildingListCheck() {
+                            if (confirmationDialogOpen($('input[id$=outputBuildingListButton]'))) {
+                                return true;
+                            }
+                            return false;
+                        }
+                        function functionCheck(check) {
+                            if(functionCheckDialog(check)){
+                                showBlockModal();
+                                return true;
+                            }
+                            return false;
+                        }
+                    </script>
+                </form>
+                <ui:remove>
+                </ui:remove>
+            </ui:define>
+        </ui:composition> 
+    </h:body>
+</html>

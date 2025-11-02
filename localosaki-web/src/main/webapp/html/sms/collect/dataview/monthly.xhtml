@@ -1,0 +1,298 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+    <head jsfc="h:head">
+        <title>月報データ</title>
+    </head>
+    <body jsfc="h:body">
+        <ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+            <ui:define name="content_side">
+                <h:outputStylesheet library="css" name="common/rfCalendar.css" />
+                <h:outputStylesheet library="css" name="sms/collect/dataview/daily.css" />
+                <h:outputScript library="js" name="common/Chart.min.js" />
+                <h:outputScript library="js" name="sms/collect/dataview/daily.js"/>
+
+                <c:set var="dataViewBean" value="#{smsCollectDataviewMonthlyBean.dataViewBean}" />
+
+                <form jsfc="h:form" id="smsMonthlyBean">
+                    <div class="inner_content">
+                        <div jsfc="a4j:outputPanel" id="monthlyDataPanel">
+                             <div class="title_area_warp">
+                                <!-- 画面タイトル -->
+                                <div class="title_area_left">
+                                    <h2 class="page_title">月報データ</h2>
+                                    <!-- ヘルプボタン -->
+                                    <c:if test="#{indexBean.userGuideBool}">
+                                        <h:commandLink class="help_icon"
+                                            action="#{indexBean.userGuide()}" target="_blank" />
+                                    </c:if>
+                                    <p class="page_subtitle">
+                                        <h:outputText value="各メーターの1日毎の計量値(使用量・指針値)を表示します。&lt;br /&gt;
+                                            指針値は各日24時の指針値を表示します。" escape="false" />
+                                    </p>
+                                </div>
+                                <div class="clear" />
+                            <div class="contents_title contents_accordion_header contents_daily">
+                                <h:graphicImage class="button_icon button_opener" library="images" name="demand/demand_container_opner.png"  style="display: none" />
+                                <h:graphicImage class="button_icon button_closer" library="images" name="demand/demand_container_closer.png" />
+                                <span class="contents_title_body">表示条件</span>
+                            </div>
+                            <div class="contents_form_area contents_accordion_body">
+                                <div class="msg">表示内容を変更したい場合は、下記を変更し、[表示更新]ボタンを押してください。</div>
+                                <div class="conditions">
+                                    <div>
+                                        <label class="TXT008 L1">接続先</label>
+                                        <f:ajax event="change" render="meterMngId dispDirect" listener="#{smsCollectDataviewMonthlyBean.changeDevIdPulldown()}">
+                                            <select jsfc="h:selectOneMenu" value="#{dataViewBean.presentCondition.devId}" class="SEL1">
+                                                <option jsfc="f:selectItems" value="#{dataViewBean.devIdMap}" />
+                                            </select>
+                                        </f:ajax>
+                                    </div>
+                                    <div>
+                                        <label class="TXT008 L2">メーター表示切替</label>
+                                        <f:ajax event="click" listener="#{smsCollectDataviewMonthlyBean.changePageNoPulldown()}">
+                                            <select jsfc="h:selectOneMenu" id="meterMngId" value="#{dataViewBean.pageNo}" class="SEL5">
+                                                <option jsfc="f:selectItems" value="#{dataViewBean.meterMngIdPageNoMap}" />
+                                            </select>
+                                        </f:ajax>
+                                    </div>
+                                </div>
+                                <div class="conditions">
+                                    <div>
+                                        <label class="TXT008 L3">表示方向</label>
+                                        <f:ajax event="click" listener="#{smsCollectDataviewMonthlyBean.changeDispDirectPulldown()}">
+                                            <select jsfc="h:selectOneMenu" id="dispDirect" value="#{dataViewBean.presentCondition.dispDirect}" class="SEL3">
+                                                <option jsfc="f:selectItems" value="#{dataViewBean.dispDirectMap}" />
+                                            </select>
+                                        </f:ajax>
+                                    </div>
+                                    <div>
+                                        <label class="TXT008 L4">表示種別</label>
+                                        <f:ajax event="click" listener="#{smsCollectDataviewMonthlyBean.changeDispTypePulldown()}">
+                                            <select jsfc="h:selectOneMenu" value="#{dataViewBean.presentCondition.dispType}" class="SEL3">
+                                                <option jsfc="f:selectItems" value="#{dataViewBean.dispTypeMap}" />
+                                            </select>
+                                        </f:ajax>
+                                    </div>
+                                    <div>
+                                        <label class="TXT008 L5">開始日</label>
+                                       <f:ajax event="click" listener="#{smsCollectDataviewMonthlyBean.changeStartDayPulldown()}">
+                                            <select jsfc="h:selectOneMenu" value="#{dataViewBean.startDay}" class="SEL4">
+                                                <option jsfc="f:selectItems" value="#{dataViewBean.startDateTimeList}" />
+                                            </select>
+                                        </f:ajax>
+                                    </div>
+                                </div>
+
+                                <div class="conditions">
+                                    <div>
+                                        <label class="TXT008 L7">テナント名</label>
+                                        <span class="TXT008" style="width: 10px;">に&nbsp;&nbsp;</span>
+                                        <f:ajax event="blur" render="meterMngId" listener="#{smsCollectDataviewMonthlyBean.inputTenantName()}">
+                                            <input type="text" jsfc="h:inputText" id="tenantName"
+                                                   value="#{dataViewBean.presentCondition.tenantName}"
+                                                   style="width: 400px;" />
+                                        </f:ajax>
+                                        <label class="TXT008" style="width: 50px; text-align: left;">を含む</label>
+                                    </div>
+                                </div>
+
+                                <div class="gradation_type_1 button_large_2 button_search">
+                                    <button jsfc="a4j:commandButton"
+                                        id="reloadButton"
+                                        class="button_width edit_search_start"
+                                        value="表示更新"
+                                        action="#{smsCollectDataviewMonthlyBean.reload()}"
+                                        execute="@form" render="#{rich:clientId('monthlyDataPanel')}"
+                                        onbegin="onBeginCalendar()" oncomplete="onCompleteCalendar()" />
+                                    <h:graphicImage class="button_icon" library="images" name="common/com015.png" />
+                                </div>
+                            </div>
+
+                            <!-- 表示種別 -->
+                            <input type="hidden" id="graphKind" value="0" />
+
+                            <!-- 表示エリア -->
+                            <div jsfc="a4j:outputPanel" id="monthlyDataBodyPanel">
+                            <table class="calendar_table">
+                                <tr>
+                                    <td class="col_button_move">
+                                        <div class="calendar_table_back gradation_type_1 gradation_type_5">
+                                            <button jsfc="a4j:commandButton"
+                                                    id="btnCalendarYearBack"
+                                                    class="calendar_move_button"
+                                                    value="前年"
+                                                    execute="@this"
+                                                    render="#{rich:clientId('monthlyDataBodyPanel')}"
+                                                    actionListener="#{smsCollectDataviewMonthlyBean.moveLastYear()}"
+                                                    onbegin="onBeginCalendarDaily();"
+                                                    oncomplete="onCompleteCalendarDaily();" />
+                                            <h:graphicImage class="calendar_move_img" library="images" name="demand/demand_calendar_back.png" />
+                                        </div>
+                                    </td>
+                                    <th colspan="12" class="cal_header">
+                                        <div class="calendar_table_ym">
+                                            #{dataViewBean.dispYear}年#{dataViewBean.startMonth}月
+                                        </div>
+                                    </th>
+                                    <td class="col_button_move">
+                                        <div class="calendar_table_next gradation_type_1 gradation_type_5">
+                                            <button jsfc="a4j:commandButton"
+                                                    id="btnCalendarYearNext"
+                                                    class="calendar_move_button"
+                                                    value="翌年"
+                                                    execute="@this"
+                                                    render="#{rich:clientId('monthlyDataBodyPanel')}"
+                                                    actionListener="#{smsCollectDataviewMonthlyBean.moveNextYear()}"
+                                                    onbegin="onBeginCalendarDaily();"
+                                                    oncomplete="onCompleteCalendarDaily();"
+                                                    disabled="#{dataViewBean.nextYearButtonDisabled}" />
+                                            <h:graphicImage class="calendar_move_img" library="images" name="demand/demand_calendar_next.png" />
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col_button_move">
+                                        <div class="calendar_table_back gradation_type_1 gradation_type_5">
+                                            <button jsfc="a4j:commandButton"
+                                                    id="btnCalendarMonthBack"
+                                                    class="calendar_move_button"
+                                                    value="前月"
+                                                    execute="@this"
+                                                    render="#{rich:clientId('monthlyDataBodyPanel')}"
+                                                    actionListener="#{smsCollectDataviewMonthlyBean.moveLastMonth()}"
+                                                    onbegin="onBeginCalendarDaily();"
+                                                    oncomplete="onCompleteCalendarDaily();" />
+                                            <h:graphicImage class="calendar_move_img" library="images" name="demand/demand_calendar_back.png" />
+                                        </div>
+                                    </td>
+
+                                    <c:forEach var="dispMonth" begin="1" end="12" step="1" varStatus="status">
+                                        <td class="td_calendar_day #{dataViewBean.calendarBean.selectedMonth == dispMonth ? 'td_targetday': ''}">
+                                            <a jsfc="a4j:commandLink"
+                                               value="${dispMonth}"
+                                               actionListener="#{smsCollectDataviewMonthlyBean.selectCalMonth(dispMonth)}"
+                                               execute="@this"
+                                               render="#{rich:clientId('monthlyDataBodyPanel')}"
+                                               onbegin="onBeginCalendarDaily();"
+                                               oncomplete="onCompleteCalendarDaily();" />
+                                        </td>
+                                    </c:forEach>
+
+                                    <td class="col_button_move">
+                                        <div class="calendar_table_next gradation_type_1 gradation_type_5">
+                                            <button jsfc="a4j:commandButton"
+                                                    id="btnCalendarMonthNext"
+                                                    class="calendar_move_button"
+                                                    value="翌月"
+                                                    execute="@this"
+                                                    render="#{rich:clientId('monthlyDataBodyPanel')}"
+                                                    actionListener="#{smsCollectDataviewMonthlyBean.moveNextMonth()}"
+                                                    onbegin="onBeginCalendarDaily();"
+                                                    oncomplete="onCompleteCalendarDaily();"
+                                                    disabled="#{dataViewBean.nextMonthButtonDisabled}" />
+                                            <h:graphicImage class="calendar_move_img" library="images" name="demand/demand_calendar_next.png" />
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="contents_header">
+                                <div class="buttons">
+                                    <div class="button gradation_type_1 button current sw_table">
+                                        <h:graphicImage class="button_icon_graph button_icon" library="images" name="demand/graph_icon_01.png" />
+                                        <input type="button" data-type="s1" value="数値">
+                                            <f:ajax event="click" listener="#{smsCollectDataviewMonthlyBean.selectDispTableOrGraph()}" />
+                                        </input>
+                                    </div>
+                                    <c:if test="#{!dataViewBean.graphIconHidden}">
+                                    <div class="button gradation_type_3 button current sw_graph">
+                                        <h:graphicImage class="button_icon_graph button_icon" library="images" name="demand/graph_icon_03.png" />
+                                        <input type="button" data-type="s2" value="グラフ">
+                                            <a4j:ajax event="click" execute="@this" oncomplete="onClickGraphButton();" />
+                                        </input>
+                                    </div>
+                                    </c:if>
+                                    <div class="button_area_right gradation_type_1 gradation_type_5 button_large_2 control_button_area">
+                                        <div class="output_button">
+                                            <button jsfc="a4j:commandButton"
+                                                id="downloadCsvFileButton"
+                                                class="button_width"
+                                                value="帳票出力"
+                                                action="#{smsCollectDataviewMonthlyBean.downloadCsvFile()}"
+                                                onbegin="showBlockModal()"
+                                                oncomplete="hideBlockModal();
+                                                           if($('.rf-msgs-err').size()==0) {
+                                                           $('input[id$=downloadCsvStart]').click();
+                                                           }"
+                                                disabled="#{dataViewBean.downloadButtonDisabled}" />
+                                            <button jsfc="h:commandButton" id="downloadCsvStart" style="display: none;"
+                                                    action="#{smsCollectDataviewMonthlyBean.downloadFileStart()}" />
+                                            <h:graphicImage class="output_button_icon" library="images" name="common/com044.png" />
+                                        </div>
+                                        <div class="print_button">
+                                            <button jsfc="a4j:commandButton"
+                                                id="downloadPdfFileButton"
+                                                class="button_width"
+                                                value="印刷出力"
+                                                action="#{smsCollectDataviewMonthlyBean.downloadPdfFile()}"
+                                                onbegin="showBlockModal()"
+                                                oncomplete="hideBlockModal();
+                                                           if($('.rf-msgs-err').size()==0) {
+                                                           $('input[id$=downloadPdfStart]').click();
+                                                           }"
+                                                disabled="#{dataViewBean.downloadButtonDisabled}" />
+                                            <button jsfc="h:commandButton" id="downloadPdfStart" style="display: none;"
+                                                    action="#{smsCollectDataviewMonthlyBean.downloadFileStart()}" />
+                                            <h:graphicImage class="output_button_icon" library="images" name="common/com079.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <c:set var="dispDataList" value="#{dataViewBean.dispDataList}" />
+                            <c:set var="numAreaHeight" value="519px" />
+                            <c:set var="scrollBarHide" value="false" />
+
+                            <c:set var="loadSurveyDataList" value="#{dataViewBean.loadSurveyDataList}" />
+
+                            <!-- 数値表示部 -->
+                            <div class="contents_table" style="height: 511px;">
+                                <c:choose>
+                                    <c:when test="#{dataViewBean.presentCondition.devId == '0'}">
+                                        <ui:include src="/html/sms/collect/dataview/numAllDevice.xhtml"/>
+                                    </c:when>
+                                    <c:when test="#{dataViewBean.presentCondition.devId != '0'}">
+                                        <ui:include src="/html/sms/collect/dataview/num.xhtml"/>
+                                    </c:when>
+                                </c:choose>
+                            </div>
+
+                            <!-- グラフ表示部 -->
+                            <div class="contents_graph">
+                                <c:choose>
+                                    <c:when test="#{dataViewBean.presentCondition.devId == '0'}">
+                                        <ui:include src="/html/sms/collect/dataview/graphAllDevice.xhtml"/>
+                                    </c:when>
+                                    <c:when test="#{dataViewBean.presentCondition.devId != '0'}">
+                                        <ui:include src="/html/sms/collect/dataview/graph.xhtml"/>
+                                    </c:when>
+                                </c:choose>
+                            </div>
+                            
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

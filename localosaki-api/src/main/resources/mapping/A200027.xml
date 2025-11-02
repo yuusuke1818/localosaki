@@ -1,0 +1,153 @@
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+  <!-- *** 負荷制御履歴(取得) テンプレート *** -->
+  <!-- ベース部分 -->
+  <template name="base">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="3" default="K00" keepPadding="true" />
+    <field name="settingChangeHist" length="2" default="00" padding="0" justify="right" />
+  </template>
+
+  <template name="base22">
+    <include template="base" />
+    <field name="compressionDataLength" length="6" default="000000" keepPadding="true" />
+  </template>
+
+  <template name="base.res">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" keepPadding="true" />
+  </template>
+
+  <template name="base22.res">
+    <include template="base.res" />
+    <field name="compressionDataLength" length="6" keepPadding="true" />
+  </template>
+
+  <!-- 共通部分１（受信用） -->
+  <template name="commonResponse1">
+    <field name="recordDayTime" length="10" keepPadding="true" />
+    <field name="leftMinute" length="2" keepPadding="true" />
+    <field name="leftSeconds" length="2" keepPadding="true" />
+  </template>
+
+  <!-- 共通部分２（受信用） -->
+  <template name="commonResponse2">
+    <field name="targetPower" length="4" keepPadding="true" />
+    <field name="nowPower" length="4" keepPadding="true" />
+    <field name="adjustPower" length="5" keepPadding="true" />
+  </template>
+
+  <!-- 「00」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="00.req" format="fixedlength">
+    <record name="request" template="base" class="jp.co.osaki.osol.mng.param.A200027Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="00.res" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200027Param">
+      <segment name="loadCtrlHistList" collection="list" class="map" occurs="100">
+        <include template="commonResponse1" />
+        <field name="loadCtrlInfoFV2" length="2" keepPadding="true" />
+        <include template="commonResponse2" />
+      </segment>
+    </record>
+  </stream>
+
+  <!-- 「03」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="03.req" format="fixedlength">
+    <record name="request" template="base" class="jp.co.osaki.osol.mng.param.A200027Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="03.res" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200027Param">
+      <segment name="loadCtrlHistList" collection="list" class="map" occurs="100">
+        <include template="commonResponse1" />
+        <field name="loadCtrlInfoFVPD" length="2" keepPadding="true" />
+        <include template="commonResponse2" />
+      </segment>
+    </record>
+  </stream>
+
+  <!-- 「06」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="06.req" format="fixedlength">
+    <record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200027Param">
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="06.res" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200027Param">
+      <segment name="loadCtrlHistList" collection="list" class="map" occurs="100">
+        <include template="commonResponse1" />
+        <field name="loadCtrlInfoFVPaD" length="3" keepPadding="true" />
+        <include template="commonResponse2" />
+      </segment>
+    </record>
+  </stream>
+
+  <!-- 「12」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="12.req" format="fixedlength">
+    <record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200027Param">
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="12.res" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200027Param">
+      <segment name="loadCtrlHistList" collection="list" class="map" occurs="100">
+        <include template="commonResponse1" />
+        <field name="loadCtrlInfoFVPaG2" length="9" keepPadding="true" />
+        <include template="commonResponse2" />
+      </segment>
+    </record>
+  </stream>
+
+  <!-- 「21」非対応 -->
+  <!-- 送信文 -->
+  <stream name="21.req" format="fixedlength">
+    <record name="request" template="base" class="jp.co.osaki.osol.mng.param.A200027Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="21.res" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200027Param">
+      <segment name="loadCtrlHistList" collection="list" class="map" occurs="100">
+        <field name="recordDayTime" length="12" keepPadding="true" />
+        <field name="loadCtrlInfoEa" length="4" keepPadding="true" />
+        <include template="commonResponse2" />
+      </segment>
+    </record>
+  </stream>
+
+  <!-- 「22」非対応 -->
+  <!-- 送信文 -->
+  <stream name="22.req" format="fixedlength">
+    <record name="request" template="base22" class="jp.co.osaki.osol.mng.param.A200027Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="22.res" format="fixedlength">
+    <record name="response" template="base22.res" class="jp.co.osaki.osol.mng.param.A200027Param">
+      <segment name="loadCtrlHistList" collection="list" class="map" occurs="100">
+        <field name="recordDayTime" length="12" keepPadding="true" />
+        <field name="loadCtrlInfoEa2" length="4" keepPadding="true" />
+        <include template="commonResponse2" />
+      </segment>
+    </record>
+  </stream>
+
+  <!-- 応答データ無し -->
+  <stream name="res_data.none" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200027Param">
+    </record>
+  </stream>
+
+</beanio>

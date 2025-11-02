@@ -1,0 +1,242 @@
+/* テーブル 記述位置調整 */
+.login_table_margin {
+  margin-left: 8%;
+}
+
+.login_table_width {
+  width: 550px;
+}
+
+.login_table_width .login_table_col1 {
+  width: 128px;
+}
+
+.login_table_width .login_table_col2 {
+  width: 10px;
+}
+
+.login_table_width .login_table_col3 {
+  width: 295px;
+}
+/* テーブル 高さ */
+.login_td_height {
+  height: 50px;
+}
+
+.login_font_td {
+  width: 150px;
+}
+
+/* ログインボタン 高さ */
+.login_btn_td_height {
+  height: 80px;
+}
+
+.input_box_height {
+  height: 30px;
+}
+
+.input_box_width, /* 入力テキスト 幅*/ .command_button_width /* 命令ボタン 幅　*/ {
+  width: 280px
+}
+
+.login_font {
+  font-size: 18px
+}
+
+.login_color {
+  color: white
+}
+
+/* 命令ボタン 高さ */
+.command_button_height {
+  height: 60px;
+}
+
+/* 境界線設定　*/
+.button_border {
+  border: none
+}
+
+/* 命令ボタン 色　*/
+.command_button_color {
+  color: white;
+  background-color: #191970;
+}
+
+/* ボタンのフォントサイズ */
+.button_font_size {
+  font-size: 17px
+}
+
+/* ボタン 角丸 */
+.button_radius {
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+/* 文字間隔 */
+.login_font, .pass_spacing {
+  letter-spacing: 1.5px
+}
+
+/*ロゴ表示範囲*/
+.top_logo_area {
+  position: relative;
+  margin-right: auto;
+  margin-left: auto;
+  padding-bottom: 20px; padding-top : 100px;
+  z-index: 40;
+  padding-top: 100px;
+}
+
+/*バージョン情報表示場所*/
+#version_info_area {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  z-index: 41;
+  color: #FFF;
+}
+
+/*ロゴ*/
+#top_logo {
+  text-align: center;
+}
+
+/*入力エリア*/
+.center_content_login {
+  position: relative;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 80px;
+  width: 600px;
+  min-height: 290px;
+  background-image: url("#{resource['images/login/login_login002.png']}");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  padding: 5px;
+  z-index: 100;
+  border-radius: 10px;
+}
+
+.editPW_table_margin {
+  margin-left: 13%;
+}
+
+.login_button_area {
+  margin-left: 10px;
+}
+
+/*ログイン画面のログインボタン*/
+.login_button_area input[type=submit] {
+  margin-left: 5px;
+  margin-top: 0px;
+  border: 0px;
+  width: 96px;
+  height: 96px;
+  background: url("#{resource['images/login/login_login001.png']}") left
+    top no-repeat;
+  cursor: pointer;
+}
+
+.login_button_area input[type=submit]:hover {
+  background: url("#{resource['images/login/login_login003.png']}") left
+    top no-repeat;
+}
+
+.login_button_area input[type=submit]:focus {
+  outline: none;
+}
+
+.dummy_login_button {
+  display: none;
+}
+
+/*パスワード変更画面タイトル*/
+.page_title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-left: 0px;
+}
+
+.editPW_area {
+  margin: 0 auto;
+  width: 800px;
+  background: #FFFFFF;
+  padding: 20px;
+}
+
+/* アナウンス 文面折り返し */
+.announcement_word-wrap {
+  word-wrap: break-word
+}
+
+/* アナウンス 記事の間隔幅 */
+.announcement_account_width {
+  width: 40px
+}
+
+/* アナウンス スクロール */
+.announcement_overflow {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+/*
+ アナウンス サイズ */
+.announcement_size {
+  height: 210px;
+  width: 470px;
+}
+
+/* アナウンス トピック サイズ */
+.announcement_topic_size {
+  overflow-y: scroll;
+  height: 140px;
+  width: 1010px;
+}
+
+/* アナウンス 境界線 */
+.announcement_border {
+  border: rgb(0, 79, 141) solid 4px;
+}
+
+/*アナウンス 案内 高さ */
+.announcement_height {
+  height: 30px
+}
+
+/*アナウンス 案内 区切り線 */
+.announcement_border_horizontal_separator, tr {
+  border-collapse: collapse;
+  border: 1px solid gray;
+  border-right: none;
+  border-left: none;
+  border-top: none;
+}
+
+/* 文字間隔 */
+.login_font, .pass_spacing {
+  letter-spacing: 1.5px
+}
+/* a4jのライブラリを読み込むとなぜか読めなくなるため追加 */
+.rf-msg-err, .rf-msgs-err {
+  background-image:
+    url(/osol-sms/org.richfaces.resources/javax.faces.resource/error.png?ln=org.richfaces);
+  color: #FF0000;
+}
+
+.rf-msg, .rf-msgs {
+  font-family: Arial, Verdana, sans-serif;
+  font-size: initial;
+}
+
+.rf-msg-err, .rf-msgs-err, .rf-msg-ftl, .rf-msgs-ftl, .rf-msg-inf,
+  .rf-msgs-inf, .rf-msg-wrn, .rf-msgs-wrn, .rf-msg-ok, .rf-msgs-ok {
+  display: block;
+  padding-right: 2px;
+  padding-left: 20px;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-position: left center;
+}

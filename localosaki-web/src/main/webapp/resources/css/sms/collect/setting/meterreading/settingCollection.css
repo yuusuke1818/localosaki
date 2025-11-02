@@ -1,0 +1,69 @@
+.settingCollection_tbl {
+    border-spacing: 0px;
+    width: 100%;
+}
+.settingCollection_tbl th {
+    background-color: #004f8d;
+    color: white;
+    font-weight: bold;
+    border: 1px #cccccc solid;
+    height: 30px;
+}
+.settingCollection_tbl td {
+    border: 1px #cccccc solid;
+    height: 30px;
+    padding-left: 10px;
+}
+th.table_header {
+	font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+}
+a.settingCollection_link {
+	font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+}
+.settingCollection_tbl_col_1 {
+    background-color: #e3f7ff;
+    width: 6%;
+    text-align: center;
+    padding-right: 10px;
+}
+.settingCollection_tbl_col_2 {
+    width: 47%;
+}
+.settingCollection_tbl_col_3 {
+    width: 47%;
+}
+.settingCollection_link {
+    color: #fff !important;
+    text-decoration: underline !important;
+    font-size: 12px;
+}
+.settingCollection_txt {
+    width: 200px;
+}
+.settingCollection_sel {
+    width: 200px;
+    height: 25px;
+}
+
+/* ボタンの右寄せ */
+.button_area_right {
+/*    margin: 20px 0; */
+    text-align: right;
+}
+/* ボタン欄 */
+.button_area {
+    margin-top: 20px;
+}
+/* ボタン */
+.action_button{
+    height: 40px;
+    width: 210px;
+}
+/* ボタンアイコン */
+.button_area .button_icon {
+    position: relative;
+    top: 6px;
+    left: -185px;
+    z-index: 10;
+    pointer-events: none;
+}

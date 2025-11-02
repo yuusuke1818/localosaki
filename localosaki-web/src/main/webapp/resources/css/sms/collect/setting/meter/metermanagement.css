@@ -1,0 +1,803 @@
+.rf-tab-cnt {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.contents_title {
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+}
+
+/*.contents_title .contents_title_body {
+    display: inline;
+    font-weight: normal;
+}*/
+
+.contents_accordion_body .head {
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+.contents_accordion_body .body {
+    margin-left: 10px;
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 5px;
+}
+
+.contents_area .conditions{
+  width: 900px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.contents_area .conditions label {
+    display: inline-block;
+    text-align: right;
+    width: 125px;
+    padding: 0 10px;
+}
+
+.contents_accordion_body .foot {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.contents_accordion_body .foot .button_icon {
+    position: absolute;
+    top: 9px;
+    left: 10px;
+}
+
+.contents_body {
+    position: relative;
+}
+
+.contents_body .button_large_2 {
+    position: absolute;
+    top: 28px;
+    right: 0;
+}
+
+.contents_body .s6Table .button_large_2 {
+    position: absolute;
+    top: 95px;
+    right: 0;
+}
+
+.contents_body .s6Table .button_large_ltem {
+    left: 0;
+}
+
+.contents_body .p6Table .button_large_2 {
+    position: absolute;
+    top: 95px;
+    right: 0;
+}
+
+.contents_body .button_large_2 .button_icon {
+    position: absolute;
+    top: 9px;
+    left: 10px;
+}
+
+/* 登録ボタンの位置調整 */
+.contents_body .btnRegistLayout {
+    position: static;
+    text-align: center;
+}
+
+/* 登録ボタンの中にアイコンを表示するための位置調整 */
+.contents_body .btnRegistLayout .btnRegistIconLayout {
+    position: relative;
+    top: 6px;
+    left: -86px;
+}
+
+/* 設定変更ボタンの中にアイコンを表示するための位置調整 */
+.contents_body .btnRegistLayout .btnSettingEditIconLayout {
+    position: relative;
+    top: 6px;
+    left: -125px;
+}
+
+/* 現在値取得ボタンの中にアイコンを表示するための位置調整 */
+.s6CurrentValueGetBtnIcon {
+    position: relative;
+    top: 3px;
+    left: 45px;
+}
+
+/* 現在値表示ボタンの中にアイコンを表示するための位置調整 */
+.s6CurrentValueDispBtnIcon {
+    position: relative;
+    top: 0px;
+    left: 35px;
+}
+
+/* ダウンロードボタンの中にアイコンを表示するための位置調整 */
+.btnDownloadIconLayout {
+    position: relative;
+    top: 6px;
+    left: -194px;
+}
+
+/* 登録データのダウンロードボタンの中にアイコンを表示するための位置調整 */
+.btnRegistrationDataDownloadIconLayout {
+    left: -229px;
+}
+
+/* 現在値表示ボタンの中にアイコンを表示するための位置調整 */
+.fileUploadDialogIcon {
+    position: relative;
+    top: 0px;
+    left: 35px;
+}
+
+/* ファイル選択ボタンの中にアイコンを表示するための位置調整 */
+.btnFileSelIconLayout {
+    left: -145px;
+}
+
+/* ファイル選択ポップアップ > OKボタンの中にアイコンを表示するための位置調整 */
+.btnFileSelOkIconLayout {
+    left: -115px;
+}
+
+
+.contents_body .buttons {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.contents_body .buttons .button {
+    position: relative;
+}
+
+.contents_body .buttons .button+.button {
+    margin-left: 5px;
+}
+
+.contents_body .buttons .button input[type='button'] {
+    height: 70px;
+    width: 90px;
+    padding-top: 40px;
+}
+
+.contents_body .buttons .button_icon {
+    position: absolute;
+    top: 0;
+    left: 10px;
+}
+
+.contents_body .tbl {
+    margin: 10px 5px;
+}
+
+.contents_body .tbl table {
+    border-collapse: collapse;
+}
+
+.contents_body .tbl table tr th {
+    color: #FFF;
+    font-size: 12px;
+    background-color: rgb(0, 79, 141);
+}
+
+a {
+    font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+}
+
+.contents_form_area .contents_area .body .col select.SEL1 {
+    width: 200px;
+}
+.contents_form_area .contents_area .body .col select.SEL2 {
+    width: 100px;
+}
+
+.textWidthSmall {
+    width: 50px;
+}
+
+.textWidthMedium {
+    width: 120px;
+}
+
+.textWidthLarge {
+    width: 240px;
+}
+
+/* 一覧の選択リンクの文字色→白固定 */
+/* .contents_body .tbl table tr th a:link,
+.contents_body .tbl table tr th a:visited,
+.contents_body .tbl table tr th a:hover,
+.contents_body .tbl table tr th a:active {
+    color: #FFF;
+} */
+.contents_body .tbl table tr th a {
+    color: #FFF;
+    font-size: 12px;
+    cursor : pointer;
+    text-decoration: underline;
+}
+
+.search_result_pop_header_wrap {
+  margin-top: 30px;
+}
+
+/* ----- ↓↓↓現在値表示ボタン押下時に表示するテーブルのレイアウト↓↓↓ ----- */
+.dispValueTable {
+    height: 200;
+    margin: 10px 5px;
+}
+
+.dispValueTable table {
+    border-collapse: collapse;
+}
+/*
+.dispValueTable table tr td {
+    background-color: rgb(200, 233, 255);
+}
+*/
+.dispValueTable table tr th {
+    color: #FFF;
+    background-color: rgb(0, 79, 141);
+}
+
+.dispValueTable table tr th, .dispValueTable table tr td {
+    border: thin solid #CCCCCC;
+}
+/* ----- ↑↑↑現在値表示ボタン押下時に表示するテーブルのレイアウト↑↑↑ ----- */
+
+/*タイトルエリアで文章が折り返してしまうので60→70に変更*/
+.title_area_left{
+    width:70%;
+}
+
+.file_input_button {
+    width: 80px;
+}
+.file_choise_msg {
+    color: #FFF;
+}
+
+div.contents_table {
+    width: 900px;
+}
+
+.regist_devName {
+    width:250px;
+}
+
+.btnHistoryLayout {
+    position: static;
+    text-align: center;
+}
+
+.btnHistoryIconLayout {
+    position: relative;
+    top: 6px;
+    left: 35px;
+}
+
+.TXT008_2 {
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    font-weight:bold;
+    text-align: right;
+    font-size: 14px;
+}
+
+.hopIdTable {
+    width:300px;
+    text-align:center;
+}
+
+.column_title {
+    width:150px;
+}
+
+.column_value {
+    width:150px;
+}
+
+.column_hopId {
+    width:200px;
+    height:10px;
+    text-align:center;
+}
+
+.table_hopId {
+    border: thin solid #CCC;
+}
+
+/* チェックボックス */
+.column_style_checkbox {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: center;
+}
+
+a:link, a:link:hover {
+    color: #FFF;
+    font-size: 12px;
+    cursor : pointer;
+    text-decoration: underline;
+}
+
+/* 管理番号 */
+.column_style_mng_id {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* ユーザーコード */
+.column_style_user_code {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* テナント名 */
+.column_style_tenant_name {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* 計器ID */
+.column_style_meter_id {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* 種別 */
+.column_style_type {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+}
+
+.column_style_type .rf-edt-c-cnt {
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* パルス種別 */
+.column_style_pulse_type {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* パルス重み */
+.column_style_pulse_weight {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: right;
+}
+
+/* 乗率 */
+.column_style_multi {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: right;
+}
+
+/* 指針値 */
+.column_style_currentdata {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: right;
+}
+
+/* 開閉状態 */
+.column_style_ocstate {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: center;
+}
+
+/* 負荷電流 */
+.column_style_loadcurrent {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: right;
+}
+
+/* 自動投入 */
+.column_style_auto_injection {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: right;
+}
+
+/* コンセントレーター名 */
+.column_style_concentrator_name {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* 最終更新日時 */
+.column_style_latest_update_date {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* 操作状態 */
+.column_style_status {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* コメント */
+.column_style_comment {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* 無線種別 */
+.column_style_handy_type {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* 無線ID */
+.column_style_wireless_id {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* リレー1無線ID */
+.column_style_hop1_id {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* リレー2無線ID */
+.column_style_hop2_id {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* リレー3無線ID */
+.column_style_hop3_id {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* ポーリンググループNo */
+.column_style_polling_id {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* 検満 */
+.column_style_exam_end_ym {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+.column_style_exam_end_ym .rf-edt-c-cnt {
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* メーター状況 */
+.column_style_meterPresSitu {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* アラート停止 */
+.column_style_alertPauseFlg {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* アラート停止期間 */
+.column_style_alertPause {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* 備考 */
+.column_style_meterStatusMemo {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* 備考のスクロール表示（スマート） */
+.rf-edt-c-sMeterStatusMemo {
+    align-items: normal !important;
+    overflow-y: auto;
+}
+
+/* 備考のスクロール表示（パルス） */
+.rf-edt-c-pMeterStatusMemo {
+    align-items: normal !important;
+    overflow-y: auto;
+}
+
+/* LTE-Mにて使用 */
+/* 開閉区分 */
+.column_style_open_mode {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: center;
+}
+.column_style_open_mode .rf-edt-c-cnt {
+  margin-left: auto;
+  margin-right: auto;
+}
+/* 負荷制限 */
+.column_style_loadLimit_mode {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: center;
+}
+.column_style_loadLimit_mode .rf-edt-c-cnt {
+  margin-left: auto;
+  margin-right: auto;
+}
+/* 負荷電流 */
+.column_style_loadcurrent_ltem {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: center;
+}
+.column_style_loadcurrent_ltem .rf-edt-c-cnt {
+  margin-left: auto;
+  margin-right: auto;
+}
+/* 自動投入 */
+.column_style_auto_injection_ltem {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: center;
+}
+.column_style_auto_injection_ltem .rf-edt-c-cnt {
+  margin-left: auto;
+  margin-right: auto;
+}
+/* 開閉器動作カウントクリア（回） */
+.column_style_breaker_act_count {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: center;
+}
+.column_style_breaker_act_count .rf-edt-c-cnt {
+  margin-left: auto;
+  margin-right: auto;
+}
+/* 開閉器カウントクリア（分） */
+.column_style_count_clear {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: center;
+}
+.column_style_count_clear .rf-edt-c-cnt {
+  margin-left: auto;
+  margin-right: auto;
+}
+/* 現在値取得の計器台数 */
+.current_value_result_total_count {
+    font-size: 17px;
+    color: rgb(0,79,141);
+    margin-right: 258px;
+}
+/* 現在値取得の表の枠線 */
+.settingBoxGetCurrentValue {
+    border: 1px solid #CCC;
+}
+/* 設定内容変更の表の枠線 */
+.settingBox {
+    border: 1px solid #CCC;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+/* LTE-M 現在値取得タイマー */
+.timer{
+    display:inline-block;
+    padding:6px 12px;
+    border:1px solid #d6e0ff;      /* 枠線 */
+    border-radius:999px;            /* カプセル形状 */
+    font-weight:600;
+    background:#eef5ff;             /* 下地 */
+    color:#1e3a8a;                  /* 文字色のベース */
+    box-shadow:0 1px 2px rgba(0,0,0,.05); /* ほんのり影 */
+}
+.timer.ok{
+    background:#eff9ef;             /* 緑系 */
+    border-color:#cfead1;
+    color:#1f7a1f;
+}
+.timer.warn{
+    background:#fff5f5;             /* 赤系 */
+    border-color:#f5c2c7;
+    color:#b30000;
+}
+.fetch-failed {
+    color: #d32f2f !important;
+    font-weight: bold;
+}
+
+/* ヘッダーのスタイル */
+.contents_body .table_header {
+    color: white;
+    background-color: rgb(0,79,141);
+    font-size:12px;
+    font-weight: bold;
+    font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px;
+    border: 0px;
+    height: 35px;
+}
+.contents_body .loadLimit_table_header {
+    color: white;
+    background-color: #2dc12d;
+    font-size:12px;
+    font-weight: bold;
+    font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px;
+    border: 0px;
+    height: 35px;
+}
+.contents_body .switch_table_header {
+    color: white;
+    background-color: rgb(33,96,222);
+    font-size:12px;
+    font-weight: bold;
+    font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px;
+    border: 0px;
+    height: 35px;
+}
+
+/* 縦スクロール設定 */
+.rf-edt-b {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    max-height: 400px;
+}
+
+.rf-edt-c, .rf-edt-hdr-c, .rf-edt-ftr-c, .rf-edt-flt-c {
+    border-right: 0.6px solid #C4C0C9;
+}
+
+/* 各表示項目の高さ指定 */
+.search_result_area .rf-edt-c {
+    border-style: none;
+    height: 39px;
+    display: flex;
+    align-items: center;
+}
+
+/* 列「テナント番号 テナント名」の高さ指定 */
+.ltem-get-current-value-scope td.col-tenant {
+    height: auto !important;
+}
+.ltem-get-current-value-scope td.col-tenant .rf-edt-cnt {
+    height: auto !important;
+}
+
+/* 各表示項目のフォント指定 */
+.rf-edt-c-cnt {
+    font-size: 11px;
+    font-family :'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    white-space: normal;
+}
+
+/* ヘッダー周りのボーダーを削除*/
+.rf-edt {
+    border-top: 0px;
+}
+
+.rf-edt-hdr-c {
+    border-bottom: 0px;
+}
+
+/* フッターの空行の高さを0に設定 */
+.rf-edt-ftr-c-emp {
+    height: 0px;
+}
+
+/* リストのフッターのボーダーを削除 */
+.rf-edt-ftr {
+    border: initial;
+}
+
+/* リストのフッターの高さと背景色を設定 */
+.search_result_area .rf-edt-ftr tbody tr {
+    height:0;
+    background-color: #cccccc;
+}
+
+/* リストの偶数行を水色に設定 */
+.search_result_area tbody tr:nth-child(2n-1) table.rf-edt-tbl tbody tr:nth-child(2n) {
+    background-color: rgb(200,233,255);
+}
+
+.preline {
+    white-space: pre-line; /* \nを改行として表示 */
+}
+
+.bulk_error_content {
+    color:red;
+    font-size:12px;
+    white-space: pre-line; /* \nを改行として表示 */
+}
+
+.bulk_error_explaination{
+    height: 70px;
+    color:red;
+}
+
+.filename_cell {
+    display:flex;
+    align-items:flex-end;
+}
+
+.file_name{
+    font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    font-size: 14px;
+    height: 26px;
+    padding: 5px;
+}
+
+.filename_wrap {
+    width:150px;
+    word-break : break-all;
+    flex: 1 1 auto;   /* 横に伸ばす */
+    min-width: 0;     /* はみ出し防止 */
+}
+
+.calobj {
+    position: relative;
+    top: -2px;
+    left: 0;
+}
+
+.rf-cal table {
+    width: 200px !important;
+}
+.rf-cal table tr {
+    height: 25px !important;
+}
+

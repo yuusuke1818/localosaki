@@ -1,0 +1,154 @@
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+	<!-- *** ユニット(取得) テンプレート *** -->
+	<!-- ベース部分 -->
+	<template name="base">
+		<field name="productCd" length="2" keepPadding="true" />
+		<field name="address" length="2" keepPadding="true" />
+		<field name="command" length="1" default="V" keepPadding="true" />
+		<field name="settingChangeHist" length="1" default="0" keepPadding="true" />
+		<field name="command" length="3" default="003" keepPadding="true" />
+	</template>
+
+	<template name="base.res">
+		<field name="productCd" length="2" keepPadding="true" />
+		<field name="address" length="2" keepPadding="true" />
+		<field name="command" length="5" keepPadding="true" />
+	</template>
+
+	<!-- 共通部分１（受信用） -->
+	<template name="commonResponse">
+		<field name="settingDate" length="11" keepPadding="true" />
+		<field name="terminalKindList" length="1" collection="list" occurs="20" />
+		<field name="addressSituationList" length="1" collection="list" occurs="20" />
+		<field name="neuronsIDList" length="12" collection="list" occurs="20" />
+
+		<field name="plotAnalogPoint1" length="2" keepPadding="true" />
+		<field name="plotAnalogPoint2" length="2" keepPadding="true" />
+	</template>
+
+	<!-- 共通部分2（受信:FV2,FVPD用） -->
+	<template name="commonResponse_0003">
+		<segment name="recordPointSetList" collection="list" class="map" occurs="20">
+			<field name="terminalAddress" length="2" keepPadding="true" />
+			<field name="internalAddress" length="2" keepPadding="true" />
+			<field name="pointType" length="2" keepPadding="true" />
+			<field name="sensorType" length="2" keepPadding="true" />
+			<field name="pulseWeight" length="6" keepPadding="true" />
+			<field name="headScale" length="6" keepPadding="true" />
+			<field name="bottomScale" length="6" keepPadding="true" />
+		</segment>
+	</template>
+
+	<!-- 共通部分3（受信:FVPαD用） -->
+	<template name="commonResponse_06">
+		<segment name="recordPointSetList" collection="list" class="map" occurs="20">
+			<field name="terminalAddress" length="2" keepPadding="true" />
+			<field name="internalAddress" length="2" keepPadding="true" />
+			<field name="pointType" length="2" keepPadding="true" />
+			<field name="sensorType" length="2" keepPadding="true" />
+			<field name="function1" length="6" keepPadding="true" />
+			<field name="function2" length="6" keepPadding="true" />
+			<field name="function3" length="6" keepPadding="true" />
+		</segment>
+	</template>
+
+	<!-- 共通部分3（受信:FVPαG2用） -->
+	<template name="commonResponse_12">
+		<segment name="recordPointSetList" collection="list" class="map" occurs="58">
+			<field name="terminalAddress" length="2" keepPadding="true" />
+			<field name="internalAddress" length="2" keepPadding="true" />
+			<field name="pointType" length="2" keepPadding="true" />
+			<field name="sensorType" length="2" keepPadding="true" />
+			<field name="function1" length="6" keepPadding="true" />
+			<field name="function2" length="6" keepPadding="true" />
+			<field name="function3" length="6" keepPadding="true" />
+		</segment>
+	</template>
+
+
+	<!-- 「00」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="00.req" format="fixedlength">
+		<record name="request" template="base" class="jp.co.osaki.osol.mng.param.A200012Param" />
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="00.res" format="fixedlength">
+		<record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200012Param">
+			<include template="commonResponse" />
+			<include template="commonResponse_0003" />
+		</record>
+	</stream>
+
+	<!-- 「03」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="03.req" format="fixedlength">
+		<record name="request" template="base" class="jp.co.osaki.osol.mng.param.A200012Param" />
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="03.res" format="fixedlength">
+		<record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200012Param">
+			<include template="commonResponse" />
+			<include template="commonResponse_0003" />
+		</record>
+	</stream>
+
+	<!-- 「06」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="06.req" format="fixedlength">
+		<record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200012Param" />
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="06.res" format="fixedlength">
+		<record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200012Param">
+			<include template="commonResponse" />
+			<include template="commonResponse_06" />
+		</record>
+	</stream>
+
+	<!-- 「12」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="12.req" format="fixedlength">
+		<record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200012Param" />
+	</stream>
+	<!-- 受信文 -->
+	<stream name="12.res" format="fixedlength">
+		<record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200012Param">
+			<include template="commonResponse" />
+			<include template="commonResponse_12" />
+		</record>
+	</stream>
+
+	<!-- 「21」非対応 -->
+	<!-- 送信文 -->
+	<stream name="21.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+	<!-- 受信文 -->
+	<stream name="21.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 「22」非対応 -->
+	<!-- 送信文 -->
+	<stream name="22.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+	<!-- 受信文 -->
+	<stream name="22.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+</beanio>

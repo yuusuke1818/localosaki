@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html" >
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="common/default.css"/>
+        <h:outputStylesheet library="css" name="common/cssLayout.css"/>
+        <h:outputStylesheet library="css" name="common/button.css"/>
+        <h:outputStylesheet library="css" name="common/common.css"/>
+        <h:outputStylesheet library="css" name="error/exceptionError.css"/>
+        <h:outputScript library="js" name="common/jquery-1.12.3.min.js" />
+        <c:if test="#{loginBean.faviconBool}">            
+            <link rel="shortcut icon" href="#{request.contextPath}/resources/images/ico/favicon_24x24.png" type="image/x-icon" />
+        </c:if>
+        <title>#{loginBean.getApplicationName()}&nbsp;#{loginBean.getOemName()}&nbsp;ver#{loginBean.getApplicationVersion()}&nbsp;#{loginBean.getProjectStage()}</title>
+    </h:head>
+    <h:body>
+        <h:form id="exception">
+            <div class="exception_message_area">
+                <div class="exception_title">
+                    処理中に問題が発生しました。管理者にお問い合わせください。
+                </div>
+                <div id="other" class="gradation_type_1 button_large" style="width:100%; text-align: center; margin-top: 4px;">
+                    <h:commandButton value="ログアウト" id="logoutButton" action="#{loginBean.logout()}" />
+                </div>                
+            </div>
+            <c:if test="${loginBean.getProjectStage() != 'Production'}" var="flg" />
+            <c:if test="${flg}" >
+                <pre>
+                    <h:messages id="exception_messages" showSummary="false" showDetail="true" errorClass="exception_message" />
+                </pre>
+            </c:if>
+            <div id="back_left"></div>
+            <div id="back_center"></div>
+            <div id="back_right"></div>
+        </h:form>    
+        <script>
+            history.pushState(null, null, null);
+
+            window.addEventListener("popstate", function() {
+                history.pushState(null, null, null);
+            });
+        </script>
+    </h:body>
+</html>

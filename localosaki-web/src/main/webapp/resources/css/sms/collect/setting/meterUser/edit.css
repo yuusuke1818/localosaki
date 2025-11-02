@@ -1,0 +1,164 @@
+.user_redcolor_description {
+    color: red;
+    margin-left: 20px;
+    font-size: 12px;
+}
+
+.horizontal_separator {
+    border: 1px solid gray;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+}
+
+.check_item {
+    padding-bottom: 5px;
+}
+
+.nest_item {
+    padding-left: 20px;
+}
+
+.contents_margin_right {
+    margin-right: 10px;
+}
+
+.contents_margin_left {
+    margin-left: 10px;
+}
+
+.table_style {
+    border-collapse: collapse;
+    font-weight: normal;
+    border: 1px #000000 solid;
+    background: #EEEEFF;
+}
+
+.table_header {
+    background-color: blue;
+    color: white;
+    font-weight: normal;
+    border: 1px #000000 solid;
+}
+
+.column_style {
+    border: 1px #000000 solid;
+    background-color: white;
+    text-align: center;
+}
+
+.user_redcolor_description {
+    color: red;
+    margin-left: 20px;
+    font-size: 12px;
+}
+
+.horizontal_separator {
+    border: 1px solid gray;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+}
+
+.check_item {
+    padding-bottom: 5px;
+}
+
+.nest_item {
+    padding-left: 20px;
+}
+
+.contents_margin_right {
+    margin-right: 10px;
+}
+
+.contents_margin_left {
+    margin-left: 10px;
+}
+
+.table_style {
+    border-collapse: collapse;
+    font-weight: normal;
+    border: 1px #000000 solid;
+    background: #EEEEFF;
+}
+
+.table_header {
+    background-color: blue;
+    color: white;
+    font-weight: normal;
+    border: 1px #000000 solid;
+}
+
+.column_style {
+    border: 1px #000000 solid;
+    background-color: white;
+    text-align: center;
+}
+
+/*項目名*/
+.column_ttl{
+    width: 210px;
+}
+
+.expiry_date table{
+    width: 30%;
+}
+
+/*アカウント状態*/
+.account_status{
+    padding-left: 20px;
+}
+
+/*企業／担当設定ボタン*/
+.button_set .button_icon{
+    position: absolute;
+    top: 12px;
+    left: 378px;
+}
+/*登録ボタン*/
+.button_regist input[type="submit"]{
+    width: 150px;
+}
+.button_regist .button_icon{
+    position: absolute;
+    top: 10px;
+    left: 410px;
+}
+
+.TXT020{
+    width: 300px;
+}
+.EDIT002{
+    width: 300px;
+}
+
+.auth_contents_area{
+    margin-left: 5px;
+}
+.auth_contents_area tbody tr td {
+    vertical-align: top;
+    width : 270px;
+    padding-bottom: 12px;
+}
+.auth_contents_area tbody tr:nth-child(n+2) td {
+    padding-left: 30px;
+}
+.auth_contents_area tbody tr td div.div_auth_head {
+    padding-bottom: 8px;
+}
+.auth_contents_area tbody tr td div.div_auth_body {
+    padding-bottom: 5px;
+    padding-left: 10px;
+}
+
+.button_building_setting{
+    margin-left: 12px;
+}
+
+.button_building_setting .button_icon{
+    position: absolute;
+    top:5px;
+    left:5px;
+}
+

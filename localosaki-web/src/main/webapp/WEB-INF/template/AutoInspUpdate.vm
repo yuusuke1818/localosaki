@@ -1,0 +1,11 @@
+$corpName($corpId)
+$buildingName($buildingNo)の建物で
+自動検針設定の変更が行われましたので通知します
+
+メーター種別 実行月 実行日 実行時間 
+#foreach ( $record in $recordList)
+#set ($pattern = "$record.meterTypeName 【$record.inspectionMonthDisp】 $record.inspectionDay日 $record.inspectionHour時")
+$pattern
+#end
+
+大崎電気工業株式会社

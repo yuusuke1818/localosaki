@@ -1,0 +1,5 @@
+[2018/11/29 10:15:16] ***** A200038:test_013 を開始 *****
+[2018/11/29 10:15:16] リクエスト : bean=LoadCtrlResultSelect&smId=4&targetDate=&hist=20
+[2018/11/29 10:15:16] リクエスト : http://localhost:8080/osolapi/json?bean=LoadCtrlResultSelect&smId=4&targetDate=&hist=20&loginCorpId=fdsa&loginPersonId=ogawa
+[2018/11/29 10:15:16] レスポンス : {"resultCode":"82002","serverDateTime":"2018/11/29 10:15:16.867 JST"}
+[2018/11/29 10:15:16] ***** A200038:test_013 を終了 *****

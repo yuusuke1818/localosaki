@@ -1,0 +1,235 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:outputStylesheet library="css" name="common/popup.css"/>
+    <rich:popupPanel id="commonSearchUserDialog" modal="true" moveable="true" resizeable="false"
+                     minWidth="800" maxWidth="800" 
+                     top="80" width="800" height="600" domElementAttachment="form" zindex="150"
+                     onshow="checkAutoFocusOnShowRichPanel(event);" >
+        <!-- z-index:150 ヘッダ部分の後ろに隠れるのを避ける為 -->
+        
+        <f:facet name="header">
+            <div class="pop_title_area">
+                <div class="left">
+                    <span class="pop_page_title">ユーザー検索</span>
+                </div>
+                <h:form id="commonUserSearchCloseForm">
+                    <a4j:commandButton value=" " 
+                                       id="closeBtn"
+                                       style="position:absolute;
+                                       top:11px;
+                                       right:5px;
+                                       background-image:url('#{resource['images/common/com023.png']}');
+                                       width:30px;
+                                       height:30px;
+                                       background-repeat: no-repeat;
+                                       border: 0px;
+                                       background-color: #FFF;
+                                       cursor: pointer;"
+                                       onclick="#{rich:component('commonSearchUserDialog')}.hide();"
+                                       execute="commonSearchUserDialog"
+                                       render="commonUserSearchForm"
+                                       actionListener="#{commonSearchUserBean.clearUserForm()}"/>
+                </h:form>
+<!--                <div class="pop_button_close">
+                    <input type="button" value="" onclick="#{rich:component('commonSearchUserDialog')}.hide()">
+                    </input>
+                </div>-->
+            </div>
+        </f:facet>
+         <form jsfc="h:form" id="commonUserSearchForm">
+            <div class="inner_content content_width">
+                    <div class="search_description">
+                        検索条件を追加して [検索開始] を押してください。<br/>
+                        ※検索条件を指定しない場合、全ユーザーを抽出します。
+                    </div>
+                <h:inputHidden id="commonDispId" value="#{commonSearchUserBean.dispId}"/>
+ 
+                    <!-- 動的検索条件テーブル -->
+                    <rich:dataTable id="searchConditionTable" rows="0"
+                                    value="#{commonSearchUserBean.conditionList}"
+                                    var="item" 
+                                    style="margin-top: 5px;
+                                    width: 100%;
+                                    border: 0px;
+                                    table-layout: fixed;">
+                    <!--検索条件表示部分 -->
+                        <span jsfc="h:column" styleClass="condition_msg" style="width: 20%; border:0px">
+                                <h:selectOneMenu  id="selectConditionCd" value="#{item.selectConditionCd}" styleClass="SELECT001" rendered="#{item.selectEnable}"
+                                                  style="height: 25px;" onkeydown="searchPopupConditionKeydown()">
+                                    <f:ajax execute="commonUserSearchForm:searchConditionTable" 
+                                            render="commonUserSearchForm:searchConditionTable" 
+                                            event="change" 
+                                            listener="#{commonSearchUserBean.changeConditionCd(item.orderNo)}" 
+                                            onevent="autoFocusOnSelectCondition" />
+                                    
+                                    <option jsfc="f:selectItems" value="#{item.selectConditionMap}" />
+                                </h:selectOneMenu>
+                            <h:outputText value="#{item.selectConditionCd}" rendered="#{item.selectDisable}" />
+                        </span>
+                        <!--「が」表示部分 -->
+                        <span jsfc="h:column" style="width: 10%; text-align: center; border:  0px;">
+                            <input jsfc="h:outputText" value="が" style="width: 100%;text-align: center" rendered="#{!item.selectEnable}"/>
+                        </span>
+                        <!--ドロップダウンリストまたは検索キーワード表示部分 -->
+
+                        <span jsfc="rich:column" colspan="2" style="width: 40%; border:  0px;">
+                        <!--アカウント状態 -->
+                            <h:selectManyCheckbox value="#{item.accountStatusKindValue}" styleClass="SELECT001 accountStatusArea1" 
+                                                  rendered="#{item.accountStatusKindSelectEnable}"
+                                                  id="accountStatusKind" onkeydown="searchPopupConditionKeydown()">
+                                <input jsfc="f:selectItem" itemValue="1" itemLabel="正常"/>
+                                <input jsfc="f:selectItem" itemValue="2" itemLabel="未ログイン"/>
+                            </h:selectManyCheckbox>                   
+                            <h:selectManyCheckbox value="#{item.accountStatusKindValue2}" styleClass="SELECT001 accountStatusArea2" 
+                                                  rendered="#{item.accountStatusKindSelectEnable}"
+                                                  id="accountStatusKind2" onkeydown="searchPopupConditionKeydown()">
+                                <input jsfc="f:selectItem" itemValue="3" itemLabel="ロック(期限切れ)"/>
+                                <input jsfc="f:selectItem" itemValue="4" itemLabel="ロック（入力ミス）"/>
+                                <input jsfc="f:selectItem" itemValue="5" itemLabel="アカウント停止中"/>
+                            </h:selectManyCheckbox>                   
+                        <!--キーワード -->
+                            <h:inputText id="conditionKeyword" value="#{item.conditionKeyword}" styleClass="EDIT002 autofocus" rendered="#{item.keywordSelectEnable}" 
+                                         style="width: 100%; height: 25px;" maxlength="50" onkeydown="searchPopupConditionKeydown()"/>
+                        </span>
+                        <!--「を含む」表示部分 -->
+                        <span jsfc="h:column"  style="width: 10%; text-align: center; border:  0px;">
+                            <input jsfc="h:outputText" value="#{item.mutchingTypeCd}" rendered="${!empty item.mutchingTypeCd}" style="width: 100%; height: 25px; text-align: center;"/>
+                        </span> 
+
+                        <!--削除ボタン表示部分 -->
+                        <span jsfc="h:column" styleClass="gradation_type_3 button_medium_2 delete_button" style="width: 10%; border:  0px;">
+                            <h:commandButton value="削除" id="deleteBtn" rendered="#{item.deleteButtonEnable}" 
+                                             style="width: 100%; height: 25px;">
+                                <f:ajax event="click" execute="commonUserSearchForm:searchConditionTable" render="commonUserSearchForm:searchConditionTable" listener="#{commonSearchUserBean.deleteCondition(item.orderNo)}"/>
+                            </h:commandButton>
+                            <h:graphicImage class="button_icon" library="images" rendered="#{item.deleteButtonEnable}" name="common/com020.png" />
+                        </span> 
+                    </rich:dataTable>
+                    <div class="button_search_pop gradation_type_1 button_large_2">
+                        <h:commandButton value="検索開始" id="searchBtn" styleClass="transition_button_size color_botton_regist" action="#{commonSearchUserBean.search()}">
+                            <!--<f:ajax execute="@form" render="@form" />-->
+                            <a4j:ajax execute="@form" render="@form" onbegin="showBlockModal()" oncomplete="hideBlockModal(true)" />
+                        </h:commandButton>
+                        <h:graphicImage class="button_icon" library="images" name="common/com028.png" />
+                    </div>
+
+
+                <!-- 検索結果 -->
+<!--                rendered="#{commonSearchUserBean.searchedFlg}"-->
+                <ui:fragment id="searchResultArea" rendered="#{commonSearchUserBean.searchedFlg}">
+                    <div class="">
+                        <div class="search_result_pop_header_wrap">
+                            <div class="page_content_parts" id="listReroad">
+                                <div class="search_result_pop_header_left">
+                                    検索条件に該当するユーザー情報  ：
+                                    <span jsfc="h:outputText" class="serach_result_total_count" value="#{commonSearchUserBean.userSelectPaging.resultCount}件" />
+                                </div>
+                            </div>
+                        </div>
+                        <c:if test="#{commonSearchUserBean.userSelectPaging.resultCount > 0}">
+                            <div class="search_result_pop_area">
+                                <table align="center" jsfc="h:dataTable" id="result" var="item" value="#{commonSearchUserBean.userSelectPaging.pageList}" 
+                                       class="search_result_pop" 
+                                       headerClass="table_header" 
+                                       style="width: 100%;"
+                                       columnClasses="column_style_user_1, column_style_user_2, column_style_user_3, column_style_user_4, column_style_user_5, column_style_user_6">
+                                    <span jsfc="h:column">
+                                        <span jsfc="f:facet" name="header" style="width: 40px;">
+                                            <span jsfc="h:outputText" value="選択"/>
+                                        </span>
+                                        <span class="button_set_pop">
+                                            <a4j:commandButton id="selectSetBtn" style="width:32px; height:32px;" value=" " 
+                                                              action="#{commonSearchUserBean.select(item)}"
+                                                              execute="@this" render="commonUserSearchForm #{reflectControl}"
+                                                              onbegin="showBlockModal();" oncomplete="hideBlockModal(true); #{rich:component('commonSearchUserDialog')}.hide();" />
+                                                <h:graphicImage class="button_icon" library="images" name="common/com060.png" />
+<!--                                            <input jsfc="h:commandButton" id="selectSetBtn" style="width:32px; height:32px;" value="" onclick="showBlockModal();" action="#{commonSearchUserBean.select(item)}"  >
+                                                <f:ajax execute="@all" render="@all" onevent="#{rich:component('commonSearchUserDialog')}.hide();"  />
+                                                <h:graphicImage class="button_icon" library="images" name="common/com060.png" />
+                                            </input>-->
+                                        </span>
+                                    </span>
+                                   <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="企業ID&lt;BR&gt;企業名"  escape="false" />
+                                        </f:facet>
+                                        <h:panelGrid columns="1">
+                                            <h:outputText id="corpId" value="#{item.corpId}" />
+                                            <h:outputText id="corpName" value="#{item.corpName}" />
+                                        </h:panelGrid>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="ユーザーID&lt;BR&gt;ユーザー名"  escape="false" />
+                                        </f:facet>
+                                        <h:panelGrid columns="1">
+                                            <h:outputText id="personId" value="#{item.personId}" />
+                                            <h:outputText id="personName" value="#{item.personName}" />
+                                        </h:panelGrid>
+                                    </h:column>                                    
+                                    <span jsfc="h:column">
+                                        <span jsfc="f:facet" name="header">
+                                            <span jsfc="h:outputText" value="ふりがな"/>
+                                        </span>
+                                        <span jsfc="h:outputText" id="personKana" value="#{item.personKana}" />
+                                    </span>                            
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="部署名&lt;BR&gt;役職名"  escape="false" />
+                                        </f:facet>
+                                        <h:panelGrid columns="1">
+                                            <h:outputText id="deptName" value="#{item.deptName}" />
+                                            <h:outputText id="positionName" value="#{item.positionName}" />
+                                        </h:panelGrid>
+                                    </h:column>
+                                    <span jsfc="h:column">
+                                        <span jsfc="f:facet" name="header">
+                                            <span jsfc="h:outputText" value="アカウント状態"/>
+                                        </span>
+                                        <span jsfc="h:outputText" id="accountStatus" value="#{item.accountStatus}" />
+                                    </span>
+                                </table>
+                            </div>
+                        </c:if>
+                    </div>
+                    <c:if test="#{commonSearchUserBean.userSelectPaging.resultCount > 0}">
+                        <div>
+                            <div align="center" >
+                                <div id="paging_area">
+                                    <span id="prevButton_area">
+                                        <h:commandLink id="prevButton" value="&lt;&nbsp;&nbsp;前へ" actionListener="#{commonSearchUserBean.prevPage}" 
+                                                          disabled="#{!commonSearchUserBean.userSelectPaging.isPrevPage()}">
+                                            <f:ajax execute="@form" render="@form" />
+                                            <f:attribute name="page" value="#{commonSearchUserBean.userSelectPaging.currentPage}" />
+                                        </h:commandLink>
+                                    </span>
+                                    <cust:pageIndex id="pageJumpButton" value="#{commonSearchUserBean.userSelectPaging.pageValue}" 
+                                                    action="#{commonSearchUserBean.pageJump()}" >
+                                        <ui:include src="/html/common/paging/index.xhtml" />
+                                    </cust:pageIndex>
+                                    <span id="nextButton_area">
+                                        <h:commandLink id="nextButton" class="nextButton" value="後へ&nbsp;&nbsp;&gt; " actionListener="#{commonSearchUserBean.nextPage}" 
+                                                          disabled="#{!commonSearchUserBean.userSelectPaging.isNextPage()}">
+                                            <f:ajax execute="@form" render="@form" />
+                                            <f:attribute name="page" value="#{commonSearchUserBean.userSelectPaging.currentPage}" />
+                                        </h:commandLink>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
+                </ui:fragment>
+            </div>
+        </form>
+    </rich:popupPanel>
+
+</html>
+

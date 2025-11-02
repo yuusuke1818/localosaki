@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+      <h:outputStylesheet library="css" name="common/popup.css"/>
+    <rich:popupPanel id="refrigerantNotice" modal="true" moveable="true" resizeable="false"  
+                       top="180" width="600" height="400" zindex="320"
+                       onshow="checkAutoFocusOnShowRichPanel(event);"
+                       >
+        <f:facet name="header">
+            <div class="pop_title_area">
+                <div class="left">
+                    <h:outputText class="pop_page_title" value="法定点検サイクルについて" />
+                </div>
+                <div class="pop_button_close">
+                    <input type="button" value="" onclick="#{rich:component('refrigerantNotice')}.hide();"/>
+                </div>
+            </div>
+        </f:facet>
+        <div  class="inner_content content_width">
+            <table jsfc="h:panelGrid" columns="1" style="width: 100%;">
+                <span class="page_subtitle">
+                    <p>法に基づく定期点検の対象および点検頻度は下記の通りです。</p>
+                </span>
+                <table class="tenken_cycle">
+                    <tr>
+                        <th>機器の圧縮機に用いられる電動機の定格出力</th>
+                        <th>定期点検の頻度</th>
+                    </tr>
+                   <tr>
+                        <td>7.5kW以上の冷凍冷蔵機器</td>
+                        <td>1年に1回以上</td>
+                    </tr>
+                   <tr>
+                        <td>50kW以上のエアコン</td>
+                        <td>1年に1回以上</td>
+                    </tr>
+                    <tr>
+                        <td>7.5kW以上50kW未満のエアコン</td>
+                        <td>3年に1回以上</td>
+                    </tr>
+                </table>
+                <span class="page_subtitle">
+                    <p>定期点検対象機器の確認は、冷凍空調機器の室外機などの銘板に記載された
+                      「圧縮機の定格出力」や「電動機出力・圧縮機」、「呼称出力」などで確認できます。
+                       不明な場合は、カタログを確認するかメーカーに問い合わせして下さい。</p>
+                </span>
+            </table>
+        </div>
+    </rich:popupPanel>
+</html>

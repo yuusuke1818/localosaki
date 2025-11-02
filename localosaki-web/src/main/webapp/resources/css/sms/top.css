@@ -1,0 +1,541 @@
+/* --- 一覧画面 --- */
+
+.search_result_area table {
+    border-collapse: collapse;
+}
+/*検索結果のtbodyのスタイル*/
+.search_result_area tbody tr{
+}
+.search_result_area .button_building_edit{
+    position: relative;
+    margin-top: 1.5px;
+    width: 36px;
+    /* text-align: center; */
+}
+
+/* --- 表示条件欄 --- */
+
+.inspectionMeterBefList_sel_std {
+    width: 250px;
+    height: 25px;
+}
+.contents_form_area table tr {
+    height: 0px;
+}
+.contents_form_area_row {
+    display: table;
+    font-weight: bold;
+    width: calc(100% - 16px);
+    margin-top: 5px;
+    padding: 10px;
+}
+.contents_form_area_row > div {
+    display: table-cell;
+}
+
+.page_title{
+  font-size: 25px !important;
+}
+
+a {
+    font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+}
+
+/* --- ボタン --- */
+
+/* ボタンのセンタリング */
+.button_area_center {
+/*    margin: 20px 0; */
+    text-align: center;
+}
+/* ボタンの右寄せ */
+.button_area_right {
+/*    margin: 20px 0; */
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* ボタンエリア */
+.button_area {
+    margin-top: 20px;
+}
+
+/* ボタン */
+.action_button {
+    height: 40px;
+    width: 150px;
+}
+
+.del_toggle_check_area {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 10px 30px 10px 0px;
+}
+
+/* 表示更新ボタンアイコン */
+.button_area .reload_button_icon {
+    position: relative;
+    top: 6px;
+    left: -135px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+
+.rf-tab-cnt {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.contents_title {
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+}
+
+/*.contents_title .contents_title_body {
+    display: inline;
+    font-weight: normal;
+}*/
+
+.contents_accordion_body .head {
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+.contents_accordion_body .body {
+    margin-left: 10px;
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 5px;
+}
+
+.contents_area .conditions{
+  width: 900px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.contents_area .conditions label {
+    display: inline-block;
+    text-align: right;
+    width: 125px;
+    padding: 0 10px;
+}
+
+.gradation_type_1 input[type="submit"] {
+  width: 150px !important;
+  height : 45px !important;
+  padding: 11px 20px 10px 40px !important;
+}
+
+.contents_accordion_body .foot {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.contents_accordion_body .foot .button_icon {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+}
+
+.contents_body {
+    position: relative;
+}
+
+.foot .button_width {
+    height: 40px;
+    width: 150px;
+}
+
+.contents_body .button_large_2 {
+    position: absolute;
+    top: 28px;
+    right: 0;
+}
+
+.contents_body .s6Table .button_large_2 {
+    position: absolute;
+    top: 95px;
+    right: 0;
+}
+
+.contents_body .p6Table .button_large_2 {
+    position: absolute;
+    top: 95px;
+    right: 0;
+}
+
+.contents_body .button_large_2 .button_icon {
+    position: absolute;
+    top: 9px;
+    left: 10px;
+}
+
+.contents_body .buttons {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.contents_body .buttons .button {
+    position: relative;
+}
+
+.contents_body .buttons .button+.button {
+    margin-left: 5px;
+}
+
+.contents_body .buttons .button input[type='button'] {
+    height: 70px;
+    width: 90px;
+    padding-top: 40px;
+}
+
+.contents_body .buttons .button_icon {
+    position: absolute;
+    top: 0;
+    left: 10px;
+}
+
+.contents_body .tbl {
+    margin: 10px 5px;
+}
+
+.contents_body .tbl table {
+    border-collapse: collapse;
+}
+
+.contents_body .tbl table tr th {
+    color: #FFF;
+    font-size: 12px;
+    background-color: rgb(0, 79, 141);
+}
+
+a {
+    font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+}
+
+.contents_form_area .contents_area .body .col select.SEL1 {
+    width: 200px;
+}
+.contents_form_area .contents_area .body .col select.SEL2 {
+    width: 100px;
+}
+
+.textWidthSmall {
+    width: 50px;
+}
+
+.textWidthMedium {
+    width: 120px;
+}
+
+.textWidthLarge {
+    width: 240px;
+}
+
+/* 一覧の選択リンクの文字色→白固定 */
+/* .contents_body .tbl table tr th a:link,
+.contents_body .tbl table tr th a:visited,
+.contents_body .tbl table tr th a:hover,
+.contents_body .tbl table tr th a:active {
+    color: #FFF;
+} */
+.contents_body .tbl table tr th a {
+    color: #FFF;
+    font-size: 12px;
+    cursor : pointer;
+    text-decoration: underline;
+}
+
+.search_result_pop_header_wrap {
+  margin-top: 30px;
+}
+
+.dispValueTable table {
+    border-collapse: collapse;
+}
+/*
+.dispValueTable table tr td {
+    background-color: rgb(200, 233, 255);
+}
+*/
+.dispValueTable table tr th {
+    color: #FFF;
+    background-color: rgb(0, 79, 141);
+}
+
+.dispValueTable table tr th, .dispValueTable table tr td {
+    border: thin solid #CCCCCC;
+}
+/* ----- ↑↑↑現在値表示ボタン押下時に表示するテーブルのレイアウト↑↑↑ ----- */
+
+/*タイトルエリアで文章が折り返してしまうので60→70に変更*/
+.title_area_left{
+    width:70%;
+}
+
+.file_input_button {
+    width: 80px;
+}
+.file_choise_msg {
+    color: #FFF;
+}
+
+div.contents_table {
+    width: 940px;
+}
+
+.regist_devName {
+    width:250px;
+}
+
+.btnHistoryLayout {
+    position: static;
+    text-align: center;
+}
+
+.btnHistoryIconLayout {
+    position: relative;
+    top: 6px;
+    left: 35px;
+}
+
+.TXT008_2 {
+    font-family:'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    font-weight:bold;
+    text-align: right;
+    font-size: 14px;
+}
+
+.hopIdTable {
+    width:300px;
+    text-align:center;
+}
+
+.column_title {
+    width:150px;
+}
+
+.column_value {
+    width:150px;
+}
+
+.column_hopId {
+    width:200px;
+    height:10px;
+    text-align:center;
+}
+
+.table_hopId {
+    border: thin solid #CCC;
+}
+
+/* チェックボックス */
+.column_style_checkbox {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: center;
+}
+
+a:link, a:link:hover {
+    color: #FFF;
+    font-size: 12px;
+    cursor : pointer;
+    text-decoration: underline;
+}
+
+/* 装置名 */
+.column_style_dev_name{
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* 管理番号 */
+.column_style_mng_id {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* ユーザーコード */
+.column_style_user_code {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* テナント名 */
+.column_style_tenant_name {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* 計器ID */
+.column_style_meter_id {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* 種別 */
+.column_style_type .rf-edt-c-cnt {
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.column_style_type {
+  border-right: 0.6px #cccccc solid;
+  border-bottom: 0.6px #cccccc solid;
+}
+
+/* 検満年月 */
+.column_style_exam_end_ym .rf-edt-c-cnt {
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.column_style_exam_end_ym {
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* 検満通知 */
+.column_style_exam_alert .rf-edt-c-cnt {
+  margin-left:auto;
+  margin-right:auto;
+}
+.column_style_exam_alert{
+    border-right: 0.6px #cccccc solid;
+    border-bottom: 0.6px #cccccc solid;
+    text-align: left;
+}
+
+/* ヘッダーのスタイル */
+.contents_body .table_header {
+    color: white;
+    background-color: rgb(0,79,141);
+    font-size:12px;
+    font-weight: bold;
+    font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px;
+    border: 0px;
+    height: 50px;
+}
+
+/* スクロール設定 */
+.rf-edt-b {
+    overflow-y: scroll;
+    max-height: 500px;
+    max-width: 960px;
+}
+
+.rf-edt-c, .rf-edt-hdr-c, .rf-edt-ftr-c, .rf-edt-flt-c {
+    border-right: 0.6px solid #C4C0C9;
+}
+
+.rf-edt-hdr{
+      background : rgb(0,79,141) !important;
+}
+
+/* 各表示項目の高さ指定 */
+.search_result_area .rf-edt-c {
+    border-style: none;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+/* 各表示項目のフォント指定 */
+.rf-edt-c-cnt {
+    font-size: 11px;
+    font-family :'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    white-space: normal;
+}
+
+/* ヘッダー周りのボーダーを削除*/
+.rf-edt {
+    border-top: 0px;
+}
+
+.rf-edt-hdr-c {
+    border-bottom: 0px;
+}
+
+/* フッターの空行の高さを0に設定 */
+.rf-edt-ftr-c-emp {
+    height: 0px;
+}
+
+/* リストのフッターの高さと背景色を設定 */
+.search_result_area .rf-edt-ftr tbody tr {
+    height:0;
+    background-color: #cccccc;
+}
+
+/* リストの偶数行を水色に設定 */
+.search_result_area tbody tr:nth-child(2n-1) table.rf-edt-tbl tbody tr:nth-child(2n) {
+    background-color: rgb(200,233,255);
+}
+
+.bulk_error_content {
+    color:red;
+    font-size:12px;
+}
+
+.bulk_error_explaination{
+    height: 70px;
+    color:red;
+}
+
+.bulk_error_content {
+    color:red;
+    font-size:12px;
+}
+
+.filename_cell {
+    display:flex;
+    align-items:flex-end;
+}
+
+.file_name{
+    font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+    font-size: 14px;
+    height: 26px;
+    padding: 5px;
+}
+
+.filename_wrap {
+    width:150px;
+    word-break : break-all;
+}
+
+.calobj {
+    position: relative;
+    top: -2px;
+    left: 0;
+}
+
+.rf-cal table {
+    width: 200px !important;
+}
+.rf-cal table tr {
+    height: 25px !important;
+}
+

@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+    <h:outputStylesheet library="css" name="sms/collect/dataview/compareGraphView.css" />
+
+    <c:if test="#{graphHeaderList1.size() > 0 || graphHeaderList2.size() > 0}">
+            <div class="contents_graph_compare">
+                <div class="graph_header">
+
+    <c:set var="graphHeaderIndexCount1" value="#{graphHeaderList1[0].size() - 1}" />
+    <c:forEach begin="0" end="#{graphHeaderIndexCount1}" varStatus="graphHeaderColumnStatus1">
+        <c:set var="index_1" value="#{graphHeaderColumnStatus1.index}" />
+        <c:set var="meterMngIdDisp" value="#{graphHeaderList1[0][index_1]}" />
+        <c:set var="meterId" value="#{graphHeaderList1[1][index_1]}" />
+        <c:set var="tenantName" value="#{graphHeaderList1[2][index_1]}" />
+        <c:set var="meterTypeName" value="#{graphHeaderList1[3][index_1]}" />
+        <c:set var="unit" value="#{graphHeaderList1[4][index_1]}" />
+
+        <c:if test="#{index_1 == 1}">
+            <input type="hidden" id="firstMeterMngId" value="#{meterMngIdDisp}" />
+        </c:if>
+
+        <input type="hidden" id="graphValues1_#{meterMngIdDisp}" value="#{graphListMap1[meterMngIdDisp]}" />
+        <input type="hidden" id="graphUnit#{meterMngIdDisp}" value="#{unit}" />
+        <input type="hidden" id="graphTargetMeterId#{meterMngIdDisp}" value="#{meterId}" />
+        <input type="hidden" id="graphTargetTenant#{meterMngIdDisp}" value="#{tenantName}" />
+        <input type="hidden" id="graphTargetMeterType#{meterMngIdDisp}" value="#{meterTypeName}" />
+    </c:forEach>
+
+    <c:set var="graphHeaderIndexCount2" value="#{graphHeaderList2[0].size() - 1}" />
+    <c:forEach begin="0" end="#{graphHeaderIndexCount2}" varStatus="graphHeaderColumnStatus2">
+        <c:set var="meterMngIdDisp" value="#{graphHeaderList2[0][graphHeaderColumnStatus2.index]}" />
+        <c:if test="#{graphHeaderColumnStatus2.index > 0}">
+            <input type="hidden" id="graphValues2_#{meterMngIdDisp}" value="#{graphListMap2[meterMngIdDisp]}" />
+        </c:if>
+    </c:forEach>
+                </div>
+
+                <div class="row div_graph_header">
+                    <div class="row graphMeterMngIdRow">
+                        <div class="head">管理番号</div>
+                        <div id="graph-mng-no" class="body"></div>
+                    </div>
+                    <div class="row graphMeterIdRow">
+                        <div class="head">計器ID</div>
+                        <div id="graph-meter-id" class="body"></div>
+                    </div>
+                    <div class="row graphTenantNameRow">
+                        <div class="head">テナント名</div>
+                        <div id="graph-tenant-name" class="body"></div>
+                    </div>
+                    <div class="row graphMeterTypeNameRow">
+                        <div class="head">メーター種別</div>
+                        <div id="graph-meter-kind" class="body"></div>
+                    </div>
+                </div>
+
+                <input type="hidden" id="targetTimes" value="#{targetTimes}" />
+
+                <div id="graphSpace"></div>
+            </div>
+    </c:if>
+
+</html>

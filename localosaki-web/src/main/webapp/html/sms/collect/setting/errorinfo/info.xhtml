@@ -1,0 +1,235 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+    <head jsfc="h:head">
+        <title>異常情報</title>
+    </head>
+    <body jsfc="h:body">
+        <ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+            <ui:define name="content_side">
+                <h:outputStylesheet library="css" name="common/button.css"/>
+                <h:outputStylesheet library="css" name="sms/collect/setting/errorinfo/info.css" />
+
+                <form jsfc="h:form" id="smsCollectSettingErrorInfoBean">
+                    <div class="inner_content">
+                        <div jsfc="a4j:outputPanel" id="autoInspectionPanel">
+                            <div class="title_area_warp">
+                                <!-- 画面タイトル -->
+                                <div class="title_area_left">
+                                    <h2 class="page_title">異常情報</h2>
+                                    <!-- ヘルプボタン -->
+                                    <c:if test="#{indexBean.userGuideBool}">
+                                        <h:commandLink class="help_icon"
+                                            action="#{indexBean.userGuide()}" target="_blank" />
+                                    </c:if>
+                                    <p class="page_subtitle">
+                                        <h:outputText value="各装置の異常情報を表示します。" />
+                                    </p>
+                                </div>
+                            <div class="clear" />
+
+                            <div class="gradation_type_1 gradation_type_5 button_large_2 button_area">
+                                <button jsfc="a4j:commandButton"
+                                    id="reloadButton"
+                                    class="button_reload"
+                                    value="最新の状態に更新"
+                                    action="#{smsCollectSettingErrorInfoBean.reload()}"
+                                    execute="@form" render="#{rich:clientId('autoInspectionPanel')}"
+                                    onbegin="showBlockModal()"
+                                    oncomplete="hideBlockModal(true); clearChangeFlag(); scrollPageTop();" />
+                                <h:graphicImage class="button_icon" library="images" name="common/com015.png" />
+                            </div>
+
+                            <div class="contents_title">
+                                <span class="contents_title_body">データ収集装置 装置異常</span>
+                            </div>
+                            <div class="contents_form_area">
+                                <c:set var="devErrorInfoList" value="#{smsCollectSettingErrorInfoBean.devErrorInfoList}" />
+                                <div class="contents_table">
+                                    <table>
+                                <c:forEach var="devErrorInfo" items="#{devErrorInfoList}" varStatus="statusRow">
+                                    <c:if test="#{!empty devErrorInfo.devName}">
+                                        <c:set var="statusClass" />
+                                        <c:if test="#{devErrorInfo.devError}">
+                                            <c:set var="statusClass" value="error_status" />
+                                        </c:if>
+                                        <tr>
+                                            <th class="dev_error_info_header">#{devErrorInfo.devName}</th>
+                                            <td class="dev_error_info_value #{statusClass}">#{devErrorInfo.devStaDisp}</td>
+                                        </tr>
+                                    </c:if>
+                                </c:forEach>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="contents_title">
+                                <span class="contents_title_body">コンセントレーター異常</span>
+                            </div>
+                            <div class="contents_form_area">
+                <c:set var="concentErrorInfoList" value="#{smsCollectSettingErrorInfoBean.concentErrorInfoList}" />
+
+                                <!-- ヘッダー -->
+                                <div class="contents_table">
+                <c:forEach var="concentErrorInfoRowList" items="#{concentErrorInfoList}" varStatus="statusDev">
+                                    <table class="concent_error_info_header_table">
+                    <c:if test="#{statusDev.index &gt; 0}">
+                                <div style="height: 25px;"></div>
+                    </c:if>
+                    <c:forEach var="concentErrorInfoInnerList" items="#{concentErrorInfoRowList}" varStatus="statusRow">
+                        <c:if test="#{statusRow.index == 0}">
+                                        <tr>
+                            <c:forEach var="concentDevName" items="#{concentErrorInfoInnerList}" varStatus="statusDevName">
+                                <c:choose>
+                                    <c:when test="#{empty concentDevName.devName}">
+                                            <td class="concent_error_info_dev_blank" style="border: none;"></td>
+                                    </c:when>
+                                    <c:otherwise>
+                                            <!-- 1行目 装置名称 -->
+                                            <th class="concent_error_info_dev">#{concentDevName.devName}</th>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                                        </tr>
+                        </c:if>
+                    </c:forEach>
+                                    </table>
+
+                                    <!-- 明細 -->
+                                    <div class="contents_table contents_table_concent">
+                                    <table class="concent_error_info_value_table">
+                    <c:forEach var="concentErrorInfoInnerList" items="#{concentErrorInfoRowList}" varStatus="statusRow">
+                                        <tr>
+                        <c:forEach var="concentErrorInfo" items="#{concentErrorInfoInnerList}" varStatus="statusColumn">
+                            <c:choose>
+                                <c:when test="#{empty concentErrorInfo.devName}">
+                                            <td class="concent_error_info_blank" style="border: none;"></td>
+                                            <td class="concent_error_info_blank" style="border: none;"></td>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="statusClass" />
+                                    <c:if test="#{concentErrorInfo.concentError}">
+                                        <c:set var="statusClass" value="error_status" />
+                                    </c:if>
+                                            <!-- 2行目以降 -->
+                                            <!-- 管理番号 -->
+                                            <th class="concent_error_info_header">#{concentErrorInfo.concentIdDisp}</th>
+                                            <!-- コンセントレーター異常 -->
+                                            <td class="concent_error_info_value #{statusClass}">#{concentErrorInfo.concentStaDisp}</td>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                                        </tr>
+                    </c:forEach>
+                                    </table>
+                                    </div>
+                </c:forEach>
+                                </div>
+                            </div>
+
+                            <div class="contents_title">
+                                <span class="contents_title_body">通信端末異常・メーター異常</span>
+                            </div>
+                            <div class="contents_form_area">
+                <c:set var="meterErrorInfoList" value="#{smsCollectSettingErrorInfoBean.meterErrorInfoList}" />
+
+                                <!-- ヘッダー -->
+                                <div class="contents_table">
+                <c:forEach var="meterErrorInfoRowList" items="#{meterErrorInfoList}" varStatus="statusDev">
+                                    <table class="meter_error_info_header_table">
+                    <c:if test="#{statusDev.index &gt; 0}">
+                                <div style="height: 25px;"></div>
+                    </c:if>
+                    <c:forEach var="meterErrorInfoInnerList" items="#{meterErrorInfoRowList}" varStatus="statusRow">
+                        <c:if test="#{statusRow.index == 0}">
+                                        <tr>
+                            <c:forEach var="meterDevName" items="#{meterErrorInfoInnerList}" varStatus="statusDevName">
+                                <c:choose>
+                                    <c:when test="#{empty meterDevName.devName}">
+                                            <td class="meter_error_info_dev_blank" style="border: none;" colspan="3"></td>
+                                    </c:when>
+                                    <c:otherwise>
+                                            <!-- 1行目 装置名称 -->
+                                            <th class="meter_error_info_dev" colspan="3">#{meterDevName.devName}</th>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                                        </tr>
+                                        <tr class="meter_error_info_header_bottom">
+                            <c:forEach var="meterDevName" items="#{meterErrorInfoInnerList}" varStatus="statusDevName">
+                                <c:choose>
+                                    <c:when test="#{empty meterDevName.devName}">
+                                            <td class="meter_error_info_header_id_blank" style="border: none;"></td>
+                                            <td class="meter_error_info_header_blank" style="border: none;"></td>
+                                            <td class="meter_error_info_header_blank" style="border: none;"></td>
+                                    </c:when>
+                                    <c:otherwise>
+                                            <!-- 2行目 ヘッダ(通信端末, メーター) -->
+                                            <th class="meter_error_info_header_id"></th>
+                                            <th class="meter_error_info_header">通信端末</th>
+                                            <th class="meter_error_info_header">メーター</th>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                                        </tr>
+                        </c:if>
+                    </c:forEach>
+                                    </table>
+
+                                    <!-- 明細 -->
+                                    <div class="contents_table contents_table_meter">
+                                    <table class="concent_error_info_value_table">
+                    <c:forEach var="meterErrorInfoInnerList" items="#{meterErrorInfoRowList}" varStatus="statusRow">
+                                        <tr>
+                        <c:forEach var="meterErrorInfo" items="#{meterErrorInfoInnerList}" varStatus="statusColumn">
+                            <c:choose>
+                                <c:when test="#{empty meterErrorInfo.devName}">
+                                            <td class="meter_error_info_value_blank" style="border: none;"></td>
+                                            <td class="meter_error_info_value_blank" style="border: none;"></td>
+                                            <td class="meter_error_info_value_blank" style="border: none;"></td>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="termStatusClass" />
+                                    <c:if test="#{meterErrorInfo.termError}">
+                                        <c:set var="termStatusClass" value="error_status" />
+                                    </c:if>
+
+                                    <c:set var="meterStatusClass" />
+                                    <c:if test="#{meterErrorInfo.meterError}">
+                                        <c:set var="meterStatusClass" value="error_status" />
+                                    </c:if>
+
+                                            <!-- 2行目以降 -->
+                                            <!-- 管理番号 -->
+                                            <th class="meter_error_info_value">#{meterErrorInfo.meterMngIdDisp}</th>
+                                            <!-- 通信端末異常 -->
+                                            <td class="meter_error_info_value #{termStatusClass}">#{meterErrorInfo.termStaDisp}</td>
+                                            <!-- メーター異常 -->
+                                            <td class="meter_error_info_value #{meterStatusClass}">#{meterErrorInfo.meterStaDisp}</td>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                                        </tr>
+                    </c:forEach>
+                                    </table>
+                                    </div>
+                </c:forEach>
+                                </div>
+                            </div>
+
+                            </div> 
+                        </div>
+                    </div>
+                </form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

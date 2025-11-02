@@ -1,0 +1,171 @@
+.rf-cal table {
+    width: 200px !important;
+    color: #000000;
+    font-weight: normal;
+}
+
+.rf-cal table .rf-cal-extr {
+	border-color: #ccc;
+}
+.rf-cal table .rf-cal-hdr-optnl {
+	border-bottom-color: #ccc;
+	background-color: #c3f5fa;
+}
+.rf-cal table .rf-cal-hdr {
+	border-bottom-color: #ccc;
+	background-color: #c3f5fa;
+}
+.rf-cal table .rf-cal-c {
+	border-bottom-color: #ccc;
+	border-right-color: #ccc;
+	background-color: #FFFFFF;
+}
+.rf-cal table .rf-cal-hdr-month {
+	background-color: #86defb;
+	color: #000000;
+}
+.rf-cal table .rf-cal-tl {
+	background-color: #86defb;
+	color: #000000;
+}
+.rf-cal table .rf-cal-day-lbl {
+	border-bottom-color: #ccc;
+	border-right-color: #ccc;
+	background-color: #c3f5fa;
+}
+.rf-cal table .rf-cal-week {
+	color: red;
+	border-bottom-color: #ccc;
+	background-color: #c3f5fa;
+	border-right-color: #ccc;
+}
+.rf-cal table .rf-cal-ftr-optnl {
+	border-top-color: #ccc;
+	border-right-color: #ccc;
+}
+.rf-cal table .rf-cal-ftr {
+	border-top-color: #ccc;
+	border-right-color: #ccc;
+}
+.rf-cal table .rf-cal-sp-inp-cntr {
+	background-color: #ffffff;
+	border-color: #ccc;
+	border-bottom-color: #ffffff;
+	border-right-color: #ffffff;
+}
+.rf-cal table .rf-cal-sp-btn {
+	background-color: #86defb;
+	border-color: #00ffff;
+}
+.rf-cal table .rf-cal-spec {
+	background-color: #c3f5fa;
+}
+.rf-cal table .rf-cal-holiday :not(.rf-cal-boundary-day):not(.caldisable){
+	background-color: #fff;
+	color: #FF7800;
+}
+
+.rf-cal table tr td.rf-cal-c:nth-child(1):not(.rf-cal-boundary-day):not(.caldisable) {
+	color: red;
+}
+.rf-cal table tr td.rf-cal-c:nth-child(7):not(.rf-cal-boundary-day):not(.caldisable) {
+	color: blue;
+}
+
+.caldisable{
+    background-color: rgb(208, 208, 208);
+    color: rgb(144, 144, 144);
+}
+
+.rf-cal table .rf-cal-boundary-day {
+	color: rgb(160, 160, 160);
+}
+.rf-cal table .rf-cal-today {
+	background-color: #FFE488;
+	color: inherit;
+        font-weight: normal;
+}
+.rf-cal table .rf-cal-sel {
+	background-color: #1061a3;
+	color: #fff;
+}
+.rf-cal table .rf-cal-sel.rf-cal-dis {
+	background-color: rgb(208, 208, 208);
+	color: rgb(144, 144, 144);
+}
+.rf-cal table .rf-cal-hov {
+	background-color: #93ebfa;
+	color: #000000;
+}
+.rf-cal table .rf-cal-tl-btn-hov {
+	background-color: #c3f5fa;
+	color: #000000;
+	border-color: #FFFFFF;
+	border-right-color: #ccc;
+	border-bottom-color: #ccc;
+}
+.rf-cal table .rf-cal-btn-press {
+	border-color: #ccc;
+	border-right-color: #FFFFFF;
+	border-bottom-color: #FFFFFF;
+}
+.rf-cal table .rf-cal-timepicker-cnt {
+	border-color: #ccc;
+}
+.rf-cal table .rf-cal-monthpicker-cnt {
+	background: #FFFFFF;
+	border-color: #ccc;
+}
+.rf-cal table .rf-cal-monthpicker-cancel {
+	background: #c3f5fa;
+	border-top-color: #ccc;
+}
+.rf-cal table .rf-cal-monthpicker-ok {
+	background: #c3f5fa;
+	border-top-color: #ccc;
+}
+.rf-cal table .rf-cal-monthpicker-split {
+	border-right-color: #ccc;
+}
+.rf-cal table .rf-cal-time-btn {
+	border-color: #FFFFFF;
+	border-right-color: #ccc;
+	border-bottom-color: #ccc;
+	background: #13EEFF;
+}
+.rf-cal table .rf-cal-time-btn-press {
+	border-color: #ccc;
+	border-right-color: #FFFFFF;
+	border-bottom-color: #FFFFFF;
+	background-color: #c3f5fa;
+}
+.rf-cal table .rf-cal-sp-btn {
+	background-color: #86defb;
+	border-color: #00ffff;
+}
+.rf-cal table .rf-cal-edtr-layout-shdw {
+	background-color: #000000;
+}
+.rf-cal table .rf-cal-edtr-btn-over {
+	border-color: #ccc;
+	background: #93ebfa;
+}
+.rf-cal table .rf-cal-edtr-btn-sel {
+	background-color: #004f8d;
+	color: #FFF;
+}
+.rf-cal table .rf-cal-edtr-tl-over {
+	background: #c3f5fa;
+	border-color: #FFFFFF;
+	border-right-color: #ccc;
+	border-bottom-color: #ccc;
+}
+.rf-cal table .rf-cal-edtr-tl-press {
+	background: #c3f5fa;
+	border-color: #ccc;
+	border-right-color: #FFFFFF;
+	border-bottom-color: #FFFFFF;
+}
+.rf-cal table input.rf-cal-dflt-lbl {
+	color: rgb(179, 179, 179);
+}

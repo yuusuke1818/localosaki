@@ -1,0 +1,33 @@
+/* 設定変更ボタンエリア */
+.edit_button_area {
+    display: flex;
+    justify-content: center;
+}
+
+/* 設定変更ボタンアイコン */
+.edit_button_area .edit_button_icon {
+    position: relative;
+    top: 6px;
+    left: -124px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* 入力フォームテーブル 幅指定 */
+.edit_table_col1 {
+    width : 25%;
+}
+.edit_table_col2 {
+    width : 40%;
+}
+.edit_table_col3 {
+    width : 35%;
+}
+
+/* テキストボックス 幅指定 */
+.text_width_middle {
+    width: 50%;
+}
+.text_width_long {
+    width: 90%;
+}

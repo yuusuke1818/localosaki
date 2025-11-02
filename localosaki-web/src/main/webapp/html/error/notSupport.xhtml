@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--※リダイレクトで遷移しているためかjsf形式だとhtml形式にレンダリングされなかったので直htmlで記述してます-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>ブラウザサポート対象外</title>
+        <link type="text/css" rel="stylesheet" href="/osol-sms/f/javax.faces.resource/common/cssLayout.css?ln=css" />
+        <link type="text/css" rel="stylesheet" href="/osol-sms/f/javax.faces.resource/error/exceptionError.css?ln=css" />
+        <c:if test="#{loginBean.faviconBool}">            
+            <link rel="shortcut icon" href="#{request.contextPath}/resources/images/ico/favicon_24x24.png" type="image/x-icon" />
+        </c:if>
+        <!--<link rel="shortcut icon" href="/osol-sms/f/resources/images/ico/favicon_24x24.png"/>-->
+        <!--<link rel="shortcut icon" href="/osol-sms/f/resources/images/ico/favicon_32x32.png"/>-->
+        <!--<link rel="shortcut icon" href="/osol-sms/f/resources/images/ico/favicon_16x16.png"/>-->
+    </h:head>
+    <body>
+        <div class="exception_message_area">
+<!--            <div class="exception_title">例外エラー</div>-->
+            <div class="exception_title">サポート対象外のブラウザでアクセスされています。</div>
+        </div>
+        <div id="back_left"></div>
+        <div id="back_center"></div>
+        <div id="back_right"></div>
+        <script>
+            history.pushState(null, null, null);
+
+            window.addEventListener("popstate", function() {
+                history.pushState(null, null, null);
+            });
+        </script>
+    </body> 
+</html>

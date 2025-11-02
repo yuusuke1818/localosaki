@@ -1,0 +1,50 @@
+.various_tbl {
+    border-spacing: 0px;
+}
+.various_tbl th {
+    background-color: #004f8d;
+    color: white;
+    font-weight: bold;
+    border: 1px #cccccc solid;
+    height: 30px;
+}
+.various_tbl td {
+    border: 1px #cccccc solid;
+    height: 40px;
+    padding-left: 15px;
+}
+.various_tbl_col_1 {
+    width: 250px;
+}
+.various_tbl_col_2 {
+    width: 320px;
+}
+.various_tbl_col_3 {
+    width: 260px;
+}
+.various_txt {
+    width: 200px;
+}
+.various_sel {
+    width: 200px;
+    height: 25px;
+}
+
+/* ボタン欄 */
+.button_area {
+    text-align: center;
+    margin-top: 20px;
+}
+/* ボタン */
+.action_button{
+    height: 40px;
+    width: 150px;
+}
+/* ボタンアイコン */
+.button_area .button_icon {
+    position: relative;
+    top: 6px;
+    left: -120px;
+    z-index: 10;
+    pointer-events: none;
+}

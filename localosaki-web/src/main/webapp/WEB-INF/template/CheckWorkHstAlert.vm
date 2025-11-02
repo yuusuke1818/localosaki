@@ -1,0 +1,11 @@
+$devNameの装置で処理途中のデータが複数存在します。
+処理予約データを確認して下さい。
+
+装置ID : $devId
+装置状態 : $devState
+ホームディレクトリ : $homeDir
+メーター件数 : $meterCount
+処理待ち中(値:1) : $waitCount
+処理待ち中(値:2) : $getsendwaitCount
+
+大崎電気工業株式会社

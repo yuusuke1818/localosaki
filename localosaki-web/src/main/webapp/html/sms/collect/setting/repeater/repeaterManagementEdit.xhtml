@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      >
+<body>
+
+<ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+    <ui:define name="content_side" class="content">
+        <meta http-equiv="content-language" content="ja" />
+        <h:outputStylesheet library="css" name="common/button.css"/>
+        <h:outputStylesheet library="css" name="common/default.css"/>
+        <h:outputStylesheet library="css" name="common/cssLayout.css"/>
+        <h:outputStylesheet library="css" name="common/common.css"/>
+        <h:outputStylesheet library="css" name="sms/collect/setting/repeater/repeaterManagementEdit.css"/>
+
+        <form jsfc="h:form" id="smsCollectSettingRepeaterManagementEditBean">
+            <div class="inner_content">
+                <div class="title_area_warp">
+                    <!-- 画面タイトル -->
+                    <div class="title_area_left">
+                        <h2 class="page_title">中継装置管理 </h2>
+                        <p class="page_subtitle">
+                            <h:outputText value="中継装置情報の新規登録、または編集ができます。" />
+                        </p>
+                        <rich:messages />
+                    </div>
+                    <div class="clear" />
+                    <c:if test="#{smsCollectSettingRepeaterManagementEditBean.editFlg}">
+                        <h3 class="contents_title editDisp">設定変更</h3>
+                    </c:if>
+                    <c:if test="#{!smsCollectSettingRepeaterManagementEditBean.editFlg}">
+                        <h3 class="contents_title editDisp">新規登録</h3>
+                    </c:if>
+                    
+                    <div class="contents_form_area editDisp">
+                        <table class="editTable">
+                            <tr style="height: 10px">
+                                <td class="edit_table_col1"></td>
+                                <td class="edit_table_col2"></td>
+                                <td class="edit_table_col3"></td>
+                                <td class="edit_table_col4"></td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">登録先装置</td>
+                                <td class="TXT020">
+                                    <h:outputText id="edit_dev_name" value="#{smsCollectSettingRepeaterManagementEditBean.devName}"></h:outputText>
+                                    <h:inputHidden value="#{smsCollectSettingRepeaterManagementEditBean.devId}" id="editDevId" />
+                                </td>
+                                <td>
+                                    ※登録先装置を表示
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">管理番号</td>
+
+                                <c:if test="#{smsCollectSettingRepeaterManagementEditBean.editFlg}">
+                                    <td class="TXT020">
+                                        <h:outputText id="mng_id" value="#{smsCollectSettingRepeaterManagementEditBean.repeaterMngId}" >
+                                            <f:convertNumber pattern="00" />
+                                        </h:outputText>
+                                    </td>
+                                </c:if>
+                                <c:if test="#{!smsCollectSettingRepeaterManagementEditBean.editFlg}">
+                                    <td>
+                                        <h:selectOneMenu id="mngIdSelect" class="EDIT002 check_change autofocus" value="#{smsCollectSettingRepeaterManagementEditBean.repeaterMngId}" >
+                                            <f:selectItems value="#{smsCollectSettingRepeaterManagementEditBean.repeaterMngIdMap}" />
+                                        </h:selectOneMenu>
+                                    </td>
+                                </c:if>
+                                <td>
+                                    ※選択範囲 ： "01～99 " 未登録の番号のみ
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">中継装置ID<span class="required"></span></td>
+                                <td>
+                                    <c:if test="#{smsCollectSettingRepeaterManagementEditBean.editFlg}">
+                                        <h:inputText id="repeater_name"
+                                            class="text_width_long check_change autofocus"
+                                            style="#{smsCollectSettingRepeaterManagementEditBean.getInvalidStyle(component.clientId)}" 
+                                            value="#{smsCollectSettingRepeaterManagementEditBean.repeaterId}"
+                                            maxlength="10"></h:inputText>
+                                    </c:if>
+                                    <c:if test="#{!smsCollectSettingRepeaterManagementEditBean.editFlg}">
+                                        <h:inputText id="repeater_name"
+                                            class="text_width_long check_change"
+                                            style="#{smsCollectSettingRepeaterManagementEditBean.getInvalidStyle(component.clientId)}" 
+                                            value="#{smsCollectSettingRepeaterManagementEditBean.repeaterId}"
+                                            maxlength="10"></h:inputText>
+                                    </c:if>
+                                </td>
+                                <td>
+                                    ※R + 9文字
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">コメント</td>
+                                <td>
+                                    <h:inputText 
+                                        id="comment"
+                                        class="text_width_long check_change"
+                                        value="#{smsCollectSettingRepeaterManagementEditBean.comment}"
+                                        maxlength="20"></h:inputText>
+                                </td>
+                                <td>
+                                    ※最大20文字
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+                        <br />
+                        <br />
+                        <div class="edit_button_area">
+                            <div class="gradation_type_1 button_large_2 button_area">
+                                <c:if test="#{smsCollectSettingRepeaterManagementEditBean.editFlg}">
+                                    <a4j:commandButton 
+                                        id="editBtn" 
+                                        value="設定変更"
+                                        render="repeater_name"
+                                        action="#{smsCollectSettingRepeaterManagementEditBean.execUpdate()}"
+                                        onclick="return confirmationDialogOpen($('input[id$=editBtn]'))"
+                                        onbegin="showBlockModal()" oncomplete="hideBlockModal(); clearChangeFlag();">
+                                    </a4j:commandButton>
+                                    <h:graphicImage class="edit_button_icon" library="images" name="common/com067.png" />
+                                </c:if>
+                                <c:if test="#{!smsCollectSettingRepeaterManagementEditBean.editFlg}">
+                                    <a4j:commandButton 
+                                        id="registBtn" 
+                                        value="登録"
+                                        render="repeater_name"
+                                        action="#{smsCollectSettingRepeaterManagementEditBean.execUpdate()}"
+                                        onclick="return confirmationDialogOpen($('input[id$=registBtn]'))"
+                                        onbegin="showBlockModal()" oncomplete="hideBlockModal(); clearChangeFlag();">
+                                    </a4j:commandButton>
+                                    <h:graphicImage class="regist_button_icon" library="images" name="common/com067.png" />
+                                </c:if>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ui:include src="/html/common/confirmationDialog.xhtml" >
+                <ui:param name="confirmationDialogTitle" value="確認" />
+                <ui:param name="confirmationDialogMessage" value="#{smsCollectSettingRepeaterManagementEditBean.confirmMessage}" />
+            </ui:include>
+        </form>
+        
+        <ui:include src="/html/common/changeCautionDialog.xhtml" >
+            <!-- ボタンに対応する場合 -->
+            <!--                                <ui:param name="cautionDialogId" value="editCautionDialog" />-->
+            <ui:param name="changeCautionTargetButton" value="#{smsCollectSettingMeterUserEditBean.acceptButton}" />
+        </ui:include>  
+
+    </ui:define>
+</ui:composition>
+
+</body>
+</html>

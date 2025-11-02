@@ -1,0 +1,368 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:oslib="http://osaki.co.jp/base-component"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:jsf="http://xmlns.jcp.org/jsf">
+<body>
+    <ui:composition template="/html/template/template.xhtml">
+        <ui:param name="isTopPage" value="true" />
+        <ui:define name="content" class="content">
+            <h:outputStylesheet library="css" name="common/sideMenu.css" />
+            <h:outputScript library="js" name="common/accordionMenu.js" />
+            <div class="main_layout">
+                <div class="sub_layout">
+                    <form jsfc="h:form" id="template_collect_sidemenu" class="side_button" prependId="false">
+                        <div>
+                            <div style="display: block; color: white; font-size: 12px; padding: 0px 12px 12px 12px;">
+                                <div>建物名</div>
+                                <h:outputText
+                                    value=" #{smsCollectTopBean.topBeanProperty.listInfo.buildingName}" />
+                                <div>建物番号</div>
+                                <h:outputText
+                                    value=" #{smsCollectTopBean.topBeanProperty.listInfo.buildingNo}" />
+                            </div>
+                        </div>
+                        <c:if test="#{smsCollectTopBean.dataViewVisble}">
+                            <div id="accordion1" class="accordion_container parent_border">
+                                <div class="accordion_title parent_button">
+                                    <h:selectBooleanCheckbox
+                                        value="#{smsCollectTopBean.topBeanProperty.selectCollectFlg}"
+                                        class="checkbox" id="checkbox1" />
+                                    <label for="checkbox1">データ表示</label>
+                                </div>
+                                <div class="accordion_content1">
+                                <c:if test="#{smsCollectTopBean.dayLoadVisble}">
+                                    <div class="child_button">
+                                        <a4j:commandButton id="DailyReportBtn" value="日報データ"
+                                            onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                            onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                            actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('DailyReportBtn')}"
+                                            action="#{smsCollectDataviewDailyBean.init(smsCollectTopBean.topBeanProperty.listInfo)}">
+                                        </a4j:commandButton>
+                                    </div>
+                                    <div class="child_button">
+                                        <a4j:commandButton id="MonthlyReportBtn" value="月報データ"
+                                            onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                            onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                            actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('MonthlyReportBtn')}"
+                                            action="#{smsCollectDataviewMonthlyBean.init(smsCollectTopBean.topBeanProperty.listInfo)}">
+                                        </a4j:commandButton>
+                                    </div>
+                                    <div class="child_button">
+                                        <a4j:commandButton id="AnnualReportBtn" value="年報データ"
+                                            onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                            onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                            actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('AnnualReportBtn')}"
+                                            action="#{smsCollectDataviewYearlyBean.init(smsCollectTopBean.topBeanProperty.listInfo)}">
+                                        </a4j:commandButton>
+                                    </div>
+                                    <div class="child_button">
+                                        <a4j:commandButton id="DailyReportGraphBtn" value="データ比較グラフ(日報)"
+                                            onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                            onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                            actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('DailyReportGraphBtn')}"
+                                            action="#{smsCollectDataviewCompareGraphDailyBean.init(smsCollectTopBean.topBeanProperty.listInfo)}">
+                                        </a4j:commandButton>
+                                    </div>
+                                    <div class="child_button">
+                                        <a4j:commandButton id="MonthlyReportGraphBtn" value="データ比較グラフ(月報)"
+                                            onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                            onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                            actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('MonthlyReportGraphBtn')}"
+                                            action="#{smsCollectDataviewCompareGraphMonthlyBean.init(smsCollectTopBean.topBeanProperty.listInfo)}">
+                                        </a4j:commandButton>
+                                    </div>
+                                    <div class="child_button">
+                                        <a4j:commandButton id="AnnualReportGraphBtn" value="データ比較グラフ(年報)"
+                                            onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                            onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                            actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('AnnualReportGraphBtn')}"
+                                            action="#{smsCollectDataviewCompareGraphYearlyBean.init(smsCollectTopBean.topBeanProperty.listInfo)}">
+                                        </a4j:commandButton>
+                                    </div>
+                                </c:if>
+                                <c:if test="#{smsCollectTopBean.inspDataVisble}">
+                                    <div class="child_button">
+                                        <a4j:commandButton id="MeterDataBtn" value="検針データ"
+                                            onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                            onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                            actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('MeterDataBtn')}"
+                                            action="#{meterReadingDataBean.init(smsCollectTopBean.topBeanProperty.listInfo)}">
+                                        </a4j:commandButton>
+                                    </div>
+                                </c:if>
+                              </div>
+                          </div>
+                      </c:if>
+                        <c:if test="#{smsCollectTopBean.managementVisble}">
+                            <div id="accordion2" class="accordion_container parent_border">
+                                <div class="accordion_title parent_button">
+                                    <h:selectBooleanCheckbox
+                                        value="#{smsCollectTopBean.topBeanProperty.selectSettingFlg}"
+                                        class="checkbox" id="checkbox2" />
+                                    <label for="checkbox2">機器管理</label>
+                                </div>
+                                <div class="accordion_content2">
+                                    <c:if test="#{smsCollectTopBean.meterManagementVisble}">
+                                        <div class="child_button">
+                                            <a4j:commandButton id="MeterManagementBtn" value="メーター管理"
+                                                render="dispArea #{rich:clientId('confirmMsgArea')}"
+                                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                                onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                                actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('MeterManagementBtn')}"
+                                                action="#{smsCollectSettingMeterMeterManagementBean.init(smsCollectTopBean.topBeanProperty.listInfo)}">
+                                            </a4j:commandButton>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="#{smsCollectTopBean.meterTenantVisble}">
+                                        <div class="child_button">
+                                            <a4j:commandButton id="MeterTenantManagementBtn"
+                                                value="メーターテナント管理"
+                                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                                onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                                actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('MeterTenantManagementBtn')}"
+                                                action="#{smsCollectSettingMeterTenantSearchBean.init()}">
+                                            </a4j:commandButton>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="#{smsCollectTopBean.notVisble}">
+                                        <div class="child_button">
+                                            <a4j:commandButton id="MeterUserManagementBtn"
+                                                value="メーターユーザー管理"
+                                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                                onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                                actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('MeterUserManagementBtn')}"
+                                                action="#{smsCollectSettingMeterUserInfoListBean.init()}">
+                                            </a4j:commandButton>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="#{smsCollectTopBean.notVisble}">
+                                        <div class="child_button">
+                                            <a4j:commandButton id="MeterGroupManagementBtn"
+                                                value="メーターグループ管理"
+                                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                                onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                                actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('MeterGroupManagementBtn')}"
+                                                action="#{smsCollectSettingMeterGroupManagementBean.init(smsCollectTopBean.topBeanProperty.listInfo)}">
+                                            </a4j:commandButton>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="#{smsCollectTopBean.notVisble}">
+                                        <div class="child_button">
+                                            <a4j:commandButton id="RelayEquipmentManagementBtn"
+                                                value="中継装置管理"
+                                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                                onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                                actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('RelayEquipmentManagementBtn')}"
+                                                action="#{smsCollectSettingRepeaterManagementBean.init(smsCollectTopBean.topBeanProperty.listInfo)}">
+                                            </a4j:commandButton>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="#{smsCollectTopBean.notVisble}">
+                                        <div class="child_button">
+                                            <a4j:commandButton id="ConcentratorManagementBtn"
+                                                value="コンセントレーター管理"
+                                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                                onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                                actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('ConcentratorManagementBtn')}"
+                                                action="#{smsCollectSettingConcentratorManagementBean.init(smsCollectTopBean.topBeanProperty.listInfo)}">
+                                            </a4j:commandButton>
+                                        </div>
+                                    </c:if>
+                                    <div class=" accordion_title_child">
+                                        <h:selectBooleanCheckbox
+                                            value="#{smsCollectTopBean.topBeanProperty.selectMeterFlg}"
+                                            class="checkbox" id="checkbox3" />
+                                        <label for="checkbox3">検針設定</label>
+                                        <div class="accordion_content3">
+                                            <c:if test="#{smsCollectTopBean.notVisble}">
+                                                <div class="grand_child_button">
+                                                    <a4j:commandButton id="VariousSettingBtn" value="各種設定"
+                                                        onbegin="showBlockModal()"
+                                                        oncomplete="hideBlockModal()"
+                                                        onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                                        actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('VariousSettingBtn')}"
+                                                        action="#{smsCollectSettingMeterreadingVariousBean.init()}">
+                                                    </a4j:commandButton>
+                                                </div>
+                                            </c:if>
+                                            <c:if test="#{smsCollectTopBean.notVisble}">
+                                                <div class="grand_child_button">
+                                                    <a4j:commandButton id="TypeSettingBtn" value="種別設定"
+                                                        onbegin="showBlockModal()"
+                                                        oncomplete="hideBlockModal()"
+                                                        onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                                        actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('TypeSettingBtn')}"
+                                                        action="#{smsCollectSettingMeterreadingTypeBean.init()}">
+                                                    </a4j:commandButton>
+                                                </div>
+                                            </c:if>
+                                            <c:if test="#{smsCollectTopBean.notVisble}">
+                                                <div class="grand_child_button">
+                                                    <a4j:commandButton id="AutoCheckMeterBtn" value="自動検針"
+                                                        onbegin="showBlockModal()"
+                                                        oncomplete="hideBlockModal()"
+                                                        onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                                        actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('AutoCheckMeterBtn')}"
+                                                        action="#{smsCollectSettingMeterreadingAutoInspectionEditBean.init(smsCollectTopBean.topBeanProperty.listInfo)}">
+                                                    </a4j:commandButton>
+                                                </div>
+                                            </c:if>
+                                            <c:if test="#{smsCollectTopBean.manualInspectionVisble}">
+                                                <div class="grand_child_button">
+                                                    <a4j:commandButton id="AnyCheckMeterBtn" value="任意検針"
+                                                        onbegin="showBlockModal()"
+                                                        oncomplete="hideBlockModal()"
+                                                        onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                                        actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('AnyCheckMeterBtn')}"
+                                                        action="#{smsCollectSettingMeterreadingManualInspectionBean.init()}">
+                                                    </a4j:commandButton>
+                                                </div>
+                                            </c:if>
+                                            <c:if test="#{smsCollectTopBean.inspectionMeterBefVisble}">
+                                                <div class="grand_child_button">
+                                                    <a4j:commandButton id="UndecidedMeterDataBtn" value="確定前検針データ"
+                                                        onbegin="showBlockModal()"
+                                                        oncomplete="hideBlockModal()"
+                                                        onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                                        actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('UndecidedMeterDataBtn')}"
+                                                        action="#{smsCollectSettingMeterreadingInspectionMeterBefListBean.init()}">
+                                                    </a4j:commandButton>
+                                                </div>
+                                            </c:if>
+                                        </div>
+                                    </div>
+                                    <c:if test="#{smsCollectTopBean.notVisble}">
+                                        <div class="abnormal_info_button">
+                                            <a4j:commandButton id="AbnormalInfoBtn" value="異常情報"
+                                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                                onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                                actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('AbnormalInfoBtn')}"
+                                                action="#{smsCollectSettingErrorInfoBean.init(smsCollectTopBean.topBeanProperty.listInfo)}">
+                                            </a4j:commandButton>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="#{smsCollectTopBean.settingCollectionVisble}">
+                                        <div class="child_button">
+                                            <a4j:commandButton id="SettingCollectionBtn" value="設定一括収集"
+                                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                                onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                                actionListener="#{smsCollectTopBean.topBeanProperty.setSelectId('SettingCollectionBtn')}"
+                                                action="#{smsCollectSettingMeterreadingSettingCollectionBean.init()}">
+                                            </a4j:commandButton>
+                                        </div>
+                                    </c:if>
+                                </div>
+                            </div>
+                        </c:if>
+                        <div class="parent_border">
+                            <div class="parent_button" style="position: relative;">
+                                <a4j:commandButton id="BuildingInfoSearchBtn" value="建物選択へ戻る"
+                                    onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                    onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                    action="#{buildingInfoSearchBean.init()}">
+                                </a4j:commandButton>
+                                <h:graphicImage style="position: absolute; left: 167px; top: 12px;" library="images" name="common/com080.png" />
+                            </div>
+                        </div>
+                        <div class="parent_button" style="position: relative;">
+                            <a4j:commandButton id="IndexBtn" value="メインメニュー"
+                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                onclick="if (actionChangeCheck !== undefined) { return actionChangeCheck(this); }"
+                                action="#{indexBean.init()}">
+                            </a4j:commandButton>
+                                <h:graphicImage style="position: absolute; left: 167px; top: 12px;" library="images" name="common/com080.png" />
+                        </div>
+                    </form>
+                </div>
+                <div id="content_side" class="center_content">
+                    <ui:insert name="content_side">content_side</ui:insert>
+                </div>
+            </div>
+            <script type="text/javascript">
+            //現在選択中メニューの背景色を変更する
+            window.onpageshow = function(){
+                var selectedCss = {'background-color': '#D9E5FF', 'color':'black'}
+                var pathlist = location.pathname.split("/")
+                var category = pathlist[5]
+                if (category == 'dataview') {
+                    var page = pathlist[6]
+                    switch(page) {
+                    case 'daily.xhtml':
+                        $('#DailyReportBtn').css(selectedCss)
+                        break
+                    case 'monthly.xhtml':
+                        $('#MonthlyReportBtn').css(selectedCss)
+                        break
+                    case 'yearly.xhtml':
+                        $('#AnnualReportBtn').css(selectedCss)
+                        break
+                    case 'compareGraphDaily.xhtml':
+                        $('#DailyReportGraphBtn').css(selectedCss)
+                        break
+                    case 'compareGraphMonthly.xhtml':
+                        $('#MonthlyReportGraphBtn').css(selectedCss)
+                        break
+                    case 'compareGraphYearly.xhtml':
+                        $('#AnnualReportGraphBtn').css(selectedCss)
+                        break
+                    case 'meterReadingData':
+                        $('#MeterDataBtn').css(selectedCss)
+                        break
+                    }
+                } else {
+                    var page = pathlist[6]
+                    var filename = pathlist[7]
+                    switch(page) {
+                    case 'meter':
+                        $('#MeterManagementBtn').css(selectedCss)
+                        break
+                    case 'meterTenant':
+                        $('#MeterTenantManagementBtn').css(selectedCss)
+                        break
+                    case 'meterUser':
+                        $('#MeterUserManagementBtn').css(selectedCss)
+                        break
+                    case 'meterGroup':
+                        $('#MeterGroupManagementBtn').css(selectedCss)
+                        break
+                    case 'repeater':
+                        $('#RelayEquipmentManagementBtn').css(selectedCss)
+                        break
+                    case 'concentrator':
+                        $('#ConcentratorManagementBtn').css(selectedCss)
+                        break
+                    case 'meterreading':
+                        switch(filename) {
+                        case 'various.xhtml':
+                            $('#VariousSettingBtn').css(selectedCss)
+                            break
+                        case 'type.xhtml':
+                            $('#TypeSettingBtn').css(selectedCss)
+                            break
+                        case 'autoinspection':
+                            $('#AutoCheckMeterBtn').css(selectedCss)
+                            break
+                        case 'manualInspection.xhtml':
+                            $('#AnyCheckMeterBtn').css(selectedCss)
+                            break
+                        case 'inspectionMeterBefList.xhtml':
+                            $('#UndecidedMeterDataBtn').css(selectedCss)
+                            break
+                        case 'settingCollection.xhtml':
+                            $('#SettingCollectionBtn').css(selectedCss)
+                            break
+                        }
+                        break
+                    case 'errorinfo':
+                        $('#AbnormalInfoBtn').css(selectedCss)
+                        break
+                    }
+                }
+            };
+            </script>
+        </ui:define>
+    </ui:composition>
+</body>
+</html>

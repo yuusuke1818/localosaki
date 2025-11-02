@@ -1,0 +1,227 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      >
+<body>
+
+<ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+    <ui:define name="content_side" class="content">
+        <meta http-equiv="content-language" content="ja" />
+        <h:outputStylesheet library="css" name="common/button.css"/>
+        <h:outputStylesheet library="css" name="common/default.css"/>
+        <h:outputStylesheet library="css" name="common/cssLayout.css"/>
+        <h:outputStylesheet library="css" name="common/common.css"/>
+        <h:outputStylesheet library="css" name="sms/collect/setting/meterGroup/meterGroupManagement.css"/>
+        <h:outputScript library="js" name="sms/collect/setting/meterGroup/meterGroupManagement.js" />
+
+        <form jsfc="h:form" id="smsCollectSettingMeterGroupManagementBean">
+            <div class="inner_content">
+                <div>
+                    <!-- 画面タイトル -->
+                    <div class="title_area_warp">
+                        <div class="title_area_left">
+                            <h2 class="page_title">メーターグループ管理</h2>
+                            <p class="page_subtitle">
+                                <h:outputText value="メーターのグループ設定ができます。" />
+                            </p>
+                            <rich:messages />
+                        </div>
+                        <div class="clear" />
+
+                    <div class="contents_title contents_accordion_header">
+                        <h:graphicImage class="button_icon button_opener" library="images" name="demand/demand_container_opner.png"  style="display: none;" />
+                        <h:graphicImage class="button_icon button_closer" library="images" name="demand/demand_container_closer.png" />
+                        <span class="contents_title_body">表示条件</span>
+                    </div>
+                    <div class="contents_form_area contents_accordion_body">
+                        <span class="msg">表示内容を変更したい場合は、下記を変更し、［表示更新］ボタンを押してください。</span>
+                        <div class="contents_form_area_row">
+                            <span class="page_subtitle">グループ</span>
+                            <div>
+                                <select jsfc="h:selectOneMenu"
+                                                 id="devId"
+                                                 value="#{smsCollectSettingMeterGroupManagementBean.meterGroupId}"
+                                                 styleClass="inspectionMeterBefList_sel_std"
+                                                 onkeydown="searchConditionKeydown()">
+                                    <option jsfc="f:selectItems" value="#{smsCollectSettingMeterGroupManagementBean.meterGroupIdMap}" />
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="button_area_center gradation_type_1 gradation_type_5 button_large_2 button_area">
+                            <a4j:commandButton
+                                id="searchButton"
+                                class="action_button"
+                                value="表示更新"
+                                execute="@form" 
+                                render="@form" 
+                                disabled="#{smsCollectSettingMeterGroupManagementBean.meterGroupIdMap.isEmpty()}"
+                                action="#{smsCollectSettingMeterGroupManagementBean.execSearch()}"
+                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                ></a4j:commandButton>
+                            <h:graphicImage class="reload_button_icon" library="images" name="common/com015.png" rendered="true"/>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="button_area_right gradation_type_1 gradation_type_5 button_large_2 control_button_area">
+                            <div class="rename_button">
+                                <a4j:commandButton
+                                    id="renameButton"
+                                    class="action_button"
+                                    value="名称設定"
+                                    execute="@form" 
+                                    render="@form" 
+                                    action="#{smsCollectSettingMeterGroupManagementBean.execRename()}"
+                                    disabled="#{smsCollectSettingMeterGroupManagementBean.meterGroupIdMap.isEmpty()}"
+                                    onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                    ></a4j:commandButton>
+                                <h:graphicImage class="rename_button_icon" library="images" name="common/com017.png" rendered="true"/>
+                            </div>
+                            <div class="regist_button">
+                                <a4j:commandButton
+                                    id="entryButton"
+                                    class="action_button"
+                                    value="新規登録"
+                                    execute="@form" 
+                                    render="@form" 
+                                    action="#{smsCollectSettingMeterGroupManagementBean.execRegist()}"
+                                    disabled="#{smsCollectSettingMeterGroupManagementBean.registButtonDisableFlg}"
+                                    onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                    ></a4j:commandButton>
+                                <h:graphicImage class="regist_button_icon" library="images" name="common/com013.png" rendered="true"/>
+                            </div>
+                            
+                            <div class="edit_button">
+                                <a4j:commandButton
+                                    id="editButton"
+                                    class="action_button"
+                                    value="選択変更"
+                                    execute="@form" 
+                                    render="@form" 
+                                    action="#{smsCollectSettingMeterGroupManagementBean.execMultiEdit()}"
+                                    onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                    ></a4j:commandButton>
+                                <h:graphicImage class="edit_button_icon" library="images" name="common/com017.png" rendered="true"/>
+                            </div>
+                            
+                            <div class="delete_button">
+                                <a4j:commandButton
+                                    id="deleteButton"
+                                    class="action_button"
+                                    value="選択削除"
+                                    execute="@form" 
+                                    render="confirmationDialog"
+                                    actionListener="#{smsCollectSettingMeterGroupManagementBean.setDeleteMessage()}"
+                                    oncomplete="$('input[id$=hiddenDeleteButton]').click();"
+                                    ></a4j:commandButton>
+                                <h:graphicImage class="delete_button_icon" library="images" name="common/com019.png" rendered="true"/>
+                                <a4j:commandButton
+                                id="hiddenDeleteButton"
+                                style="display: none;"
+                                execute="@form" 
+                                render="@form"
+                                action="#{smsCollectSettingMeterGroupManagementBean.execDelete()}"
+                                onclick="return confirmationDialogOpen($('input[id$=hiddenDeleteButton]'))"
+                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                ></a4j:commandButton>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <!-- 検索結果リスト表示 -->
+                    <div class="search_result_area">
+                       <div class="search_result_header_wrap">
+                            <div id="listReroad">
+                                <div class="search_result_header_left page_content_parts">
+                                    検索条件に該当するメーター情報 
+                                    <span class="serach_result_total_count" jsfc="h:outputText" value=" #{smsCollectSettingMeterGroupManagementBean.meterGroupContents.size()}" />
+                                    件
+                                </div>
+                                <br/><br/>
+                            </div>
+                        </div>
+                        
+                        <h:dataTable var="item" value="#{smsCollectSettingMeterGroupManagementBean.meterGroupContents}"
+                            style="width: 100%;"
+                            headerClass="table_header"
+                            columnClasses="column_style_checkbox,column_style_dev,column_style_meter_id,column_style_calcType,column_style_button"
+                            rendered="#{!smsCollectSettingMeterGroupManagementBean.meterGroupContents.isEmpty()}">
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    <a4j:commandLink id="selectAllCheck" styleClass="all_check" style="color:#FFF;font-size:12px;text-decoration:underline;">選択</a4j:commandLink>
+                                </f:facet>
+                                <h:selectBooleanCheckbox id="targetCheckBox" value="#{item.checkBox}" />
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    装置
+                                </f:facet>
+                                <h:outputText id="dev" value="#{item.meterGroup.devName}">
+                                </h:outputText>
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                   メーター管理番号
+                                </f:facet>
+                                <h:outputText id="meterId" value="#{item.meterGroup.meterMngId}" >
+                                    <f:convertNumber pattern="0000" />
+                                </h:outputText>
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    加減算
+                                </f:facet>
+                                <h:outputText id="calcType" value="#{smsCollectSettingMeterGroupManagementBean.getCalcTypeStr(item.meterGroup.calcType)}" />
+                                
+                            </span>
+                            <span jsfc="h:column">
+                                <f:facet name="header">
+                                    編集
+                                </f:facet>
+                                <a4j:commandButton
+                                    id="editButton"
+                                    class="button_small button_building_edit"
+                                    value=" "
+                                    action="#{smsCollectSettingMeterGroupManagementBean.execEdit(item.meterGroup)}"
+                                    onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                                    ></a4j:commandButton>
+                                    <h:graphicImage class="button_edit" library="images" name="common/com018.png" />
+                                    
+                            </span>
+                        </h:dataTable>
+                    </div>
+                    
+                    </div>
+                </div>
+            </div>
+            
+            <ui:include src="/html/common/confirmationDialog.xhtml" >
+                <ui:param name="confirmationDialogTitle" value="確認" />
+                <ui:param name="confirmationDialogMessage" value="#{smsCollectSettingMeterGroupManagementBean.confirmMessage}" />
+            </ui:include>
+
+
+            <script type="text/javascript">
+            $(document).on('click', '.contents_accordion_header', function() {
+                $(this).parent().children(".contents_accordion_body").slideToggle();
+                $(this).find(".button_opener").toggle();
+                $(this).find(".button_closer").toggle();
+            })
+            </script>
+        </form>
+    </ui:define>
+</ui:composition>
+
+</body>
+</html>

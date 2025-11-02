@@ -1,0 +1,213 @@
+.TXT008 {
+  width: 200px;
+}
+
+/* ボタンのセンタリング */
+.button_area_center {
+  margin: 20px 0;
+  text-align: center;
+}
+
+/*追加/登録ボタン*/
+.button_regist input[type="submit"] {
+  width: 150px;
+}
+
+.button_regist .img_regist_beseinfo {
+  position: relative;
+  left: -125px;
+  top: 7px;
+}
+
+.button_regist .img_regist {
+  position: absolute;
+  left: 380px;
+  top: 10px;
+}
+
+.check_del_dev {
+  margin-left: 20px;
+}
+
+/* SMS建物情報 */
+.search_result_head, .search_result_add {
+
+}
+
+.search_result_detail {
+
+}
+
+.search_result_area_1 {
+  width: 100%;
+  font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+}
+
+/*検索結果のヘッダーのスタイル*/
+.search_result_area_1 .table_header {
+  background-color: rgb(0, 79, 141);
+  color: white;
+  font-weight: bold;
+  border: 1px #CCC solid;
+  height: 34px;
+  text-align: center;
+}
+
+/*検索結果のtbodyのスタイル*/
+.search_result_area_1 tbody tr {
+  height: 50px;
+}
+
+/*検索結果の1リストに2行表示させるパターンの背景色対応１*/
+.search_result_area_1 tbody tr:nth-child(2n) {
+  background-color: rgb(200, 233, 255);
+}
+
+/*検索結果の1リストに2行表示させるパターンの背景色対応２*/
+.search_result_area_1 tbody tr:nth-child(2n-1) table tbody tr:nth-child(2n) {
+  background-color: #FFF;
+}
+
+/*リスト内アクションボタン(グラデーション直接指定)*/
+.search_result_area_1 tbody tr input[type="submit"], .search_result_area_1 tbody tr input[type="button"]
+  {
+  height: 36px;
+  background: -moz-linear-gradient(top, #fffcf7 0%, #3990ce 25%, #1061a3 50%, #2baaf3 85%, #37e6e6);
+  background: -webkit-gradient(linear, left top, left bottom, from(#fffcf7), color-stop(0.25, #3990ce),
+    color-stop(0.40, #1061a3), color-stop(0.50, #1061a3), color-stop(0.90, #2baaf3), to(#2baaf3));
+  background: -ms-linear-gradient(top, #fffcf7 0%, #3990ce 25%, #1061a3 50%, #2baaf3 85%, #37e6e6);
+  -moz-border-radius: 1px;
+  -webkit-border-radius: 1px;
+  border-radius: 1px;
+  border: 1px solid #24a1e9;
+  -moz-box-shadow: 0px 1px 3px rgba(000, 000, 000, 0.5), inset 0px -1px 0px rgba(255, 255, 255, 0.7);
+  -webkit-box-shadow: 0px 1px 3px rgba(000, 000, 000, 0.5), inset 0px -1px 0px
+    rgba(255, 255, 255, 0.7);
+  -ms-box-shadow: 0px 1px 3px rgba(000, 000, 000, 0.5), inset 0px -1px 0px rgba(255, 255, 255, 0.7);
+  box-shadow: 0px 1px 3px rgba(000, 000, 000, 0.5), inset 0px -1px 0px rgba(255, 255, 255, 0.7);
+  text-shadow: 0px -1px 1px rgba(000, 000, 000, 0.2), 0px 1px 0px rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
+}
+
+.search_result_area_1 tbody tr input:hover[type="submit"], .search_result_area_1 tbody tr input:hover[type="button"]
+  {
+  background: -moz-linear-gradient(top, #fffcf7 0%, #3990ce 10%, #1061a3 40%, #2baaf3 90%, #fffcf7);
+  background: -webkit-gradient(linear, left top, left bottom, from(#fffcf7), color-stop(0.10, #3990ce),
+    color-stop(0.40, #1061a3), color-stop(0.50, #1061a3), color-stop(0.90, #2baaf3), to(#2baaf3));
+  background: -ms-linear-gradient(top, #fffcf7 0%, #3990ce 10%, #1061a3 40%, #2baaf3 90%, #37e6e6);
+  cursor: pointer;
+}
+
+.search_result_area_1 tbody tr input[type="submit"][disabled], .search_result_area_1 tbody tr input[type="button"][disabled]
+  {
+  color: #000000;
+  opacity: 0.4;
+  background: -moz-linear-gradient(top, #fffcf7 0%, #b8b8b8 20%, #999999 50%, #b8b8b8 80%, #fffcf7);
+  background: -webkit-gradient(linear, left top, left bottom, from(#fffcf7), color-stop(0.20, #b8b8b8),
+    color-stop(0.50, #999999), color-stop(0.80, #b8b8b8), to(#fffcf7));
+  background: -ms-linear-gradient(top, #fffcf7 0%, #b8b8b8 20%, #999999 50%, #b8b8b8 80%, #fffcf7);
+  border: 1px solid #8f8f8f;
+}
+
+.search_result_area_1 tbody tr input[type="submit"][disabled]+img, .search_result_area_1 tbody tr input[type="button"][disabled]+img
+  {
+  opacity: 0.4;
+}
+
+.search_result_area_1 table {
+  border-collapse: collapse;
+}
+
+.search_result_area_1 table tr, .search_result_area_1 table td {
+  border: 1px #CCC solid;
+  font-size: 14px;
+}
+
+.dev_id_setting {
+  vertical-align: top;
+  padding-top: 10px;
+}
+
+.tab_dev_id {
+}
+
+.tab_dev_id .table_header td {
+  text-align: center;
+}
+
+.tab_dev_id tr {
+  background-color: white;
+}
+
+.tab_dev_id td {
+  position: relative;
+  padding: 10px 10px 10px 10px;
+}
+
+.tab_dev_id td input, .tab_dev_id td select {
+  width: 100%;
+}
+
+.tab_dev_id .td_no {
+  width: 30px;
+  text-align: center;
+}
+
+.tab_dev_id .td_dev_id {
+  width: 230px;
+}
+
+.tab_dev_id .td_add {
+  width: 65px;
+  text-align: center;
+}
+
+/* 2024-01-26 */
+.tab_dev_id.td_lte_dev_id {
+	width: 150px;
+}
+
+.tab_dev_id.td_meter_count {
+	width: 150px;
+}
+
+.tab_dev_id.td_meter_id {
+	width: 150px;
+}
+
+.tab_dev_id.td_regist_date {
+	width: 150px;
+}
+/**************/
+.tab_dev_id .table_detail td img.button_icon {
+  position: absolute;
+  top: 18px;
+  left: 33px;
+}
+
+.tab_dev_id .table_add td img.button_icon {
+  position: absolute;
+  top: 19px;
+  left: 34px;
+}
+
+.tab_dev_id .td_add input[type='button'] {
+  width: 36px;
+  font-size: 10pt;
+}
+
+.TXT190 {
+  font-size: 14px;
+}
+
+.rf-msg-err, .rf-msgs-err, .rf-msg-inf, .rf-msgs-inf {
+  margin-top: 20px;
+}
+
+.serach_result_total_count{
+    letter-spacing: 1.5px;
+}
+
+.registration_cnt .serach_result_total_count{
+    padding: 0 5px 0 5px;
+}

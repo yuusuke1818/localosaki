@@ -1,0 +1,255 @@
+.center_content table { border-collapse: collapse; }
+
+.user_redcolor_description {
+    color: red;
+    margin-left: 20px;
+    font-size: 12px;
+}
+
+.vartical_separator {
+    border: 1px solid gray;
+    border-right: none;
+    border-bottom: none;
+    border-top: none;
+}
+
+.check_item {
+    padding-bottom: 5px;
+}
+
+.nest_item {
+    padding-left: 20px;
+}
+
+.contents_margin_right {
+    margin-right: 10px;
+}
+
+.contents_margin_left {
+    margin-left: 10px;
+}
+
+/*検索条件内のレイアウト*/
+.search_condition_area tr{
+    height:45px;
+    border-bottom:1px solid #CCC;
+}
+
+.search_condition_area tr td:nth-child(1){
+    width:250px;
+}
+
+.search_condition_area tr td:nth-child(2){
+    width:40px;
+}
+
+.search_condition_area tr td:nth-child(3){
+    width:250px;
+}
+
+.search_condition_area tr td:nth-child(4){
+
+}
+
+.search_condition_area tr td:nth-child(5){
+
+}
+
+.search_condition_area .user_input1{
+    height: 24px;
+    width: 260px;
+    font-size : 16px;
+    font-weight: normal;
+}
+
+.search_condition_area .user_input2{
+    height: 24px;
+    width: 260px;
+    font-size : 16px;
+    font-weight: normal;
+}
+
+.search_condition_area .user_input4{
+    height: 24px;
+    width: 150px;
+}
+
+/*ボタン*/
+/*ユーザー新規登録ボタン*/
+.new_regist_button{
+    width: 186px;
+    float: right;
+    margin-top: 20px;
+}
+.new_regist_button input[type="submit"]{
+    float: right;
+}
+/*検索開始ボタン*/
+.action_button{
+    /*height: 35px;*/
+    width: 150px;
+}
+/*一覧出力ボタン*/
+.button_export{
+    margin-bottom: 5px;
+}
+/*一覧出力ボタン*/
+/*.list_output{
+    margin-bottom: 5px;
+}*/
+/*ボタン小サイズ*/
+.button_size_small {
+    width: 36px;
+}
+.button_size_tanto {
+    padding-left: 38px;
+    width: 140px;
+}
+
+
+/*検索条件内のレイアウト*/
+/*
+.search_result_area {
+    border-collapse: collapse;
+    font-weight: normal;
+    border: 1px #CCC solid;
+    margin-left: auto;
+    margin-right: auto;
+}
+*/
+
+/*tableのtheadのスタイル*/
+/*
+.table_header {
+    background-color: rgb(0,79,141);
+    color: white;
+    font-weight: normal;
+    border: 1px #CCC solid;
+    height:34px;
+}
+*/
+/*tableのtbodyのスタイル*/
+/*
+.search_result_area tbody tr{
+    height:50px;
+}
+*/
+/*
+.search_result_area tbody tr:nth-child(2n) td{
+    background-color: rgb(200,233,255);
+}
+*/
+.column_style {
+    border: 1px #CCC solid;
+    text-align: center;
+}
+/* 検索結果一覧のレイアウト */
+.search_result_area table {
+    width: 100%;
+}
+
+.column_style_personid {
+    width: 170px;
+    border: 1px #CCC solid;
+    /*text-align: center;*/
+}
+.column_style_personname {
+    width: 170px;
+    border: 1px #CCC solid;
+    /*text-align: center;*/
+}
+.column_style_furigana {
+    width: 170px;
+    border: 1px #CCC solid;
+    /*text-align: center;*/
+}
+.column_style_department {
+    width: 120px;
+    border: 1px #CCC solid;
+    /*text-align: center;*/
+}
+.column_style_position {
+    width: 100px;
+    border: 1px #CCC solid;
+    /*text-align: center;*/
+}
+.column_style_account {
+    width: 100px;
+    position: relative;
+    border: 1px #CCC solid;
+    /*text-align: center;*/
+}
+.column_style_edit {
+    width: 80px;
+    position: relative;
+    border: 1px #CCC solid;
+    text-align: center;
+}
+.column_style_tanto {
+    width: 170px;
+    position: relative;
+    border: 1px #CCC solid;
+    text-align: center;
+}
+
+.column_style_edit .button_icon{
+    position: relative;
+    top: 3px;
+    margin-left: -26px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/*アイコン*/
+/*新規登録*/
+.new_regist_button .button_icon{
+    position: absolute;
+    top: 8px;
+    right: 102px;
+    z-index: 10;
+    pointer-events: none;
+}
+/*検索開始*/
+.button_search .button_icon{
+position: absolute;
+    top: 8px;
+    left: 413px;
+    z-index: 10;
+    pointer-events: none;
+}
+/*一覧出力*/
+.button_export .button_icon{
+    position: absolute;
+    top: 9px;
+    right: 190px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.column_style_account .button_icon {
+    position: absolute;
+    margin-top: 9px;
+    margin-left: -26px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.column_style_tanto .button_icon {
+    position: absolute;
+    top: 13px;
+    left: 20px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.account_status_condition tbody tr td{
+    font-size:10px;
+}
+
+/*複数選択セレクトボックスの位置調整*/
+.accountStatusKind td:nth-child(1){
+    width:144px;
+}
+.TXT008_margin{
+    margin-left: 5px;
+}

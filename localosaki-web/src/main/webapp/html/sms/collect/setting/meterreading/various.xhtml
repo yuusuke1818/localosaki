@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      >
+<body>
+
+<ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+    <ui:define name="content_side" class="content">
+        <h:outputStylesheet library="css" name="common/button.css"/>
+        <h:outputStylesheet library="css" name="common/common.css"/>
+        <h:outputStylesheet library="css" name="sms/collect/setting/meterreading/various.css"/>
+        <form jsfc="h:form" id="smsCollectSettingMeterreadingVariousBean">
+            <div class="inner_content">
+                <div class="title_area_warp">
+                    <!-- 画面タイトル -->
+                    <div class="title_area_left">
+                        <h2 class="page_title">各種設定</h2>
+                        <!-- ヘルプボタン -->
+                            <c:if test="#{indexBean.userGuideBool}">
+                                <h:commandLink class="help_icon"
+                                    action="#{indexBean.userGuide()}" target="_blank" />
+                            </c:if>
+                        <p class="page_subtitle">
+                            <h:outputText value="各種設定に必要な情報の設定変更ができます。" />
+                        </p>
+                        <rich:messages />
+                    </div>
+                    <div class="clear" />
+
+                    <div>
+                        <table class="various_tbl">
+                            <tr class="search_result_area">
+                                <th class="various_tbl_col_1">項目</th>
+                                <th class="various_tbl_col_2">設定値</th>
+                                <th class="various_tbl_col_3">備考</th>
+                            </tr>
+                            <tr>
+                                <td id="dem1_td1">&nbsp;消費税率</td>
+                                <td id="dem1_td2">
+                                    <input type="text"
+                                        jsfc="h:inputText" styleClass="check_change various_txt autofocus" maxlength="3"
+                                        id="saleTaxRate" value="#{smsCollectSettingMeterreadingVariousBean.saleTaxRate}"
+                                        style="#{smsCollectSettingMeterreadingVariousBean.getInvalidStyle(component.clientId)}"
+                                        onkeyup="NumOnly(this)" /> (%)
+                                </td>
+                                <td>入力範囲 ： "1～100 " (半角数字)</td>
+                            </tr>
+                            <tr>
+                                <td id="dem2_td1">&nbsp;消費税扱い</td>
+                                <td id="dem2_td2">
+                                    <select jsfc="h:selectOneMenu"
+                                                     id="saleTaxDeal"
+                                                     value="#{smsCollectSettingMeterreadingVariousBean.saleTaxDeal}"
+                                                     styleClass="check_change various_sel"
+                                                     onkeydown="searchConditionKeydown()">
+                                        <option jsfc="f:selectItems" value="#{smsCollectSettingMeterreadingVariousBean.saleTaxDealMap}" />
+                                    </select>
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="dem4_td1">&nbsp;小数部端数処理</td>
+                                <td id="dem4_td2">
+                                    <select jsfc="h:selectOneMenu"
+                                                     id="decimalFraction"
+                                                     value="#{smsCollectSettingMeterreadingVariousBean.decimalFraction}"
+                                                     styleClass="check_change various_sel"
+                                                     onkeydown="searchConditionKeydown()">
+                                        <option jsfc="f:selectItems" value="#{smsCollectSettingMeterreadingVariousBean.decimalFractionMap}" />
+                                    </select>
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="dem6_td1">&nbsp;年報締め月</td>
+                                <td id="dem6_td2">
+                                    <select jsfc="h:selectOneMenu"
+                                                     id="yearCloseMonth"
+                                                     value="#{smsCollectSettingMeterreadingVariousBean.yearCloseMonth}"
+                                                     styleClass="check_change various_sel"
+                                                     onkeydown="searchConditionKeydown()">
+                                        <option jsfc="f:selectItems" value="#{smsCollectSettingMeterreadingVariousBean.yearCloseMonthMap}" />
+                                    </select>
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="button_area_center gradation_type_1 button_large_2 button_area">
+                            <a4j:commandButton
+                                id="updateButton"
+                                class="action_button"
+                                value="登録"
+                                execute="@form" 
+                                render="@form" 
+                                action="#{smsCollectSettingMeterreadingVariousBean.regist()}"
+                                onclick="return confirmationDialogOpen($('input[id$=updateButton]'))"
+                                onbegin="showBlockModal()" oncomplete="hideBlockModal(); clearChangeFlag();"
+                                ></a4j:commandButton>
+                            <h:graphicImage class="button_icon" library="images" name="common/com067.png" rendered="true"/>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <ui:include src="/html/common/changeCautionDialog.xhtml" />
+
+            <ui:include src="/html/common/confirmationDialog.xhtml" >
+                <ui:param name="confirmationDialogTitle" value="確認" />
+                <ui:param name="confirmationDialogMessage" value="#{smsCollectSettingMeterreadingVariousBean.beforeRegisterMessage}" />
+            </ui:include>
+            <script type="text/javascript">
+            /* ========================================================================================
+            文字入力を数字だけにする
+            ======================================================================================== */
+            function NumOnly(obj){
+                if (window.event){
+                    var key = window.event.keyCode;
+                    if (48 &lt;= key &amp;&amp; key &lt;= 57 || 96 &lt;= key &amp;&amp; key &lt;= 105 || key == 37 || key == 39 || key == 8 || key == 45 || key == 46 || key == 36 || key == 35) {
+                        return;
+                    }
+                }
+                var val = obj.value;
+                val = val.replace(/[^0-9]/g,'');
+                obj.value = val;
+            }
+            </script>
+
+        </form>
+    </ui:define>
+</ui:composition>
+
+</body>
+</html>

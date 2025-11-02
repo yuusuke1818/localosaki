@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.1"
+    xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd">
+        <named-query name="MLoginIpAddr.findLoginIpAddrCheckFilter">
+            <query><![CDATA[SELECT m FROM MLoginIpAddr m WHERE m.id.corpId = :corpId AND ipAddress = :ipAddress AND loginPermitStatus = :loginPermitStatus AND loginPermitTarget <> :loginPermitTarget AND delFlg = 0]]></query>
+        </named-query>
+        <named-query name="MLoginIpAddr.findLoginIpAddrCheckFilterCorp">
+            <query><![CDATA[SELECT m FROM MLoginIpAddr m INNER JOIN m.id WHERE m.id.corpId = :corpId AND loginPermitTarget <> :loginPermitTarget AND delFlg = 0]]></query>
+        </named-query>
+        <named-query name="MLoginIpAddr.findLoginIpAddrCheckFilterStatus">
+            <query><![CDATA[SELECT m FROM MLoginIpAddr m WHERE m.id.corpId = :corpId  AND loginPermitStatus = :loginPermitStatus AND loginPermitTarget <> :loginPermitTarget AND delFlg = 0]]></query>
+        </named-query>
+</entity-mappings>

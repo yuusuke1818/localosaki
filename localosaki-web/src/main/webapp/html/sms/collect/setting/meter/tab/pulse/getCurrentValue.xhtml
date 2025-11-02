@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:rich="http://richfaces.org/rich" xmlns:cust="http://xmlns.jcp.org/jsf/component"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:a4j="http://richfaces.org/a4j">
+    <div style="margin-top: 0;">
+        <div>
+            <rich:messages id="p6Messages" styleClass="errNonSearch errArea" />
+            <form jsfc="h:form" id="pulseCurrentValueForm">
+                <table class="p6Table">
+                    <tr style="height: 10px">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <!-- <div jsfc="a4j:outputPanel" id="p6MeterMngIdListPanel"> -->
+                            <!-- TODO: kimura 一覧チェックボックス＆選択リンクのrenderに↑ここのIDを設定すると一覧の情報が表示されなくなる（情報は取れているし、行も生成されているのに中身が空白表示になってしまう）
+                            でもrenderに↑ここのIDを設定しないとチェック状態が↓に反映されるという要件を満たせない... -->
+                            <div jsfc="a4j:outputPanel" id="p6MeterMngIdListPanel">
+                                メーター管理番号：
+                                <span class="meterMngIdList">
+                                    <select jsfc="h:selectOneMenu" id="p6MeterMngIdSelect" value="#{smsCollectSettingMeterMeterManagementBean.nowValMeterMngIdPulse}" class="SEL1 selDev sDevIdSel">
+                                        <option jsfc="f:selectItems" value="#{smsCollectSettingMeterMeterManagementBean.nowValMeterMngIdMap}" />
+                                    </select>
+                                </span>
+                            </div>
+                        </td>
+                        <td class="TXT020" colspan="2">
+                            <div class="gradation_type_1 button_large_2">
+                                <h:graphicImage class="s6CurrentValueGetBtnIcon" library="images" name="admin/admin003.png" />
+                                <a4j:commandButton
+                                    id="p6GetValueBtn"
+                                    class="action_button"
+                                    value="現在値取得"
+                                    execute="@form" 
+                                    render="@form  #{rich:clientId('alertDialog')}"
+                                    onbegin="showBlockModal();"
+                                    oncomplete="hideBlockModal(); viewList('P'); alertDialogOpen();"
+                                    actionListener="#{smsCollectSettingMeterMeterManagementBean.execGetCurrentValue(smsCollectSettingMeterMeterManagementBean.nowValMeterMngIdPulse)}">
+                                </a4j:commandButton>
+
+                                &nbsp;
+                                <h:graphicImage class="s6CurrentValueDispBtnIcon" library="images" name="admin/admin005.png" />
+                                <a4j:commandButton
+                                    id="p6DispValueBtn"
+                                    class="action_button"
+                                    value="現在値表示"
+                                    execute="@form" 
+                                    onclick="getCurrentValueSelMeterMngId()"
+                                    render="smsCollectSettingMeterMeterManagementBean:p6CurrentValueDispPanel"
+                                    actionListener="#{smsCollectSettingMeterMeterManagementBean.execDispCurrentValue(smsCollectSettingMeterMeterManagementBean.nowValMeterMngIdPulse)}">
+                                </a4j:commandButton>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+            <br />
+            <br />
+            <br />
+            
+            <div jsfc="a4j:outputPanel" id="p6CurrentValueDispPanel">
+
+                <c:if test="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.demandingFlg == '1'}">
+                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.demandingMsg}" style="white-space: pre;font-weight: bold;" /><br/><br/>
+                </c:if>                
+                
+                <c:if test="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.existenceFlag}">
+                    <div class="dispValueTable">
+                        <table>
+                            <tr>
+                                <th class="top_cls">現在時刻</th>
+                                <th class="top_cls">計器ID</th>
+                                <th class="top_cls">計器種別</th>
+                                <th class="top_cls">パルス種別</th>
+                                <th class="top_cls">パルス重み</th>
+                                <th class="top_cls">乗率</th>
+                                <th class="top_cls">現在指針値</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.measureDateDisp}" />
+                                </td>
+                                <td>
+                                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.meterId}" />
+                                </td>
+                                <td>
+                                    <!-- ここは固定文字列 -->
+                                    パルス
+                                </td>
+                                <td>
+                                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.pulseTypeDisp}" />
+                                </td>
+                                <td>
+                                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.pulseWeight}" />
+                                </td>
+                                <td>
+                                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.multi}" />
+                                </td>
+                                <td>
+                                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.currentKwh1}" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </c:if>
+                <c:if test="#{!smsCollectSettingMeterMeterManagementBean.nowValProperty.existenceFlag}">
+                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.existenceMsg1}" style="white-space: pre;font-weight: bold;" /><br/>
+                    <h:outputText value="#{smsCollectSettingMeterMeterManagementBean.nowValProperty.existenceMsg2}" style="white-space: pre;font-weight: bold;" />
+                </c:if>
+            </div>
+        </div>
+    </div>
+</html>

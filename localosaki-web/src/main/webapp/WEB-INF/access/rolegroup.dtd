@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PUBLIC ID: osol-rolegroup
+    SYSTEM ID: "rolegroup.dtd"
+-->
+<!-- RoleGroupリスト -->
+<!ELEMENT RoleGroupList (RoleGroup*)>
+    <!-- RoleGroup  -->
+    <!ELEMENT RoleGroup (Role+)>
+        <!-- ロールキー -->
+        <!ELEMENT Role (#PCDATA)>
+<!-- Key(ユニーク,必須) -->
+<!ATTLIST RoleGroup Key ID #REQUIRED>
+<!-- Name(必須) -->
+<!ATTLIST RoleGroup Name CDATA #REQUIRED>
+

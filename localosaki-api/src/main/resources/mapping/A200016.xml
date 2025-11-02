@@ -1,0 +1,131 @@
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+	<!-- *** 通信動作モード(取得) テンプレート *** -->
+	<!-- ベース部分 -->
+	<template name="base">
+		<field name="command" length="2" default="T5" keepPadding="true" />
+		<field name="answerCd" length="1" default="0" keepPadding="true" />
+	</template>
+
+	<template name="base.res">
+		<field name="command" length="2" keepPadding="true" />
+		<field name="answerCd" length="1" keepPadding="true" />
+	</template>
+
+	<!-- 共通部分１（受信用） -->
+	<template name="commonResponse">
+		<segment name="transmissionTerminalState" class="map">
+			<field name="communicationErrors" length="10" keepPadding="true" />
+			<field name="equipmentError" length="1" keepPadding="true" />
+		</segment>
+		<segment name="settingConnectionPPP" class="map">
+			<field name="telephoneNumber" length="12" keepPadding="true" />
+			<field name="ipAddress" length="12" keepPadding="true" />
+		</segment>
+		<segment name="transmissionTerminalSetting" class="map">
+			<field name="transmissionMode" length="1" keepPadding="true" />
+			<field name="transmissionSpeed" length="1" keepPadding="true" />
+			<field name="pollingPeriod" length="3" keepPadding="true" />
+			<field name="callIpAddress" length="12" keepPadding="true" />
+			<field name="powerActivation" length="1" keepPadding="true" />
+			<field name="communicationError" length="1" keepPadding="true" />
+			<field name="equipmentError" length="1" keepPadding="true" />
+			<field name="timeoutCall" length="3" keepPadding="true" />
+		</segment>
+		<segment name="communicationSetting" class="map">
+			<field name="communicationIpAddress1" length="12" keepPadding="true" />
+			<field name="communicationIpAddress2" length="12" keepPadding="true" />
+			<field name="communicationIpAddress3" length="12" keepPadding="true" />
+		</segment>
+		<segment name="alertState" class="map">
+			<field name="powerActivation" length="1" keepPadding="true" />
+			<field name="communicationError" length="1" keepPadding="true" />
+			<field name="equipmentError" length="1" keepPadding="true" />
+		</segment>
+	</template>
+
+
+
+	<!-- 「00」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="00.req" format="fixedlength">
+		<record name="response" template="base" class="jp.co.osaki.osol.mng.param.A200016Param" />
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="00.res" format="fixedlength">
+		<record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200016Param">
+			<include template="commonResponse" />
+		</record>
+	</stream>
+
+	<!-- 「03」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="03.req" format="fixedlength">
+		<record name="response" template="base" class="jp.co.osaki.osol.mng.param.A200016Param" />
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="03.res" format="fixedlength">
+		<record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200016Param">
+			<include template="commonResponse" />
+		</record>
+	</stream>
+
+	<!-- 「06」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="06.req" format="fixedlength">
+		<record name="response" template="base" class="jp.co.osaki.osol.mng.param.A200016Param" />
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="06.res" format="fixedlength">
+		<record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200016Param">
+			<include template="commonResponse" />
+		</record>
+	</stream>
+
+	<!-- 「12」非対応 -->
+	<!-- 送信文 -->
+	<stream name="12.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+	<!-- 受信文 -->
+	<stream name="12.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 「21」非対応 -->
+	<!-- 送信文 -->
+	<stream name="21.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+	<!-- 受信文 -->
+	<stream name="21.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+	<!-- 「22」非対応 -->
+	<!-- 送信文 -->
+	<stream name="22.req" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+	<!-- 受信文 -->
+	<stream name="22.res" format="fixedlength">
+		<record name="dummy">
+			<field name="dummy" length="0" />
+		</record>
+	</stream>
+
+</beanio>

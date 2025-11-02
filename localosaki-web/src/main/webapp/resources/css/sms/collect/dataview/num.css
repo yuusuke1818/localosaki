@@ -1,0 +1,308 @@
+/* 数値表示部 */
+.tenantNameHeaderInner {
+    position: relative;
+    top: 10px;
+}
+
+.devNameHeaderInner {
+    position: relative;
+    top: 10px;
+}
+
+tbody tr:nth-child(2n-1) table.rf-edt-tbl tbody tr:nth-child(2n) .rf-edt-c .column_power_value.column_footer_value {
+    background-color: #50E450;
+}
+
+tbody tr:nth-child(2n-1) table.rf-edt-tbl tbody tr:nth-child(2n) {
+    background-color: rgb(200,233,255);
+}
+
+.rf-edt-ftr tbody tr {
+    background-color: #cccccc;
+}
+
+.powerValue {
+    margin-right: 5px;
+}
+
+.search_result_area tbody tr {
+    height: auto;
+}
+
+.rf-edt-hdr-c {
+    background-color: rgb(0,79,141);
+    font-weight: bold;
+}
+
+.rf-edt-hdr-c-cnt, .rf-edt-tbl-hdr {
+    color: white;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.rf-edt-hdr-c .th-span-label {
+    height: 20px;
+    line-height: 22px;
+    font-size: 10pt;
+    overflow: hidden;
+}
+.rf-edt-hdr-c .th-span-label span {
+    display: inline-block;
+    line-height: normal;
+}
+
+.rf-edt-hdr-c .th-sep-label {
+    border-top: 1px solid #CCC;
+    font-size: 9pt;
+    line-height: 20px;
+    overflow: hidden;
+    height: 20px;
+}
+
+.rf-edt-hdr-c .th-sep-label-middle-header {
+    height: 39px;
+}
+
+.rf-edt-hdr-c .th-sep-label-middle {
+    height: 39px;
+    line-height: 39px;
+    vertical-align: middle;
+}
+
+.rf-edt-hdr-c .th-sep-label-middle span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+
+.rf-edt-hdr-c .th-label {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 10pt;
+    height: 20px;
+    overflow: hidden;
+}
+
+.rf-edt-hdr-c .th-label.th-label-footer {
+    background-color: green;
+}
+
+.rf-edt-c {
+    height: 18px;
+}
+.rf-edt-hdr-c-cnt,
+.rf-edt-c-cnt, .rf-edt-tbl {
+    padding: 0px;
+}
+.rf-edt-c .column_header {
+    font-size: 10pt;
+    color: white;
+    background-color: rgb(0,79,141);
+    font-weight: bold;
+    text-align: center;
+    height: 18px;
+}
+.rf-edt-c .column_header.th-label-footer
+{
+    background-color: green;
+}
+
+.rf-edt-c .column_power_value {
+    text-align: right;
+    font-size: 10pt;
+    padding-top: 2px;
+    padding-bottom: 1px;
+}
+.rf-edt-c .column_power_value.column_footer_value {
+    background-color: lightgreen;
+}
+
+.column_open_close {
+    border-bottom-color: red;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+}
+
+.rf-edt-r-act {
+    font-weight: normal;
+}
+.rf-edt-rsz {
+    display: none;
+}
+.th-label.th-label-middle {
+    font-size: 10pt;
+    padding-top: 11px;
+    padding-bottom: 10px;
+}
+
+.th-label.th-label-multiup {
+    font-size: 10pt;
+    padding-top: 3px;
+}
+
+.th-label.th-label-multidown {
+    font-size: 10pt;
+    margin-top: -2px;
+}
+
+.th-label-row, .td-value-row {
+    display: table;
+}
+.th-label-row > div,
+.td-value-row > div {
+    display: table-cell;
+}
+.table_comp .th-label-row > div {
+    padding: 1px 0;
+
+}
+
+.col-cut-group {
+    font-size: 10pt;
+}
+
+.table_max_demand .th-label-row > div{
+    width: 115px;
+    font-size: 10pt;
+}
+
+.table_max_demand .td-value-row > div{
+    width: 115px;
+    height: 18px;
+    font-size: 10pt;
+}
+.table_max_demand .td-value-row > .col-cut-value.col-cut-group.column_footer_value{
+    background-color: lightgreen;
+}
+
+.table_max_demand .th-label-row {
+    border-top: thin solid #ccc;
+}
+.th-label-group + .th-label-group {
+    border-left: thin solid #ccc;
+}
+.col-cut-head1, .col-cut-head2 {
+    padding-top: 1px;
+}
+.col-cut-head2 {
+    border-top: thin solid #ccc;
+}
+.col-cut-value + .col-cut-value {
+    border-left: 1px solid #C4C0C9;
+}
+
+.table_comp .rf-edt-hdr-c-cnt,
+.table_comp .rf-edt-tbl-hdr,
+.table_comp .rf-edt-c-cnt,
+.table_comp .rf-edt-tbl,
+.table_max_demand .rf-edt-hdr-c-cnt,
+.table_max_demand .rf-edt-tbl-hdr,
+.table_max_demand .rf-edt-c-cnt,
+.table_max_demand .rf-edt-tbl
+{
+    padding: 0;
+}
+.th-label.th-label-max {
+    padding-top: 10px;
+    height: 32px;
+    font-size: 10pt;
+}
+.table_max_demand .rf-edt-c .column_header {
+    margin: 0;
+}
+.table_max_demand .col-cut-value {
+    text-align: center;
+}
+.table_max_demand .column_power_value {
+}
+.table_weekly_comp tbody tr,
+.table_monthly_comp tbody tr,
+.table_yearly_comp tbody tr {
+}
+.table_weekly_comp .rf-edt-c,
+.table_monthly_comp .rf-edt-c,
+.table_yearly_comp .rf-edt-c {
+    height: 18px;
+}
+.table_daily_comp .rf-edt-c .column_header {
+    margin: 0;
+}
+.table_weekly_comp .rf-edt-c .column_header,
+.table_monthly_comp .rf-edt-c .column_header,
+.table_yearly_comp .rf-edt-c .column_header {
+    margin: 0;
+    padding: 0;
+}
+
+.table_weekly_comp .rf-edt-c .column_header .th-label-weekly-comp-row,
+.table_monthly_comp .rf-edt-c .column_header .th-label-monthly-comp-row,
+.table_yearly_comp .rf-edt-c .column_header .th-label-yearly-comp-row{
+    height: 18px;
+}
+
+.th-label-monthly-comp-row .th-label-monthly-comp .th-label-date,
+.th-label-yearly-comp-row .th-label-yearly-comp .th-label-date {
+    padding: 1px 0;
+}
+.th-label-weekly-comp + .th-label-weekly-comp,
+.th-label-monthly-comp + .th-label-monthly-comp,
+.th-label-yearly-comp + .th-label-yearly-comp {
+    border-left: 1px solid #C4C0C9;
+}
+
+.table_daily_comp .th-label-row > div,
+.table_daily_comp .td-value-row > div {
+    width: 88px;
+}
+.table_weekly_comp .th-label-row > div,
+.table_monthly_comp .th-label-row > div,
+.table_yearly_comp .th-label-row > div {
+    width: 83px;
+}
+
+.table_weekly_comp .td-value-row > div,
+.table_monthly_comp .td-value-row > div,
+.table_yearly_comp .td-value-row > div{
+    width: 83px;
+}
+
+.table_daily_comp .column_power_value {
+    height: 23px;
+    padding-top: 2px;
+}
+.table_weekly_comp .column_power_value,
+.table_monthly_comp .column_power_value,
+.table_yearly_comp .column_power_value {
+    height: 23px;
+    padding-top: 2px;
+}
+.table_monthly .rf-edt-c .rf-edt-c-cnt {
+    padding: 0;
+}
+.table_monthly .rf-edt-c .rf-edt-c-cnt .column_header {
+    margin: 0;
+    padding: 0;
+}
+.table_monthly .rf-edt-c .rf-edt-c-cnt .column_header .column_header_date,
+.table_monthly .rf-edt-c .rf-edt-c-cnt .column_header .column_header_weekday {
+    display: inline-block;
+}
+.table_monthly .rf-edt-c .rf-edt-c-cnt .column_header .column_header_date {
+    width: 50px;
+}
+.table_monthly .rf-edt-c .rf-edt-c-cnt .column_header .column_header_weekday {
+    padding-left: 10px;
+    border-left: 1px solid #CCC;
+}
+.table_monthly .rf-edt-c .rf-edt-c-cnt .column_header.column_footer {
+}
+.table_monthly .rf-edt-c .column_power_value {
+}
+
+.table_weekly_comp .rf-edt-c .rf-edt-c-cnt .column_header.column_footer {
+    height: 36px;
+}
+
+.table_daily_comp .td-value-row > div.th-substract-column {
+    width: 89px;
+}

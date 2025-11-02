@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      >
+<body>
+
+<ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+    <ui:define name="content_side" class="content">
+        <meta http-equiv="content-language" content="ja" />
+        <h:outputStylesheet library="css" name="common/button.css"/>
+        <h:outputStylesheet library="css" name="common/default.css"/>
+        <h:outputStylesheet library="css" name="common/cssLayout.css"/>
+        <h:outputStylesheet library="css" name="common/common.css"/>
+        <h:outputStylesheet library="css" name="sms/collect/setting/meterreading/inspectionMeterBef.css"/>
+        <h:outputScript library="js" name="sms/collect/setting/meterreading/meterreading_common.js"/>
+
+        <form jsfc="h:form" id="smsCollectSettingMeterreadingInspectionMeterBefBean">
+            <div class="inner_content">
+                <div class="title_area_warp">
+                    <!-- 画面タイトル -->
+                    <div class="title_area_left">
+                        <h2 class="page_title">確定前検針データ</h2>
+                        <!-- ヘルプボタン -->
+                        <c:if test="#{indexBean.userGuideBool}">
+                            <h:commandLink class="help_icon"
+                                action="#{indexBean.userGuide()}" target="_blank" />
+                        </c:if>
+                        <p class="page_subtitle">
+                            <h:outputText value="確定前検針データから、検針データへの登録ができます。" />
+                        </p>
+                        <rich:messages />
+                    </div> 
+                    <div class="clear" />
+
+                    <div class="contents_title">
+                        <span class="contents_title_body">登録編集</span>
+                    </div>
+                    <div class="contents_form_area">
+                        <div class="contents_form_area_row">
+                            <div class="TXT008">接続先</div>
+                            <div>
+                                <h:outputText class="bgcolor_gray" id="devName" value="#{smsCollectSettingMeterreadingInspectionMeterBefBean.devName}" />
+                            </div>
+                        </div>
+                        <div class="contents_form_area_row">
+                            <div class="TXT008 WIDTH_REQUIRED_TEXT">検針年月</div>
+                            <div class="WIDTH_REQUIRED_ICON"><h:graphicImage library="images" name="common/com001.png" rendered="true"/></div>
+                            <div>
+                                <f:ajax event="change" render="inspMonthNo inspYearMonth" listener="#{smsCollectSettingMeterreadingInspectionMeterBefBean.changeMonthNoPulldown()}">
+	                                <h:inputText
+	                                    class="check_change inspectionMeterBef_txt_short autofocus" maxlength="7"
+	                                    id="inspYearMonth" value="#{smsCollectSettingMeterreadingInspectionMeterBefBean.inspYearMonth}" p:placeholder="YYYY/MM"
+                                        style="#{smsCollectSettingMeterreadingInspectionMeterBefBean.getInvalidStyle(component.clientId)}" />
+                                </f:ajax>
+                            </div>
+                        </div>
+                        <div class="contents_form_area_row">
+                            <div class="TXT008 WIDTH_REQUIRED_TEXT">検針種別</div>
+                            <div class="WIDTH_REQUIRED_ICON"><h:graphicImage library="images" name="common/com001.png" rendered="true"/></div>
+                            <div>
+                                <f:ajax event="change" render="inspMonthNo" listener="#{smsCollectSettingMeterreadingInspectionMeterBefBean.changeMonthNoPulldown()}">
+	                                <select jsfc="h:selectOneMenu"
+	                                                 id="inspType"
+	                                                 value="#{smsCollectSettingMeterreadingInspectionMeterBefBean.inspType}"
+	                                                 styleClass="check_change inspectionMeterBef_sel_short"
+	                                                 onkeydown="searchConditionKeydown()">
+	                                    <option jsfc="f:selectItems" value="#{smsCollectSettingMeterreadingInspectionMeterBefBean.inspTypeMap}" />
+	                                </select>
+                                </f:ajax>
+                            </div>
+                        </div>
+                        <div class="contents_form_area_row">
+                            <div class="TXT008">検針連番</div>
+                            <div>
+                                <select jsfc="h:selectOneMenu"
+                                                 id="inspMonthNo"
+                                                 value="#{smsCollectSettingMeterreadingInspectionMeterBefBean.inspMonthNo}"
+                                                 styleClass="check_change inspectionMeterBef_sel_short"
+                                                 onkeydown="searchConditionKeydown()"
+                                                 disabled="#{smsCollectSettingMeterreadingInspectionMeterBefBean.inspMonthNoMap == null}">
+                                    <option jsfc="f:selectItems" value="#{smsCollectSettingMeterreadingInspectionMeterBefBean.inspMonthNoMap}" />
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button_area_center gradation_type_1 button_large_2 button_area">
+                        <c:if test="#{smsCollectSettingMeterreadingInspectionMeterBefBean.meterBefList.size() > 0}">
+	                        <a4j:commandButton
+	                            id="updateButton"
+	                            class="action_button"
+	                            value="確定登録"
+	                            execute="@form"
+	                            render="@form"
+	                            action="#{smsCollectSettingMeterreadingInspectionMeterBefBean.regist()}"
+	                            onclick="return confirmationDialog($('input[id$=updateButton]'), '#{smsCollectSettingMeterreadingInspectionMeterBefBean.beforeRegisterMessage}', false)"
+	                            onbegin="showBlockModal()" oncomplete="hideBlockModal(); afterTrns(); clearChangeFlag();"
+	                            ></a4j:commandButton>
+	                        <h:graphicImage class="button_icon" library="images" name="common/com067.png" rendered="true"/>
+                        </c:if>
+                        <c:if test="#{smsCollectSettingMeterreadingInspectionMeterBefBean.meterBefList.size() == 0}">
+                            <p class="page_subtitle">確定登録完了しました。</p>
+                        </c:if>
+                    </div>
+
+                </div>
+            </div>
+
+            <h:inputHidden id="isForcedWrite" value="#{smsCollectSettingMeterreadingInspectionMeterBefBean.isForcedWrite}" /> 
+
+            <ui:include src="/html/common/confirmationDialog.xhtml" >
+                <ui:param name="confirmationDialogTitle" value="確認" />
+                <ui:param name="confirmationDialogMessage" value="" />
+            </ui:include>
+
+            <ui:include src="/html/common/changeCautionDialog.xhtml" />
+
+            <script type="text/javascript">
+            /*
+             * 「確定登録」ボタンの後処理
+             */
+            function afterTrns() {
+                let confReWriteOfExisting = "#{smsCollectSettingMeterreadingInspectionMeterBefBean.confReWriteOfExisting}";
+                if (confReWriteOfExisting != "") {
+                    // 登録時にすでに登録されていた"メーター管理番号"が存在した → 強制実行確認ダイアログを表示 ※[OK]ボタン押下時は、実行ボタンの処理を行う
+                    confirmationDialog($('input[id$=updateButton]'), confReWriteOfExisting, true);
+                }
+            }
+
+            /*
+             * 確認ダイアログ表示
+             * [OK]ボタン押下時は、実行ボタンの処理を行う
+             * ※この処理は、ダイアログ内の[OK]ボタン押下時にも実行される。confirmationDialogShowing 変数 で判別する
+             * @param btn 押下時したボタン
+             * @param msg 確認メッセージ
+             * @param isForcedWrite 強制実行フラグ  true:強制(メーター管理番号の存在チェックを行わない)  false:非強制(通常)
+             */
+            function confirmationDialog(btn, msg, isForcedWrite) {
+                if (!confirmationDialogShowing) { // ダイアログ処理内ので[OK]ボタン押下によって再帰的に呼ばれたケースではない
+                    $('input[id$=isForcedWrite]').val(isForcedWrite);
+                }
+                $('span[id$=confirmationDialogMessage]').html(msg);
+                return confirmationDialogOpen(btn);
+            }
+            </script>
+        </form>
+    </ui:define>
+</ui:composition>
+
+</body>
+</html>

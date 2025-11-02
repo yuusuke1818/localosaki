@@ -1,0 +1,283 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+    <head>
+        <title>メーターユーザー管理</title>
+    </head>
+    <body>
+        <ui:composition template="/html/template/template_collect_sidemenu.xhtml">
+            <ui:define name="content_side">
+
+                <h:outputStylesheet library="css" name="sms/collect/setting/meterUser/list.css"/>
+                <!--
+                <h:outputScript library="js" name="user/list.js"/>
+                 -->
+                <h:form id="smsCollectSettingMeterUserInfoListBean">
+                    <!--ユーザー情報一覧-->
+                    <div class="inner_content">
+                        <div class="title_area_warp">
+                            <!-- 画面タイトル -->
+                            <div class="title_area_left">
+                                <h2 class="page_title">メーターユーザー管理</h2>
+                                <!-- ヘルプボタン -->
+                                <c:if test="#{indexBean.userGuideBool}">
+                                  <h:commandLink class="help_icon" action="#{indexBean.userGuide()}" target="_blank" />
+                                </c:if>
+                                <p class="page_subtitle">
+                                    <h:outputText value="ユーザー情報の新規登録、または編集ができます。" />
+                                </p>
+                            </div>
+                            <div class="title_area_right">
+                                <div class="gradation_type_1 button_large_2 new_regist_button">
+                                    <button class="" jsfc="h:commandButton" value="新規登録" action="#{smsCollectSettingMeterUserInfoListBean.onclickMeterUserEdit(null, null, false)}"
+                                            onclick="showBlockModal()"
+                                            id="userNewRegister"/>
+                                    <h:graphicImage class="button_icon" library="images" name="common/com013.png" />
+                                </div>
+                            </div>
+
+                        <!--検索条件-->
+                        <div class="clear" />
+
+                        <!-- メッセージ表示部分 -->
+                        <!--<div>-->
+                            <rich:messages id="Messages" showSummary="true" />
+                        <!--</div>-->
+                        <!-- 説明文 -->
+                        <div class="search_description">
+                            <p>検索条件を設定して[検索開始]を押してください。</p>
+                        </div>
+                        <!-- 動的検索条件テーブル -->
+                        <rich:dataTable id="searchConditionTable" rows="0"
+                                        value="#{smsCollectSettingMeterUserInfoListBean.conditionList}"
+                                        var="item"
+                                        style="margin-top: 5px;
+                                        width: 100%;
+                                        border: 0px;
+                                        table-layout: fixed;">
+                            <!--検索条件表示部分 -->
+                            <span jsfc="h:column" styleClass="condition_msg" style="width: 20%; border:0px" id="MenuColumn">
+                                <h:selectOneMenu  id="selectConditionCd" value="#{item.selectConditionCd}"
+                                                  styleClass="SELECT001" rendered="#{item.selectEnable}"
+                                                  style="height: 25px;">
+                                    <f:ajax execute="smsCollectSettingMeterUserInfoListBean:searchConditionTable" render="smsCollectSettingMeterUserInfoListBean:searchConditionTable"
+                                        event="change" listener="#{smsCollectSettingMeterUserInfoListBean.changeConditionCd(item.orderNo)}" onevent="autoFocusOnSelectCondition" />
+                                    <option jsfc="f:selectItems" value="#{item.selectConditionMap}" />
+                                </h:selectOneMenu>
+                                <h:outputText value="#{item.selectConditionCd}" rendered="#{item.selectDisable}" id="selectCondition"/>
+                            </span>
+
+                            <!--接続詞表示部分 -->
+                            <span jsfc="h:column" style="width: 10%; text-align: center; border:  0px;" id="outputTextColumn">
+                                <input jsfc="h:outputText" value="#{item.searchSubjectConjunction}" style="width: 100%; text-align: center" rendered="#{!item.selectEnable}"/>
+                            </span>
+
+                            <!--ドロップダウンリストまたは検索キーワード表示部分 -->
+                            <span jsfc="h:column" style="border:  0px;" id="selectManyColumn">
+                                <!--アカウント状態 -->
+                                <h:selectManyCheckbox value="#{item.accountStatusKindValue}" styleClass="SELECT001"
+                                                      rendered="#{item.accountStatusKindSelectEnable}"
+                                                      style="width:100%; height: 25px;"
+                                                      id="accountStatusKind"
+                                                      class="accountStatusKind" onkeydown="searchConditionKeydown()">
+                                    <input jsfc="f:selectItem" itemValue="1" itemLabel="正常"/>
+                                    <input jsfc="f:selectItem" itemValue="2" itemLabel="未ログイン"/>
+                                </h:selectManyCheckbox>
+                                <h:selectManyCheckbox value="#{item.accountStatusKindValue2}" styleClass="SELECT001"
+                                                      rendered="#{item.accountStatusKindSelectEnable}"
+                                                      style="height: 25px;"
+                                                      id="accountStatusKind2" onkeydown="searchConditionKeydown()">
+                                    <input jsfc="f:selectItem" itemValue="3" itemLabel="ロック(期限切れ)"/>
+                                    <input jsfc="f:selectItem" itemValue="4" itemLabel="ロック（入力ミス）"/>
+                                    <input jsfc="f:selectItem" itemValue="5" itemLabel="アカウント停止中"/>
+                                </h:selectManyCheckbox>
+
+                                <!--キーワード -->
+                                <h:inputText id="conditionKeyword" value="#{item.conditionKeyword}"
+                                             styleClass="EDIT002 autofocus" rendered="#{item.keywordSelectEnable}"
+                                             style="width: 100%; height: 25px;" maxlength="50" onkeydown="searchConditionKeydown()"/>
+                            </span>
+                            <!--「を含む」表示部分 -->
+                            <span jsfc="h:column"  style="width: 10%; text-align: center; border:  0px;"
+                                  id="mutchingTypeColumn">
+                                <input jsfc="h:outputText" value="#{item.mutchingTypeCd}"
+                                       rendered="#{!empty item.mutchingTypeCd}" style="width: 100%; height: 25px; text-align: center;"
+                                       id="mutchingType"/>
+                            </span>
+                            <!--削除ボタン表示部分 -->
+                            <span jsfc="h:column" styleClass="gradation_type_3 button_medium_2 delete_button"
+                                  style="width: 10%; border:  0px;" id="deleteColumn">
+                                <h:commandButton value="削除" rendered="#{item.deleteButtonEnable}"
+                                                 style="width: 100%; height: 25px;"
+                                                 id="deleteButton">
+                                    <f:ajax event="click" execute="smsCollectSettingMeterUserInfoListBean:searchConditionTable"
+                                        render="smsCollectSettingMeterUserInfoListBean:searchConditionTable"
+                                        listener="#{smsCollectSettingMeterUserInfoListBean.deleteCondition(item.orderNo)}"/>
+                                </h:commandButton>
+                                <h:graphicImage class="button_icon" library="images" rendered="#{item.deleteButtonEnable}" name="common/com020.png" />
+                            </span>
+                        </rich:dataTable>
+                        <!--検索条件 大枠 -->
+                        <table style="width: 100%">
+                            <tr>
+                                <td colspan="2" class="contents_center">
+                                    <div class="button_area_center gradation_type_1 button_large_2 button_search">
+                                            <a4j:commandButton
+                                                id="searchButton"
+                                                value="検索開始"
+                                                execute="@form"
+                                                render="@form"
+                                                actionListener="#{smsCollectSettingMeterUserInfoListBean.search()}"
+                                                onbegin="showBlockModal()"
+                                                oncomplete="hideBlockModal()">
+                                           </a4j:commandButton>
+                                       <h:graphicImage class="button_icon" library="images" name="common/com028.png" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <ui:fragment rendered="#{smsCollectSettingMeterUserInfoListBean.userInfoListBeanProperty.searchFlg}">
+                            <div>
+                                <div class="search_result_header_wrap">
+                                    <div class="search_result_header_left">
+                                        検索条件に該当するユーザー情報
+                                        <span class="serach_result_total_count"
+                                              jsfc="h:outputText" value="#{smsCollectSettingMeterUserInfoListBean.userInfoListPaging.resultCount}" />
+                                        件
+                                    </div>
+                                    <br></br>
+                                    <br></br>
+                                </div>
+                                <!-- 検索結果 表示 -->
+                                <div>
+                                    <div class="contents">
+                                        <div class="search_result_area user_info_list">
+                                            <table align="center" jsfc="h:dataTable" id="result" var="item"
+                                                   value="#{smsCollectSettingMeterUserInfoListBean.userInfoListPaging.pageList}"
+                                                   headerClass="table_header"
+                                                   columnClasses="column_style_personid, column_style_personname, column_style_furigana,
+                                                   column_style_department, column_style_account,
+                                                   column_style_edit, column_style_tanto"
+                                                   rendered="#{smsCollectSettingMeterUserInfoListBean.userInfoListPaging.resultCount != '0'}">
+
+                                                <span jsfc="h:column" rendered="#{item.personId==null}">
+                                                    <span jsfc="f:facet" name="header">
+                                                        <span jsfc="h:outputText" value="ユーザーID"/>
+                                                    </span>
+                                                        <span jsfc="h:outputText" id="personId" value="#{item.personId}" class="TXT008_margin"/>
+                                                </span>
+                                                <span jsfc="h:column" rendered="#{item.personId==null}">
+                                                    <span jsfc="f:facet" name="header">
+                                                        <span jsfc="h:outputText" value="ユーザー名"/>
+                                                    </span>
+                                                        <span jsfc="h:outputText" id="personName" value="#{item.personName}" class="TXT008_margin"/>
+                                                </span>
+                                                <span jsfc="h:column" rendered="#{item.personId==null}">
+                                                    <span jsfc="f:facet" name="header">
+                                                        <span jsfc="h:outputText" value="ふりがな"/>
+                                                    </span>
+                                                    <span jsfc="h:outputText" id="furigana" value="#{item.personKana}" class="TXT008_margin"/>
+                                                </span>
+                                                <span jsfc="h:column" rendered="#{item.personId==null}">
+                                                    <span jsfc="f:facet" name="header">
+                                                        <span jsfc="h:outputText" value="部署名"/><br/>
+                                                        <span jsfc="h:outputText" value="役職名"/>
+                                                    </span>
+                                                    <span jsfc="h:outputText" id="department" value="#{item.deptName}" class="TXT008_margin"/><br/>
+                                                    <span jsfc="h:outputText" id="position" value="#{item.positionName}" class="TXT008_margin"/>
+                                                </span>
+                                                <span jsfc="h:column" rendered="#{item.personId==null}">
+                                                    <span jsfc="f:facet" name="header">
+                                                        <span jsfc="h:outputText" value="アカウント状態"/>
+                                                    </span>
+                                                    <span jsfc="h:outputText" id="telNo" value="#{item.accountState}" class="TXT008_margin"/>
+                                                </span>
+                                                <span jsfc="h:column" rendered="#{item.personId==null}">
+                                                    <span jsfc="f:facet" name="header">
+                                                        <span jsfc="h:outputText" value="編集"/>
+                                                    </span>
+                                                        <a4j:commandButton
+                                                            id="userDetailSelect"
+                                                            class="button_size_small"
+                                                            value=" "
+                                                            action="#{smsCollectSettingMeterUserInfoListBean.onclickMeterUserEdit(item.corpId, item.personId, item.personDisabled)}"
+                                                            execute="@form"
+                                                            render="@form"
+                                                            onbegin="showBlockModal()"
+                                                            oncomplete="hideBlockModal()">
+                                                       </a4j:commandButton>
+                                                    <h:graphicImage class="button_icon" library="images" name="common/com018.png" />
+                                                </span>
+
+                                                <span jsfc="h:column" rendered="#{item.personId==null}">
+                                                    <span jsfc="f:facet" name="header">
+                                                        <span jsfc="h:outputText" value="担当設定"/>
+                                                        </span>
+<!--
+                                                    <input type="submit" jsfc="h:commandButton" class="button_size_tanto" value="担当テナント設定"
+                                                               action="#{userInfoListBean.onclickBuildingPerson(item.personId, item.personName, item.corpId,item.corpId, 'ID19')}"
+                                                               id="settingBuilding" disabled="#{item.personDisabled}"
+                                                               onclick="showBlockModal();"/>
+                                                        <h:graphicImage class="button_icon" library="images" name="user/user_list001.png" />
+                                                     -->
+                                                        <input jsfc="h:commandButton" id="settingBuilding" class="button_size_tanto"
+                                                            onclick="showBlockModal();" value="担当テナント設定"
+                                                            disabled="#{item.personDisabled}"
+                                                            action="#{smsCollectSettingMeterUserInfoListBean.onclickTenantPerson(item.personId, item.personName, item.corpId)}">
+                                                            <h:graphicImage class="button_icon" library="images" name="user/user_list001.png" />
+                                                        </input>
+<!--
+                                                      <input type="submit" jsfc="h:commandButton" class="button_size_tanto" value="担当テナント設定"
+                                                                 id="settingBuilding" disabled="#{item.personDisabled}"
+                                                                 onclick="showBlockModal();"/>
+                                                          <h:graphicImage class="button_icon" library="images" name="user/user_list001.png" />
+                                                           -->
+                                                </span>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ui:fragment rendered="#{smsCollectSettingMeterUserInfoListBean.userInfoListPaging.resultCount != '0'}">
+                                <div class="contents_center">
+                                    <div id="paging_area">
+                                        <span id="prevButton_area">
+                                            <h:commandLink id="prevButton" value="&lt;&nbsp;&nbsp;前へ" actionListener="#{smsCollectSettingMeterUserInfoListBean.prevPage}"
+                                                           disabled="#{!smsCollectSettingMeterUserInfoListBean.userInfoListPaging.isPrevPage()}">
+                                                <f:ajax execute="@form" render="@form" />
+                                                <f:attribute name="page" value="#{smsCollectSettingMeterUserInfoListBean.userInfoListPaging.currentPage}" />
+                                            </h:commandLink>
+                                        </span>
+                                        <cust:pageIndex id="pageJumpButton" value="#{smsCollectSettingMeterUserInfoListBean.userInfoListPaging.pageValue}"
+                                                        action="#{smsCollectSettingMeterUserInfoListBean.pageJump()}" >
+                                            <ui:include src="/html/common/paging/index.xhtml" />
+                                        </cust:pageIndex>
+                                        <span id="nextButton_area">
+                                            <h:commandLink id="nextButton" value="後へ&nbsp;&nbsp;&gt; " actionListener="#{smsCollectSettingMeterUserInfoListBean.nextPage}"
+                                                           disabled="#{!smsCollectSettingMeterUserInfoListBean.userInfoListPaging.isNextPage()}">
+                                                <f:ajax execute="@form" render="@form" />
+                                                <f:attribute name="page" value="#{smsCollectSettingMeterUserInfoListBean.userInfoListPaging.currentPage}" />
+                                            </h:commandLink>
+                                        </span>
+                                    </div>
+                                </div>
+                            </ui:fragment>
+                        </ui:fragment>
+                        </div>
+                    </div>
+                    <!--アクセストークン用-->
+                    <oslib:requestToken />
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE RoleGroupList SYSTEM "rolegroup.dtd">
+<RoleGroupList>
+    <!-- 管理者 -->
+    <RoleGroup Key="Administrator" Name="管理者" >
+        <Role>OSAKI_FOR_CORP</Role>
+        <Role>PARTNER_FOR_CORP</Role>
+        <Role>MAINTENANCE_ON_ADMIN</Role>
+        <Role>CONTRACT_ON_ADMIN</Role>
+    </RoleGroup>
+    <!-- 大崎またはパートナー企業担当 -->
+    <RoleGroup Key="OsakiOrPartnerCorp" Name="大崎またはパートナー企業担当" >
+        <Role>OSAKI</Role>
+        <Role>PARTNER_FOR_CORP</Role>
+    </RoleGroup>
+</RoleGroupList>

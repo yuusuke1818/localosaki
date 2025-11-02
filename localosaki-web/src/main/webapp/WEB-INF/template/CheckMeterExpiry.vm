@@ -1,0 +1,8 @@
+$devName($devId)の装置で
+下記のメーターが検満時期となりますので、ご確認をお願いします。
+
+管理番号 メータID 検満年月
+#foreach($meter in $meterList)$meter.meterMngId $meter.meterId $meter.examEndYm
+#end
+
+大崎電気工業株式会社

@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#*" PATH="/*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#*:0" NAME="item" PATH="/*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="login::#html#login#login.xhtml"
+    NAME="output" PATH="/html/login/login.xhtml"
+    TARGET="rules:#html#login#login.xhtml" TITLE="login" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="editPassword::#html#login#editPassword.xhtml" NAME="output1"
+    PATH="/html/login/editPassword.xhtml"
+    TARGET="rules:#html#login#editPassword.xhtml" TITLE="editPassword" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="top::#html#menu#index.xhtml" NAME="output2"
+    PATH="/html/menu/index.xhtml" TARGET="rules:#html#menu#index.xhtml"
+    TITLE="top" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="error::#html#error#exceptionError.xhtml"
+    NAME="output3" PATH="/html/error/exceptionError.xhtml"
+    TARGET="rules:#html#error#exceptionError.xhtml" TITLE="error" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#html#menu#index.xhtml"
+  PATH="/html/menu/index.xhtml" SHAPE="288,353,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#html#menu#index.xhtml:0" NAME="item"
+   PATH="/html/menu/index.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="buildingSearch::#html#building#info#search.xhtml" NAME="output"
+    PATH="/html/building/info/search.xhtml"
+    TARGET="rules:#html#building#info#search.xhtml"
+    TITLE="buildingSearch" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="serverTop::#html#sms#server#top.xhtml"
+    NAME="output1" PATH="/html/sms/server/top.xhtml"
+    TARGET="rules:#html#sms#server#top.xhtml" TITLE="serverTop" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#html#login#login.xhtml"
+  PATH="/html/login/login.xhtml" SHAPE="288,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#html#error#exceptionError.xhtml"
+  PATH="/html/error/exceptionError.xhtml" SHAPE="288,465,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#html#login#editPassword.xhtml"
+  PATH="/html/login/editPassword.xhtml" SHAPE="288,241,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#html#building#info#search.xhtml"
+  PATH="/html/building/info/search.xhtml" SHAPE="496,449,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#html#building#info#search.xhtml:0"
+   NAME="item" PATH="/html/building/info/search.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="collectTop::#html#sms#collect#top.xhtml"
+    NAME="output" PATH="/html/sms/collect/top.xhtml"
+    TARGET="rules:#html#sms#collect#top.xhtml" TITLE="collectTop" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#html#sms#server#top.xhtml"
+  PATH="/html/sms/server/top.xhtml" SHAPE="512,449,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#html#sms#collect#top.xhtml"
+  PATH="/html/sms/collect/top.xhtml" SHAPE="720,609,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#html#sms#collect#*"
+  PATH="/html/sms/collect/*" SHAPE="32,993,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#html#sms#collect#*:0" NAME="item"
+   PATH="/html/sms/collect/*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="meterReadingData::#html#sms#collect#dataview#meterReadingData#meterReadingData.xhtml"
+    NAME="output"
+    PATH="/html/sms/collect/dataview/meterReadingData/meterReadingData.xhtml"
+    TARGET="rules:#html#sms#collect#dataview#meterReadingData#meterReadingData.xhtml"
+    TITLE="meterReadingData" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="daily::#html#sms#collect#dataview#daily.xhtml" NAME="output1"
+    PATH="/html/sms/collect/dataview/daily.xhtml"
+    TARGET="rules:#html#sms#collect#dataview#daily.xhtml" TITLE="daily" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="monthly::#html#sms#collect#dataview#monthly.xhtml"
+    NAME="output2" PATH="/html/sms/collect/dataview/monthly.xhtml"
+    TARGET="rules:#html#sms#collect#dataview#monthly.xhtml"
+    TITLE="monthly" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="yearly::#html#sms#collect#dataview#yearly.xhtml" NAME="output3"
+    PATH="/html/sms/collect/dataview/yearly.xhtml"
+    TARGET="rules:#html#sms#collect#dataview#yearly.xhtml"
+    TITLE="yearly" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="compareGraphDaily::#html#sms#collect#dataview#compareGraphDaily.xhtml"
+    NAME="output4"
+    PATH="/html/sms/collect/dataview/compareGraphDaily.xhtml"
+    TARGET="rules:#html#sms#collect#dataview#compareGraphDaily.xhtml"
+    TITLE="compareGraphDaily" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="compareGraphMonthly::#html#sms#collect#dataview#compareGraphMonthly.xhtml"
+    NAME="output5"
+    PATH="/html/sms/collect/dataview/compareGraphMonthly.xhtml"
+    TARGET="rules:#html#sms#collect#dataview#compareGraphMonthly.xhtml"
+    TITLE="compareGraphMonthly" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="compareGraphYearly::#html#sms#collect#dataview#compareGraphYearly.xhtml"
+    NAME="output6"
+    PATH="/html/sms/collect/dataview/compareGraphYearly.xhtml"
+    TARGET="rules:#html#sms#collect#dataview#compareGraphYearly.xhtml"
+    TITLE="compareGraphYearly" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="smsCollectSettingMeterreadingVarious::#html#sms#collect#setting#meterreading#various.xhtml"
+    NAME="output"
+    PATH="/html/sms/collect/setting/meterreading/various.xhtml"
+    TARGET="rules:#html#sms#collect#setting#meterreading#various.xhtml"
+    TITLE="smsCollectSettingMeterreadingVarious" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="smsCollectSettingMeterreadingType::#html#sms#collect#setting#meterreading#type.xhtml"
+    NAME="output7"
+    PATH="/html/sms/collect/setting/meterreading/type.xhtml"
+    TARGET="rules:#html#sms#collect#setting#meterreading#type.xhtml"
+    TITLE="smsCollectSettingMeterreadingType" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="smsCollectSettingMeterreadingTypeRange::#html#sms#collect#setting#meterreading#typeRange.xhtml"
+    NAME="output8"
+    PATH="/html/sms/collect/setting/meterreading/typeRange.xhtml"
+    TARGET="rules:#html#sms#collect#setting#meterreading#typeRange.xhtml"
+    TITLE="smsCollectSettingMeterreadingTypeRange" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="autoInspectionEdit::#html#sms#collect#setting#meterreading#autoinspection#edit.xhtml"
+    NAME="output9"
+    PATH="/html/sms/collect/setting/meterreading/autoinspection/edit.xhtml"
+    TARGET="rules:#html#sms#collect#setting#meterreading#autoinspection#edit.xhtml"
+    TITLE="autoInspectionEdit" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="smsCollectSettingMeterreadingInspectionMeterBefList::#html#sms#collect#setting#meterreading#inspectionMeterBefList.xhtml"
+    NAME="output10"
+    PATH="/html/sms/collect/setting/meterreading/inspectionMeterBefList.xhtml"
+    TARGET="rules:#html#sms#collect#setting#meterreading#inspectionMeterBefList.xhtml"
+    TITLE="smsCollectSettingMeterreadingInspectionMeterBefList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="smsCollectSettingMeterreadingInspectionMeterBef::#html#sms#collect#setting#meterreading#inspectionMeterBef.xhtml"
+    NAME="output11"
+    PATH="/html/sms/collect/setting/meterreading/inspectionMeterBef.xhtml"
+    TARGET="rules:#html#sms#collect#setting#meterreading#inspectionMeterBef.xhtml"
+    TITLE="smsCollectSettingMeterreadingInspectionMeterBef" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="smsCollectSettingMeterreadingSettingCollection::#html#sms#collect#setting#meterreading#settingCollection.xhtml"
+    NAME="output12"
+    PATH="/html/sms/collect/setting/meterreading/settingCollection.xhtml"
+    TARGET="rules:#html#sms#collect#setting#meterreading#settingCollection.xhtml"
+    TITLE="smsCollectSettingMeterreadingSettingCollection" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="meterManagement::#html#sms#collect#setting#meter#meterManagement.xhtml"
+    NAME="output13"
+    PATH="/html/sms/collect/setting/meter/meterManagement.xhtml"
+    TARGET="rules:#html#sms#collect#setting#meter#meterManagement.xhtml"
+    TITLE="meterManagement" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="meterTenantSearch::#html#sms#collect#setting#meterTenant#search.xhtml"
+    NAME="output14"
+    PATH="/html/sms/collect/setting/meterTenant/search.xhtml"
+    TARGET="rules:#html#sms#collect#setting#meterTenant#search.xhtml"
+    TITLE="meterTenantSearch" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="meterTenantEdit::#html#sms#collect#setting#meterTenant#edit.xhtml"
+    NAME="output15"
+    PATH="/html/sms/collect/setting/meterTenant/edit.xhtml"
+    TARGET="rules:#html#sms#collect#setting#meterTenant#edit.xhtml"
+    TITLE="meterTenantEdit" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="meterTenantBulkEdit::#html#sms#collect#setting#meterTenant#bulkEdit.xhtml"
+    NAME="output16"
+    PATH="/html/sms/collect/setting/meterTenant/bulkEdit.xhtml"
+    TARGET="rules:#html#sms#collect#setting#meterTenant#bulkEdit.xhtml"
+    TITLE="meterTenantBulkEdit" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="meterUserList::#html#sms#collect#setting#meterUser#list.xhtml"
+    NAME="output17"
+    PATH="/html/sms/collect/setting/meterUser/list.xhtml"
+    TARGET="rules:#html#sms#collect#setting#meterUser#list.xhtml"
+    TITLE="meterUserList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="meterUserEdit::#html#sms#collect#setting#meterUser#edit.xhtml"
+    NAME="output18"
+    PATH="/html/sms/collect/setting/meterUser/edit.xhtml"
+    TARGET="rules:#html#sms#collect#setting#meterUser#edit.xhtml"
+    TITLE="meterUserEdit" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="meterGroupManagement::#html#sms#collect#setting#meterGroup#meterGroupManagement.xhtml"
+    NAME="output19"
+    PATH="/html/sms/collect/setting/meterGroup/meterGroupManagement.xhtml"
+    TARGET="rules:#html#sms#collect#setting#meterGroup#meterGroupManagement.xhtml"
+    TITLE="meterGroupManagement" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="meterGroupManagementEdit::#html#sms#collect#setting#meterGroup#meterGroupManagementEdit.xhtml"
+    NAME="output20"
+    PATH="/html/sms/collect/setting/meterGroup/meterGroupManagementEdit.xhtml"
+    TARGET="rules:#html#sms#collect#setting#meterGroup#meterGroupManagementEdit.xhtml"
+    TITLE="meterGroupManagementEdit" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="meterGroupManagementGroupNameEdit::#html#sms#collect#setting#meterGroup#meterGroupManagementGroupNameEdit.xhtml"
+    NAME="output21"
+    PATH="/html/sms/collect/setting/meterGroup/meterGroupManagementGroupNameEdit.xhtml"
+    TARGET="rules:#html#sms#collect#setting#meterGroup#meterGroupManagementGroupNameEdit.xhtml"
+    TITLE="meterGroupManagementGroupNameEdit" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="concentratorManagementEdit::#html#sms#collect#setting#concentrator#concentratorManagementEdit.xhtml"
+    NAME="output22"
+    PATH="/html/sms/collect/setting/concentrator/concentratorManagementEdit.xhtml"
+    TARGET="rules:#html#sms#collect#setting#concentrator#concentratorManagementEdit.xhtml"
+    TITLE="concentratorManagementEdit" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="repeaterManagement::#html#sms#collect#setting#repeater#repeaterManagement.xhtml"
+    NAME="output23"
+    PATH="/html/sms/collect/setting/repeater/repeaterManagement.xhtml"
+    TARGET="rules:#html#sms#collect#setting#repeater#repeaterManagement.xhtml"
+    TITLE="repeaterManagement" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="repeaterManagementEdit::#html#sms#collect#setting#repeater#repeaterManagementEdit.xhtml"
+    NAME="output24"
+    PATH="/html/sms/collect/setting/repeater/repeaterManagementEdit.xhtml"
+    TARGET="rules:#html#sms#collect#setting#repeater#repeaterManagementEdit.xhtml"
+    TITLE="repeaterManagementEdit" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="buildingSearch::#html#building#info#search.xhtml"
+    NAME="output25" PATH="/html/building/info/search.xhtml"
+    TARGET="rules:#html#building#info#search.xhtml"
+    TITLE="buildingSearch" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#html#sms#server#*" PATH="/html/sms/server/*"
+  SHAPE="240,1233,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#html#sms#server#*:0" NAME="item"
+   PATH="/html/sms/server/*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="serverTop::#html#sms#server#top.xhtml"
+    NAME="output1" PATH="/html/sms/server/top.xhtml"
+    TARGET="rules:#html#sms#server#top.xhtml" TITLE="serverTop" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="handySearch::#html#sms#server#setting#handy#search.xhtml"
+    NAME="output" PATH="/html/sms/server/setting/handy/search.xhtml"
+    TARGET="rules:#html#sms#server#setting#handy#search.xhtml"
+    TITLE="handySearch" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="handyEdit::#html#sms#server#setting#handy#edit.xhtml"
+    NAME="output2" PATH="/html/sms/server/setting/handy/edit.xhtml"
+    TARGET="rules:#html#sms#server#setting#handy#edit.xhtml"
+    TITLE="handyEdit" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="collectSearch::#html#sms#server#setting#collect#search.xhtml"
+    NAME="output3" PATH="/html/sms/server/setting/collect/search.xhtml"
+    TARGET="rules:#html#sms#server#setting#collect#search.xhtml"
+    TITLE="collectSearch" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="collectEdit::#html#sms#server#setting#collect#edit.xhtml"
+    NAME="output4" PATH="/html/sms/server/setting/collect/edit.xhtml"
+    TARGET="rules:#html#sms#server#setting#collect#edit.xhtml"
+    TITLE="collectEdit" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="buildingdeviceSearch::#html#sms#server#setting#buildingdevice#search.xhtml"
+    NAME="output5"
+    PATH="/html/sms/server/setting/buildingdevice/search.xhtml"
+    TARGET="rules:#html#sms#server#setting#buildingdevice#search.xhtml"
+    TITLE="buildingdeviceSearch" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="buildingdeviceEdit::#html#sms#server#setting#buildingdevice#edit.xhtml"
+    NAME="output6"
+    PATH="/html/sms/server/setting/buildingdevice/edit.xhtml"
+    TARGET="rules:#html#sms#server#setting#buildingdevice#edit.xhtml"
+    TITLE="buildingdeviceEdit" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="ocrSearch::#html#sms#server#setting#ocr#search.xhtml"
+    NAME="output7" PATH="/html/sms/server/setting/ocr/search.xhtml"
+    TARGET="rules:#html#sms#server#setting#ocr#search.xhtml"
+    TITLE="ocrSearch" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="ocrEdit::#html#sms#server#setting#ocr#edit.xhtml" NAME="output8"
+    PATH="/html/sms/server/setting/ocr/edit.xhtml"
+    TARGET="rules:#html#sms#server#setting#ocr#edit.xhtml"
+    TITLE="ocrEdit" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#meterreading#various.xhtml"
+  PATH="/html/sms/collect/setting/meterreading/various.xhtml"
+  SHAPE="256,1681,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#meterreading#type.xhtml"
+  PATH="/html/sms/collect/setting/meterreading/type.xhtml"
+  SHAPE="256,1681,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#meter#meterManagement.xhtml"
+  PATH="/html/sms/collect/setting/meter/meterManagement.xhtml"
+  SHAPE="272,1713,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#meterreading#typeRange.xhtml"
+  PATH="/html/sms/collect/setting/meterreading/typeRange.xhtml"
+  SHAPE="288,1745,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#html#sms#collect#dataview#monthly.xhtml"
+  PATH="/html/sms/collect/dataview/monthly.xhtml" SHAPE="304,1889,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#html#sms#collect#dataview#yearly.xhtml"
+  PATH="/html/sms/collect/dataview/yearly.xhtml" SHAPE="304,2113,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#dataview#meterReadingData#meterReadingData.xhtml"
+  PATH="/html/sms/collect/dataview/meterReadingData/meterReadingData.xhtml"
+  SHAPE="304,1777,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#html#sms#collect#dataview#daily.xhtml"
+  PATH="/html/sms/collect/dataview/daily.xhtml" SHAPE="32,2209,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#meterreading#inspectionMeterBefList.xhtml"
+  PATH="/html/sms/collect/setting/meterreading/inspectionMeterBefList.xhtml"
+  SHAPE="304,1841,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#dataview#compareGraphDaily.xhtml"
+  PATH="/html/sms/collect/dataview/compareGraphDaily.xhtml"
+  SHAPE="304,1873,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#meterreading#inspectionMeterBef.xhtml"
+  PATH="/html/sms/collect/setting/meterreading/inspectionMeterBef.xhtml"
+  SHAPE="304,1969,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#dataview#compareGraphMonthly.xhtml"
+  PATH="/html/sms/collect/dataview/compareGraphMonthly.xhtml"
+  SHAPE="304,1969,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#dataview#compareGraphYearly.xhtml"
+  PATH="/html/sms/collect/dataview/compareGraphYearly.xhtml"
+  SHAPE="304,1969,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#meterTenant#search.xhtml"
+  PATH="/html/sms/collect/setting/meterTenant/search.xhtml"
+  SHAPE="304,2033,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#meterTenant#edit.xhtml"
+  PATH="/html/sms/collect/setting/meterTenant/edit.xhtml"
+  SHAPE="304,2145,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#concentrator#concentratorManagement.xhtml"
+  PATH="/html/sms/collect/setting/concentrator/concentratorManagement.xhtml"
+  SHAPE="304,2065,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#html#sms#server#setting#handy#search.xhtml"
+  PATH="/html/sms/server/setting/handy/search.xhtml"
+  SHAPE="512,1793,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#html#sms#server#setting#handy#search.xhtml:0"
+   NAME="item" PATH="/html/sms/server/setting/handy/search.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="handyEdit::#html#sms#server#setting#handy#edit.xhtml"
+    NAME="output" PATH="/html/sms/server/setting/handy/edit.xhtml"
+    TARGET="rules:#html#sms#server#setting#handy#edit.xhtml"
+    TITLE="handyEdit" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#html#sms#server#setting#handy#edit.xhtml"
+  PATH="/html/sms/server/setting/handy/edit.xhtml" SHAPE="288,1953,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#html#sms#server#setting#handy#edit.xhtml:0"
+   NAME="item" PATH="/html/sms/server/setting/handy/edit.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="handySearch::#html#sms#server#setting#handy#search.xhtml"
+    NAME="output" PATH="/html/sms/server/setting/handy/search.xhtml"
+    TARGET="rules:#html#sms#server#setting#handy#search.xhtml"
+    TITLE="handySearch" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#meterreading#autoinspection#edit.xhtml"
+  PATH="/html/sms/collect/setting/meterreading/autoinspection/edit.xhtml"
+  SHAPE="304,2065,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#meterreading#settingCollection.xhtml"
+  PATH="/html/sms/collect/setting/meterreading/settingCollection.xhtml"
+  SHAPE="304,2945,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#errorinfo#info.xhtml"
+  PATH="/html/sms/collect/setting/errorinfo/info.xhtml"
+  SHAPE="304,3409,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#repeater#repeaterManagement.xhtml"
+  PATH="/html/sms/collect/setting/repeater/repeaterManagement.xhtml"
+  SHAPE="304,3521,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#meterUser#tenantPerson.xhtml"
+  PATH="/html/sms/collect/setting/meterUser/tenantPerson.xhtml"
+  SHAPE="304,3297,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#meterUser#edit.xhtml"
+  PATH="/html/sms/collect/setting/meterUser/edit.xhtml"
+  SHAPE="304,3185,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#meterUser#list.xhtml"
+  PATH="/html/sms/collect/setting/meterUser/list.xhtml"
+  SHAPE="304,3073,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#server#setting#collect#search.xhtml"
+  PATH="/html/sms/server/setting/collect/search.xhtml"
+  SHAPE="560,2049,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#html#sms#server#setting#collect#edit.xhtml"
+  PATH="/html/sms/server/setting/collect/edit.xhtml"
+  SHAPE="560,2289,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#meterreading#manualInspection.xhtml"
+  PATH="/html/sms/collect/setting/meterreading/manualInspection.xhtml"
+  SHAPE="304,3169,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#meterGroup#meterGroupManagement.xhtml"
+  PATH="/html/sms/collect/setting/meterGroup/meterGroupManagement.xhtml"
+  SHAPE="304,3377,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#meterTenant#bulkEdit.xhtml"
+  PATH="/html/sms/collect/setting/meterTenant/bulkEdit.xhtml"
+  SHAPE="304,3377,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#meterGroup#meterGroupManagementGroupNameEdit.xhtml"
+  PATH="/html/sms/collect/setting/meterGroup/meterGroupManagementGroupNameEdit.xhtml"
+  SHAPE="304,2001,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#meterGroup#meterGroupManagementEdit.xhtml"
+  PATH="/html/sms/collect/setting/meterGroup/meterGroupManagementEdit.xhtml"
+  SHAPE="304,1057,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#server#setting#buildingdevice#edit.xhtml"
+  PATH="/html/sms/server/setting/buildingdevice/edit.xhtml"
+  SHAPE="576,2513,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#concentrator#concentratorManagementEdit.xhtml"
+  PATH="/html/sms/collect/setting/concentrator/concentratorManagementEdit.xhtml"
+  SHAPE="304,945,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#collect#setting#repeater#repeaterManagementEdit.xhtml"
+  PATH="/html/sms/collect/setting/repeater/repeaterManagementEdit.xhtml"
+  SHAPE="304,2113,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#html#sms#server#setting#buildingdevice#search.xhtml"
+  PATH="/html/sms/server/setting/buildingdevice/search.xhtml"
+  SHAPE="576,2209,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#html#sms#server#setting#ocr#search.xhtml"
+  PATH="/html/sms/server/setting/ocr/search.xhtml"
+  SHAPE="568,2336,50,25" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#html#sms#server#setting#ocr#edit.xhtml"
+  PATH="/html/sms/server/setting/ocr/edit.xhtml" SHAPE="576,2568,50,25" model-entity="JSFProcessGroup"/>
+</PROCESS>

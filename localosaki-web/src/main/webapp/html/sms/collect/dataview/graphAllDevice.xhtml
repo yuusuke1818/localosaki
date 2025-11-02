@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cust="http://xmlns.jcp.org/jsf/component"
+      xmlns:oslib="http://osaki.co.jp/base-component"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+    <h:outputStylesheet library="css" name="common/cssLayout.css"/>
+    <h:outputStylesheet library="css" name="sms/collect/dataview/graph.css" />
+
+    <!-- 列の数 -->
+    <c:set var="graphColumnCount" value="#{dataViewBean.dispDataList.get(0).columnDataList.size() - 1}" />
+    <!-- 1列目の幅 -->
+    <c:set var="graphFirstColumnWidth" value="87" />
+    <!-- 2列目以降の各列の幅 -->
+    <c:set var="graphColumnWidth" value="140" />
+    <c:set var="graphAreaWidth" value="#{(graphFirstColumnWidth + 1) + (graphColumnWidth * graphColumnCount)}" />
+    <c:set var="graphHeaderList" value="#{loadSurveyDataList}" />
+    <c:set var="graphHeaderIndexCount" value="#{graphHeaderList[0].size() - 1}" />
+
+    <c:if test="#{dataViewBean.graphListMap.size() > 0}">
+        <div class="search_result_area">
+            <div style="display: flex; border: 0px;">
+                <div class="graph_header" style="border: 0px;">
+                    <div class="head">
+                        <div class="devNameHeader" id = "devName">装置名</div>
+                        <div class="meterMngIdHeader">管理番号</div>
+                        <div class="meterIdNameHeader">計器ID</div>
+                        <div class="tenantNameHeader">
+                            <span class="tenantNameHeaderInner">
+                                テナント名
+                            </span>
+                        </div>
+                        <div class="meterTypeNameHeader">メーター種別</div>
+                        <div class="unitHeader">単位</div>
+                    </div>
+                </div>
+                <div id="scrollContainer" style="width: 835px; overflow-x: scroll; border: 0px;">
+                    <div class="graph_header" style="width: #{graphAreaWidth}px; border: 0px;">
+
+                    <c:forEach begin="1" end="#{graphHeaderIndexCount}" varStatus="graphHeaderColumnStatus">
+                        <c:set var="index" value="#{graphHeaderColumnStatus.index}" />
+                        <c:set var="devName" value="#{graphHeaderList[0][index]}" />
+                        <c:set var="meterMngIdDisp" value="#{graphHeaderList[1][index]}" />
+                        <c:set var="meterId" value="#{graphHeaderList[2][index]}" />
+                        <c:set var="tenantName" value="#{graphHeaderList[3][index]}" />
+                        <c:set var="meterTypeName" value="#{graphHeaderList[4][index]}" />
+                        <c:set var="unit" value="#{graphHeaderList[5][index]}" />
+
+                        <c:if test="#{index == 1}">
+                            <input type="hidden" id="firstMeterMngId" value="#{meterMngIdDisp}" />
+                            <input type="hidden" id="firstMeterId" value="#{meterId}" />
+                        </c:if>
+                            <!-- 2列目以降 -->
+                            <div id="graphSelect#{meterId}" class="items">
+                                <div class="devNameHeader">
+                                    <span title="#{devName}">#{devName}</span>
+                                </div>
+                                <div class="no meterMngIdHeader">#{meterMngIdDisp}</div>
+                                <div class="meterId meterTypeNameHeader">
+                                    <span title="#{meterId}">#{meterId}</span>
+                                </div>
+                                <div class="user tenantNameHeader">
+                                    <span title="#{tenantName}">#{tenantName}</span>
+                                </div>
+                                <div class="kind meterTypeNameHeader">
+                                    <span title="#{meterTypeName}">#{meterTypeName}</span>
+                                </div>
+                                <div class="kind unitHeader">
+                                    <span title="#{unit}">#{unit}</span>
+                                </div>
+                            </div>
+
+                        <input type="hidden" id="graphValues#{meterId}" value="#{dataViewBean.graphListMap[meterId]}" />
+                        <input type="hidden" id="graphMaxDemandValues#{meterId}" value="#{dataViewBean.graphMaxDemandListMap[meterId]}" />
+                        <input type="hidden" id="graphMaxDemandPeriod#{meterId}" value="#{dataViewBean.graphMaxDemandPeriodMap[meterId]}" />
+                        <input type="hidden" id="graphMaxDemandLastYear#{meterId}" value="#{dataViewBean.graphMaxDemandLastYearMap[meterId]}" />
+                        <input type="hidden" id="graphMaxDemandPast#{meterId}" value="#{dataViewBean.graphMaxDemandPastMap[meterId]}" />
+                        <input type="hidden" id="graphUnit#{meterId}" value="#{unit}" />
+                        <input type="hidden" id="graphTargetDevName#{meterId}" value="#{devName}" />
+                        <input type="hidden" id="graphTargetMeterMngId#{meterId}" value="#{meterMngIdDisp}" />
+                        <input type="hidden" id="graphTargetMeterId#{meterId}" value="#{meterId}" />
+                        <input type="hidden" id="graphPeriod#{maxDemandSpecifiedPeriodDisp}" value="#{maxDemandSpecifiedPeriodDisp}" />
+                        <input type="hidden" id="graphTargetTenant#{meterId}" value="#{tenantName}" />
+                        <input type="hidden" id="graphTargetMeterType#{meterId}" value="#{meterTypeName}" />
+                    </c:forEach>
+                    </div>
+                </div>
+            </div>
+            
+            <input type="hidden" id="isDaily" value="#{dataViewBean.daily}" />
+            <input type="hidden" id="isMonthly" value="#{dataViewBean.monthly}" />
+            <input type="hidden" id="isYearly" value="#{dataViewBean.yearly}" />
+
+            <div class="row div_graph_dev_header">
+                <div class="row graphDevNameRow">
+                    <div class="head">装置名</div>
+                    <div id="graph-dev-name" class="body"></div>
+                </div>
+            </div>
+            <div class="row div_graph_header">
+                <div class="row graphMeterMngIdRow">
+                    <div class="head">管理番号</div>
+                    <div id="graph-mng-no" class="body"></div>
+                </div>
+                <div class="row graphMeterIdRow">
+                    <div class="head">計器ID</div>
+                    <div id="graph-meter-id" class="body"></div>
+                </div>
+                <div class="row graphTenantNameRow">
+                    <div class="head">テナント名</div>
+                    <div id="graph-tenant-name" class="body"></div>
+                </div>
+                <div class="row graphMeterTypeNameRow">
+                    <div class="head">メーター種別</div>
+                    <div id="graph-meter-kind" class="body"></div>
+                </div>
+            </div>
+            <div class="row div_graph_demand_header">
+                <div class="row graph-max-demand">
+                     <div class="title">最大デマンド</div>
+                      <c:if test="#{dataViewBean.daily}">
+                        <div class="head">当日値</div>
+                        <div id="graph-this-date" class="body"></div>
+                        <div class="head">昨年同日</div>
+                        <div id="graph-last-year" class="body"></div>
+                      </c:if>
+                      
+                      <c:if test="#{dataViewBean.monthly}">
+                        <div class="head">当月値</div>
+                        <div id="graph-this-date" class="body"></div>
+                        <div class="head">昨年同月</div>
+                        <div id="graph-last-year" class="body"></div> 
+                      </c:if>
+                      
+                      <c:if test="#{dataViewBean.yearly}">
+                        <div class="head">当年値</div>
+                        <div id="graph-this-date" class="body"></div>
+                        <div class="head">昨年</div>
+                        <div id="graph-last-year" class="body"></div>                      
+                      </c:if>
+                     
+                     <div class="head">過去最大</div>
+                     <div id="graph-past" class="body"></div>
+                </div>
+            </div>
+         </div>
+
+        <input type="hidden" id="targetTimes" value="#{dataViewBean.dispDateList}" />
+
+        <div id="graphSpace"></div>
+    </c:if>
+
+    <br/><br/>
+    <span class="graph_notes">
+        ※ [表示更新]ボタンを押下すると、数値画面が表示されます。
+    </span>
+
+</html>

@@ -1,0 +1,241 @@
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+  <!-- *** 無線装置情報(取得) テンプレート *** -->
+  <!-- ベース部分 -->
+  <template name="base">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" default="V0013" keepPadding="true" />
+  </template>
+
+  <template name="base22">
+    <include template="base" />
+    <field name="compressionDataLength" length="6" default="000000" keepPadding="true" />
+  </template>
+
+  <template name="base.res">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" keepPadding="true" />
+    <field name="settingDate" length="10" keepPadding="true" />
+  </template>
+
+  <template name="base22.res">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" keepPadding="true" />
+    <field name="compressionDataLength" length="6" keepPadding="true" />
+    <field name="settingDate" length="10" keepPadding="true" />
+  </template>
+
+  <!-- 共通部分１（受信用） -->
+  <template name="commonResponse1">
+    <segment name="wirelessTemperatureUnitInfoList" collection="list" class="map" occurs="5">
+      <field name="fieldIntensityPort1" length="2" keepPadding="true" />
+      <field name="fieldIntensityPort2" length="2" keepPadding="true" />
+      <field name="fieldIntensityPort3" length="2" keepPadding="true" />
+      <field name="fieldIntensityPort4" length="2" keepPadding="true" />
+      <field name="batteryAlertPort1" length="1" keepPadding="true" />
+      <field name="batteryAlertPort2" length="1" keepPadding="true" />
+      <field name="batteryAlertPort3" length="1" keepPadding="true" />
+      <field name="batteryAlertPort4" length="1" keepPadding="true" />
+    </segment>
+  </template>
+
+  <!-- 共通部分２（受信用） -->
+  <template name="commonResponse2_old">
+    <segment name="wirelessTemperatureSensorPdList" collection="list" class="map" occurs="5">
+      <field name="fieldIntensityCd1" length="2" keepPadding="true" />
+      <field name="fieldIntensityCd2" length="2" keepPadding="true" />
+      <field name="fieldIntensityCd3" length="2" keepPadding="true" />
+      <field name="fieldIntensityCd4" length="2" keepPadding="true" />
+      <field name="batteryAlertCd1" length="1" keepPadding="true" />
+      <field name="batteryAlertCd2" length="1" keepPadding="true" />
+      <field name="batteryAlertCd3" length="1" keepPadding="true" />
+      <field name="batteryAlertCd4" length="1" keepPadding="true" />
+    </segment>
+  </template>
+
+  <!-- 共通部分２（受信用） -->
+  <template name="commonResponse2">
+    <segment name="wirelessTemperatureSensorPdList" collection="list" class="map" occurs="5">
+      <field name="fieldIntensityCd1" length="2" keepPadding="true" />
+      <field name="fieldIntensityCd2" length="2" keepPadding="true" />
+      <field name="fieldIntensityCd3" length="2" keepPadding="true" />
+      <field name="fieldIntensityCd4" length="2" keepPadding="true" />
+      <field name="batteryAlertCd1" length="1" keepPadding="true" />
+      <field name="batteryAlertCd2" length="1" keepPadding="true" />
+      <field name="batteryAlertCd3" length="1" keepPadding="true" />
+      <field name="batteryAlertCd4" length="1" keepPadding="true" />
+      <field name="elapsedTimeCd1" length="5" keepPadding="true" />
+      <field name="elapsedTimeCd2" length="5" keepPadding="true" />
+      <field name="elapsedTimeCd3" length="5" keepPadding="true" />
+      <field name="elapsedTimeCd4" length="5" keepPadding="true" />
+    </segment>
+  </template>
+
+  <!-- 共通部分３（受信用） -->
+  <template name="commonResponse3_old">
+    <segment name="wirelessTemperatureUnitInfoList" collection="list" class="map" occurs="9">
+      <field name="fieldIntensityPort1" length="3" keepPadding="true" />
+      <field name="fieldIntensityPort2" length="3" keepPadding="true" />
+      <field name="fieldIntensityPort3" length="3" keepPadding="true" />
+      <field name="fieldIntensityPort4" length="3" keepPadding="true" />
+      <field name="fieldIntensityPort5" length="3" keepPadding="true" />
+      <field name="fieldIntensityPort6" length="3" keepPadding="true" />
+      <field name="fieldIntensityPort7" length="3" keepPadding="true" />
+      <field name="fieldIntensityPort8" length="3" keepPadding="true" />
+      <field name="fieldIntensityPort9" length="3" keepPadding="true" />
+      <field name="batteryAlertPort1" length="1" keepPadding="true" />
+      <field name="batteryAlertPort2" length="1" keepPadding="true" />
+      <field name="batteryAlertPort3" length="1" keepPadding="true" />
+      <field name="batteryAlertPort4" length="1" keepPadding="true" />
+      <field name="batteryAlertPort5" length="1" keepPadding="true" />
+      <field name="batteryAlertPort6" length="1" keepPadding="true" />
+      <field name="batteryAlertPort7" length="1" keepPadding="true" />
+      <field name="batteryAlertPort8" length="1" keepPadding="true" />
+      <field name="batteryAlertPort9" length="1" keepPadding="true" />
+    </segment>
+  </template>
+
+  <!-- 共通部分３（受信用） -->
+  <template name="commonResponse3">
+    <segment name="wirelessTemperatureUnitInfoList" collection="list" class="map" occurs="9">
+      <field name="fieldIntensityPort1" length="3" keepPadding="true" />
+      <field name="fieldIntensityPort2" length="3" keepPadding="true" />
+      <field name="fieldIntensityPort3" length="3" keepPadding="true" />
+      <field name="fieldIntensityPort4" length="3" keepPadding="true" />
+      <field name="fieldIntensityPort5" length="3" keepPadding="true" />
+      <field name="fieldIntensityPort6" length="3" keepPadding="true" />
+      <field name="fieldIntensityPort7" length="3" keepPadding="true" />
+      <field name="fieldIntensityPort8" length="3" keepPadding="true" />
+      <field name="fieldIntensityPort9" length="3" keepPadding="true" />
+      <field name="batteryAlertPort1" length="1" keepPadding="true" />
+      <field name="batteryAlertPort2" length="1" keepPadding="true" />
+      <field name="batteryAlertPort3" length="1" keepPadding="true" />
+      <field name="batteryAlertPort4" length="1" keepPadding="true" />
+      <field name="batteryAlertPort5" length="1" keepPadding="true" />
+      <field name="batteryAlertPort6" length="1" keepPadding="true" />
+      <field name="batteryAlertPort7" length="1" keepPadding="true" />
+      <field name="batteryAlertPort8" length="1" keepPadding="true" />
+      <field name="batteryAlertPort9" length="1" keepPadding="true" />
+      <field name="elapsedTimePort1" length="5" keepPadding="true" />
+      <field name="elapsedTimePort2" length="5" keepPadding="true" />
+      <field name="elapsedTimePort3" length="5" keepPadding="true" />
+      <field name="elapsedTimePort4" length="5" keepPadding="true" />
+      <field name="elapsedTimePort5" length="5" keepPadding="true" />
+      <field name="elapsedTimePort6" length="5" keepPadding="true" />
+      <field name="elapsedTimePort7" length="5" keepPadding="true" />
+      <field name="elapsedTimePort8" length="5" keepPadding="true" />
+      <field name="elapsedTimePort9" length="5" keepPadding="true" />
+    </segment>
+  </template>
+
+  <!-- 「00」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="00.req" format="fixedlength">
+    <record name="request" template="base" class="jp.co.osaki.osol.mng.param.A200032Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="00.res" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200032Param">
+      <include template="commonResponse1" />
+    </record>
+  </stream>
+
+  <!-- 「03」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="03.req" format="fixedlength">
+    <record name="request" template="base" class="jp.co.osaki.osol.mng.param.A200032Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="03.res" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200032Param">
+      <include template="commonResponse1" />
+    </record>
+  </stream>
+
+  <!-- 「06」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="06.req" format="fixedlength">
+    <record name="request" template="base" class="jp.co.osaki.osol.mng.param.A200032Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="06.res" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200032Param">
+      <include template="commonResponse1" />
+    </record>
+  </stream>
+
+  <!-- 「12」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="12.req" format="fixedlength">
+    <record name="request" template="base" class="jp.co.osaki.osol.mng.param.A200032Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="12.res" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200032Param">
+      <include template="commonResponse2" />
+    </record>
+  </stream>
+
+  <stream name="12.res_old" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200032Param">
+      <include template="commonResponse2_old" />
+    </record>
+  </stream>
+
+  <!-- 「21」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="21.req" format="fixedlength">
+    <record name="request" template="base" class="jp.co.osaki.osol.mng.param.A200032Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="21.res" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200032Param">
+      <include template="commonResponse3" />
+    </record>
+  </stream>
+
+  <stream name="21.res_old" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200032Param">
+      <include template="commonResponse3_old" />
+    </record>
+  </stream>
+
+  <!-- 「22」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="22.req" format="fixedlength">
+    <record name="request" template="base22" class="jp.co.osaki.osol.mng.param.A200032Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="22.res" format="fixedlength">
+    <record name="response" template="base22.res" class="jp.co.osaki.osol.mng.param.A200032Param">
+      <include template="commonResponse3" />
+    </record>
+  </stream>
+
+  <!-- (旧電文)受信文 -->
+  <stream name="22.res_old" format="fixedlength">
+    <record name="response" template="base22.res" class="jp.co.osaki.osol.mng.param.A200032Param">
+      <include template="commonResponse3_old" />
+    </record>
+  </stream>
+
+  <!-- 応答データ無し -->
+  <stream name="res_data.none" format="fixedlength">
+    <record name="response" class="jp.co.osaki.osol.mng.param.A200032Param">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" keepPadding="true" />
+    </record>
+  </stream>
+
+</beanio>

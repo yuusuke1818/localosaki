@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:cust="http://xmlns.jcp.org/jsf/component"
+    xmlns:oslib="http://osaki.co.jp/base-component"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+>
+<body>
+    <ui:composition template="/html/template/template_server_sidemenu.xhtml">
+        <ui:define name="content_side" class="content">
+            <h:outputStylesheet library="css" name="sms/server/setting/ocr/edit.css" />
+            <form jsfc="h:form" id="smsServerSettingOcrEditBean">
+                <div class="inner_content">
+                    <div class="title_area_warp">
+                        <!-- 画面タイトル -->
+                        <c:if test="#{!smsServerSettingOcrEditBean.editBeanProperty.updateProcessFlg}">
+                            <div class="title_area_left">
+                                <h2 class="page_title">
+                                    <h:outputText value="AieLink新規登録" />
+                                </h2>
+                                <!-- ヘルプボタン -->
+                                <c:if test="#{indexBean.userGuideBool}">
+                                    <h:commandLink class="help_icon"
+                                        action="#{indexBean.userGuide()}" target="_blank" />
+                                </c:if>
+                                <p class="page_subtitle">
+                                    <h:outputText value="AieLink情報の新規登録ができます。" />
+                                </p>
+                            </div>
+                        </c:if>
+                        <c:if test="#{smsServerSettingOcrEditBean.editBeanProperty.updateProcessFlg}">
+                            <div class="title_area_left">
+                                <h2 class="page_title">
+                                    <h:outputText value="AieLink編集" />
+                                </h2>
+                                <p class="page_subtitle">
+                                    <h:outputText value="AieLink情報の編集ができます。" />
+                                </p>
+                            </div>
+                        </c:if>
+                        <div class="clear" />
+                        <rich:messages id="smsServerSettingOcrEditBeanMessages" />
+                        <div>
+                            <h3 class="contents_title">
+                                <h:outputText value="新規登録" rendered="#{!smsServerSettingOcrEditBean.editBeanProperty.updateProcessFlg}"/>
+                                <h:outputText value="編集" rendered="#{smsServerSettingOcrEditBean.editBeanProperty.updateProcessFlg}"/>
+                            </h3>
+                            <div class="contents_form_area">
+                                <table>
+                                    <tr>
+                                        <th class="TXT008">
+                                            装置コード
+                                            <span class="required"></span>
+                                        </th>
+                                        <td>
+                                            <h:inputText id="inputDevId" styleClass="check_change EDIT002 autofocus"
+                                                value="#{smsServerSettingOcrEditBean.editBeanProperty.devId}"
+                                                rendered="#{!smsServerSettingOcrEditBean.editBeanProperty.updateProcessFlg}"
+                                                style="width:250px; #{smsServerSettingOcrEditBean.getInvalidStyle(component.clientId)}"
+                                                maxlength="8"/>
+                                            <h:outputText id="outputDevId" styleClass="TXT020" value="#{smsServerSettingOcrEditBean.editBeanProperty.devId}"
+                                                rendered="#{smsServerSettingOcrEditBean.editBeanProperty.updateProcessFlg}"/>
+                                        </td>
+                                        <c:if test="#{!smsServerSettingOcrEditBean.editBeanProperty.updateProcessFlg}">
+                                            <td colspan="2">
+                                                <span>
+                                                    ※ 重複して登録できませんのでご注意ください。<br/>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;装置コードの先頭2文字はOCで入力してください。<br/>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;例：OCXXXXXX
+                                                </span>
+                                            </td>
+                                        </c:if>
+                                    </tr>
+                                    <tr>
+                                        <th class="TXT008">
+                                            装置名称
+                                        </th>
+                                        <td>
+                                            <h:inputText id="devName" styleClass="check_change EDIT002 autofocus"
+                                                value="#{smsServerSettingOcrEditBean.editBeanProperty.name}"
+                                                style="width:250px; #{smsServerSettingOcrEditBean.getInvalidStyle(component.clientId)}"
+                                                maxlength="20"/>
+                                        </td>
+                                        <td colspan="2">
+                                            <span>
+                                                ※ 全角20文字以内にて入力してください。
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="TXT008">
+                                            検満通知月
+                                        </th>
+                                        <td>
+                                            <h:inputText id="examNoticeMonth" styleClass="check_change EDIT002"
+                                                value="#{smsServerSettingOcrEditBean.editBeanProperty.examNoticeMonth}"
+                                                style="width:30px; #{smsServerSettingOcrEditBean.getInvalidStyle(component.clientId)}"
+                                                maxlength="2"/>
+                                            <h:outputText value=" ヶ月前" />
+                                        </td>
+                                        <td colspan="2">
+                                            <span>
+                                                ※ 設定値は以下の範囲で設定してください。<br/>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;1～99 (半角数字)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 登録ボタン -->
+                        <div class="button_area_center gradation_type_1 button_large_2 button_regist" style="position: relative;">
+                            <a4j:commandButton id="RegistButton" styleClass="action_button" value="登録"
+                                onclick="return deleteCheck('#{smsServerSettingOcrEditBean.deleteDialogMessage}',
+                                                '#{smsServerSettingOcrEditBean.dialogMessage}');"
+                                render="@form" onbegin="showBlockModal()" oncomplete="hideBlockModal();clearChangeFlag();"
+                                action="#{smsServerSettingOcrEditBean.regist()}"
+                            >
+                            </a4j:commandButton>
+                            <h:graphicImage class="button_icon img_regist_beseinfo" library="images" name="common/com067.png" />
+                            <span style="position: absolute; top: 12px;">
+                                <h:selectBooleanCheckbox value="#{smsServerSettingOcrEditBean.editBeanProperty.delFlg}"
+                                        styleClass="check_change check_delete" rendered="#{smsServerSettingOcrEditBean.editBeanProperty.updateProcessFlg}"
+                                >
+                                    <span class="TXT008 check_del_dev">
+                                        <h:outputText id="checkDelOcrLabel" value="装置を削除する" />
+                                    </span>
+                                </h:selectBooleanCheckbox>
+                            </span>
+                        </div>
+                    </div>
+
+                    <ui:include src="/html/common/changeCautionDialog.xhtml" />
+
+                    <!-- アクセストークン用 -->
+                    <oslib:requestToken />
+                    <ui:remove>確認ダイアログ</ui:remove>
+                    <ui:include src="/html/common/confirmationDialog.xhtml">
+                        <ui:param name="confirmationDialogTitle" value="確認" />
+                        <ui:param name="confirmationDialogMessage" value="#{smsServerSettingOcrEditBean.dialogMessage}" />
+                    </ui:include>
+                    <script type="text/javascript">
+                    function deleteCheck(deleteMsgTxt, nomalMsgTxt) {
+                        if (confirmationDialogOpen($('input[id$=RegistButton]'))) {
+                            return true;
+                        }
+                        var isDelete = $(".check_delete").prop('checked');
+                        if (isDelete) {
+                            $('span[id$=confirmationDialogMessage]').html(deleteMsgTxt);
+                        } else {
+                            $('span[id$=confirmationDialogMessage]').html(nomalMsgTxt);
+                        }
+                        return false;
+                    }
+                    </script>
+                    <script type="text/javascript">
+                        function functionCheck(check) {
+                            if(functionCheckDialog(check)){
+                                showBlockModal();
+                                return true;
+                            }
+                            return false;
+                        }
+                    </script>
+                </div>
+            </form>
+        </ui:define>
+    </ui:composition>
+</body>
+</html>

@@ -1,0 +1,383 @@
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+  <!-- *** AielMaster日報データ送信 テンプレート *** -->
+  <!-- ベース部分 -->
+  <template name="base">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" default="SM002" keepPadding="true" />
+    <field name="settingDate" length="10" keepPadding="true" />
+  </template>
+
+  <template name="base22">
+    <include template="base" />
+    <field name="compressionDataLength" length="6" default="000000" keepPadding="true" />
+  </template>
+
+  <template name="base.res">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" keepPadding="true" />
+  </template>
+
+  <template name="base22.res">
+    <include template="base.res" />
+    <field name="compressionDataLength" length="6" keepPadding="true" />
+  </template>
+
+  <!-- 共通部分１（送信用） -->
+  <template name="commonRequest">
+
+    <segment name="demandDayReportList" collection="list" class="map" occurs="48">
+        <field name="001" length="4" keepPadding="true" />
+        <field name="002" length="4" keepPadding="true" />
+        <field name="003" length="4" keepPadding="true" />
+        <field name="004" length="4" keepPadding="true" />
+        <field name="005" length="4" keepPadding="true" />
+        <field name="006" length="4" keepPadding="true" />
+        <field name="007" length="4" keepPadding="true" />
+        <field name="008" length="4" keepPadding="true" />
+        <field name="009" length="4" keepPadding="true" />
+        <field name="010" length="4" keepPadding="true" />
+        <field name="011" length="4" keepPadding="true" />
+        <field name="012" length="4" keepPadding="true" />
+        <field name="013" length="4" keepPadding="true" />
+        <field name="014" length="4" keepPadding="true" />
+        <field name="015" length="4" keepPadding="true" />
+        <field name="016" length="4" keepPadding="true" />
+        <field name="017" length="4" keepPadding="true" />
+        <field name="018" length="4" keepPadding="true" />
+        <field name="019" length="4" keepPadding="true" />
+        <field name="020" length="4" keepPadding="true" />
+        <field name="021" length="4" keepPadding="true" />
+        <field name="022" length="4" keepPadding="true" />
+        <field name="023" length="4" keepPadding="true" />
+        <field name="024" length="4" keepPadding="true" />
+        <field name="025" length="4" keepPadding="true" />
+        <field name="026" length="4" keepPadding="true" />
+        <field name="027" length="4" keepPadding="true" />
+        <field name="028" length="4" keepPadding="true" />
+        <field name="029" length="4" keepPadding="true" />
+        <field name="030" length="4" keepPadding="true" />
+        <field name="031" length="4" keepPadding="true" />
+        <field name="032" length="4" keepPadding="true" />
+        <field name="033" length="4" keepPadding="true" />
+        <field name="034" length="4" keepPadding="true" />
+        <field name="035" length="4" keepPadding="true" />
+        <field name="036" length="4" keepPadding="true" />
+        <field name="037" length="4" keepPadding="true" />
+        <field name="038" length="4" keepPadding="true" />
+        <field name="039" length="4" keepPadding="true" />
+        <field name="040" length="4" keepPadding="true" />
+        <field name="041" length="4" keepPadding="true" />
+        <field name="042" length="4" keepPadding="true" />
+        <field name="043" length="4" keepPadding="true" />
+        <field name="044" length="4" keepPadding="true" />
+        <field name="045" length="4" keepPadding="true" />
+        <field name="046" length="4" keepPadding="true" />
+        <field name="047" length="4" keepPadding="true" />
+        <field name="048" length="4" keepPadding="true" />
+        <field name="049" length="4" keepPadding="true" />
+        <field name="050" length="4" keepPadding="true" />
+        <field name="051" length="4" keepPadding="true" />
+        <field name="052" length="4" keepPadding="true" />
+        <field name="053" length="4" keepPadding="true" />
+        <field name="054" length="4" keepPadding="true" />
+        <field name="055" length="4" keepPadding="true" />
+        <field name="056" length="4" keepPadding="true" />
+        <field name="057" length="4" keepPadding="true" />
+        <field name="058" length="4" keepPadding="true" />
+        <field name="059" length="4" keepPadding="true" />
+        <field name="060" length="4" keepPadding="true" />
+        <field name="061" length="4" keepPadding="true" />
+        <field name="062" length="4" keepPadding="true" />
+        <field name="063" length="4" keepPadding="true" />
+        <field name="064" length="4" keepPadding="true" />
+        <field name="065" length="4" keepPadding="true" />
+        <field name="066" length="4" keepPadding="true" />
+        <field name="067" length="4" keepPadding="true" />
+        <field name="068" length="4" keepPadding="true" />
+        <field name="069" length="4" keepPadding="true" />
+        <field name="070" length="4" keepPadding="true" />
+        <field name="071" length="4" keepPadding="true" />
+        <field name="072" length="4" keepPadding="true" />
+        <field name="073" length="4" keepPadding="true" />
+        <field name="074" length="4" keepPadding="true" />
+        <field name="075" length="4" keepPadding="true" />
+        <field name="076" length="4" keepPadding="true" />
+        <field name="077" length="4" keepPadding="true" />
+        <field name="078" length="4" keepPadding="true" />
+        <field name="079" length="4" keepPadding="true" />
+        <field name="080" length="4" keepPadding="true" />
+        <field name="081" length="4" keepPadding="true" />
+        <field name="082" length="4" keepPadding="true" />
+        <field name="083" length="4" keepPadding="true" />
+        <field name="084" length="4" keepPadding="true" />
+        <field name="085" length="4" keepPadding="true" />
+        <field name="086" length="4" keepPadding="true" />
+        <field name="087" length="4" keepPadding="true" />
+        <field name="088" length="4" keepPadding="true" />
+        <field name="089" length="4" keepPadding="true" />
+        <field name="090" length="4" keepPadding="true" />
+        <field name="091" length="4" keepPadding="true" />
+        <field name="092" length="4" keepPadding="true" />
+        <field name="093" length="4" keepPadding="true" />
+        <field name="094" length="4" keepPadding="true" />
+        <field name="095" length="4" keepPadding="true" />
+        <field name="096" length="4" keepPadding="true" />
+        <field name="097" length="4" keepPadding="true" />
+        <field name="098" length="4" keepPadding="true" />
+        <field name="099" length="4" keepPadding="true" />
+        <field name="100" length="4" keepPadding="true" />
+        <field name="101" length="4" keepPadding="true" />
+        <field name="102" length="4" keepPadding="true" />
+        <field name="103" length="4" keepPadding="true" />
+        <field name="104" length="4" keepPadding="true" />
+        <field name="105" length="4" keepPadding="true" />
+        <field name="106" length="4" keepPadding="true" />
+        <field name="107" length="4" keepPadding="true" />
+        <field name="108" length="4" keepPadding="true" />
+        <field name="109" length="4" keepPadding="true" />
+        <field name="110" length="4" keepPadding="true" />
+        <field name="111" length="4" keepPadding="true" />
+        <field name="112" length="4" keepPadding="true" />
+        <field name="113" length="4" keepPadding="true" />
+        <field name="114" length="4" keepPadding="true" />
+        <field name="115" length="4" keepPadding="true" />
+        <field name="116" length="4" keepPadding="true" />
+        <field name="117" length="4" keepPadding="true" />
+        <field name="118" length="4" keepPadding="true" />
+        <field name="119" length="4" keepPadding="true" />
+        <field name="120" length="4" keepPadding="true" />
+        <field name="121" length="4" keepPadding="true" />
+        <field name="122" length="4" keepPadding="true" />
+        <field name="123" length="4" keepPadding="true" />
+        <field name="124" length="4" keepPadding="true" />
+        <field name="125" length="4" keepPadding="true" />
+        <field name="126" length="4" keepPadding="true" />
+        <field name="127" length="4" keepPadding="true" />
+        <field name="128" length="4" keepPadding="true" />
+        <field name="129" length="4" keepPadding="true" />
+        <field name="130" length="4" keepPadding="true" />
+        <field name="131" length="4" keepPadding="true" />
+        <field name="132" length="4" keepPadding="true" />
+        <field name="133" length="4" keepPadding="true" />
+        <field name="134" length="4" keepPadding="true" />
+        <field name="135" length="4" keepPadding="true" />
+        <field name="136" length="4" keepPadding="true" />
+        <field name="137" length="4" keepPadding="true" />
+        <field name="138" length="4" keepPadding="true" />
+        <field name="139" length="4" keepPadding="true" />
+        <field name="140" length="4" keepPadding="true" />
+        <field name="141" length="4" keepPadding="true" />
+        <field name="142" length="4" keepPadding="true" />
+        <field name="143" length="4" keepPadding="true" />
+        <field name="144" length="4" keepPadding="true" />
+        <field name="145" length="4" keepPadding="true" />
+        <field name="146" length="4" keepPadding="true" />
+        <field name="147" length="4" keepPadding="true" />
+        <field name="148" length="4" keepPadding="true" />
+        <field name="149" length="4" keepPadding="true" />
+        <field name="150" length="4" keepPadding="true" />
+        <field name="151" length="4" keepPadding="true" />
+        <field name="152" length="4" keepPadding="true" />
+        <field name="153" length="4" keepPadding="true" />
+        <field name="154" length="4" keepPadding="true" />
+        <field name="155" length="4" keepPadding="true" />
+        <field name="156" length="4" keepPadding="true" />
+        <field name="157" length="4" keepPadding="true" />
+        <field name="158" length="4" keepPadding="true" />
+        <field name="159" length="4" keepPadding="true" />
+        <field name="160" length="4" keepPadding="true" />
+        <field name="161" length="4" keepPadding="true" />
+        <field name="162" length="4" keepPadding="true" />
+        <field name="163" length="4" keepPadding="true" />
+        <field name="164" length="4" keepPadding="true" />
+        <field name="165" length="4" keepPadding="true" />
+        <field name="166" length="4" keepPadding="true" />
+        <field name="167" length="4" keepPadding="true" />
+        <field name="168" length="4" keepPadding="true" />
+        <field name="169" length="4" keepPadding="true" />
+        <field name="170" length="4" keepPadding="true" />
+        <field name="171" length="4" keepPadding="true" />
+        <field name="172" length="4" keepPadding="true" />
+        <field name="173" length="4" keepPadding="true" />
+        <field name="174" length="4" keepPadding="true" />
+        <field name="175" length="4" keepPadding="true" />
+        <field name="176" length="4" keepPadding="true" />
+        <field name="177" length="4" keepPadding="true" />
+        <field name="178" length="4" keepPadding="true" />
+        <field name="179" length="4" keepPadding="true" />
+        <field name="180" length="4" keepPadding="true" />
+        <field name="181" length="4" keepPadding="true" />
+        <field name="182" length="4" keepPadding="true" />
+        <field name="183" length="4" keepPadding="true" />
+        <field name="184" length="4" keepPadding="true" />
+        <field name="185" length="4" keepPadding="true" />
+        <field name="186" length="4" keepPadding="true" />
+        <field name="187" length="4" keepPadding="true" />
+        <field name="188" length="4" keepPadding="true" />
+        <field name="189" length="4" keepPadding="true" />
+        <field name="190" length="4" keepPadding="true" />
+        <field name="191" length="4" keepPadding="true" />
+        <field name="192" length="4" keepPadding="true" />
+        <field name="193" length="4" keepPadding="true" />
+        <field name="194" length="4" keepPadding="true" />
+        <field name="195" length="4" keepPadding="true" />
+        <field name="196" length="4" keepPadding="true" />
+        <field name="197" length="4" keepPadding="true" />
+        <field name="198" length="4" keepPadding="true" />
+        <field name="199" length="4" keepPadding="true" />
+        <field name="200" length="4" keepPadding="true" />
+        <field name="201" length="4" keepPadding="true" />
+        <field name="202" length="4" keepPadding="true" />
+        <field name="203" length="4" keepPadding="true" />
+        <field name="204" length="4" keepPadding="true" />
+        <field name="205" length="4" keepPadding="true" />
+        <field name="206" length="4" keepPadding="true" />
+        <field name="207" length="4" keepPadding="true" />
+        <field name="208" length="4" keepPadding="true" />
+        <field name="209" length="4" keepPadding="true" />
+        <field name="210" length="4" keepPadding="true" />
+        <field name="211" length="4" keepPadding="true" />
+        <field name="212" length="4" keepPadding="true" />
+        <field name="213" length="4" keepPadding="true" />
+        <field name="214" length="4" keepPadding="true" />
+        <field name="215" length="4" keepPadding="true" />
+        <field name="216" length="4" keepPadding="true" />
+        <field name="217" length="4" keepPadding="true" />
+        <field name="218" length="4" keepPadding="true" />
+        <field name="219" length="4" keepPadding="true" />
+        <field name="220" length="4" keepPadding="true" />
+        <field name="221" length="4" keepPadding="true" />
+        <field name="222" length="4" keepPadding="true" />
+        <field name="223" length="4" keepPadding="true" />
+        <field name="224" length="4" keepPadding="true" />
+        <field name="225" length="4" keepPadding="true" />
+        <field name="226" length="4" keepPadding="true" />
+        <field name="227" length="4" keepPadding="true" />
+        <field name="228" length="4" keepPadding="true" />
+        <field name="229" length="4" keepPadding="true" />
+        <field name="230" length="4" keepPadding="true" />
+        <field name="231" length="4" keepPadding="true" />
+        <field name="232" length="4" keepPadding="true" />
+        <field name="233" length="4" keepPadding="true" />
+        <field name="234" length="4" keepPadding="true" />
+        <field name="235" length="4" keepPadding="true" />
+        <field name="236" length="4" keepPadding="true" />
+        <field name="237" length="4" keepPadding="true" />
+        <field name="238" length="4" keepPadding="true" />
+        <field name="239" length="4" keepPadding="true" />
+        <field name="240" length="4" keepPadding="true" />
+        <field name="241" length="4" keepPadding="true" />
+        <field name="242" length="4" keepPadding="true" />
+        <field name="243" length="4" keepPadding="true" />
+        <field name="244" length="4" keepPadding="true" />
+        <field name="245" length="4" keepPadding="true" />
+        <field name="246" length="4" keepPadding="true" />
+        <field name="247" length="4" keepPadding="true" />
+        <field name="248" length="4" keepPadding="true" />
+        <field name="249" length="4" keepPadding="true" />
+        <field name="250" length="4" keepPadding="true" />
+        <field name="251" length="4" keepPadding="true" />
+        <field name="252" length="4" keepPadding="true" />
+        <field name="253" length="4" keepPadding="true" />
+        <field name="254" length="4" keepPadding="true" />
+        <field name="255" length="4" keepPadding="true" />
+        <field name="256" length="4" keepPadding="true" />
+        <field name="SRC" length="4" keepPadding="true" />
+    </segment>
+
+  </template>
+
+  <!-- 「00」非対応 -->
+  <!-- 送信文 -->
+  <stream name="00.req" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="00.res" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 「03」非対応 -->
+  <!-- 送信文 -->
+  <stream name="03.req" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="03.res" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 「06」非対応 -->
+  <!-- 送信文 -->
+  <stream name="06.req" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="06.res" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 「12」非対応 -->
+  <!-- 送信文 -->
+  <stream name="12.req" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="12.res" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 「21」非対応 -->
+  <!-- 送信文 -->
+  <stream name="21.req" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="21.res" format="fixedlength">
+    <record name="dummy">
+      <field name="dummy" length="0" />
+    </record>
+  </stream>
+
+    <!-- 「22」製品に対する設定 -->
+    <!-- 送信文 -->
+    <stream name="22.req" format="fixedlength">
+        <record name="response" template="base22" class="jp.co.osaki.osol.mng.param.A210011Param">
+            <include template="commonRequest" />
+        </record>
+    </stream>
+
+    <!-- 受信文 -->
+    <stream name="22.res" format="fixedlength">
+        <record name="response" template="base22.res" class="jp.co.osaki.osol.mng.param.A210011Param">
+        </record>
+    </stream>
+
+</beanio>

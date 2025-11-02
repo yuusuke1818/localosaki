@@ -1,0 +1,121 @@
+/* サイドメニューCSS（template_*_sideMenu.xhtml 専用）*/
+.main_layout {
+  display: flex;
+  margin-top: -45px;
+  margin-left: -10px;
+}
+
+.sub_layout {
+  background-color: rgb(0, 79, 141);
+  color: #FFF;
+  min-width: 200px;
+  min-height: calc(100vh - 170px);
+  padding-bottom: 20px
+}
+
+.auth {
+  margin: 10px 5px;
+  padding: 13px 0px;
+  background-color: rgb(255, 165, 0);
+  border-radius: 5px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.side_title {
+  margin: 0px 5px 10px 5px;
+  padding: 13px 0px;
+  background-color: rgb(0, 153, 98);
+  border-radius: 5px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.side_button input[type="submit"] {
+  background-color: none;
+  border: none;
+  background-image: none;
+  outline: 0 !important;
+  width: 100%;
+  text-align: left;
+}
+
+.side_button input[type="submit"]:hover, .side_button label:hover {
+  background-color: rgb(239, 251, 255);
+}
+
+.parent_button input[type="submit"] {
+  background-color: rgb(33, 96, 222);
+  padding: 15px;
+  font-size: 14px;
+  color: white;
+}
+
+.parent_button input[type="submit"]:hover, .parent_button label:hover {
+  color: black;
+}
+
+.child_button input[type="submit"] {
+  background-color: rgb(152, 210, 255);
+  padding: 10px 10px 10px 25px;
+  font-size: 12px;
+  border-bottom: solid 1px rgb(33, 96, 222);
+}
+
+.grand_child_button input[type="submit"] {
+  background-color: rgb(187, 255, 255);
+  padding: 10px 10px 10px 35px;
+  font-size: 12px;
+  border-bottom: solid 1px rgb(152, 210, 255);
+}
+
+.abnormal_info_button input[type="submit"] {
+  background-color: rgb(152, 210, 255);
+  padding: 10px 10px 9px 25px;
+  font-size: 12px;
+  border-bottom: solid 1px rgb(33, 96, 222);
+  border-top: solid 1px rgb(33, 96, 222);
+}
+
+.accordion_title input[type="checkbox"], .accordion_title_child input[type="checkbox"] {
+  display: none;
+}
+
+.accordion_title label {
+  position: relative;
+  display: inline-block;
+  font-size: 14px;
+  color: white;
+  background-color: rgb(33, 96, 222);
+  padding: 15px 0px;
+  width: 100%;
+  color: white;
+  text-indent: 15px;
+}
+
+.accordion_title label:after, .accordion_title_child label:after {
+  position: absolute;
+  right: 10px;
+  content: '\25BC';
+}
+
+.checkbox:checked+label:after {
+  content: '\25B2';
+}
+
+.accordion_title_child label {
+  position: relative;
+  display: inline-block;
+  font-size: 12px;
+  color: black;
+  background-color: rgb(152, 210, 255);
+  padding: 10px 0px 11px;
+  width: 100%;
+  text-indent: 25px;
+}
+
+.parent_border {
+  border-bottom: solid 2px rgb(0, 79, 141);
+}

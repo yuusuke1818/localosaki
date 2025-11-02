@@ -1,0 +1,299 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+      <rich:popupPanel id="billingAmountDetailsPopup" modal="true" moveable="true" resizeable="false" 
+                     width="600" height="480" domElementAttachment="form" zindex="200"
+                     minWidth="600" maxWidth="600" minHeight="480"
+                     onshow="hideBlockModal(true);checkAutoFocusOnShowRichPanel(event);" onhide="resetListener();">
+        <h:outputStylesheet library="css" name="common/popup.css"/>
+        <h:outputStylesheet library="css" name="sms/collect/dataview/meterReadingData.css" />
+
+        <f:facet name="header">
+            <div class="pop_title_area">
+                <div class="left">
+                    <h:outputText class="pop_page_title" value="請求金額詳細情報" />
+                </div>
+                <div class="pop_button_close">
+                    <input type="button" id="closeBtn" value="" onclick="#{rich:component('billingAmountDetailsPopup')}.hide();">
+                    </input>
+                </div>
+            </div>
+        </f:facet>
+        <form jsfc="h:form" id="billingAmountDetailsPopupForm" >
+            <div class="inner_content">
+                <table id="data_table">
+                    <tr>
+                        <th class="TXT008">
+                            <h:outputText value="ユーザーコード" />
+                        </th>
+                        <td class="TXT008 TXT010 TXT011" colspan="3">
+                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.tenantId}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="TXT008">
+                            <h:outputText value="テナント番号" />
+                        </th>
+                        <td class="TXT008 TXT010 TXT011" colspan="3">
+                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.buildingNo}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="TXT008">
+                            <h:outputText value="テナント名" />
+                        </th>
+                        <td class="TXT008 TXT010 TXT011" colspan="3">
+                            <h:outputText value="#{fn:substring(meterReadingDataBean.billingAmountDataDetailsBeanProperty.buildingName, 0, 50)}"/>
+                        </td>
+                    </tr>
+                    <div jsfc="ui:repeat" value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.billingAmountDetails}" varStatus="item1">
+	                    <tr>
+	                        <th class="TXT008"></th>
+	                        <td class="TXT008 TXT010 TXT011" colspan="3"></td>
+	                    </tr>
+	                    <tr>
+	                        <th class="TXT008">
+	                            <h:outputText value="メーター種別名" />
+	                        </th>
+	                        <td class="TXT008 TXT010 TXT011" colspan="3">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.billingAmountDetails[item1.index].meterTypeName}"/>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <th class="TXT008">
+	                            <h:outputText value="料金メニュー" />
+	                        </th>
+	                        <td class="TXT008 TXT010 TXT011" colspan="3">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.billingAmountDetails[item1.index].priceMenuName}"/>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <th class="TXT008">
+	                            <h:outputText value="装置ID" />
+	                        </th>
+	                        <td class="TXT008 TXT010 TXT011" colspan="3">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.billingAmountDetails[item1.index].devId}"/>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <th class="TXT008">
+	                            <h:outputText value="メーター管理番号" />
+	                        </th>
+	                        <td class="TXT008 TXT010 TXT011" colspan="3">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.billingAmountDetails[item1.index].meterMngId}"/>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <th class="TXT008">
+	                            <h:outputText value="計器ID" />
+	                        </th>
+	                        <td class="TXT008 TXT010 TXT011" colspan="3">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.billingAmountDetails[item1.index].meterId}"/>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <th class="TXT008">
+	                            <h:outputText value="コメント" />
+	                        </th>
+	                        <td class="TXT008 TXT010 TXT011" colspan="3">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.billingAmountDetails[item1.index].memo}"/>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <th class="TXT008">
+	                            <h:outputText value="ステータス" />
+	                        </th>
+	                        <td class="TXT008 TXT010 TXT011" colspan="3">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.billingAmountDetails[item1.index].status}"/>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <th class="TXT008">
+	                            <h:outputText value="今回検針値(kWh)" />
+	                        </th>
+	                        <td class="TXT008 TXT010 TXT011 TXT012">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.billingAmountDetails[item1.index].thisInspVal}"/>
+	                        </td>
+	                        <th class="TXT008">
+	                            <h:outputText value="前回検針値(kWh)" />
+	                        </th>
+	                        <td class="TXT008 TXT010 TXT011 TXT012">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.billingAmountDetails[item1.index].prevInspVal}"/>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <th class="TXT008">
+	                            <h:outputText value="乗率" />
+	                        </th>
+	                        <td class="TXT008 TXT010 TXT011 TXT012" colspan="1">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.billingAmountDetails[item1.index].multipleRate}"/>
+	                        </td>
+                            <th class="TXT008"/>
+                            <td class="TXT008 TXT010 TXT011"/>
+	                    </tr>
+	                    <tr>
+	                        <th class="TXT008">
+	                            <h:outputText value="使用量(kWh)" />
+	                        </th>
+	                        <td class="TXT008 TXT010 TXT011 TXT012" colspan="1">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.billingAmountDetails[item1.index].usageVal}"/>
+	                        </td>
+                            <th class="TXT008"/>
+                            <td class="TXT008 TXT010 TXT011"/>
+	                    </tr>
+	                    <tr>
+	                        <th class="TXT008">
+	                            <h:outputText value="基本料金" />
+	                        </th>
+	                        <td class="TXT008 TXT010 TXT011 TXT012" colspan="1">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.billingAmountDetails[item1.index].dispBasicCharge}"/>
+	                        </td>
+                            <th class="TXT008"/>
+                            <td class="TXT008 TXT010 TXT011"/>
+	                    </tr>
+	                    <tr>
+	                        <th class="TXT008">
+	                            <h:outputText value="従量料金" />
+	                        </th>
+	                        <td class="TXT008 TXT010 TXT011 TXT012" colspan="1">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.billingAmountDetails[item1.index].dispUsageVolumeFee}"/>
+	                        </td>
+                            <th class="TXT008"/>
+                            <td class="TXT008 TXT010 TXT011"/>
+	                    </tr>
+	                    <tr>
+	                        <th class="TXT008">
+	                            <h:outputText value="燃料費調整額" />
+	                        </th>
+	                        <td class="TXT008 TXT010 TXT011 TXT012" colspan="1">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.billingAmountDetails[item1.index].dispFuelAdjustmentFee}"/>
+	                        </td>
+                            <th class="TXT008"/>
+                            <td class="TXT008 TXT010 TXT011"/>
+	                    </tr>
+	                    <tr>
+	                        <th class="TXT008">
+	                            <h:outputText value="再エネ賦課金" />
+	                        </th>
+	                        <td class="TXT008 TXT010 TXT011 TXT012" colspan="1">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.billingAmountDetails[item1.index].dispRenewableEnergyLevy}"/>
+	                        </td>
+                            <th class="TXT008"/>
+                            <td class="TXT008 TXT010 TXT011"/>
+	                    </tr>
+	                    <tr>
+	                        <th class="TXT008">
+	                            <h:outputText value="割引額" />
+	                        </th>
+	                        <td class="TXT008 TXT010 XT011 TXT012" colspan="1">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.billingAmountDetails[item1.index].dispDiscountAmount}"/>
+	                        </td>
+                            <th class="TXT008"/>
+                            <td class="TXT008 TXT010 TXT011"/>
+	                    </tr>
+	                    <tr>
+	                        <th class="TXT008">
+	                            <h:outputText value="使用料金(円)" />
+	                        </th>
+	                        <td class="TXT008 TXT010 TXT011 TXT012" colspan="1">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.billingAmountDetails[item1.index].dispUsageFee}"/>
+	                        </td>
+                            <th class="TXT008"/>
+                            <td class="TXT008 TXT010 TXT011"/>
+	                    </tr>
+                    </div>
+                    <tr>
+                        <th class="TXT008"></th>
+                        <td class="TXT008 TXT010 TXT011" colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <th class="TXT008">
+                            <h:outputText value="メーター小計(円)" />
+                        </th>
+                        <td class="TXT008 TXT010 TXT011 TXT012" colspan="1">
+                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.dispUsageFees}"/>
+                        </td>
+                        <th class="TXT008"/>
+                        <td class="TXT008 TXT010 TXT011"/>
+                    </tr>
+                    <tr>
+                        <th class="TXT008"></th>
+                        <td class="TXT008 TXT010 TXT011" colspan="3"></td>
+                    </tr>
+                    <div jsfc="ui:repeat" value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.meterGroupTotalChargeList}" varStatus="item2">
+	                    <tr>
+	                        <th class="TXT008">
+	                            <h:outputText value="グループ#{item2.index + 1}" />
+	                        </th>
+	                        <td class="TXT008 TXT010 TXT011 TXT012" colspan="1">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.meterGroupTotalChargeList[item2.index].groupTotalCharge}"/>
+	                        </td>
+                            <th class="TXT008"/>
+                            <td class="TXT008 TXT010 TXT011"/>
+	                    </tr>
+	            	</div>
+                    <tr>
+                        <th class="TXT008">
+                            <h:outputText value="グループ按分小計(円)" />
+                        </th>
+                        <td class="TXT008 TXT010 TXT011 TXT012" colspan="1">
+                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.dispMeterGroupTotalCharges}"/>
+                        </td>
+                        <th class="TXT008"/>
+                        <td class="TXT008 TXT010 TXT011"/>
+                    </tr>
+                    <tr>
+                        <th class="TXT008"></th>
+                        <td class="TXT008 TXT010 TXT011 TXT012" colspan="3"></td>
+                    </tr>
+                    <div jsfc="ui:repeat" value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.fixedCostList}" varStatus="item3">
+	                    <tr>
+	                        <th class="TXT008">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.fixedCostList[item3.index].fixedCostName}" />
+	                        </th>
+	                        <td class="TXT008 TXT010 TXT011 TXT012" colspan="1">
+	                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.fixedCostList[item3.index].dispFixedCost}"/>
+	                        </td>
+                            <th class="TXT008"/>
+                            <td class="TXT008 TXT010 TXT011"/>
+	                    </tr>
+	            	</div>
+                    <tr>
+                        <th class="TXT008">
+                            <h:outputText value="固定費小計(円)" />
+                        </th>
+                        <td class="TXT008 TXT010 TXT011 TXT012" colspan="1">
+                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.dispFixedCosts}"/>
+                        </td>
+                        <th class="TXT008"/>
+                        <td class="TXT008 TXT010 TXT011"/>
+                    </tr>
+                    <tr>
+                        <th class="TXT008"></th>
+                        <td class="TXT008 TXT010 TXT011" colspan="3"></td>
+                    </tr>
+                    <tr id="bill_amount">
+                        <th class="TXT008">
+                            <h:outputText value="今回請求金額(円)" />
+                        </th>
+                        <td class="TXT008 TXT010 TXT011 TXT012">
+                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.dispSumUsageFee}"/>
+                        </td>
+                        <th class="TXT008">
+                            <h:outputText value="うち消費税( #{meterReadingDataBean.billingAmountDataDetailsBeanProperty.salesTaxRate}% )" />
+                        </th>
+                        <td class="TXT008 TXT010 TXT011 TXT012">
+                            <h:outputText value="#{meterReadingDataBean.billingAmountDataDetailsBeanProperty.dispSumTax}"/>
+                        </td>
+                    </tr>
+	        	</table>
+            </div>
+        </form>
+    </rich:popupPanel>
+</html>

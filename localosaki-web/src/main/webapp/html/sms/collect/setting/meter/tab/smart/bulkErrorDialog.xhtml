@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:outputStylesheet library="css" name="common/popup.css"/>
+    <rich:popupPanel id="bulkErrorDialog" modal="true" moveable="true" resizeable="false"  
+                       top="180" zindex="320" autosized="true"
+                       domElementAttachment="parent">
+
+        <f:facet name="header">
+            <div class="pop_title_area">
+                <div class="left">
+                    <h:outputText class="pop_page_title" value="一括登録エラー" />
+                </div>
+                <div class="pop_button_close">
+                    <input type="button" value="" onclick="#{rich:component('bulkErrorDialog')}.hide();">
+                    </input>
+                </div>
+            </div>
+        </f:facet>
+        <div  class="inner_content">
+            <div class="TXT008 bulk_error_explaination">
+                <span>メーターの一括登録が正常に行われませんでした。</span><br />
+                <span>下記メーターの入力値が不正です。</span><br />
+                <span>CSVファイルを確認してください。</span><br />
+            </div>
+            <c:forEach var="obj" items="#{smsCollectSettingMeterMeterManagementBean.bulkErrorList}">
+                <h:outputText styleClass="bulk_error_content" value="#{obj}"></h:outputText><br /><br />
+            </c:forEach>
+            <table class="change_caution_button_area" style="text-align: center; margin-left: 13px;">
+                <tr>
+                    <td class="gradation_type_1 button_large_2">
+                        <h:form>
+                            <a4j:commandButton id="okBtn" value="OK"
+                                      style="width:160px;"
+                                      oncomplete="#{rich:component('bulkErrorDialog')}.hide(); return false;"
+                                      />
+                            <h:graphicImage style="pointer-events: none;" class="button_icon btnDownloadIconLayout btnFileSelOkIconLayout" library="images" name="common/com067.png" />
+                        </h:form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </rich:popupPanel>
+
+</html>

@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:rich="http://richfaces.org/rich" xmlns:cust="http://xmlns.jcp.org/jsf/component"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <div style="margin-top: 0;">
+        <div>
+            <rich:messages id="s5Messages" styleClass="errNonSearch errArea" />
+            <h3 class="contents_title">設定内容変更</h3>
+            <form jsfc="h:form" id="smartSettingEditForm">
+                <div class="contents_form_area">
+                <div jsfc="a4j:outputPanel" id="s5Panel">
+                    <div class="#{smsCollectSettingMeterMeterManagementBean.lteMDeviceFlg ? 'settingBox' : ''}">
+                        <table class="s5Table">
+                            <tr style="height: 10px">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <ui:fragment rendered="#{!smsCollectSettingMeterMeterManagementBean.lteMDeviceFlg}">
+                                <tr>
+                                <td class="TXT008">負荷制限</td>
+                                <td colspan="2">
+                                    <h:selectOneMenu id="s5LoadlimitSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.loadlimitMode}" >
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.loadlimitMap}" />
+                                    </h:selectOneMenu>
+                                </td>
+                                <td>
+                                    ※負荷制限機能の有無を選択
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">負荷電流</td>
+                                <td>
+                                    基本設定
+                                    <h:selectOneMenu id="s5BasicCurlimitSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.loadCurrent}" >
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.curlimitMap}" />
+                                    </h:selectOneMenu>
+                                    A
+                                </td>
+                                <td>
+                                    臨時設定
+                                    <h:selectOneMenu id="s5TmpCurlimitSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.tempLoadCurrent}" >
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.curlimitMap}" />
+                                    </h:selectOneMenu>
+                                    A
+                                </td>
+                                <td>
+                                    ※負荷制限機能の負荷電流値を選択
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">自動投入</td>
+                                <td>
+                                    基本設定
+                                    <h:inputText
+                                            id="s5BasicAutorec"
+                                            class="textWidthSmall check_change"
+                                            value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.autoInjection}"
+                                            maxlength="3"
+                                            style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                                    秒
+                                </td>
+                                <td>
+                                    臨時設定
+                                    <h:inputText
+                                            id="s5TmpAutorec"
+                                            class="textWidthSmall check_change"
+                                            value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.tempAutoInjection}"
+                                            maxlength="3"
+                                            style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"></h:inputText>
+                                    秒
+                                </td>
+                                <td>
+                                    ※入力範囲 ： "0"(なし) or "5～300" (秒)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">開閉器動作カウント</td>
+                                <td>
+                                    基本設定
+                                    <h:selectOneMenu id="s5BasiOccountSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.breakerActCount}" >
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.occountMap}" />
+                                    </h:selectOneMenu>
+                                    回
+                                </td>
+                                <td>
+                                    臨時設定
+                                    <h:selectOneMenu id="s5TmpOccountSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.tempBreakerActCount}" >
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.occountMap}" />
+                                    </h:selectOneMenu>
+                                    回
+                                </td>
+                                <td>
+                                    ※選択範囲 ： "0～9" (回)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">開閉器カウントクリア</td>
+                                <td>
+                                    基本設定
+                                    <h:selectOneMenu id="s5BasiCntclrSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.countClear}" >
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.cntclrMap}" />
+                                    </h:selectOneMenu>
+                                    分
+                                </td>
+                                <td>
+                                    臨時設定
+                                    <h:selectOneMenu id="s5TmpCntclrSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.tempCountClear}" >
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.cntclrMap}" />
+                                    </h:selectOneMenu>
+                                    分
+                                </td>
+                                <td>
+                                    ※選択範囲 ： "00～60 " (分)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">開閉区分</td>
+                                <td colspan="2">
+                                    <h:selectOneMenu id="s5OcstateSelect"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.openMode}" >
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.ocstateMap}" />
+                                    </h:selectOneMenu>
+                                </td>
+                                <td>
+                                    ※開閉区分を選択
+                                </td>
+                            </tr>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{smsCollectSettingMeterMeterManagementBean.lteMDeviceFlg}">
+                            <tr>
+                                <td class="TXT008">負荷制限</td>
+                                <td colspan="2">
+                                    <!-- 初期値は「要選択」とする -->
+                                    <h:selectOneMenu id="s5LoadlimitSelectLteM" class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.loadlimitMode}"
+                                     required="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.sendFlgLoadlimit}"
+                                     requiredMessage="負荷制限を選択してください。"
+                                     style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}" >
+                                        <f:selectItem itemLabel="--要選択--" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.loadlimitMap}" />
+                                        <a4j:ajax event="change"
+                                            render="s5BasicCurlimitSelectGroup s5BasicAutorecGroup s5BasicOccountSelectGroup s5BasicCntclrSelectGroup
+                                                    s5TmpCurlimitSelectGroup s5TmpAutorecGroup s5TmpOccountSelectGroup s5TmpCntclrSelectGroup"
+                                            execute="@this"
+                                            listener="#{smsCollectSettingMeterMeterManagementBean.initSmartSettingUpdateProperty}"
+                                            resetValues="true" />
+                                    </h:selectOneMenu>
+                                </td>
+                                <td>
+                                    ※負荷制限機能の有無を選択<br />&nbsp;「なし」にした場合も入力値を送信する
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">負荷電流</td>
+                                <td><a4j:outputPanel id="s5BasicCurlimitSelectGroup" layout="block">
+                                    基本設定
+                                    <!-- 初期値は「要選択」とする -->
+                                    <h:selectOneMenu id="s5BasicCurlimitSelectLteM"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.loadCurrent}"
+                                     required="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.sendFlgLoadlimit and smsCollectSettingMeterMeterManagementBean.settingBasicEnabled}"
+                                     requiredMessage="負荷電流(基本設定)を選択してください。"
+                                     style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"
+                                     disabled="#{!smsCollectSettingMeterMeterManagementBean.settingBasicEnabled}" >
+                                        <f:selectItem itemLabel="--要選択--" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.curlimitMap}" />
+                                    </h:selectOneMenu>
+                                    A
+                                    </a4j:outputPanel>
+                                </td>
+                                <td><a4j:outputPanel id="s5TmpCurlimitSelectGroup" layout="block">
+                                    臨時設定
+                                    <!-- 初期値は「要選択」とする -->
+                                    <h:selectOneMenu id="s5TmpCurlimitSelectLteM"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.tempLoadCurrent}"
+                                    required="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.sendFlgLoadlimit and smsCollectSettingMeterMeterManagementBean.settingTempEnabled}"
+                                    requiredMessage="負荷電流(臨時設定)を選択してください。"
+                                    style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"
+                                    disabled="#{!smsCollectSettingMeterMeterManagementBean.settingTempEnabled}" >
+                                        <f:selectItem itemLabel="--要選択--" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.curlimitMap}" />
+                                    </h:selectOneMenu>
+                                    A
+                                    </a4j:outputPanel>
+                                </td>
+                                <td>
+                                    ※負荷制限機能の負荷電流値を選択
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">自動投入</td>
+                                <td><a4j:outputPanel id="s5BasicAutorecGroup" layout="block">
+                                    基本設定
+                                    <!-- 初期値は「要入力」とする -->
+                                    <h:inputText
+                                        id="s5BasicAutorecLteM"
+                                        class="EDIT002 textWidthSmall check_change"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.autoInjection}"
+                                        maxlength="3"
+                                        required="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.sendFlgLoadlimit and smsCollectSettingMeterMeterManagementBean.settingBasicEnabled}"
+                                        requiredMessage="自動投入(基本設定)は0または5～300の範囲で入力して下さい。"
+                                        p:type="text"
+                                        p:inputmode="numeric"
+                                        p:pattern="[0-9]{0,3}"
+                                        p:placeholder="要入力"
+                                        oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,3);"
+                                        style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"
+                                        disabled="#{!smsCollectSettingMeterMeterManagementBean.settingBasicEnabled}" />
+                                    秒
+                                    </a4j:outputPanel>
+                                </td>
+                                <td><a4j:outputPanel id="s5TmpAutorecGroup" layout="block">
+                                    臨時設定
+                                    <!-- 初期値は「要入力」とする -->
+                                    <h:inputText
+                                        id="s5TmpAutorecLteM"
+                                        class="EDIT002 textWidthSmall check_change"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.tempAutoInjection}"
+                                        maxlength="3"
+                                        required="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.sendFlgLoadlimit and smsCollectSettingMeterMeterManagementBean.settingTempEnabled}"
+                                        requiredMessage="自動投入(臨時設定)は0または5～300の範囲で入力して下さい。"
+                                        p:type="text"
+                                        p:inputmode="numeric"
+                                        p:pattern="[0-9]{0,3}"
+                                        p:placeholder="要入力"
+                                        oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,3);"
+                                        style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"
+                                        disabled="#{!smsCollectSettingMeterMeterManagementBean.settingTempEnabled}" />
+                                    秒
+                                    </a4j:outputPanel>
+                                </td>
+                                <td>
+                                    ※入力範囲 ： "0"(なし) or "5～300" (秒)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">開閉器動作カウント</td>
+                                <td><a4j:outputPanel id="s5BasicOccountSelectGroup" layout="block">
+                                    基本設定
+                                    <!-- 初期値は「要選択」とする -->
+                                    <h:selectOneMenu id="s5BasiOccountSelectLteM"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.breakerActCount}"
+                                    required="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.sendFlgLoadlimit and smsCollectSettingMeterMeterManagementBean.settingBasicEnabled}"
+                                    requiredMessage="開閉器動作カウント(基本設定)を選択してください。"
+                                    style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"
+                                    disabled="#{!smsCollectSettingMeterMeterManagementBean.settingBasicEnabled}" >
+                                        <f:selectItem itemLabel="--要選択--" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.occountMap}" />
+                                    </h:selectOneMenu>
+                                    回
+                                    </a4j:outputPanel>
+                                </td>
+                                <td><a4j:outputPanel id="s5TmpOccountSelectGroup" layout="block">
+                                    臨時設定
+                                    <!-- 初期値は「要選択」とする -->
+                                    <h:selectOneMenu id="s5TmpOccountSelectLteM"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.tempBreakerActCount}"
+                                    required="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.sendFlgLoadlimit and smsCollectSettingMeterMeterManagementBean.settingTempEnabled}"
+                                    requiredMessage="開閉器動作カウント(臨時設定)」を選択してください。"
+                                    style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"
+                                    disabled="#{!smsCollectSettingMeterMeterManagementBean.settingTempEnabled}" >
+                                        <f:selectItem itemLabel="--要選択--" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.occountMap}" />
+                                    </h:selectOneMenu>
+                                    回
+                                    </a4j:outputPanel>
+                                </td>
+                                <td>
+                                    ※選択範囲 ： "0～9" (回)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="TXT008">開閉器カウントクリア</td>
+                                <td><a4j:outputPanel id="s5BasicCntclrSelectGroup" layout="block">
+                                    基本設定
+                                    <!-- 初期値は「要選択」とする -->
+                                    <h:selectOneMenu id="s5BasicCntclrSelectLteM"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.countClear}"
+                                     required="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.sendFlgLoadlimit and smsCollectSettingMeterMeterManagementBean.settingBasicEnabled}"
+                                     requiredMessage="開閉器カウントクリア(基本設定)を選択してください。"
+                                     style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"
+                                     disabled="#{!smsCollectSettingMeterMeterManagementBean.settingBasicEnabled}" >
+                                        <f:selectItem itemLabel="--要選択--" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.cntclrMap}" />
+                                    </h:selectOneMenu>
+                                    分
+                                    </a4j:outputPanel>
+                                </td>
+                                <td><a4j:outputPanel id="s5TmpCntclrSelectGroup" layout="block">
+                                    臨時設定
+                                    <!-- 初期値は「要選択」とする -->
+                                    <h:selectOneMenu id="s5TmpCntclrSelectLteM"  class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.tempCountClear}"
+                                    required="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.sendFlgLoadlimit and smsCollectSettingMeterMeterManagementBean.settingTempEnabled}"
+                                    requiredMessage="開閉器カウントクリア(臨時設定)を選択してください。"
+                                    style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}"
+                                    disabled="#{!smsCollectSettingMeterMeterManagementBean.settingTempEnabled}" >
+                                        <f:selectItem itemLabel="--要選択--" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.cntclrMap}" />
+                                    </h:selectOneMenu>
+                                    分
+                                    </a4j:outputPanel>
+                                </td>
+                                <td>
+                                    ※選択範囲 ： "00～60 " (分)
+                                </td>
+                            </tr>
+                            </ui:fragment>
+                        </table>
+                        <br />
+                        <br />
+                        <h:panelGroup rendered="#{!smsCollectSettingMeterMeterManagementBean.lteMDeviceFlg}">
+                        <div class="btnRegistLayout">
+                            <h:selectBooleanCheckbox id="s5SendFlg"
+                               value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.sendFlg}" />
+                            <h:outputLabel for="s5SendFlg">：機器に送信する</h:outputLabel>
+                        </div>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{smsCollectSettingMeterMeterManagementBean.lteMDeviceFlg}">
+                        <div class="btnRegistLayout execBtnArea">
+                            <h:selectBooleanCheckbox id="s5SendFlgLoadlimit"
+                                                     value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.sendFlgLoadlimit}"
+                                                     styleClass="sendFlgLoadlimitCheckBoxClass">
+                                <a4j:ajax event="change" execute="@this" oncomplete="controlExecBtn()" />
+                            </h:selectBooleanCheckbox>
+                            <h:outputLabel for="s5SendFlgLoadlimit">：機器に送信する</h:outputLabel>
+                        </div>
+                        </h:panelGroup>
+                    </div>
+                    <h:panelGroup id="s5OcstateSelectLteMPanelGroup" rendered="#{smsCollectSettingMeterMeterManagementBean.lteMDeviceFlg}">
+                    <div class="#{smsCollectSettingMeterMeterManagementBean.lteMDeviceFlg ? 'settingBox' : ''}">
+                        <table class="s5Table">
+                            <tr>
+                                <td class="TXT008">開閉区分</td>
+                                <td colspan="2" style="width: 33.3%;">
+                                    <!-- 初期値は「要選択」とする -->
+                                    <h:selectOneMenu id="s5OcstateSelectLteM" class="EDIT002 check_change" value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.openMode}"
+                                     required="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.sendFlgSwitch}" requiredMessage="開閉区分を選択してください。"
+                                     style="#{smsCollectSettingMeterMeterManagementBean.getInvalidStyle(component.clientId)}" >
+                                        <f:selectItem itemLabel="--要選択--" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{smsCollectSettingMeterMeterManagementBean.ocstateMap}" />
+                                        <a4j:ajax event="change" execute="@this" />
+                                    </h:selectOneMenu>
+                                </td>
+                                <td style="width: 33.3%;">
+                                    ※開閉区分を選択
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+                        <br />
+                        <div class="btnRegistLayout execBtnArea">
+                            <h:selectBooleanCheckbox id="s5SendFlgSwitch"
+                                                     value="#{smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty.sendFlgSwitch}"
+                                                     styleClass="sendFlgCheckBoxClass">
+                                <a4j:ajax event="change" execute="@this" oncomplete="controlExecBtn()" />
+                            </h:selectBooleanCheckbox>
+                            <h:outputLabel for="s5SendFlgSwitch">：機器に送信する</h:outputLabel>
+                        </div>
+                    </div>
+                    </h:panelGroup>
+                    <br />
+                    <div class="gradation_type_5 button_large_2 btnRegistLayout execBtnArea s5ExecBtn">
+                        <!-- 確認メッセージ設定処理を呼び出し → 更新処理呼び出し用ボタンclick -->
+                        <a4j:commandButton
+                                id="s5ExecBtn"
+                                value="実行"
+                                execute="@form"
+                                render="@form confirmDialogForm:confirmationDialogMessage
+                                    #{rich:clientId('sTablePanel')} :s5Messages
+                                    smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2ExamNoticeMonthPanel
+                                    smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2DevNamePanel
+                                    smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2MeterMngIdMapPanel
+                                    smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2ExamNoticeMonthPanel
+                                    smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2DevNamePanel
+                                    smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2MeterMngIdMapPanel
+                                    smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2ExamNoticeMonthPanel
+                                    smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2DevNamePanel
+                                    smsCollectSettingMeterMeterManagementBean:handyRegistForm:h2MeterMngIdMapPanel"
+                                onclick="return confirmationDialogOpenForUpd($('input[id$=s5ExecBtn]'))"
+                                action="#{smsCollectSettingMeterMeterManagementBean.execEdit(smsCollectSettingMeterMeterManagementBean.smartSettingUpdateProperty, '2')}"
+                                onbegin="showBlockModal()"
+                                oncomplete="hideBlockModal(); viewList('S'); clearChangeFlag(); dispButton(); moveColumnsForLteMDevice(); controlExecBtn();">
+                        </a4j:commandButton>
+                        <h:graphicImage class="btnRegistIconLayout" library="images" name="common/com067.png" />
+                    </div>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</html>

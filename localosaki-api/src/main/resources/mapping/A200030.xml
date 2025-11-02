@@ -1,0 +1,216 @@
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+  <!-- *** デマンド任意(取得)_20180911 テンプレート *** -->
+  <!-- ベース部分 -->
+  <template name="base">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" default="B0000" keepPadding="true" />
+  </template>
+
+  <template name="base12">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" default="BB000" keepPadding="true" />
+  </template>
+
+  <template name="base22">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" default="B0000" keepPadding="true" />
+    <field name="compressionDataLength" length="6" default="000000" keepPadding="true" />
+  </template>
+
+  <template name="base.res">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" keepPadding="true" />
+    <field name="measureDayTime" length="10" keepPadding="true" />
+    <field name="targetPower" length="4" keepPadding="true" />
+    <field name="nowTargetPower" length="4" keepPadding="true" />
+    <field name="forecastPower" length="4" keepPadding="true" />
+    <field name="adjustPowerPlusMinus" length="1" keepPadding="true" />
+    <field name="adjustPower" length="4" keepPadding="true" />
+    <field name="nowPower" length="4" keepPadding="true" />
+  </template>
+
+  <template name="base22.res">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" keepPadding="true" />
+    <field name="compressionDataLength" length="6" keepPadding="true" />
+    <field name="measureDayTime" length="10" keepPadding="true" />
+    <field name="targetPower" length="4" keepPadding="true" />
+    <field name="nowTargetPower" length="4" keepPadding="true" />
+    <field name="forecastPower" length="4" keepPadding="true" />
+    <field name="adjustPowerPlusMinus" length="1" keepPadding="true" />
+    <field name="adjustPower" length="4" keepPadding="true" />
+    <field name="nowPower" length="4" keepPadding="true" />
+  </template>
+
+  <!-- 共通部分１（受信用） -->
+  <template name="commonResponse1">
+    <field name="leftMinute" length="2" keepPadding="true" />
+    <field name="leftSeconds" length="2" keepPadding="true" />
+    <field name="lastPower" length="4" keepPadding="true" />
+  </template>
+
+  <!-- 共通部分２（受信用） -->
+  <template name="commonResponse2">
+    <field name="allowanceExceed" length="1" keepPadding="true" />
+    <field name="cautionAlert" length="1" keepPadding="true" />
+    <field name="blockAlert" length="1" keepPadding="true" />
+    <field name="limitAlert" length="1" keepPadding="true" />
+    <field name="highLoadAlert" length="1" keepPadding="true" />
+  </template>
+
+  <!-- 「00」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="00.req" format="fixedlength">
+    <record name="request" template="base" class="jp.co.osaki.osol.mng.param.A200030Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="00.res" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200030Param">
+      <include template="commonResponse1" />
+      <field name="dayMaxDemand" length="4" keepPadding="true" />
+      <field name="dayTotalPowerAmount" length="6" keepPadding="true" />
+      <field name="monthMaxDemand" length="4" keepPadding="true" />
+      <field name="monthTotalPowerAmount" length="7" keepPadding="true" />
+      <include template="commonResponse2" />
+      <segment name="loadInfoList" collection="list" class="map" occurs="6">
+        <field name="output" length="1" keepPadding="true" />
+      </segment>
+      <segment name="measurePointList" collection="list" class="map" occurs="20">
+        <field name="demand" length="4" keepPadding="true" />
+      </segment>
+    </record>
+  </stream>
+
+  <!-- 「03」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="03.req" format="fixedlength">
+    <record name="request" template="base" class="jp.co.osaki.osol.mng.param.A200030Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="03.res" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200030Param">
+      <include template="commonResponse1" />
+      <field name="dayMaxDemand" length="4" keepPadding="true" />
+      <field name="dayTotalPowerAmount" length="6" keepPadding="true" />
+      <field name="monthMaxDemand" length="4" keepPadding="true" />
+      <field name="monthTotalPowerAmount" length="7" keepPadding="true" />
+      <include template="commonResponse2" />
+      <segment name="loadInfoList" collection="list" class="map" occurs="6">
+        <field name="output" length="1" keepPadding="true" />
+      </segment>
+      <segment name="measurePointList" collection="list" class="map" occurs="20">
+        <field name="demand" length="4" keepPadding="true" />
+      </segment>
+    </record>
+  </stream>
+
+  <!-- 「06」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="06.req" format="fixedlength">
+    <record name="request" template="base" class="jp.co.osaki.osol.mng.param.A200030Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="06.res" format="fixedlength">
+    <record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200030Param">
+      <include template="commonResponse1" />
+      <field name="dayMaxDemand" length="4" keepPadding="true" />
+      <field name="dayTotalPowerAmount" length="6" keepPadding="true" />
+      <field name="monthMaxDemand" length="4" keepPadding="true" />
+      <field name="monthTotalPowerAmount" length="7" keepPadding="true" />
+      <include template="commonResponse2" />
+      <segment name="bitLoadInfoList" collection="list" class="map" occurs="2">
+        <field name="output" length="3" keepPadding="true" />
+      </segment>
+      <segment name="measurePointList" collection="list" class="map" occurs="20">
+        <field name="demand" length="4" keepPadding="true" />
+      </segment>
+    </record>
+  </stream>
+
+  <!-- 「12」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="12.req" format="fixedlength">
+    <record name="request" template="base12" class="jp.co.osaki.osol.mng.param.A200030Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="12.res" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200030Param">
+      <field name="saveForecastPower" length="4" keepPadding="true" />
+      <field name="saveNowPower" length="4" keepPadding="true" />
+      <include template="commonResponse1" />
+      <field name="lastSavePower" length="4" keepPadding="true" />
+      <include template="commonResponse2" />
+      <segment name="loadInfoList" collection="list" class="map" occurs="36">
+        <field name="output" length="1" keepPadding="true" />
+      </segment>
+      <segment name="measurePointList" collection="list" class="map" occurs="58">
+        <field name="demand" length="4" keepPadding="true" />
+      </segment>
+    </record>
+  </stream>
+
+  <!-- 「21」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="21.req" format="fixedlength">
+    <record name="request" template="base" class="jp.co.osaki.osol.mng.param.A200030Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="21.res" format="fixedlength">
+    <record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200030Param">
+      <include template="commonResponse1" />
+      <field name="dayMaxDemand" length="4" keepPadding="true" />
+      <field name="dayTotalPowerAmount" length="6" keepPadding="true" />
+      <include template="commonResponse2" />
+      <segment name="loadInfoList" collection="list" class="map" occurs="24">
+        <field name="output" length="1" keepPadding="true" />
+      </segment>
+      <segment name="measurePointList" collection="list" class="map" occurs="256">
+        <field name="demand" length="4" keepPadding="true" />
+      </segment>
+    </record>
+  </stream>
+
+  <!-- 「22」製品に対する設定 -->
+  <!-- 送信文 -->
+  <stream name="22.req" format="fixedlength">
+    <record name="request" template="base22" class="jp.co.osaki.osol.mng.param.A200030Param" />
+  </stream>
+
+  <!-- 受信文 -->
+  <stream name="22.res" format="fixedlength">
+    <record name="response" template="base22.res" class="jp.co.osaki.osol.mng.param.A200030Param">
+      <include template="commonResponse1" />
+      <field name="dayMaxDemand" length="4" keepPadding="true" />
+      <field name="dayTotalPowerAmount" length="6" keepPadding="true" />
+      <include template="commonResponse2" />
+      <segment name="loadInfoList" collection="list" class="map" occurs="24">
+        <field name="output" length="1" keepPadding="true" />
+      </segment>
+      <segment name="measurePointList" collection="list" class="map" occurs="256">
+        <field name="demand" length="4" keepPadding="true" />
+      </segment>
+    </record>
+  </stream>
+
+  <!-- 応答データ無し -->
+  <stream name="res_data.none" format="fixedlength">
+    <record name="response" class="jp.co.osaki.osol.mng.param.A200030Param">
+    <field name="productCd" length="2" keepPadding="true" />
+    <field name="address" length="2" keepPadding="true" />
+    <field name="command" length="5" keepPadding="true" />
+    </record>
+  </stream>
+
+</beanio>

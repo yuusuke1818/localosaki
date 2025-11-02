@@ -1,0 +1,263 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:cust="http://xmlns.jcp.org/jsf/component"
+    xmlns:oslib="http://osaki.co.jp/base-component" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j"
+>
+<h:body>
+    <ui:composition template="/html/template/template_server_sidemenu.xhtml">
+        <ui:define name="content_side" class="content">
+            <h:outputStylesheet library="css" name="sms/server/setting/buildingdevice/search.css" />
+            <form jsfc="h:form" id="smsServerSettingBuildingDeviceSearchBean">
+                <div class="inner_content">
+                    <div class="title_area_warp">
+                        <!-- 画面タイトル -->
+                        <div class="title_area_left">
+                            <h2 class="page_title">建物装置設定（建物選択）</h2>
+                            <!-- ヘルプボタン -->
+                            <c:if test="#{indexBean.userGuideBool}">
+                                <h:commandLink class="help_icon" action="#{indexBean.userGuide()}" target="_blank" />
+                            </c:if>
+                            <p class="page_subtitle">装置を設定する対象の建物を選択できます。</p>
+                        </div>
+                    </div>
+                    <div class="clear" />
+                    <!-- メッセージ表示部分 -->
+                    <rich:messages id="Messages" showSummary="true" />
+                    <!-- 説明文 -->
+                    <div class="search_description">
+                        <p>検索条件を設定して[検索開始]を押してください。</p>
+                    </div>
+
+                    <!-- 動的検索条件テーブル -->
+                    <div class="gradation_type_1">
+                        <a4j:outputPanel id="commonSearchResult">
+                            <rich:dataTable id="searchConditionTable" rows="0" value="#{smsServerSettingBuildingDeviceSearchBean.conditionList}"
+                                var="item"
+                                style="margin-top: 5px;
+                                            width: 100%;
+                                            border: 0px;
+                                            table-layout: fixed;"
+                            >
+                                <!--検索条件表示部分 -->
+                                <span jsfc="h:column" styleClass="condition_msg" style="width: 20%; border: 0px">
+                                    <h:selectOneMenu id="selectConditionCd" value="#{item.selectConditionCd}" styleClass="SELECT001"
+                                        rendered="#{item.selectEnable}" style="height: 30px;"
+                                    >
+                                        <f:ajax event="change" execute="smsServerSettingBuildingDeviceSearchBean:searchConditionTable"
+                                            render="smsServerSettingBuildingDeviceSearchBean:searchConditionTable"
+                                            listener="#{smsServerSettingBuildingDeviceSearchBean.changeConditionCd(item.orderNo)}"
+                                            onevent="autoFocusOnSelectCondition"
+                                        />
+
+                                        <option jsfc="f:selectItems" value="#{item.selectConditionMap}" />
+                                    </h:selectOneMenu>
+                                    <h:outputText value="#{item.selectConditionCd}" rendered="#{item.selectDisable}" />
+                                </span>
+                                <!--接続詞表示部分 -->
+                                <span jsfc="h:column" style="width: 10%; text-align: center; border: 0px;">
+                                    <input jsfc="h:outputText" value="#{item.searchSubjectConjunction}" style="width: 100%; text-align: center"
+                                        rendered="#{item.searchSubjectConjunctionEnable}"
+                                    />
+                                </span>
+                                <!--ドロップダウンリストまたは検索キーワード表示部分 -->
+                                <span jsfc="h:column" style="width: 40%; border: 0px;">
+                                    <!-- 都道府県-->
+                                    <h:selectOneMenu id="prefectureCd" value="#{item.prefectureCd}" styleClass="SELECT001"
+                                        rendered="#{item.prefectureSelectEnable}" style="width: 100%; height: 25px;"
+                                        onkeydown="searchConditionKeydown()"
+                                    >
+                                        <option jsfc="f:selectItems"
+                                            value="#{smsServerSettingBuildingDeviceSearchBean.searchBeanProperty.prefectureMap}"
+                                        />
+                                    </h:selectOneMenu>
+                                    <!--入居形態 -->
+                                    <h:selectOneMenu id="nyukyoTypeCd" value="#{item.nyukyoTypeCd}" styleClass="SELECT001"
+                                        rendered="#{item.nyukyoTypeSelectEnable}" style="width: 100%; height: 25px;"
+                                        onkeydown="searchConditionKeydown()"
+                                    >
+                                        <option jsfc="f:selectItems"
+                                            value="#{smsServerSettingBuildingDeviceSearchBean.searchBeanProperty.nyukyoTypeMap}"
+                                        />
+                                    </h:selectOneMenu>
+                                    <!--稼働状況 -->
+                                    <h:selectOneMenu id="buildingStatusCd" value="#{item.buildingStatusCd}" styleClass="SELECT001"
+                                        rendered="#{item.buildingStatusSelectEnable}" style="width: 100%; height: 25px;"
+                                        onkeydown="searchConditionKeydown()"
+                                    >
+                                        <option jsfc="f:selectItems"
+                                            value="#{smsServerSettingBuildingDeviceSearchBean.searchBeanProperty.buildingStatusMap}"
+                                        />
+                                    </h:selectOneMenu>
+                                    <!--キーワード -->
+                                    <h:inputText id="conditionKeyword" value="#{item.conditionKeyword}" styleClass="EDIT002" class="autofocus"
+                                        rendered="#{item.keywordSelectEnable}" style="width: 100%; height: 25px;" maxlength="50"
+                                        onkeydown="searchConditionKeydown()"
+                                    />
+                                </span>
+                                <!--「を含む」表示部分 -->
+                                <span jsfc="h:column" style="width: 12%; text-align: center; border: 0px;">
+                                    <input jsfc="h:outputText" value="#{item.mutchingTypeCd}" rendered="${!empty item.mutchingTypeCd}"
+                                        style="width: 100%; height: 25px; text-align: center;"
+                                    />
+                                </span>
+
+                                <!--削除ボタン表示部分 -->
+                                <span jsfc="h:column" styleClass="gradation_type_3 button_medium_2 delete_button" style="width: 10%; border: 0px;">
+                                    <h:commandButton id="delButton" value="削除" rendered="#{item.deleteButtonEnable}"
+                                        style="width: 100%; height: 25px;"
+                                    >
+                                        <f:ajax event="click" execute="smsServerSettingBuildingDeviceSearchBean:searchConditionTable"
+                                            render="smsServerSettingBuildingDeviceSearchBean:searchConditionTable"
+                                            listener="#{smsServerSettingBuildingDeviceSearchBean.deleteCondition(item.orderNo)}"
+                                        />
+                                    </h:commandButton>
+                                    <h:graphicImage class="button_icon" library="images" rendered="#{item.deleteButtonEnable}"
+                                        name="common/com020.png"
+                                    />
+                                </span>
+                            </rich:dataTable>
+                        </a4j:outputPanel>
+                    </div>
+                    <!-- 検索ボタン -->
+                    <div class="button_area_center gradation_type_1 button_large_2 button_search">
+                        <input id="searchButton" class="action_button" jsfc="h:commandButton" value="検索開始">
+                            <a4j:ajax event="click" execute="@form" render="@form" listener="#{smsServerSettingBuildingDeviceSearchBean.search()}"
+                                onbegin="showBlockModal()" oncomplete="hideBlockModal()"
+                            />
+                        </input>
+                        <h:graphicImage class="button_icon" library="images" name="common/com028.png" />
+                    </div>
+
+                    <!-- 検索結果サマリー表示 -->
+                    <ui:fragment id="searchResultArea" rendered="#{smsServerSettingBuildingDeviceSearchBean.searchBeanProperty.searchedFlg}">
+                        <div class="search_result_header_wrap">
+                            <div id="listReroad">
+                                <div class="search_result_header_left page_content_parts">
+                                    検索条件に該当する建物情報
+                                    <span class="serach_result_total_count" jsfc="h:outputText"
+                                        value=" #{smsServerSettingBuildingDeviceSearchBean.infoPagingList.resultCount}"
+                                    />
+                                    件
+                                </div>
+                            </div>
+                        </div>
+                        <ui:fragment rendered="#{smsServerSettingBuildingDeviceSearchBean.infoPagingList.resultCount != '0'}">
+                            <!-- 検索結果リスト表示 -->
+                            <div class="search_result_area">
+                                <h:dataTable id="result" var="item" style="width: 100%;"
+                                    value="#{smsServerSettingBuildingDeviceSearchBean.infoPagingList.pageList}" headerClass="table_header"
+                                    columnClasses="column_style_corp, column_style_tenant_flg, column_style_building, column_style_address,
+                                    column_style_status, column_style_building_edit, column_style_facility"
+                                >
+                                    <span jsfc="h:column">
+                                        <f:facet name="header">
+                                            企業ID<br />
+                                            企業名
+                                        </f:facet>
+                                        <h:panelGrid columns="1">
+                                            <h:outputText id="corpId" value="#{item.corpId}" />
+                                            <h:outputText id="corpName" value="#{item.corpName}" />
+                                        </h:panelGrid>
+                                    </span>
+                                    <span jsfc="h:column">
+                                        <f:facet name="header">
+                                        </f:facet>
+                                        <h:graphicImage class="button_icon" library="images" name="common/com075.png" />
+                                    </span>
+                                    <span jsfc="h:column">
+                                        <f:facet name="header">
+                                            建物番号<br />
+                                            建物名
+                                        </f:facet>
+                                        <h:panelGrid columns="1">
+                                            <h:outputText id="buildingNo" value="#{item.buildingNo}" />
+                                            <h:outputText id="buildingName" value="#{item.buildingName}" />
+                                        </h:panelGrid>
+                                    </span>
+                                    <span jsfc="h:column">
+                                        <f:facet name="header">
+                                            住所
+                                        </f:facet>
+                                        <h:outputText id="buildingAddress" value="#{item.address}" />
+                                    </span>
+                                    <span jsfc="h:column">
+                                        <f:facet name="header">
+                                            稼働状況<br />
+                                            入居形態
+                                        </f:facet>
+                                        <h:panelGrid columns="1">
+                                            <h:outputText id="buildingStatus" value="#{item.buildingStatus}" />
+                                            <h:outputText id="nyukyoType" value="#{item.nyukyoType}" />
+                                        </h:panelGrid>
+                                    </span>
+                                    <span jsfc="h:column">
+                                        <f:facet name="header">
+                                            選択
+                                        </f:facet>
+                                        <button jsfc="h:commandButton" id="editButton" class="button_small button_building_edit" value=""
+                                            onclick="showBlockModal();" action="#{smsServerSettingBuildingDeviceSearchBean.execNextScreen(item)}"
+                                        >
+                                            <h:graphicImage class="button_edit" library="images" name="common/com018.png" />
+                                        </button>
+                                    </span>
+                                </h:dataTable>
+                            </div>
+                            <!-- ページング -->
+                            <div class="contents_center">
+                                <div id="paging_area">
+                                    <span id="prevButton_area">
+                                        <h:commandLink id="prevButton" value="&lt;&nbsp;&nbsp;前へ"
+                                            actionListener="#{smsServerSettingBuildingDeviceSearchBean.prevPage}"
+                                            disabled="#{!smsServerSettingBuildingDeviceSearchBean.infoPagingList.isPrevPage()}"
+                                        >
+                                            <f:ajax execute="@form" render="@form" />
+                                            <f:attribute name="page" value="#{smsServerSettingBuildingDeviceSearchBean.infoPagingList.currentPage}" />
+                                        </h:commandLink>
+                                    </span>
+                                    <cust:pageIndex id="pageJumpButton" value="#{smsServerSettingBuildingDeviceSearchBean.infoPagingList.pageValue}"
+                                        action="#{smsServerSettingBuildingDeviceSearchBean.pageJump()}"
+                                    >
+                                        <ui:include src="/html/common/paging/index.xhtml" />
+                                    </cust:pageIndex>
+                                    <span id="nextButton_area">
+                                        <h:commandLink id="nextButton" class="nextButton" value="後へ&nbsp;&nbsp;&gt; "
+                                            actionListener="#{smsServerSettingBuildingDeviceSearchBean.nextPage}"
+                                            disabled="#{!smsServerSettingBuildingDeviceSearchBean.infoPagingList.isNextPage()}"
+                                        >
+                                            <f:ajax execute="@form" render="@form" />
+                                            <f:attribute name="page" value="#{smsServerSettingBuildingDeviceSearchBean.infoPagingList.currentPage}" />
+                                        </h:commandLink>
+                                    </span>
+                                </div>
+                            </div>
+                        </ui:fragment>
+                    </ui:fragment>
+                </div>
+                <!-- アクセストークン用 -->
+                <oslib:requestToken />
+                <ui:remove>確認ダイアログ</ui:remove>
+                <ui:include src="/html/common/confirmationDialog.xhtml">
+                    <ui:param name="confirmationDialogTitle" value="確認" />
+                    <ui:param name="confirmationDialogMessage" value="メッセージ" />
+                </ui:include>
+                <script type="text/javascript">
+                        function outputBuildingListCheck() {
+                            if (confirmationDialogOpen($('input[id$=outputBuildingListButton]'))) {
+                                return true;
+                            }
+                            return false;
+                        }
+                        function functionCheck(check) {
+                            if(functionCheckDialog(check)){
+                                showBlockModal();
+                                return true;
+                            }
+                            return false;
+                        }
+                    </script>
+            </form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

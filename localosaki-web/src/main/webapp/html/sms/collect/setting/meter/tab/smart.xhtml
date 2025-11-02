@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:cust="http://xmlns.jcp.org/jsf/component"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:jsf="http://xmlns.jcp.org/jsf">
+<div class="contents_form_area" style="margin-top: 0;">
+    <rich:messages styleClass="errSearch errArea" globalOnly="true" />
+    <div class="contents_title contents_accordion_header">
+        <h:graphicImage class="button_icon button_opener" library="images"
+            name="demand/demand_container_opner.png" style="display: none" />
+        <h:graphicImage class="button_icon button_closer" library="images"
+            name="demand/demand_container_closer.png" />
+        <span class="contents_title_body">表示条件</span>
+    </div>
+    <div class="contents_area contents_accordion_body">
+        <div class="head">表示内容を変更したい場合は、下記を変更し、[ 表示更新 ]ボタンを押してください。</div>
+        <h:form id="smartSearchForm">
+            <div class="body">
+                <div jsfc="a4j:outputPanel" id="s1SearchConditionPanel">
+                    <div class="conditions">
+                        <div>
+                            <label class="TXT008 L1">接続先</label>
+                          <f:ajax event="change"
+                                render="s1SearchConditionPanel
+                                        p1SearchConditionPanel
+                                        h1SearchConditionPanel
+                                        o1SearchConditionPanel"
+                                listener="#{smsCollectSettingMeterMeterManagementBean.changeDevIdSel(smsCollectSettingMeterMeterManagementBean.smartProperty.devId)}">
+                                <select jsfc="h:selectOneMenu"
+                                    value="#{smsCollectSettingMeterMeterManagementBean.smartProperty.devId}"
+                                    class="SEL1 selDev sDevIdSel autofocus">
+                                    <option jsfc="f:selectItems"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.devIdMap}" />
+                                </select>
+                            </f:ajax>
+                        </div>
+                        <c:if
+                            test="#{!smsCollectSettingMeterMeterManagementBean.pagerMap.isEmpty()}">
+                            <div>
+                                <label class="TXT008 L2">メーター表示切替</label> <select
+                                    jsfc="h:selectOneMenu"
+                                    value="#{smsCollectSettingMeterMeterManagementBean.page}"
+                                    class="SEL2">
+                                    <option jsfc="f:selectItems"
+                                        value="#{smsCollectSettingMeterMeterManagementBean.pagerMap}" />
+                                </select>
+                            </div>
+                        </c:if>
+                    </div>
+                </div>
+            </div>
+            <div class="foot">
+                <div class="gradation_type_1 button_large_2">
+                    <h:graphicImage class="button_icon" library="images"
+                        name="common/com015.png" />
+                    <button jsfc="a4j:commandButton" id="s1ReloadButton"
+                        class="button_width edit_search_start s1ReloadButton" value="表示更新"
+                        action="#{smsCollectSettingMeterMeterManagementBean.searchMeterInfo()}"
+                        execute="@form"
+                        render="#{rich:clientId('sTablePanel')}
+                            smsCollectSettingMeterMeterManagementBean:smartRegistForm
+                            smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2ExamNoticeMonthPanel
+                            smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2DevNamePanel
+                            smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2MeterMngIdMapPanel
+                            smsCollectSettingMeterMeterManagementBean:s3DevNamePanel
+                            #{rich:clientId('confirmMsgArea')}
+                            smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2ExamNoticeMonthPanel
+                            smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2DevNamePanel
+                            smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2MeterMngIdMapPanel
+                            smsCollectSettingMeterMeterManagementBean:smartFileName
+                            smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5Panel
+                            smsCollectSettingMeterMeterManagementBean:smartLumpRegistUploadForm
+                            smsCollectSettingMeterMeterManagementBean:s6CurrentValueDispPanel
+                            buttonsAreaS #{rich:clientId('s6Include')}"
+                resetValues="true"
+                onbegin="showBlockModal()"
+                oncomplete="setErrMsgArea('1'); changeDispListMode('S'); hideBlockModal(); moveColumnsForLteMDevice(); controlExecBtn();" />
+                </div>
+            </div>
+        </h:form>
+    </div>
+    <div class="contents_body">
+        <div class="gradation_type_1 button_large_2">
+            <h:graphicImage class="button_icon" library="images"
+                name="common/com043.png" />
+            <a4j:commandButton
+                    value="帳票出力"
+                    event="click"
+                    execute="@form"
+                    actionListener="#{smsCollectSettingMeterMeterManagementBean.downloadCsvFile()}"
+                    onbegin="showBlockModal()"
+                    oncomplete="setErrMsgArea('1');
+                                if(!#{smsCollectSettingMeterMeterManagementBean.hasError()}) {
+                                    $('input[id$=downloadFileStartCsvSmart]').click();
+                                }
+                                hideBlockModal();" />
+            <button jsfc="h:commandButton" id="downloadFileStartCsvSmart" style="display: none;" action="#{smsCollectSettingMeterMeterManagementBean.downloadFileStart()}" />
+        </div>
+        <div class="buttons" jsf:id="buttonsAreaS">
+            <div class="button button_list gradation_type_1 button current">
+                <h:graphicImage class="button_icon" library="images"
+                    name="meterManage/btn_list.png" />
+                <input id="btnS1List" type="button" data-type="s1" value="一覧表示" />
+            </div>
+            <c:if test="#{smsCollectSettingMeterMeterManagementBean.smsAuthControl}">
+                <c:if test="#{smsCollectSettingMeterMeterManagementBean.listMax}">
+                    <div class="button button_new gradation_type_5 button current">
+                        <h:graphicImage class="button_icon" library="images" name="meterManage/btn_regist.png" />
+                        <input type="button" data-type="s2" value="新規登録" disabled="true" />
+                    </div>
+                </c:if>
+                <c:if test="#{!smsCollectSettingMeterMeterManagementBean.listMax}">
+                    <div class="button button_new gradation_type_3 button current">
+                        <h:graphicImage class="button_icon" library="images" name="meterManage/btn_regist.png" />
+                        <input type="button" data-type="s2" value="新規登録" />
+                    </div>
+                </c:if>
+            </c:if>
+            <c:if test="#{smsCollectSettingMeterMeterManagementBean.smsAuthControl}">
+                <!-- listMaxにて設定した台数以降も一括登録で更新はできるようにしたいため以下コメントアウト -->
+                <!-- なお一括登録で新規登録の場合はlistMax以降の台数はエラーとなるようにバリデーションチェックは追加済 -->
+                <!-- <c:if test="#{smsCollectSettingMeterMeterManagementBean.listMax}">
+                    <div class="button button_new gradation_type_5 button current">
+                        <h:graphicImage class="button_icon" library="images" name="meterManage/btn_lumpRegist.png" />
+                        <input type="button" data-type="s3" value="一括登録" disabled="true" />
+                    </div>
+                </c:if>
+                <c:if test="#{!smsCollectSettingMeterMeterManagementBean.listMax}"> -->
+                    <div class="button button_new gradation_type_3 button current">
+                        <h:graphicImage class="button_icon" library="images" name="meterManage/btn_lumpRegist.png" />
+                        <input type="button" data-type="s3" value="一括登録" />
+                    </div>
+                <!-- </c:if> -->
+            </c:if>
+            <div class="button button_edit btn_edit gradation_type_5 button current">
+                <h:graphicImage class="button_icon" library="images"
+                    name="meterManage/btn_editAndDelete.png" />
+                <input type="button" data-type="s4" value="編集・削除" disabled="true" />
+            </div>
+            <c:if test="#{smsCollectSettingMeterMeterManagementBean.smsAuthControl}">
+                <!-- らくらく検針対応 -->
+                <div class="button button_edit_2 btn_setting gradation_type_5 button current">
+                    <h:graphicImage class="button_icon" library="images"
+                        name="meterManage/btn_settingEdit.png" />
+                    <input type="button" data-type="s5" value="設定変更" disabled="true" />
+                </div>
+            </c:if>
+            <c:if test="#{smsCollectSettingMeterMeterManagementBean.smsAuthControl}">
+                <c:if test="#{!smsCollectSettingMeterMeterManagementBean.lteMDeviceFlg}">
+                <!-- らくらく検針対応 -->
+                <div class="button button_edit_2 btn_current gradation_type_5 button current">
+                    <h:graphicImage class="button_icon" library="images"
+                        name="meterManage/btn_currentValue.png" />
+                    <input type="button" data-type="s6" value="現在値取得" disabled="true" />
+                </div>
+                </c:if>
+                <c:if test="#{smsCollectSettingMeterMeterManagementBean.lteMDeviceFlg}">
+                <div class="button button_edit_2 btn_current gradation_type_5 button current">
+                    <h:graphicImage class="button_icon" library="images"
+                        name="meterManage/btn_currentValue.png" />
+                    <input type="button" data-type="s6" value="現在値取得"
+                     onclick="document.getElementById('#{rich:clientId('s6GetValueBtnDispNone')}').click();" disabled="true" />
+                </div>
+                </c:if>
+            </c:if>
+            <c:if test="#{smsCollectSettingMeterMeterManagementBean.osakiAuth}">
+                <div class="button button_edit btn_status gradation_type_5 button current">
+                    <h:graphicImage class="button_icon" library="images"
+                        name="meterManage/btn_meterStatus.png" />
+                     <input type="button" data-type="s7" value="ﾒｰﾀｰ状態登録" disabled="true" />
+                </div>
+            </c:if>
+            <!-- 「LTE-M」装置の場合、ログインしている企業IDによって「設定変更」「現在値取得」の操作権限を切替 -->
+            <h:inputHidden id="lteMFunctionUseAuthFlg" value="#{smsCollectSettingMeterMeterManagementBean.lteMFunctionUseAuthFlg}" />
+        </div>
+
+        <c:if test="#{smsCollectSettingMeterMeterManagementBean.smsAuthControl}">
+            <div id="s2" style="display: none;">
+                <!-- ■■■■■■■■■■■■■■■■■■ 新規登録（個別） ■■■■■■■■■■■■■■■■■■ -->
+                <ui:include
+                    src="/html/sms/collect/setting/meter/tab/smart/regist.xhtml" />
+            </div>
+        </c:if>
+
+        <c:if test="#{smsCollectSettingMeterMeterManagementBean.smsAuthControl}">
+            <div id="s3" style="display: none;">
+                <!-- ■■■■■■■■■■■■■■■■■■ 新規登録（一括） ■■■■■■■■■■■■■■■■■■ -->
+                <ui:include
+                    src="/html/sms/collect/setting/meter/tab/smart/lumpRegist.xhtml" />
+            </div>
+        </c:if>
+
+        <div id="s4" style="display: none;" class="editSreen">
+            <!-- ■■■■■■■■■■■■■■■■■■ 登録内容変更・削除 ■■■■■■■■■■■■■■■■■■ -->
+            <ui:include
+               src="/html/sms/collect/setting/meter/tab/smart/edit.xhtml" />
+        </div>
+
+        <c:if test="#{smsCollectSettingMeterMeterManagementBean.smsAuthControl}">
+            <div id="s5" style="display: none;">
+                <!-- ■■■■■■■■■■■■■■■■■■ 設定内容変更 ■■■■■■■■■■■■■■■■■■ -->
+                <ui:include
+                    src="/html/sms/collect/setting/meter/tab/smart/settingEdit.xhtml" />
+            </div>
+        </c:if>
+
+        <c:if test="#{smsCollectSettingMeterMeterManagementBean.smsAuthControl}">
+            <div id="s6" style="display:none;">
+                <!-- ■■■■■■■■■■■■■■■■■■ 現在値取得 ■■■■■■■■■■■■■■■■■■ -->
+                <a4j:outputPanel id="s6Include" layout="block">
+                <ui:include src="#{smsCollectSettingMeterMeterManagementBean.lteMDeviceFlg
+                    ? '/html/sms/collect/setting/meter/tab/smart/getCurrentValueLteM.xhtml'
+                    : '/html/sms/collect/setting/meter/tab/smart/getCurrentValue.xhtml'}" />
+                </a4j:outputPanel>
+            </div>
+        </c:if>
+
+        <c:if test="#{smsCollectSettingMeterMeterManagementBean.osakiAuth}">
+            <div id="s7" style="display: none;">
+                <!-- ■■■■■■■■■■■■■■■■■■ メーター状態登録 ■■■■■■■■■■■■■■■■■■ -->
+                <ui:include src="/html/sms/collect/setting/meter/tab/smart/meterStatus.xhtml" />
+            </div>
+        </c:if>
+
+        <!-- 全件の件数を保持 -->
+        <h:panelGroup styleClass="sDispCnt">
+            <h:inputHidden
+                value="#{smsCollectSettingMeterMeterManagementBean.dispCnt}" />
+        </h:panelGroup>
+        <div jsfc="a4j:outputPanel" id="sTablePanel">
+            <!-- 検針結果一覧 -->
+            <div class="search_result_pop_header_wrap">
+                <div class="page_content_parts">
+                    <div class="search_result_pop_header_left">
+                        検索条件に該当するスマートメーター情報 <span jsfc="h:outputText"
+                            class="serach_result_total_count"
+                            value="#{smsCollectSettingMeterMeterManagementBean.dispCnt}" />
+                        件
+                    </div>
+                </div>
+            </div>
+            <c:if
+                test="#{smsCollectSettingMeterMeterManagementBean.dispCnt != '0'}">
+                <div class="tbl contents_table">
+                    <div class="search_result_area">
+                        <form jsfc="h:form" id="smartListFrom">
+                            <rich:extendedDataTable id="resultMeterData" frozenColumns="6" var="item"  class="sTbl"
+                                       value="#{smsCollectSettingMeterMeterManagementBean.meterList}"
+                                       cellpadding="0"
+                                        selectionMode="none"
+                                        rendered="#{!smsCollectSettingMeterManagementBean.meterList.isEmpty()}"
+                                        columnClasses="column_style_checkbox, column_style_mng_id, column_style_user_code, column_style_tenant_name,
+                                                       column_style_meter_id, column_style_type, column_style_currentdata, column_style_ocstate,
+                                                       column_style_loadcurrent, column_style_auto_injection, column_style_multi, column_style_concentrator_name, column_style_latest_update_date, column_style_status,column_style_comment,
+                                                       column_style_exam_end_ym, column_style_meterPresSitu, column_style_alertPauseFlg, column_style_alertPause, column_style_meterStatusMemo">
+                                <rich:column headerClass="table_header" width="45px"> <f:facet
+                                        name="header" border="0">
+                                    <f:ajax event="click" execute="@form"
+                                            listener="#{smsCollectSettingMeterMeterManagementBean.checkBoxOperationAll()}"
+                                            render="#{rich:clientId('sTablePanel')}
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5Panel
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5LoadlimitSelectLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5BasicCurlimitSelectLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5BasicAutorecLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5BasiOccountSelectLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5BasicCntclrSelectLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5TmpCurlimitSelectLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5TmpAutorecLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5TmpOccountSelectLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5TmpCntclrSelectLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5OcstateSelectLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartCurrentValueForm:s6MeterMngIdListPanel
+                                                    smsCollectSettingMeterMeterManagementBean:smartMeterStatusForm:s7Panel"
+                                            onevent="allCheckboxClick"
+                                            resetValues="true">
+                                        <h:commandLink style="color:#FFF" value="選択"></h:commandLink>
+                                    </f:ajax>
+                                    </f:facet>
+
+                                    <div jsfc="a4j:outputPanel" id="sTableCheckPanel">
+                                        <h:selectBooleanCheckbox id="targetCheckBox"
+                                                value="#{item.checkBox}" >
+                                        <a4j:ajax event="change" execute="@form"
+                                                render="smsCollectSettingMeterMeterManagementBean:smartEditForm:s4Panel
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5Panel
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5LoadlimitSelectLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5BasicCurlimitSelectLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5BasicAutorecLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5BasiOccountSelectLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5BasicCntclrSelectLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5TmpCurlimitSelectLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5TmpAutorecLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5TmpOccountSelectLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5TmpCntclrSelectLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartSettingEditForm:s5OcstateSelectLteM
+                                                    smsCollectSettingMeterMeterManagementBean:smartCurrentValueForm:s6MeterMngIdListPanel
+                                                    smsCollectSettingMeterMeterManagementBean:smartMeterStatusForm:s7Panel
+                                                    smsCollectSettingMeterMeterManagementBean:smartNowValBtnForm"
+                                                listener="#{smsCollectSettingMeterMeterManagementBean.checkBoxOperation()}"
+                                                oncomplete="controlExecBtn();"
+                                                resetValues="true" />
+                                        </h:selectBooleanCheckbox>
+                                    </div>
+                                </rich:column>
+                                <rich:column headerClass="table_header" width="55px"> <f:facet
+                                        name="header">
+                                    管理番号
+                                    </f:facet> <h:outputText id="meterMngId"
+                                    value="#{item.meterMngId}" />
+                                </rich:column>
+                                <rich:column headerClass="table_header" width="65px"> <f:facet
+                                        name="header">
+                                    ユーザー<br />コード
+                                    </f:facet> <h:outputText id="tenantId"
+                                        value="#{item.tenantId}" rendered="#{item.tenantId != null}" /> <h:outputText
+                                        id="tenantIdBlank" value="-" rendered="#{item.tenantId == null}" />
+                                </rich:column>
+                                <rich:column headerClass="table_header" width="150px"> <f:facet
+                                        name="header">
+                                    テナント番号<br />テナント名
+                                    </f:facet> <ui:fragment
+                                        rendered="#{item.tenantId != null}">
+                                        <h:outputText id="buildingNo" value="#{item.buildingNo}" />
+                                        <br />
+                                        <h:outputText id="buildingName" value="#{item.buildingName}" />
+                                    </ui:fragment> <h:outputText id="buildingNoBlank" value="-"
+                                    rendered="#{item.tenantId == null}" />
+                                </rich:column>
+                                <rich:column headerClass="table_header" width="95px"> <f:facet
+                                        name="header">
+                                    計器ID
+                                    </f:facet> <h:outputText id="meterId"
+                                        value="#{item.meterId}" />
+                                </rich:column>
+                                <rich:column headerClass="table_header" width="85px"> <f:facet
+                                        name="header">
+                                    種別
+                                    </f:facet> <h:outputText id="meterTypeName"
+                                        value="#{item.meterTypeName}" />
+                                </rich:column>
+                                <rich:column headerClass="table_header" width="80px"> <f:facet
+                                        name="header">
+                                    指針値
+                                    </f:facet> <h:outputText id="dmvKwh"
+                                        value="#{item.dmvKwh}" />
+                                </rich:column>
+                                <rich:column headerClass="table_header" width="30px"> <f:facet
+                                        name="header">
+                                    開閉<br />状態
+                                    </f:facet> <h:outputText id="openMode"
+                                        value="#{item.openModeDisp}" />
+                                </rich:column>
+                                <rich:column headerClass="table_header" width="55px"> <f:facet
+                                        name="header">
+                                    負荷電流
+                                    </f:facet> <h:outputText id="tempLoadCurrent"
+                                        value="#{item.tempLoadCurrent}A"
+                                        rendered="#{item.loadlimitMode == 'A'}" /> <h:outputText
+                                        id="loadCurrentInvalid" value="-"
+                                        rendered="#{item.loadlimitMode == '0'}" /> <h:outputText
+                                        id="loadCurrent" value="#{item.loadCurrent}A"
+                                        rendered="#{item.loadlimitMode != '0' and item.loadlimitMode != 'A'}" />
+
+                                </rich:column>
+                                <rich:column headerClass="table_header" width="55px">
+                                    <f:facet name="header">
+                                    自動投入
+                                    </f:facet> <h:outputText id="tempAutoInjection"
+                                        value="#{item.tempAutoInjection}秒"
+                                        rendered="#{item.loadlimitMode == 'A'}" /> <h:outputText
+                                        id="autoInjectionInvalid" value="-"
+                                        rendered="#{item.loadlimitMode == '0'}" /> <h:outputText
+                                        id="autoInjection" value="#{item.autoInjection}秒"
+                                        rendered="#{item.loadlimitMode != '0' and item.loadlimitMode != 'A'}" />
+                                </rich:column>
+
+                                <rich:column headerClass="table_header" width="80px">
+                                    <f:facet name="header">
+                                    乗率
+                                    </f:facet> <h:outputText id="multi"
+                                        value="#{item.multi}" />
+                                </rich:column>
+
+                                <rich:column headerClass="table_header" width="125px" rendered="#{!smsCollectSettingMeterMeterManagementBean.lteMDeviceFlg}">
+                                    <f:facet name="header">
+                                    コンセント<br />レーター名
+                                    </f:facet> <h:outputText id="concentratorName"
+                                        value="#{item.concentratorName}" />
+                                </rich:column>
+
+                                <rich:column headerClass="table_header" width="100px"> <f:facet
+                                        name="header">
+                                    操作状態
+                                    </f:facet> <ui:fragment
+                                        rendered="${item.srvEnt == '9'}">
+                                        <h:outputText id="operationStatusError" style="color: #ff0000;"
+                                            value="#{item.operationStatus}"/>
+                                    </ui:fragment> <ui:fragment rendered="${item.srvEnt == '1'}">
+                                        <h:outputText id="operationStatusRequesting"
+                                            style="color: #0000D0;" value="#{item.operationStatus}"/>
+                                    </ui:fragment> <ui:fragment
+                                        rendered="${item.srvEnt != '9' and item.srvEnt != '1'}">
+                                        <h:outputText id="operationStatus"
+                                            value="#{item.operationStatus}"/>
+                                    </ui:fragment>
+                                    <h:outputText id="operationStatusBlank" value="-" rendered="#{item.operationStatus == null or empty item.operationStatus}" />
+                                </rich:column>
+                                <rich:column headerClass="table_header" width="135px"> <f:facet
+                                        name="header">
+                                    コメント
+                                    </f:facet> <h:outputText id="memo"
+                                        value="#{item.memo}" />
+                                </rich:column>
+                                <rich:column headerClass="table_header" width="90px"> <f:facet
+                                        name="header">
+                                    検満
+                                    </f:facet> <ui:fragment
+                                        rendered="${item.dispYearFlg == '0'}">
+                                        <h:outputText id="examEndYm" value="#{item.examEndYm}" />
+                                    </ui:fragment> <ui:fragment rendered="${item.dispYearFlg == '1'}">
+                                        <h:outputText id="examEndYmWareki"
+                                            value="#{item.examEndYmWareki}" />
+                                    </ui:fragment>
+                                </rich:column>
+                                <c:if test="#{smsCollectSettingMeterMeterManagementBean.osakiAuth}">
+                                    <rich:column headerClass="table_header" width="55px" id="sMeterPreSitu"> <f:facet
+                                            name="header">
+                                        メーター<br />状況
+                                        </f:facet>
+                                        <h:outputText id="meterPresentSituation" value="#{item.meterPresentSituationDisp}" />
+                                    </rich:column>
+                                    <rich:column headerClass="table_header" width="55px" id="sAlertPauseFlg"> <f:facet
+                                            name="header">
+                                        アラート<br />停止
+                                        </f:facet><ui:fragment
+                                            rendered="${item.alertPauseFlg == '1'}">
+                                            <h:outputText id="alertPause" value="#{item.alertPauseDisp}"
+                                                style="color: #ff0000;"/></ui:fragment>
+                                    </rich:column>
+                                    <rich:column headerClass="table_header" width="160px" id="sAlertPause"> <f:facet
+                                            name="header">
+                                        アラート停止期間
+                                        </f:facet>
+                                        <h:outputText id="alertPauseStart" value="#{item.alertPauseStart}" />
+                                        <ui:fragment rendered="#{(item.alertPauseStart != null and !item.alertPauseStart.isEmpty()) ||
+                                            (item.alertPauseEnd != null and !item.alertPauseEnd.isEmpty())}" >
+                                            <h:outputText value="&nbsp;-&nbsp;" />
+                                        </ui:fragment>
+                                        <h:outputText id="alertPauseEnd" value="#{item.alertPauseEnd}" />
+                                    </rich:column>
+                                    <rich:column headerClass="table_header" width="180px" id="sMeterStatusMemo"> <f:facet
+                                            name="header">
+                                        備考
+                                        </f:facet>
+                                        <h:outputText id="meterStatusMemo" value="#{item.meterStatusMemo}" />
+                                    </rich:column>
+                                </c:if>
+                                <rich:column headerClass="table_header" width="13.5px" class="scroll_space"/>
+                            </rich:extendedDataTable>
+                        </form>
+                    </div>
+                </div>
+            </c:if>
+        </div>
+    </div>
+</div>
+<!-- メッセージエリアを初期化 -->
+<a4j:jsFunction
+    name="clearServerMsgs"
+    execute="@this"
+    actionListener="#{smsCollectSettingMeterMeterManagementBean.clearFacesMessages}"
+    render="s2Messages s3Messages s4Messages s5Messages s6Messages"
+/>
+<!-- サイドメニューにて「メーター管理」押下時の初期表示の設定 -->
+<h:outputScript rendered="#{smsCollectSettingMeterMeterManagementBean.lteMDeviceFlg}">
+  window.addEventListener("DOMContentLoaded", function () {
+    moveColumnsForLteMDevice();
+  });
+</h:outputScript>
+<!-- 現在表示が残る件の対応 -->
+<h:form id="smartNowValBtnForm">
+    <a4j:commandButton id="nowValResetBtn" class="nowValResetBtn"
+        style="display: none;" value="現在値表示リセット" execute="@form"
+        render="smsCollectSettingMeterMeterManagementBean:s6CurrentValueDispPanel
+                smsCollectSettingMeterMeterManagementBean:p6CurrentValueDispPanel"
+        actionListener="#{smsCollectSettingMeterMeterManagementBean.resetNowVal()}">
+    </a4j:commandButton>
+</h:form>
+</html>

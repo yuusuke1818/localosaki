@@ -1,0 +1,189 @@
+<beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+	<!-- *** 手動負荷制御(設定) テンプレート *** -->
+	<!-- ベース部分 -->
+	<template name="base">
+		<field name="productCd" length="2" keepPadding="true" />
+		<field name="address" length="2" keepPadding="true" />
+		<field name="command" length="5" default="X0004" keepPadding="true" />
+	</template>
+
+	<template name="base22">
+		<include template="base" />
+		<field name="compressionDataLength" length="6" default="000000" keepPadding="true" />
+	</template>
+
+	<template name="base.res">
+		<field name="productCd" length="2" keepPadding="true" />
+		<field name="address" length="2" keepPadding="true" />
+		<field name="command" length="5" keepPadding="true" />
+	</template>
+
+	<template name="base22.res">
+		<include template="base.res" />
+		<field name="compressionDataLength" length="6" keepPadding="true" />
+	</template>
+
+	<!-- 共通部分１（受信用） -->
+	<template name="commonResponse">
+		<field name="settingDate" length="11" keepPadding="true" />
+	</template>
+
+	<!-- 共通部分２（送受信共用） -->
+	<template name="common">
+		<field name="errorManualCtrlState" length="1" keepPadding="true" />
+	</template>
+
+	<!-- 共通部分３（送信用） -->
+	<template name="commonRequest3">
+		<field name="cautionManualCtrlState" length="1" keepPadding="true" />
+		<field name="blockManualCtrlState" length="1" keepPadding="true" />
+		<field name="limitManualCtrlState" length="1" keepPadding="true" />
+		<field name="errorManualCtrlState" length="1" keepPadding="true" />
+		<segment name="loadInfoList" collection="list" class="map" occurs="96">
+			<field name="manualCtrlState" length="1" keepPadding="true" />
+		</segment>
+	</template>
+
+
+	<!-- 「00」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="00.req" format="fixedlength">
+		<record name="response" template="base" class="jp.co.osaki.osol.mng.param.A200009Param">
+			<segment name="loadInfoList" collection="list" class="map" occurs="6">
+				<field name="manualCtrlState" length="1" keepPadding="true" />
+			</segment>
+			<include template="common" />
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="00.res" format="fixedlength">
+		<record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200009Param">
+			<include template="commonResponse" />
+			<segment name="loadInfoList" collection="list" class="map" occurs="6">
+				<field name="manualCtrlState" length="1" keepPadding="true" />
+			</segment>
+			<include template="common" />
+		</record>
+	</stream>
+
+	<!-- 「03」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="03.req" format="fixedlength">
+		<record name="response" template="base" class="jp.co.osaki.osol.mng.param.A200009Param">
+			<segment name="loadInfoList" collection="list" class="map" occurs="6">
+				<field name="manualCtrlState" length="1" keepPadding="true" />
+			</segment>
+			<include template="common" />
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="03.res" format="fixedlength">
+		<record name="response" template="base.res" class="jp.co.osaki.osol.mng.param.A200009Param">
+			<include template="commonResponse" />
+			<segment name="loadInfoList" collection="list" class="map" occurs="6">
+				<field name="manualCtrlState" length="1" keepPadding="true" />
+			</segment>
+			<include template="common" />
+		</record>
+	</stream>
+
+	<!-- 「06」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="06.req" format="fixedlength">
+		<record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200009Param">
+			<segment name="loadInfoList" collection="list" class="map" occurs="12">
+				<field name="manualCtrlState" length="1" keepPadding="true" />
+			</segment>
+			<field name="cautionManualCtrlState" length="1" keepPadding="true" />
+			<field name="blockManualCtrlState" length="1" keepPadding="true" />
+			<field name="limitManualCtrlState" length="1" keepPadding="true" />
+			<include template="common" />
+
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="06.res" format="fixedlength">
+		<record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200009Param">
+			<include template="commonResponse" />
+			<segment name="loadInfoList" collection="list" class="map" occurs="12">
+				<field name="manualCtrlState" length="1" keepPadding="true" />
+			</segment>
+			<field name="cautionManualCtrlState" length="1" keepPadding="true" />
+			<field name="blockManualCtrlState" length="1" keepPadding="true" />
+			<field name="limitManualCtrlState" length="1" keepPadding="true" />
+			<include template="common" />
+
+		</record>
+	</stream>
+
+	<!-- 「12」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="12.req" format="fixedlength">
+		<record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200009Param">
+
+			<segment name="loadInfoList" collection="list" class="map" occurs="12">
+				<field name="manualCtrlState" length="1" keepPadding="true" />
+			</segment>
+			<field name="cautionManualCtrlState" length="1" keepPadding="true" />
+			<field name="blockManualCtrlState" length="1" keepPadding="true" />
+			<field name="limitManualCtrlState" length="1" keepPadding="true" />
+			<include template="common" />
+			<!-- getterにgetAddLoadInfoListを追加しloadInfoListに追加 -->
+			<segment name="loadInfoList" collection="list" class="map" occurs="24" getter="getAddLoadInfoList">
+				<field name="manualCtrlState" length="1" keepPadding="true" />
+			</segment>
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="12.res" format="fixedlength">
+		<record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200009Param">
+			<include template="commonResponse" />
+			<segment name="loadInfoList" collection="list" class="map" occurs="12">
+				<field name="manualCtrlState" length="1" keepPadding="true" />
+			</segment>
+			<field name="cautionManualCtrlState" length="1" keepPadding="true" />
+			<field name="blockManualCtrlState" length="1" keepPadding="true" />
+			<field name="limitManualCtrlState" length="1" keepPadding="true" />
+			<include template="common" />
+			<!-- _loadInfoListはリスト追加分 -->
+			<segment name="_loadInfoList" collection="list" class="map" occurs="24">
+				<field name="manualCtrlState" length="1" keepPadding="true" />
+			</segment>
+		</record>
+	</stream>
+
+	<!-- 「21」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="21.req" format="fixedlength">
+		<record name="param" template="base" class="jp.co.osaki.osol.mng.param.A200009Param">
+			<include template="commonRequest3" />
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="21.res" format="fixedlength">
+		<record name="param" template="base.res" class="jp.co.osaki.osol.mng.param.A200009Param">
+		</record>
+	</stream>
+
+	<!-- 「22」製品に対する設定 -->
+	<!-- 送信文 -->
+	<stream name="22.req" format="fixedlength">
+		<record name="param" template="base22" class="jp.co.osaki.osol.mng.param.A200009Param">
+			<include template="commonRequest3" />
+		</record>
+	</stream>
+
+	<!-- 受信文 -->
+	<stream name="22.res" format="fixedlength">
+		<record name="param" template="base22.res" class="jp.co.osaki.osol.mng.param.A200009Param">
+		</record>
+	</stream>
+
+</beanio>

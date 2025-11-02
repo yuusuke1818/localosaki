@@ -1,0 +1,109 @@
+.contents_graph_compare .row {
+    display: flex;
+    align-items: center;
+}
+
+.contents_graph_compare .graph_header {
+    display: flex;
+    margin-left: 0px;
+    margin-bottom: 20px;
+}
+
+.contents_graph_compare .graph_header {
+    color: #FFF;
+    text-align: center;
+}
+
+.contents_graph_compare .graph_header .head {
+    width: 120px;
+    font-weight: bold;
+}
+
+.items {
+    width: 80px;
+    font-weight: bold;
+    margin-left: 1px;
+    cursor: pointer;
+}
+
+.contents_graph_compare .graph_header .items:hover div {
+    background-color: #99ef99;
+}
+
+.contents_graph_compare .graph_header .head div,
+.contents_graph_compare .graph_header .items div {
+    height: 18px;
+    margin: 1px 0;
+    padding: 3px 0;
+    background-color: #004f8d;
+}
+
+.div_graph_header {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.div_graph_header .head {
+    color: #999;
+    border: 1px solid #CCC;
+    border-radius: 15px;
+    padding: 3px 20px;
+    font-weight: bold;
+    margin-right: 3px;
+}
+
+.div_graph_header .graphMeterMngIdRow .head {
+    width: 50px;
+}
+
+.div_graph_header .graphMeterMngIdRow .body {
+    width: 40px;
+}
+
+.div_graph_header .graphMeterIdRow .head {
+    width: 45px;
+}
+
+.div_graph_header .graphMeterIdRow .body {
+    width: 120px;
+}
+
+.div_graph_header .graphTenantNameRow .head {
+    width: 60px;
+}
+
+.div_graph_header .graphTenantNameRow .body {
+    width: 225px;
+}
+
+.div_graph_header .graphMeterTypeNameRow .head {
+    width: 75px;
+}
+
+.div_graph_header .graphMeterTypeNameRow .body {
+    width: 160px;
+}
+
+@media (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .div_graph_header .graphMeterMngIdRow .head {
+        width: 50px;
+    }
+
+    .div_graph_header .graphMeterIdRow .head {
+        width: 45px;
+    }
+
+    .div_graph_header .graphTenantNameRow .head {
+        width: 65px;
+    }
+
+    .div_graph_header .graphMeterTypeNameRow .head {
+        width: 75px;
+    }
+}
+
+.div_graph_header .body {
+    color: #2dc12d;
+    font-size: 16px;
+    font-weight: bold;
+}
