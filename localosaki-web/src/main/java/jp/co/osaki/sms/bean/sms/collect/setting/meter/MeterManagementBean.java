@@ -854,6 +854,17 @@ public class MeterManagementBean extends SmsConversationBean implements Serializ
     /** 非同期処理にてエラー時格納するキュー */
     private final ConcurrentLinkedQueue<String> asyncUiErrors = new ConcurrentLinkedQueue<>();
 
+    /** 一括登録ボタンの活性/非活性フラグ */
+    private boolean batchRegistEnabled = true;
+
+    public boolean isBatchRegistEnabled() {
+        return batchRegistEnabled;
+    }
+
+    public void setBatchRegistEnabled(boolean batchRegistEnabled) {
+        this.batchRegistEnabled = batchRegistEnabled;
+    }
+
     @Override
     public String init() {
         conversationStart();
@@ -911,6 +922,8 @@ public class MeterManagementBean extends SmsConversationBean implements Serializ
         if (lteMDeviceFlg && mCorpFunctionUse == null) {
             lteMFunctionUseAuthFlg = false;
         }
+
+        checkBatchRegistrationEnabled();
 
         eventLogger.debug(MeterManagementBean.class.getPackage().getName().concat(" MeterManagementBean:init():END"));
 
@@ -1229,6 +1242,8 @@ public class MeterManagementBean extends SmsConversationBean implements Serializ
         // 現在値取得のメーター管理番号のプルダウンの設定を初期化
         nowValMeterMngIdSmart = 0L;
 
+        checkBatchRegistrationEnabled();
+
         return init();
     }
 
@@ -1241,6 +1256,27 @@ public class MeterManagementBean extends SmsConversationBean implements Serializ
         for (Iterator<FacesMessage> it = ctx.getMessages(); it.hasNext();) {
             it.next();
             it.remove();
+        }
+    }
+
+    /**
+     * 一括登録ボタンの活性/非活性を判定する
+     * 大崎権限（corp_id が osaki または osakitest00）の場合は活性化
+     * それ以外で m_corp_function_use に function_cd='610' が存在する場合は非活性化
+     */
+    private void checkBatchRegistrationEnabled() {
+        String corpId = getLoginCorpId();
+        
+        if ("osaki".equals(corpId) || "osakitest00".equals(corpId)) {
+            batchRegistEnabled = true;
+            return;
+        }
+        
+        MCorpFunctionUse functionUse = MCorpFunctionUseDao.find("610", corpId);
+        if (functionUse != null) {
+            batchRegistEnabled = false;
+        } else {
+            batchRegistEnabled = true;
         }
     }
 

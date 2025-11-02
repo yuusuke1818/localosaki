@@ -132,10 +132,20 @@
                     </div>
                 </c:if>
                 <c:if test="#{!smsCollectSettingMeterMeterManagementBean.listMax}"> -->
-                    <div class="button button_new gradation_type_3 button current">
-                        <h:graphicImage class="button_icon" library="images" name="meterManage/btn_lumpRegist.png" />
-                        <input type="button" data-type="s3" value="一括登録" />
-                    </div>
+                    <c:choose>
+                        <c:when test="#{!smsCollectSettingMeterMeterManagementBean.batchRegistEnabled}">
+                            <div class="button button_new gradation_type_5 button current">
+                                <h:graphicImage class="button_icon" library="images" name="meterManage/btn_lumpRegist.png" />
+                                <input type="button" data-type="s3" value="一括登録" disabled="true" />
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="button button_new gradation_type_3 button current">
+                                <h:graphicImage class="button_icon" library="images" name="meterManage/btn_lumpRegist.png" />
+                                <input type="button" data-type="s3" value="一括登録" />
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
                 <!-- </c:if> -->
             </c:if>
             <div class="button button_edit btn_edit gradation_type_5 button current">
