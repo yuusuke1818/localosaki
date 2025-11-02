@@ -206,40 +206,36 @@ function dispButton() {
     const cd610Val = $('input[id$="functionCd610Exists"]').val();
     const cd610Exists = String(cd610Val).toLowerCase() === 'true';
     
-    if (!cd610Exists) {
-        $(".button_edit_2").addClass('gradation_type_5').removeClass('gradation_type_3').removeClass('gradation_type_1');
-        $(".button_edit_2 input[type='button']").prop('disabled', true);
-        $(".button_new").removeClass('gradation_type_1').addClass('gradation_type_3');
-        return;
-    }
-    
     const chk = $(".tbl input[type='checkbox']:checked").length;
     if (chk > 0) {
         $(".button_edit").removeClass('gradation_type_5').removeClass('gradation_type_1').addClass('gradation_type_3');
         $(".button_edit input[type='button']").prop('disabled', false);
 
-        // hiddenの文字列をbooleanへ変換
         const authFlgVal = $("input[id$='lteMFunctionUseAuthFlg']").val();
         const lteMFunctionUseHasAuth = String(authFlgVal).toLowerCase() === 'true';
-        if ((devId.slice(0,2) == 'TL') || (devId.slice(0,2) == 'M6') || !lteMFunctionUseHasAuth) {        /* らくらく検針,MR64C対応  TL:LTE端末   M6:MR64C または  「LTE-M」装置の場合、ログインしている企業IDに「設定変更」「現在値取得」の操作権限が無い場合*/
-            $(".button_edit_2").addClass('gradation_type_5').removeClass('gradation_type_3').removeClass('gradation_type_1');    /* 設定変更・現在値取得無効 */
-            $(".button_edit_2 input[type='button']").prop('disabled', true);    /* 設定変更・現在値取得無効 */
+        const currentDevId = $(".selDev").val() || devId;
+        
+        if (!cd610Exists) {
+            $(".button_edit_2").addClass('gradation_type_5').removeClass('gradation_type_3').removeClass('gradation_type_1');
+            $(".button_edit_2 input[type='button']").prop('disabled', true);
+        }
+        else if (((currentDevId && currentDevId.slice(0,2) == 'TL') || (currentDevId && currentDevId.slice(0,2) == 'M6')) && !lteMFunctionUseHasAuth) {
+            $(".button_edit_2").addClass('gradation_type_5').removeClass('gradation_type_3').removeClass('gradation_type_1');
+            $(".button_edit_2 input[type='button']").prop('disabled', true);
         }
         else {
-            $(".button_edit_2:not(.gradation_type_1)").removeClass('gradation_type_5').removeClass('gradation_type_1').addClass('gradation_type_3');    /* 設定変更・現在値取得有効 */
-            $(".button_edit_2 input[type='button']").prop('disabled', false);    /* 設定変更・現在値取得有効 */
+            $(".button_edit_2:not(.gradation_type_1)").removeClass('gradation_type_5').removeClass('gradation_type_1').addClass('gradation_type_3');
+            $(".button_edit_2 input[type='button']").prop('disabled', false);
         }
-        // 選択1件以上の場合、変更画面の表示/非表示の制御
         editDispSwitching();
     }
     else {
         $(".button_edit").addClass('gradation_type_5').removeClass('gradation_type_3').removeClass('gradation_type_1');
         $(".button_edit input[type='button']").prop('disabled', true);
-        $(".button_edit_2").addClass('gradation_type_5').removeClass('gradation_type_3').removeClass('gradation_type_1');    /* 設定変更・現在値取得無効 */
-        $(".button_edit_2 input[type='button']").prop('disabled', true);    /* 設定変更・現在値取得無効 */
-        $(".button_new").removeClass('gradation_type_1').addClass('gradation_type_3'); /* 水色表示 */
+        $(".button_edit_2").addClass('gradation_type_5').removeClass('gradation_type_3').removeClass('gradation_type_1');
+        $(".button_edit_2 input[type='button']").prop('disabled', true);
+        $(".button_new").removeClass('gradation_type_1').addClass('gradation_type_3');
         if (selectBtn != 1 && selectBtn != 2 && selectBtn != 3) {
-            // 選択0件の場合、一覧ボタン押下と同じ挙動
             changeDispListMode();
         }
     }
