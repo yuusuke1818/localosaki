@@ -1868,7 +1868,7 @@ public class MeterManagementBean extends SmsConversationBean implements Serializ
                                 semaphore.release();
                             }
                         }
-                    }, lteMParallelExecutor.getExecutor());
+                    }, java.util.concurrent.ForkJoinPool.commonPool());
 
             // List<LteMMeterExecResult>をBooleanへ畳み込み（全部成功なら true）
             final MeterInfo info = meterInfo;
