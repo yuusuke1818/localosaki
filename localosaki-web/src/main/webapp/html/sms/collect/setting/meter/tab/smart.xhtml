@@ -69,6 +69,7 @@
                             smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2ExamNoticeMonthPanel
                             smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2DevNamePanel
                             smsCollectSettingMeterMeterManagementBean:smartRegistForm:s2MeterMngIdMapPanel
+                            smsCollectSettingMeterMeterManagementBean:smartRegistForm:lteMFunctionUseAuthFlg
                             smsCollectSettingMeterMeterManagementBean:s3DevNamePanel
                             #{rich:clientId('confirmMsgArea')}
                             smsCollectSettingMeterMeterManagementBean:pulseRegistForm:p2ExamNoticeMonthPanel
@@ -81,7 +82,7 @@
                             buttonsAreaS #{rich:clientId('s6Include')}"
                 resetValues="true"
                 onbegin="showBlockModal()"
-                oncomplete="setErrMsgArea('1'); changeDispListMode('S'); hideBlockModal(); moveColumnsForLteMDevice(); controlExecBtn();" />
+                oncomplete="setErrMsgArea('1'); changeDispListMode('S'); hideBlockModal(); moveColumnsForLteMDevice(); controlExecBtn(); dispButton();" />
                 </div>
             </div>
         </h:form>

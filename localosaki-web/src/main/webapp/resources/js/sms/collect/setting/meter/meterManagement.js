@@ -20,6 +20,7 @@ $(function() {
     $(document).on('change', '.selDev', function() {
         devId = $(".selDev").val();
         devName = $(".selDev option:selected").text();
+        dispButton();
     })
 
     window.onload = function() {
@@ -213,7 +214,7 @@ function dispButton() {
 
         const authFlgVal = $("input[id$='lteMFunctionUseAuthFlg']").val();
         const lteMFunctionUseHasAuth = String(authFlgVal).toLowerCase() === 'true';
-        const currentDevId = $(".selDev").val() || devId;
+        const currentDevId = $('.contents_body:visible .selDev').val() || $('.selDev').first().val() || '';
         
         if (!cd610Exists) {
             $(".button_edit_2").addClass('gradation_type_5').removeClass('gradation_type_3').removeClass('gradation_type_1');
