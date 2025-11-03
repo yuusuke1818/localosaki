@@ -122,22 +122,30 @@
                     </div>
                 </c:if>
             </c:if>
-            <c:if test="#{smsCollectSettingMeterMeterManagementBean.smsAuthControl}">
-                <!-- listMaxにて設定した台数以降も一括登録で更新はできるようにしたいため以下コメントアウト -->
-                <!-- なお一括登録で新規登録の場合はlistMax以降の台数はエラーとなるようにバリデーションチェックは追加済 -->
-                <!-- <c:if test="#{smsCollectSettingMeterMeterManagementBean.listMax}">
+            <!-- LTE-M接続時は大崎権限でない場合は非活性、LTE-M以外は既存権限（smsAuthControl）で表示/非表示 -->
+            <c:choose>
+                <!-- LTE-M接続時かつ大崎権限でない場合：ボタンは表示するが非活性 -->
+                <c:when test="#{smsCollectSettingMeterMeterManagementBean.lteMDeviceFlg and !smsCollectSettingMeterMeterManagementBean.osakiAuth}">
                     <div class="button button_new gradation_type_5 button current">
                         <h:graphicImage class="button_icon" library="images" name="meterManage/btn_lumpRegist.png" />
                         <input type="button" data-type="s3" value="一括登録" disabled="true" />
                     </div>
-                </c:if>
-                <c:if test="#{!smsCollectSettingMeterMeterManagementBean.listMax}"> -->
+                </c:when>
+                <!-- LTE-M接続時かつ大崎権限がある場合：ボタンを活性状態で表示 -->
+                <c:when test="#{smsCollectSettingMeterMeterManagementBean.lteMDeviceFlg and smsCollectSettingMeterMeterManagementBean.osakiAuth}">
                     <div class="button button_new gradation_type_3 button current">
                         <h:graphicImage class="button_icon" library="images" name="meterManage/btn_lumpRegist.png" />
                         <input type="button" data-type="s3" value="一括登録" />
                     </div>
-                <!-- </c:if> -->
-            </c:if>
+                </c:when>
+                <!-- LTE-M以外：既存のsmsAuthControl権限チェックで表示/非表示 -->
+                <c:when test="#{!smsCollectSettingMeterMeterManagementBean.lteMDeviceFlg and smsCollectSettingMeterMeterManagementBean.smsAuthControl}">
+                    <div class="button button_new gradation_type_3 button current">
+                        <h:graphicImage class="button_icon" library="images" name="meterManage/btn_lumpRegist.png" />
+                        <input type="button" data-type="s3" value="一括登録" />
+                    </div>
+                </c:when>
+            </c:choose>
             <div class="button button_edit btn_edit gradation_type_5 button current">
                 <h:graphicImage class="button_icon" library="images"
                     name="meterManage/btn_editAndDelete.png" />
