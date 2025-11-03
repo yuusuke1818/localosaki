@@ -211,7 +211,15 @@ function dispButton() {
         $(".button_edit").removeClass('gradation_type_5').removeClass('gradation_type_1').addClass('gradation_type_3');
         $(".button_edit input[type='button']").prop('disabled', false);
 
+        const authFlgVal = $("input[id$='lteMFunctionUseAuthFlg']").val();
+        const lteMFunctionUseHasAuth = String(authFlgVal).toLowerCase() === 'true';
+        const currentDevId = $(".selDev").val() || devId;
+        
         if (!cd610Exists) {
+            $(".button_edit_2").addClass('gradation_type_5').removeClass('gradation_type_3').removeClass('gradation_type_1');
+            $(".button_edit_2 input[type='button']").prop('disabled', true);
+        }
+        else if (((currentDevId && currentDevId.slice(0,2) == 'TL') || (currentDevId && currentDevId.slice(0,2) == 'M6')) && !lteMFunctionUseHasAuth) {
             $(".button_edit_2").addClass('gradation_type_5').removeClass('gradation_type_3').removeClass('gradation_type_1');
             $(".button_edit_2 input[type='button']").prop('disabled', true);
         }
