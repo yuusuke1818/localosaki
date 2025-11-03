@@ -20,6 +20,12 @@ $(function() {
     $(document).on('change', '.selDev', function() {
         devId = $(".selDev").val();
         devName = $(".selDev option:selected").text();
+        
+        // チェックボックスが選択されている場合、ボタンの状態を更新
+        const chk = $(".tbl input[type='checkbox']:checked").length;
+        if (chk > 0) {
+            dispButton();
+        }
     })
 
     window.onload = function() {
@@ -43,6 +49,10 @@ $(function() {
      * 一覧のチェックボックス操作時
      */
     $(document).on('click', ".tbl input[type='checkbox']", function() {
+        // 接続先の最新値を取得
+        devId = $(".selDev").val();
+        devName = $(".selDev option:selected").text();
+        
         dispButton();
         const chk = $(".tbl input[type='checkbox']:checked").length;
         if (chk > 0) {
