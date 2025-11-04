@@ -204,7 +204,7 @@ public class MeterManagementConstants {
     public static final int SEMAPHORE_TIMEOUT_LUMP_REGIST_API = 60;
 
     /** 開閉制御APIと負荷制限API実行時タイムアウト時間 */
-    public static final long TIMEOUT_SEC = 200;
+    public static final long TIMEOUT_SEC = 300;
     /** 「開閉制御APIと負荷制限API実行時」および「設定変更にて負荷制限「なし」に設定した際の負荷制限API2回実行時」の遅延時間  例）開閉制御APIが実行された後に設定された時間が空いて負荷制限APIが実行される*/
     public static final long DELAY_TIME = 10;
     /** 開閉制御API名 */

@@ -237,7 +237,9 @@ public class LteMParallelExecutor {
                       + (input.isSendFlgLoadlimit() ? 1 : 0)
                       + (MeterManagementConstants.LOADLIMIT_MODE.DISABLED.getValue()
                              .equals(input.getLoadlimitMode()) ? 1 : 0);
-                perRequestTimeoutSec = MeterManagementConstants.TIMEOUT_SEC * apiCount  + Math.round((MeterManagementConstants.TIMEOUT_SEC * apiCount) / 2.0);;
+                long delaySeconds = (input.isSendFlgSwitch() && input.isSendFlgLoadlimit())
+                                    ? MeterManagementConstants.DELAY_TIME : 0;
+                perRequestTimeoutSec = MeterManagementConstants.TIMEOUT_SEC * apiCount  + Math.round((MeterManagementConstants.TIMEOUT_SEC * apiCount) / 2.0) + delaySeconds;
             }
         } else {
             // その他の場合
